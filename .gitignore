@@ -24,4 +24,9 @@ tests/validation.json
 *.zip
 *.7z
 /test
-/docs/sample-statistics.json
+# Local documentation and USB-transferred output; Git keeps source + README.
+/docs/
+/exports/
+/waferflow-*.json
+/waferflow-*.csv
+/waferflow-*.html
