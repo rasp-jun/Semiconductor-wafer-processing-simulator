@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101e2b"><title>WaferFlow · 장비 운전실</title><link rel="stylesheet" href="equipment.css"></head>
+<body>
+  <header class="topbar"><a class="brand" href="index.html"><span class="brand-icon">wf</span><span>WaferFlow<small>EQUIPMENT ENGINEERING</small></span></a><nav aria-label="작업 공간"><a href="index.html">메모리 팹 통합</a><a href="cmos-lab.html">CMOS Fab</a><a href="equipment.html" aria-current="page">장비 운전실</a><a href="workbench.html">레시피 검토 ↗</a></nav><span class="offline"><i></i> OFFLINE SIMULATION</span></header>
+  <main class="shell">
+    <div class="page-heading"><div><span class="eyebrow">EQUIPMENT WORKSPACE / 01</span><h1>장비 운전실 <span>Ion Mill</span></h1><p>조건을 설정하고, 장비의 응답과 단계별 동작을 함께 확인하세요.</p></div><div class="heading-actions"><button id="sourceButton">자료 출처 · 모델 범위</button><button id="importButton">로그 불러오기 ↑</button><input id="importFile" type="file" accept=".json,application/json" hidden><button id="exportButton">운전 기록 ↓</button></div></div>
+    <div class="provenance-banner"><span id="dataBadge" class="pill amber">자체 생성 예제</span><p id="dataDescription">공개 장비 채널을 참고한 범용 이온 밀링 모델입니다. 수치·단위·동작 시간은 자체 설정값이며 삼성·SK하이닉스의 실측 데이터가 아닙니다.</p><button id="returnSimulation" hidden>예제 모델로 돌아가기</button></div>
+    <div id="feedback" class="feedback" role="status" aria-live="polite" hidden></div>
+    <div class="console-grid">
+      <aside class="recipe-panel panel">
+        <div class="panel-heading"><span class="eyebrow">01 / RECIPE</span><span class="pill" id="recipeMode">EDITABLE</span></div><h2>운전 조건</h2><p class="muted" id="profileLabel">GENERIC ION MILL · 단일 챔버</p>
+        <form id="recipeForm" novalidate><div id="recipeFields"></div><button type="button" id="defaultsButton" class="text-button">예제 기본값 복원</button></form>
+        <label class="field-label" for="faultSelect">이상 조건 시험</label><select id="faultSelect"><option value="none">정상 운전</option><option value="vacuum">진공 도달 실패</option><option value="cooling">가공 중 냉각 압력 저하</option><option value="beam">빔 전류 추종 실패</option></select>
+        <div class="checks-heading"><span>실행 전 점검</span><span class="muted">예제 규칙</span></div><ul id="preflight" class="checks"></ul>
+        <button id="runButton" class="primary">▶ 설정 조건으로 실행</button><button id="stopButton" class="stop" disabled>■ 운전 중단</button><p class="scope-note">이 화면의 점검은 예제 모델 범위입니다. 실제 장비 투입 가능 여부는 판정하지 않습니다.</p>
+        <span id="draftStatus" class="draft-status">독립 작업 공간 · 기존 Fab 기록 보존</span>
+      </aside>
+      <div class="main-column">
+        <section class="panel chamber-panel" aria-label="장비 상태 및 동작">
+          <div class="chamber-heading"><div><span class="live-dot"></span><strong>IM-01</strong><span class="muted">ION MILLING CHAMBER</span></div><span id="runState" class="state ready">READY</span></div>
+          <div id="equipmentViewport" class="equipment-viewport"></div>
+          <div class="part-explainer"><span class="part-icon">ⓘ</span><div><strong id="partTitle">장비 내부를 눌러보세요</strong><p id="partDescription">이온원·셔터·스테이지·진공·냉각·이송부의 역할을 확인할 수 있습니다.</p></div></div>
+          <div class="readouts" id="readouts"></div>
+          <div id="digitalStates" class="digital-states" aria-label="구동 신호"></div>
+        </section>
+        <section class="panel playback-panel" aria-label="운전 재생">
+          <div class="playback-heading"><div><span class="eyebrow">02 / SEQUENCE</span><strong id="stageTitle">운전 대기</strong></div><span id="timeLabel" class="mono">0.0 / 0.0 s</span></div>
+          <div id="stageStrip" class="stage-strip"></div>
+          <div class="transport"><button id="playButton" class="play-button" aria-label="운전 기록 재생">▶ 재생</button><button id="rewindButton" aria-label="처음으로 이동">↶</button><label class="scrubber-label" for="scrubber">운전 시간</label><input id="scrubber" type="range" min="0" max="100" step="0.1" value="0" aria-label="운전 시간 탐색"><label class="speed">속도 <select id="speedSelect"><option value="1">1×</option><option value="2">2×</option><option value="4" selected>4×</option><option value="8">8×</option><option value="16">16×</option></select></label></div>
+          <p id="stageDescription" class="stage-description">재생 속도만 압축하며, 그래프와 기록에는 모델의 운전 시간을 표시합니다.</p>
+        </section>
+      </div>
+    </div>
+    <div class="analysis-grid">
+      <section class="panel trace-panel"><div class="section-heading"><div><span class="eyebrow">03 / SENSOR RESPONSE</span><h2>설정값과 응답</h2></div><label class="channel-label">채널 <select id="channelSelect"></select></label></div><div class="chart-legend"><span><i class="solid"></i><span id="actualLegend">모델 응답</span></span><span><i class="dashed"></i>설정값</span><span id="chartScale" class="muted"></span></div><div id="traceChart" class="trace-chart"></div><div class="chart-footer"><span id="channelValue">—</span><span>차트 클릭으로 시점 이동</span></div></section>
+      <section class="panel event-panel"><div class="section-heading"><div><span class="eyebrow">04 / EVENT LOG</span><h2>상태 전이 · 알람</h2></div><span id="eventCount" class="pill">0 EVENTS</span></div><div id="outcome" class="outcome">현재 운전의 결과가 여기에 표시됩니다.</div><div id="eventList" class="event-list"></div></section>
+    </div>
+    <section id="reviewWorkspace" class="panel review-workspace" aria-labelledby="reviewTitle">
+      <div class="section-heading"><div><span class="eyebrow">05 / ENGINEERING REVIEW</span><h2 id="reviewTitle">레시피·실험 검토</h2></div><span class="pill amber">현장 보정 미완료</span></div>
+      <p class="review-intro">계산 기록을 버전별로 보관하고 기준 운전과 비교합니다. 검토 완료는 실험 근거 검토이며 장비 투입 승인이 아닙니다.</p>
+      <div class="review-toolbar"><div><span id="reviewConnection" class="pill">서버 연결 전</span><button id="reviewConnect">계정 연결</button><button id="reviewLogout" hidden>로그아웃</button></div><div><button id="pinBaseline">현재 기록을 비교 기준으로</button><button id="currentReport">현재 계산 보고서 ↓</button><button id="archiveRun" class="primary">검토 기록 보관</button></div></div>
+      <p id="reviewMessage" class="review-message" role="status" aria-live="polite">서버에 보관하기 전까지 운전 기록은 현재 브라우저에만 있습니다.</p>
+      <div class="review-comparison"><div class="comparison-heading"><div><strong>기준 운전 비교</strong><span id="baselineLabel">비교 기준을 지정하세요.</span></div><label for="comparisonStage">비교 단계 <select id="comparisonStage"><option value="process">이온 밀링</option><option value="pump">진공 형성</option><option value="stabilize">조건 안정화</option><option value="cooldown">빔 정지·냉각</option><option value="vent">압력 복귀</option></select></label></div><div id="reviewComparison"><p class="muted">기준 기록을 지정한 뒤 레시피를 바꿔 실행하면 같은 단계의 응답을 비교할 수 있습니다.</p></div></div>
+      <div id="archiveArea" hidden><div class="archive-controls"><label for="archiveProject">프로젝트 <select id="archiveProject"></select></label><button id="archiveRefresh">목록 새로고침</button><button id="createReviewProject">프로젝트 만들기</button></div><div class="review-table-wrap"><table class="archive-table"><thead><tr><th>검토 이름 / 버전</th><th>운전 결과</th><th>검토 상태</th><th>작성자 · 시각</th><th>열기</th></tr></thead><tbody id="archiveRows"></tbody></table></div><div class="archive-pagination"><span id="archiveCount"></span><div><button id="archivePrevious">이전</button><button id="archiveNext">다음</button></div></div><div id="archiveDetail" class="archive-detail" hidden></div></div>
+    </section>
+    <footer><span id="modelVersion">독립 장비 모델</span><span>설정 검토 → 가상 운전 → 시간별 응답 확인 → 기록 내보내기</span><a href="cmos-lab.html">기존 CMOS Fab로 돌아가기 ↗</a></footer>
+  </main>
+  <dialog id="sourceDialog" aria-labelledby="sourceTitle"><div class="dialog-heading"><div><span class="eyebrow">DATA & MODEL REGISTER</span><h2 id="sourceTitle">사용한 자료와 구현 범위</h2></div><button id="closeSource" aria-label="닫기">✕</button></div><div class="dialog-body">
+    <article class="source-card"><span class="pill amber">현재 실행 모델</span><h3>범용 이온 밀링 · 독립 예제</h3><p>압력, 빔 전압·전류, 헬륨 냉각 압력, 스테이지 회전·틸트 채널을 사용합니다. 단위, 범위, 지연 상수, 장비 형상, 상태 전이, 인터록은 기능을 시험하기 위해 독립적으로 설정했습니다. 특정 제조사 장비의 레시피·안전 로직을 재현하지 않습니다.</p></article>
+    <article class="source-card"><span class="pill">공개 채널 명세 참고</span><h3>PHM Society 2018 · Ion Mill Etching</h3><p>여러 실제 이온 밀링 장비의 센서 시계열을 설명하는 공개 자료입니다. 원본은 공학 단위를 비공개로 처리했습니다. 현재 앱에는 이 데이터셋의 원본 행을 포함하지 않았으며, 재배포 조건도 확인되지 않았습니다.</p><a href="https://phmsociety.org/conference/annual-conference-of-the-phm-society/annual-conference-of-the-prognostics-and-health-management-society-2018-b/phm-data-challenge-6/" target="_blank" rel="noopener noreferrer">공식 자료 보기 ↗</a></article>
+    <article class="source-card"><span class="pill">실제 장비 공개 사양 · 미구현</span><h3>ASML TWINSCAN EXE:5200B</h3><p>SK하이닉스의 M16 도입 발표와 ASML의 0.55 NA High-NA EUV 제품 설명을 확인했습니다. 노광 장비이며 현재 이온 밀링 모델과 다른 장비입니다. 현장 레시피·운전 로그가 없어 구동 모델에는 사용하지 않았습니다.</p><div class="source-links"><a href="https://news.skhynix.com/en/sk-hynix-introduces-industrys-first-commercial-high-na-euv/" target="_blank" rel="noopener noreferrer">SK하이닉스 발표 ↗</a><a href="https://www.asml.com/en/products/euv-lithography-systems/twinscan-exe-5200b" target="_blank" rel="noopener noreferrer">ASML 공개 사양 ↗</a></div></article>
+    <article class="source-card"><span class="pill">설계 참고</span><h3>Samsung Quality Handbook</h3><p>장비 입력·공정 출력 감시, FDC·SPC·APC 및 인터록을 구분하는 구조를 참고했습니다. 삼성 장비의 실제 제한값이나 로그는 확보하지 않았습니다.</p><a href="https://download.semiconductor.samsung.com/resources/others/Quality_Handbook_Web_Rev.05.pdf" target="_blank" rel="noopener noreferrer">공식 문서 · 5.4절 ↗</a></article>
+    <article class="source-card"><h3>사용자 로그 불러오기</h3><p>이 화면에서 내보낸 JSON을 양식으로 사용할 수 있습니다. 시간은 초, 채널 단위는 양식과 일치해야 합니다. 센서값만 있는 로그는 빠진 설정값·구동 신호를 ‘미상’으로 표시합니다. 불러온 파일은 출처 미검증으로 표시하며, 새 레시피의 예측 근거로 사용하지 않습니다. 파일 불러오기는 브라우저 안에서 처리합니다. ‘검토 기록 보관’을 선택하면 계산 기록과 검토 정보를 서버에 저장합니다.</p></article>
+  </div><div class="dialog-footer"><button id="closeSourceBottom" class="primary">확인</button></div></dialog>
+  <dialog id="reviewModal" aria-labelledby="reviewModalTitle"><div class="dialog-heading"><h2 id="reviewModalTitle">검토 작업</h2><button id="closeReviewModal" aria-label="검토 창 닫기">✕</button></div><div id="reviewModalBody" class="dialog-body"></div></dialog>
+  <noscript>장비 운전실을 사용하려면 JavaScript를 활성화하세요.</noscript>
+  <script src="equipment-engine.js"></script><script src="equipment-view.js"></script><script src="equipment-app.js"></script><script src="equipment-review-math.js"></script><script src="equipment-review.js"></script>
+</body>
+</html>

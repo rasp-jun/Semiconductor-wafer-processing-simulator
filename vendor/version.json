@@ -1,0 +1,5 @@
+{
+  "three": "0.180.0",
+  "source": "https://unpkg.com/three@0.180.0/build/three.cjs",
+  "format": "Official self-contained CJS wrapped to expose window.THREE"
+}

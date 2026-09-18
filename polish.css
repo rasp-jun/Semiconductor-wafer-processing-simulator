@@ -1,0 +1,85 @@
+/* Equipment workspace: deliberate hierarchy, readable controls and part inspection. */
+:root{--machine-accent:#cdea9b;--machine-muted:#9aafba}
+.page-description{font-size:12px}.eyebrow,.beta,.tiny-label{font-size:9px}
+.nav-item{font-size:12px}.workspace-picker strong{font-size:10px}
+.mission-banner{padding:16px 22px}.mission-copy h2{font-size:16px}
+.machine-panel{border-color:#3d535e;border-radius:12px;box-shadow:0 16px 60px #050b1038}
+.machine-heading{padding:16px 22px;background:#1b2931}
+.machine-heading h2{font-size:14px;font-weight:600}.machine-version{font-size:9px}
+.machine-heading-right{gap:7px!important}.machine-tool{font-size:10px;min-height:32px}
+.equipment-nav{background:#16232c}.equipment-tab{padding:17px 14px 16px;transition:background .2s}
+.equipment-tab>span{font-size:9px;color:#89a4b3;letter-spacing:.5px}
+.equipment-tab>strong{font-size:12px;font-weight:600;margin:8px 0 6px}
+.equipment-tab>small{font-size:9px;line-height:1.5;color:#8da5b0;white-space:normal}
+.equipment-tab.active{background:linear-gradient(180deg,#263c35,#223530);box-shadow:inset 0 -3px var(--machine-accent)}
+.equipment-tab.active>small{color:#b3c9a8}
+.machine-viewport{height:600px;background:#111d25}
+.machine-viewport::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 48%,#07121b44);z-index:1}
+.machine-hud{top:25px;left:26px;padding:0;background:none;backdrop-filter:none;border:0;min-width:0;text-shadow:0 2px 14px #071018}
+.machine-hud .tiny-label{font-size:9px;letter-spacing:2px;color:#96b4c0}
+.machine-hud>strong{font-size:25px;font-weight:600;margin:10px 0 12px;letter-spacing:-.9px}
+.machine-hud>div{font-size:11px;color:#cbe8a6;gap:8px}
+.machine-hud i{width:5px;height:5px;box-shadow:0 0 0 4px #cbea9412}
+.machine-hud p{font-size:10px;color:#a4bfcb;margin-top:12px}
+.machine-camera{top:24px;right:24px}.machine-camera>span{font-size:10px}
+.machine-camera button{width:35px;height:35px;border-color:#47606e}
+.machine-camera button.selected{color:#d9efad;border-color:#9ab67b;background:#324235}
+.machine-canvas-caption{bottom:18px;left:26px;right:26px;font-size:9px;color:#a0b4be}
+.machine-annotations{position:absolute;inset:0;pointer-events:none;z-index:3}
+.annotation-connectors{position:absolute;inset:0;width:100%;height:100%;overflow:hidden}
+.annotation-connectors line{stroke:#a1bfbd;stroke-width:1;stroke-dasharray:3 4;opacity:.5}
+.annotation-connectors circle{fill:#d6efb3;stroke:#213d37;stroke-width:3}
+.component-label{position:absolute;top:0;left:0;display:flex;align-items:center;gap:8px;pointer-events:auto;background:#182a34f0;backdrop-filter:blur(6px);border:1px solid #536e7980;border-radius:5px;padding:6px 10px 6px 6px;white-space:nowrap;font-size:10px;box-shadow:0 3px 20px #06101540;transition:background .15s,border-color .15s;will-change:transform}
+.component-label b{display:grid;place-items:center;width:23px;height:23px;background:#2f454e;border-radius:3px;font:10px var(--mono);color:#bcd3db}
+.component-label:hover,.component-label.active{background:#263c32;border-color:#bddb90;color:#e1efc6}
+.component-label.active b{background:#cdea9b;color:#23341e}
+.machine-component-info{position:absolute;right:25px;bottom:53px;z-index:3;width:250px;padding:16px 18px;border:1px solid #53697080;border-radius:7px;background:#172630e8;backdrop-filter:blur(12px);box-shadow:0 6px 30px #07121a33;pointer-events:none}
+.machine-component-info>.tiny-label{font-size:8px;letter-spacing:1.5px;color:#8eacb8}
+.machine-component-info>div{display:flex;gap:10px;align-items:center;margin-top:12px}
+.machine-component-info b{font:12px var(--mono);color:var(--machine-accent)}
+.machine-component-info h3{font-size:13px;font-weight:500;color:#e0e9ec}
+.machine-component-info p{font-size:11px;line-height:1.85;color:#aabfc9;margin-top:9px;word-break:keep-all}
+.machine-process-readout{position:absolute;bottom:64px;left:26px;z-index:2;pointer-events:none;text-shadow:0 2px 12px #06121c}
+.machine-process-readout>span{display:block;font:8px var(--mono);color:#8faab7;letter-spacing:1.4px}
+.machine-process-readout>strong{display:block;font:25px var(--mono);color:#dbebed;margin-top:8px;letter-spacing:-1px}
+.machine-process-readout>small{display:block;font-size:10px;color:#9bb2be;margin-top:7px}
+.machine-equipment-card{background:#192b33;padding:20px 24px;gap:25px;grid-template-columns:1fr 1.5fr 1.2fr}
+.machine-equipment-card .tiny-label{font-size:9px}.machine-equipment-card h3{font-size:17px;font-weight:600}
+.machine-equipment-card p{font-size:12px;line-height:1.85}.machine-equipment-card>div:nth-child(2)>span{font-size:10px;line-height:1.7}
+.machine-change>span{font-size:10px}.machine-change>strong{font-size:11px}
+.machine-transport{padding:19px 24px;gap:20px}.machine-play{font-size:11px;min-width:130px;padding:12px 15px}
+.machine-transport select{font-size:11px;padding:8px 5px}.machine-speed-label{font-size:10px}
+.machine-timeline>div:first-child{font-size:8px;margin-bottom:13px;letter-spacing:.5px}
+.machine-timeline>div:first-child>span:last-child{font-size:10px}
+.machine-progress-track{position:relative;overflow:visible;height:4px;margin-bottom:5px}
+.machine-progress-track>i{border-radius:4px;pointer-events:none;transition:none}
+#machineScrubber{position:absolute;left:0;top:-10px;width:100%;height:24px;padding:0;margin:0;appearance:none;-webkit-appearance:none;background:transparent;cursor:pointer;accent-color:var(--machine-accent)}
+#machineScrubber::-webkit-slider-runnable-track{height:4px;background:transparent}
+#machineScrubber::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:12px;height:12px;margin-top:-4px;border:2px solid #e8f5cf;border-radius:50%;background:#b6d77f;box-shadow:0 0 0 4px #cbea9410}
+#machineScrubber::-moz-range-track{height:4px;background:transparent}
+#machineScrubber::-moz-range-thumb{width:9px;height:9px;border:2px solid #e8f5cf;border-radius:50%;background:#b6d77f}
+.machine-transport .machine-next{font-size:10px;min-height:36px}
+.machine-phase-bar{display:grid;grid-template-columns:repeat(4,1fr);padding:0 24px 16px;gap:10px;background:#17252e}
+.machine-phase-bar button{display:flex;align-items:center;gap:9px;text-align:left;padding:10px 12px;color:#93aebb;background:#1a2c36;border:1px solid #354b56;border-radius:5px;font-size:10px}
+.machine-phase-bar button span{font:9px var(--mono);color:#819ca7}
+.machine-phase-bar button small{margin-left:auto;font:8px var(--mono);color:#7795a4}
+.machine-phase-bar button.active{background:#2a3c31;border-color:#697e50;color:#dfedc5}
+.machine-phase-bar button.active span{color:#cdea9b}.machine-phase-bar button:hover{border-color:#8da39a}
+.machine-footnote{padding:12px 24px;font-size:9px;color:#8da6b2;line-height:1.8}
+.machine-tool:disabled{cursor:not-allowed}.machine-viewport:fullscreen{height:100%}
+@media(min-width:1680px){.machine-viewport{height:660px}}
+@media(max-width:1250px){.machine-heading{flex-wrap:wrap}.machine-heading-right{margin-left:auto}.machine-version{display:none}.machine-phase-bar button small{display:none}.machine-component-info{width:220px}.machine-speed-label{display:none}.machine-equipment-card{gap:18px}}
+@media(max-width:1000px){.machine-viewport{height:550px}.equipment-tab{padding:13px}.equipment-tab>span{font-size:8px}.equipment-tab>small{font-size:9px}.machine-equipment-card{grid-template-columns:1fr 1.5fr}.machine-change{grid-column:1/-1;border-left:0;border-top:1px solid #3d5556;padding:12px 0 0;display:flex;align-items:center;gap:14px}.machine-change>strong{margin:0}.machine-timeline>div:first-child>span:first-child{display:none}.machine-transport{gap:12px}.machine-component-info{right:18px;bottom:50px;width:215px;padding:13px}.machine-component-info p{font-size:10px}}
+@media(max-width:700px){
+ .machine-heading{padding:14px;gap:13px}.machine-heading h2{font-size:13px}.machine-heading-right{width:100%;margin:0;justify-content:space-between}.machine-heading-right>.machine-tool{font-size:9px;padding:6px;min-height:32px}
+ .equipment-tab{padding:12px 9px}.equipment-tab>strong{font-size:10px}.equipment-tab>small{font-size:8px}.equipment-tab>span{font-size:8px}
+ .machine-viewport{height:570px}.machine-hud{left:17px;top:62px;min-width:0;padding:0}.machine-hud>strong{font-size:21px;margin:8px 0}.machine-hud .tiny-label{font-size:8px}.machine-hud>div{font-size:10px}.machine-hud p{font-size:9px}
+ .machine-camera{top:15px;right:15px}.machine-camera button{width:32px;height:32px}.machine-camera>span{font-size:9px}
+ .machine-component-info{left:17px;right:17px;bottom:45px;width:auto;padding:11px 14px}.machine-component-info>.tiny-label{display:none}.machine-component-info>div{margin:0}.machine-component-info h3{font-size:12px}.machine-component-info p{font-size:10px;line-height:1.7;margin-top:6px}
+ .machine-process-readout{display:none}.component-label{font-size:9px;padding:4px 7px 4px 4px;gap:6px}.component-label b{width:22px;height:22px}.component-label>span{display:none}
+ .machine-canvas-caption{left:17px;right:17px;bottom:16px;font-size:8px}.machine-equipment-card{grid-template-columns:1fr;padding:17px;gap:12px}.machine-equipment-card .tiny-label{font-size:8px}.machine-equipment-card h3{font-size:15px}.machine-equipment-card p{font-size:11px}.machine-change{padding-top:12px}.machine-change>span{font-size:9px}.machine-change>strong{font-size:10px}
+ .machine-transport{padding:17px;gap:15px}.machine-play{min-width:122px;font-size:11px}.machine-transport .machine-next{font-size:10px}.machine-timeline{order:5}.machine-phase-bar{padding:0 17px 17px;gap:6px}.machine-phase-bar button{padding:9px 6px;justify-content:center;gap:5px;font-size:9px}.machine-phase-bar button span{font-size:8px}.machine-footnote{padding:11px 17px;font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){.component-label,.equipment-tab{transition:none}}
+
+.workspace-revision-banner{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding:16px 20px;border:1px solid #709785;background:#243e35;border-radius:7px}.workspace-revision-banner p{flex:1;font-size:12px;line-height:1.8;color:#c6d9cb}.workspace-revision-banner a,.workspace-revision-banner button{font-size:10px;flex-shrink:0}@media(max-width:900px){.workspace-revision-banner{flex-wrap:wrap}.workspace-revision-banner p{flex-basis:100%}.topbar-right>.button{font-size:8px;padding:7px}.topbar-right{gap:8px}}

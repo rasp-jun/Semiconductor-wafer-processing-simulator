@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.ps1 text eol=crlf
+# Keep upstream library formatting; whitespace checks apply to project source.
+vendor/three.js -whitespace
+tests/linkedom.worker.mjs -whitespace

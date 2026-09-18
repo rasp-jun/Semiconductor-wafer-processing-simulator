@@ -1,0 +1,186 @@
+{
+  "version": "wf-edu-0.2.0",
+  "fields": {
+    "temperature": {
+      "label": "산화 온도",
+      "unit": "°C",
+      "min": 850,
+      "max": 1100,
+      "step": 5
+    },
+    "oxidationTime": {
+      "label": "산화 시간",
+      "unit": "min",
+      "min": 10,
+      "max": 90,
+      "step": 1
+    },
+    "rpm": {
+      "label": "스핀 속도",
+      "unit": "rpm",
+      "min": 1500,
+      "max": 5000,
+      "step": 100
+    },
+    "bakeTemp": {
+      "label": "소프트베이크 온도",
+      "unit": "°C",
+      "min": 80,
+      "max": 130,
+      "step": 1
+    },
+    "bakeTime": {
+      "label": "소프트베이크 시간",
+      "unit": "s",
+      "min": 30,
+      "max": 120,
+      "step": 1
+    },
+    "pebTemp": {
+      "label": "PEB 온도",
+      "unit": "°C",
+      "min": 90,
+      "max": 130,
+      "step": 1
+    },
+    "dose": {
+      "label": "노광량",
+      "unit": "mJ/cm²",
+      "min": 70,
+      "max": 150,
+      "step": 1
+    },
+    "focus": {
+      "label": "초점 오프셋",
+      "unit": "µm",
+      "min": -1,
+      "max": 1,
+      "step": 0.05
+    },
+    "developTime": {
+      "label": "현상 시간",
+      "unit": "s",
+      "min": 30,
+      "max": 90,
+      "step": 1
+    },
+    "power": {
+      "label": "RF 파워",
+      "unit": "W",
+      "min": 100,
+      "max": 400,
+      "step": 5
+    },
+    "pressure": {
+      "label": "챔버 압력",
+      "unit": "mTorr",
+      "min": 10,
+      "max": 80,
+      "step": 1
+    },
+    "etchTime": {
+      "label": "식각 시간",
+      "unit": "s",
+      "min": 30,
+      "max": 150,
+      "step": 1
+    }
+  },
+  "defaults": {
+    "temperature": 1000,
+    "oxidationTime": 40,
+    "rpm": 3000,
+    "bakeTemp": 100,
+    "bakeTime": 60,
+    "pebTemp": 110,
+    "dose": 100,
+    "focus": 0,
+    "developTime": 60,
+    "power": 220,
+    "pressure": 30,
+    "etchTime": 80
+  },
+  "missions": [
+    {
+      "id": "edge",
+      "code": "CASE 001",
+      "title": "사라진 가장자리 수율을 찾아서",
+      "subtitle": "가장자리 과식각",
+      "level": "입문",
+      "focusStage": 6,
+      "target": 90,
+      "budget": 150,
+      "seed": 701,
+      "defaults": {
+        "temperature": 1000,
+        "oxidationTime": 40,
+        "rpm": 3000,
+        "bakeTemp": 100,
+        "bakeTime": 60,
+        "pebTemp": 110,
+        "dose": 100,
+        "focus": 0,
+        "developTime": 60,
+        "power": 310,
+        "pressure": 30,
+        "etchTime": 80
+      },
+      "description": "가장자리에 모인 불량. 식각 조건을 바꿔 수율 90%와 가상 비용 $150 이하를 함께 달성하세요.",
+      "hint": "RF 파워만 220 W 부근으로 낮춰 기준과 비교해 보세요. 너무 낮추면 잔류막이 생길 수 있습니다."
+    },
+    {
+      "id": "residue",
+      "code": "CASE 002",
+      "title": "열리지 않는 식각 창의 비밀",
+      "subtitle": "현상 잔사",
+      "level": "기초",
+      "focusStage": 5,
+      "target": 90,
+      "budget": 150,
+      "seed": 902,
+      "defaults": {
+        "temperature": 1000,
+        "oxidationTime": 40,
+        "rpm": 3000,
+        "bakeTemp": 100,
+        "bakeTime": 60,
+        "pebTemp": 110,
+        "dose": 90,
+        "focus": 0,
+        "developTime": 52,
+        "power": 220,
+        "pressure": 30,
+        "etchTime": 80
+      },
+      "description": "식각을 늘려도 남는 잔류막. 노광과 현상의 연결을 살펴 수율 90% 이상을 달성하세요.",
+      "hint": "식각보다 앞선 공정을 확인하세요. 노광량 100 mJ/cm², 현상 시간 60 s를 한 변수씩 비교해 보세요."
+    },
+    {
+      "id": "focus",
+      "code": "CASE 003",
+      "title": "흔들리는 패턴, 좁아진 공정창",
+      "subtitle": "초점과 균일도",
+      "level": "응용",
+      "focusStage": 3,
+      "target": 93,
+      "budget": 150,
+      "seed": 1203,
+      "defaults": {
+        "temperature": 1000,
+        "oxidationTime": 40,
+        "rpm": 3000,
+        "bakeTemp": 100,
+        "bakeTime": 60,
+        "pebTemp": 110,
+        "dose": 100,
+        "focus": 0.7,
+        "developTime": 60,
+        "power": 220,
+        "pressure": 65,
+        "etchTime": 80
+      },
+      "description": "초점 오차와 압력 편차가 함께 작용합니다. 공정창을 비교해 수율 93% 이상을 달성하세요.",
+      "hint": "초점을 0 µm에 가깝게 맞춘 뒤 압력을 30 mTorr 부근으로 조절하세요. 두 변수의 효과를 따로 기록해 보세요."
+    }
+  ]
+}
