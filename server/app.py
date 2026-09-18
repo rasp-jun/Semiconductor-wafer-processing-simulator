@@ -20,7 +20,7 @@ from .model import CATALOG, ValidationError, parse_measurements, simulate, valid
 from .equipment import register_equipment
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = '0.4.0'
+VERSION = '0.4.1'
 COOKIE = 'wf_session'
 
 
@@ -45,6 +45,7 @@ def create_app(database=None, testing=False):
     database = Path(database or os.getenv('WF_DATABASE', str(ROOT / '.data' / 'waferflow.sqlite3')))
     database.parent.mkdir(parents=True, exist_ok=True)
     app.config.update(TESTING=testing, DATABASE=str(database), MAX_CONTENT_LENGTH=1500000,
+                      PUBLIC_ASSET_MANIFEST=ROOT / 'server' / 'public-assets.json',
                       TRUSTED_HOSTS=os.getenv('WF_ALLOWED_HOSTS', 'localhost,127.0.0.1,[::1]').split(','),
                       COOKIE_SECURE=os.getenv('WF_COOKIE_SECURE', '0') == '1')
     with closing(sqlite3.connect(database)) as connection:
@@ -397,13 +398,19 @@ def create_app(database=None, testing=False):
 
     @app.get('/')
     def home():
-        return send_from_directory(ROOT, 'index.html')
+        return assets('index.html')
 
     @app.get('/<path:filename>')
     def assets(filename):
-        allowed = {'index.html', 'equipment.html', 'equipment.css', 'equipment-engine.js', 'equipment-view.js', 'equipment-app.js', 'equipment-review.js', 'equipment-review-math.js', 'photo-lab.html', 'fab.css', 'fab-engine.js', 'fab-view.js', 'fab-app.js', 'fab-guide.js', 'workbench.html', 'styles.css', 'polish.css', 'review.css', 'review.js', 'workspace-bridge.js', 'engine.js', 'visuals.js', 'app.js', 'machine.js', 'equipment-detail.js', 'vendor/three.js', 'vendor/THREE-LICENSE'}
-        allowed.update({'cmos-lab.html', 'memory-fab.html', 'memory-fab.css', 'memory-fab-engine.js', 'memory-fab-view.js', 'memory-fab-app.js'})
-        allowed.update({'evidence.html', 'evidence.css', 'evidence-engine.js', 'evidence-app.js'})
+        # Re-read the explicit public list so new pages and their dependencies
+        # become available together without restarting an unchanged backend.
+        try:
+            allowed = json.loads(Path(app.config['PUBLIC_ASSET_MANIFEST']).read_text(encoding='utf-8'))
+            if not isinstance(allowed, list) or not all(isinstance(name, str) for name in allowed):
+                raise ValueError('Public asset manifest must be a list of paths')
+        except (OSError, ValueError):
+            app.logger.exception('Cannot load public asset manifest')
+            abort(503, description='화면 파일 목록을 읽지 못했습니다. server/public-assets.json 배포 상태를 확인하세요.')
         if filename not in allowed:
             abort(404)
         return send_from_directory(ROOT, filename)
