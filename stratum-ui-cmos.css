@@ -605,8 +605,9 @@ body.route-docked :is(.process-selector, #moduleRail) {
   box-shadow: none;
 }
 
-/* Desktop runs from the recipe inspector; the transport bar serves narrow screens. */
-body.route-docked #cmosMain > .console-transport {
+/* On desktop the recipe inspector carries the run controls, so the transport bar is
+ * shown only in the section / analysis views, where the inspector is not on screen. */
+body.route-docked:is([data-console-view="equipment"], [data-console-view="all"]) #cmosMain > .console-transport {
   display: none;
 }
 
@@ -913,4 +914,38 @@ body.route-docked #cmosMain > .console-transport {
   border: 0;
   border-radius: var(--radius);
   padding: var(--sp-4);
+}
+
+/* Transport bar spans the column edge to edge; its legacy margins matched old paddings. */
+.cmos-console #cmosMain > .console-transport {
+  margin-inline: calc(-1 * var(--sp-4));
+  padding-inline: var(--sp-4);
+}
+
+/* Focus mode gives the equipment the full width: the docked tree steps aside. */
+body.stage-focused.route-docked .workspace.cmos-studio {
+  grid-template-columns: minmax(0, 1fr);
+}
+body.stage-focused .route-dock {
+  display: none !important;
+}
+
+/* View modes (장비 · 단면 · 결과 · 전체). Re-declared here because the studio layout rules
+ * above set display values that outrank the legacy-layer versions of these rules. */
+body[data-console-view="equipment"] :is(#waferSection, #processResults),
+body[data-console-view="wafer"] :is(#processWorkspace, #processResults),
+body[data-console-view="analysis"] :is(#processWorkspace, #waferSection) {
+  display: none;
+}
+@media print {
+  .cmos-console .route-dock,
+  .cmos-console .cmos-toolbar :is(.lab-shortcuts, .route-open) {
+    display: none !important;
+  }
+  body.route-docked .workspace.cmos-studio {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cmos-toolbar {
+    position: static;
+  }
 }

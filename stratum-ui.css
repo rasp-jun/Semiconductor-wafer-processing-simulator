@@ -60,6 +60,12 @@ body.stratum {
   }
 }
 
+/* The hidden attribute always wins: new component rules set display values that would
+ * otherwise reveal elements scripts have hidden (e.g. role-gated tabs, pending buttons). */
+.stratum [hidden] {
+  display: none !important;
+}
+
 /* Skip links become visible only on focus. */
 .stratum :is(.skip-link, .skip) {
   position: fixed;
@@ -491,25 +497,25 @@ html.st-rail-collapsed .st-rail-link:is(:hover, :focus-visible)::after {
   cursor: not-allowed;
 }
 .st-btn-primary,
-.st-pagehead-actions :is(.dark, .primary, .st-btn-primary) {
+.st-pagehead-actions :is(button, .button, a.button):is(.dark, .primary, .st-btn-primary) {
   background: var(--ui-accent);
   border-color: var(--ui-accent);
   color: var(--n-0);
 }
 .st-btn-primary:hover:not(:disabled),
-.st-pagehead-actions :is(.dark, .primary, .st-btn-primary):hover:not(:disabled) {
+.st-pagehead-actions :is(button, .button, a.button):is(.dark, .primary, .st-btn-primary):hover:not(:disabled) {
   background: var(--ui-accent-hover);
   border-color: var(--ui-accent-hover);
 }
 .st-btn-ghost,
-.st-pagehead-actions .st-btn-ghost {
+.st-pagehead-actions :is(button, .button, a.button).st-btn-ghost {
   background: none;
   border-color: transparent;
   box-shadow: none;
   color: var(--ui-text-muted);
 }
 .st-btn-ghost:hover:not(:disabled),
-.st-pagehead-actions .st-btn-ghost:hover:not(:disabled) {
+.st-pagehead-actions :is(button, .button, a.button).st-btn-ghost:hover:not(:disabled) {
   background: var(--n-100);
   color: var(--ui-text);
 }
@@ -527,6 +533,13 @@ html.st-rail-collapsed .st-rail-link:is(:hover, :focus-visible)::after {
   height: 6px;
   border-radius: 50%;
   background: var(--g-500);
+}
+
+.st-status.error {
+  color: var(--d-700);
+}
+.st-status.error::before {
+  background: var(--d-500);
 }
 
 /* Overflow menu for secondary page actions. */
@@ -848,5 +861,30 @@ html.st-rail-collapsed .st-rail-link:is(:hover, :focus-visible)::after {
   }
   .stratum.stratum-review #reviewMain {
     padding: var(--sp-4) var(--sp-4) var(--sp-8);
+  }
+}
+/* Section tab labels stay visible on phones; the tab row scrolls instead. */
+.st-tabs .nav-item > span:not([data-icon]) {
+  display: inline;
+}
+
+/* ───────────────────────── Print ─────────────────────────
+ * Reports print without the application chrome. */
+@media print {
+  body.stratum,
+  html.st-rail-collapsed body.stratum {
+    padding-left: 0;
+  }
+  .st-rail,
+  .st-mobilebar,
+  .st-scrim,
+  .st-pagehead-actions,
+  .st-tabs {
+    display: none !important;
+  }
+  .st-pagehead {
+    position: static;
+    backdrop-filter: none;
+    background: none;
   }
 }

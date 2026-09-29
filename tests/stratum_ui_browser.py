@@ -6,6 +6,7 @@ artifact; neither mode reads a user's browser profile or production database.
 import argparse
 import functools
 import json
+import re
 import sys
 import tempfile
 import threading
@@ -59,43 +60,84 @@ def inspect_layout(page, route, width, problems):
     return result
 
 
-def check_navigation(page, route, width, prefix):
-    switcher = page.locator('details.stratum-switcher:visible')
-    expect(switcher).to_have_count(1)
-    summary = switcher.locator('summary')
-    summary.focus()
-    page.keyboard.press('Enter')
-    expect(switcher).to_have_attribute('open', '')
-    links = switcher.locator('a[href]')
+REACH = """el=>{
+  const r=el.getBoundingClientRect();let left=Math.max(0,r.left),right=Math.min(innerWidth,r.right),top=Math.max(0,r.top),bottom=Math.min(innerHeight,r.bottom),p=el.parentElement;
+  while(p){const s=getComputedStyle(p),b=p.getBoundingClientRect();if(['auto','scroll','hidden','clip'].includes(s.overflowX)){left=Math.max(left,b.left);right=Math.min(right,b.right)}if(['auto','scroll','hidden','clip'].includes(s.overflowY)){top=Math.max(top,b.top);bottom=Math.min(bottom,b.bottom)}p=p.parentElement}
+  const hit=right>left&&bottom>top?document.elementFromPoint((left+right)/2,(top+bottom)/2):null;
+  return {name:el.textContent,height:bottom-top,width:right-left,clickable:!!hit&&el.contains(hit)};
+}"""
+
+
+def check_links(page, rail, min_width):
+    links = rail.locator('a.st-rail-link')
     expect(links).to_have_count(9)
     for link in links.all():
-        expect(link).to_be_visible()
         link.scroll_into_view_if_needed()
-        reachable = link.evaluate('''el=>{
-          const r=el.getBoundingClientRect();let left=Math.max(0,r.left),right=Math.min(innerWidth,r.right),top=Math.max(0,r.top),bottom=Math.min(innerHeight,r.bottom),p=el.parentElement;
-          while(p){const s=getComputedStyle(p),b=p.getBoundingClientRect();if(['auto','scroll','hidden','clip'].includes(s.overflowX)){left=Math.max(left,b.left);right=Math.min(right,b.right)}if(['auto','scroll','hidden','clip'].includes(s.overflowY)){top=Math.max(top,b.top);bottom=Math.min(bottom,b.bottom)}p=p.parentElement}
-          const hit=right>left&&bottom>top?document.elementFromPoint((left+right)/2,(top+bottom)/2):null;
-          return {name:el.textContent,height:bottom-top,width:right-left,clickable:!!hit&&el.contains(hit)};
-        }''')
-        assert reachable['height'] >= 38 and reachable['width'] >= 100 and reachable['clickable'], reachable
-    links.first.scroll_into_view_if_needed()
-    page.keyboard.press('Tab')
-    assert links.evaluate_all('(els)=>els.some(el=>el===document.activeElement)'), 'Keyboard cannot enter workspace links'
-    page.keyboard.press('Escape')
-    expect(switcher).not_to_have_attribute('open', '')
-    expect(summary).to_be_focused()
-    summary.click()
-    bounds = switcher.evaluate('(el)=>{const panel=el.querySelector("nav")||el.lastElementChild;const r=panel.getBoundingClientRect();return {left:r.left,right:r.right,width:innerWidth}}')
-    assert bounds['left'] >= -1 and bounds['right'] <= bounds['width'] + 1, bounds
-    if route == 'cmos-lab.html' and width in [1440,390]:
-        switcher.locator('.stratum-space-panel').screenshot(path=str(OUTPUT/f'{prefix}cmos-workspace-menu-{width}.png'))
-    summary.click()
-    return {'keyboard_open_close': True, 'workspace_links': links.count()}
+        reachable = link.evaluate(REACH)
+        assert reachable['height'] >= 38 and reachable['width'] >= min_width and reachable['clickable'], reachable
+    expect(rail.locator('a[aria-current="page"]')).to_have_count(1)
+    return links
+
+
+def is_collapsed(page):
+    return page.evaluate('document.documentElement.classList.contains("st-rail-collapsed")')
+
+
+def check_navigation(page, route, width, prefix):
+    """The shared rail: every workspace reachable at every width, by pointer and keyboard."""
+    rail = page.locator('nav.st-rail')
+    expect(rail).to_have_count(1)
+    expected = 'index.html' if route == 'memory-fab.html' else route
+    if width >= 900:
+        expect(page.locator('.st-menu-button')).to_be_hidden()
+        collapsed = is_collapsed(page)
+        links = check_links(page, rail, 40 if collapsed else 180)
+        assert rail.locator('a[aria-current="page"]').get_attribute('href') == expected
+        toggle = rail.locator('.st-rail-collapse')
+        toggle.click()
+        assert is_collapsed(page) != collapsed
+        check_links(page, rail, 180 if collapsed else 40)
+        toggle.click()
+        assert is_collapsed(page) == collapsed
+        links.first.focus()
+        page.keyboard.press('Tab')
+        assert links.evaluate_all('(els)=>els.includes(document.activeElement)'), 'Keyboard cannot move through workspace links'
+        mode = 'rail-collapsed' if collapsed else 'rail'
+    else:
+        menu = page.locator('.st-menu-button')
+        expect(menu).to_be_visible()
+        assert rail.evaluate('(el)=>getComputedStyle(el).visibility') == 'hidden', 'Closed drawer links must leave the tab order'
+        menu.focus()
+        page.keyboard.press('Enter')
+        expect(page.locator('body')).to_have_class(re.compile(r'\bst-rail-open\b'))
+        expect(menu).to_have_attribute('aria-expanded', 'true')
+        page.wait_for_timeout(220)
+        check_links(page, rail, 180)
+        assert rail.evaluate('(el)=>el.contains(document.activeElement)'), 'Focus did not move into the drawer'
+        bounds = rail.evaluate('(el)=>{const r=el.getBoundingClientRect();return {left:r.left,right:r.right,width:innerWidth}}')
+        assert bounds['left'] >= -1 and bounds['right'] <= bounds['width'] + 1, bounds
+        if route == 'cmos-lab.html' and width == 390:
+            page.screenshot(path=str(OUTPUT/f'{prefix}cmos-workspace-drawer-{width}.png'))
+        page.keyboard.press('Escape')
+        expect(page.locator('body')).not_to_have_class(re.compile(r'\bst-rail-open\b'))
+        expect(menu).to_be_focused()
+        mode = 'drawer'
+    return {'navigation': mode, 'workspace_links': 9}
 
 
 def check_cmos(page, problems, output, prefix):
     expect(page.locator('#fabViewport')).to_have_attribute('data-asset-status', 'ready', timeout=30000)
     assert page.locator('[data-step]').count() == 117
+    # Wide screens dock the route beside the equipment; narrow screens keep the dialog.
+    expect(page.locator('#routeDock .route-panel')).to_be_visible()
+    expect(page.locator('#openRoute')).to_be_hidden()
+    page.locator('#routeSearch').fill('PR')
+    assert page.locator('#routeDock [data-step]:visible').count() > 0
+    page.locator('#routeSearch').fill('')
+    viewport_top = page.locator('#fabViewport').evaluate('(el)=>el.getBoundingClientRect().top')
+    assert viewport_top < 200, f'Equipment viewport starts at {viewport_top}px on a 1440px screen'
+    page.set_viewport_size({'width':820,'height':1000})
+    expect(page.locator('#routeDialog .route-panel')).to_have_count(1)
     page.locator('#openRoute').click()
     expect(page.locator('#routeDialog')).to_be_visible()
     page.locator('#routeSearch').fill('PR')
@@ -105,6 +147,9 @@ def check_cmos(page, problems, output, prefix):
     page.keyboard.press('Escape')
     expect(page.locator('#routeDialog')).not_to_be_visible()
     expect(page.locator('#openRoute')).to_be_focused()
+    page.locator('#routeSearch').evaluate("(el)=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}))}")
+    page.set_viewport_size({'width':1440,'height':1000})
+    expect(page.locator('#routeDock .route-panel')).to_be_visible()
     for workspace, target in [('wafer','#waferSection'),('analysis','#processResults'),('equipment','#processWorkspace')]:
         page.locator(f'[data-workspace="{workspace}"]').click()
         expect(page.locator('body')).to_have_attribute('data-console-view', workspace)
@@ -167,17 +212,19 @@ def check_cmos(page, problems, output, prefix):
     page.set_viewport_size({'width':1440,'height':1000})
     page.evaluate('window.scrollTo(0,0)')
     page.screenshot(path=str(output/'hero-cmos-operation.png'))
+    # Desktop runs from the recipe inspector; the transport bar is the narrow-screen control.
+    expect(page.locator('#consoleRun')).to_be_hidden()
     page.locator('#cutaway').check()
-    page.locator('#consoleRun').click()
+    page.locator('#runButton').click()
     expect(page.locator('#cutaway')).to_be_checked()
-    page.locator('#consoleRun').click()
+    page.locator('#runButton').click()
     page.locator('#cutaway').uncheck()
-    page.locator('#consoleRun').click()
+    page.locator('#runButton').click()
     expect(page.locator('#cutaway')).not_to_be_checked()
-    page.locator('#consoleRun').click()
-    page.locator('#consoleCancel').click()
+    page.locator('#runButton').click()
+    page.locator('#cancelRunButton').click()
     assert page.evaluate('FabApp.snapshot().wafers[0].records.length') == records
-    return ['Route filtering and Escape focus restoration', 'Material / analysis / equipment workspaces',
+    return ['Docked route filtering; dialog route with Escape focus restoration below 1100px', 'Material / analysis / equipment workspaces',
             'Focus mode and modal keyboard recovery', 'Exterior wafer visible while paused',
             'Canvas Space run / pause; held key does not repeat', 'Camera 1–4 synchronize aria-pressed; exterior reset selects whole equipment',
             'Start / resume preserve internal and exterior selection', 'Cancelled observation preserves completed records']
@@ -218,8 +265,9 @@ def main():
                             expect(page.locator('#fabViewport')).to_have_attribute('data-asset-status','ready',timeout=30000)
                         if not args.baseline:
                             assert 'STRATUM' in page.title(),page.title()
-                            expect(page.locator('.stratum-brand:visible').first).to_be_visible()
-                            assert 'STRATUM' in page.locator('.stratum-brand:visible').first.inner_text()
+                            brand = page.locator('a.st-brand:visible').first
+                            expect(brand).to_be_visible()
+                            assert 'STRATUM' in brand.get_attribute('aria-label')
                         dimensions=[]
                         for width in WIDTHS:
                             page.set_viewport_size({'width':width,'height':1000})
@@ -239,7 +287,7 @@ def main():
                     except Exception as error:
                         problems.append({'page':route,'width':page.viewport_size['width'],'problem':'interaction_or_load','detail':str(error)})
                         page.screenshot(path=str(OUTPUT/f'{prefix}{Path(route).stem}-failure.png'),full_page=True)
-                        print('FAILED',route,str(error),flush=True)
+                        print('FAILED',route,str(error).encode('ascii','backslashreplace').decode(),flush=True)
                     finally:
                         context.close()
                 browser.close()

@@ -52,9 +52,13 @@ def main():
                 page.locator('#focusStage').click()
                 assert not page.locator('.route-panel').is_visible()
                 page.keyboard.press('Escape')
-                assert not page.locator('.route-panel').is_visible()
+                # Leaving focus mode restores the docked route beside the equipment.
+                expect(page.locator('#routeDock .route-panel')).to_be_visible()
                 assert page.locator('#focusStage').get_attribute('aria-pressed')=='false'
-                page.locator('#consoleRun').click()
+                # Desktop runs from the recipe inspector in the equipment view; the transport
+                # bar carries the controls in the section / analysis views.
+                expect(page.locator('#consoleRun')).to_be_hidden()
+                page.locator('#runButton').click()
                 expect(page.locator('#nextOperation')).to_be_disabled()
                 page.locator('[data-workspace=wafer]').click()
                 page.locator('#consoleRun').click()
@@ -66,7 +70,7 @@ def main():
 
                 page.locator('[data-workspace=equipment]').click()
                 page.locator('#speedSelect').select_option('8')
-                page.locator('#consoleRun').click()
+                page.locator('#runButton').click()
                 expect(page.locator('#runState')).to_have_text('기록 완료', timeout=20000)
                 expect(page.locator('#consoleCompleted')).to_have_text('1 / 117')
                 assert page.locator('[data-route-jump]').first.get_attribute('title').endswith('1/14 완료')
