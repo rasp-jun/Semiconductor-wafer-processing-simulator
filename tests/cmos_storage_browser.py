@@ -11,6 +11,8 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from server.app import create_app
 
+REVEAL = "el=>{const menu=el.closest('details.st-more');if(menu)menu.open=true}"  # actions in the page overflow menu
+
 
 def main():
     output = ROOT / '.test-tools' / 'cmos-storage'
@@ -56,7 +58,7 @@ def main():
                     other.locator('#recipe-time').fill('230')
                     assert page.evaluate('localStorage.getItem("waferflow-fab-"+FabEngine.VERSION)') == before
                     with other.expect_download() as downloaded:
-                        other.locator('#exportButton').click()
+                        other.locator('#exportButton').evaluate(REVEAL);other.locator('#exportButton').click()
                     exported = json.loads(Path(downloaded.value.path()).read_text(encoding='utf-8'))
                     assert exported['wafers'][0]['overrides']['OP001']['time'] == 230
                     results.append({'width': width, 'original_preserved': True, 'restored_draft': True, 'tab_conflict_protected': True, 'expanded_learning_overflow': False})

@@ -32,14 +32,14 @@ HIT = """el=>{
 }"""
 
 ROUTE_SIZE = """()=>{
-  const dialog=document.querySelector('#routeDialog'),list=document.querySelector('#routeList'),d=dialog.getBoundingClientRect(),r=list.getBoundingClientRect();
-  return {dialog_height:dialog.clientHeight,dialog_scroll:dialog.scrollHeight,list_height:list.clientHeight,list_scroll:list.scrollHeight,list_top:r.top,list_bottom:r.bottom,dialog_top:d.top,dialog_bottom:d.bottom};
+  const dialog=document.querySelector('#routeDialog'),box=dialog.open?dialog:document.querySelector('#routeDock'),list=document.querySelector('#routeList'),d=box.getBoundingClientRect(),r=list.getBoundingClientRect();
+  return {dialog_height:box.clientHeight,dialog_scroll:box.scrollHeight,list_height:list.clientHeight,list_scroll:list.scrollHeight,list_top:r.top,list_bottom:r.bottom,dialog_top:d.top,dialog_bottom:d.bottom};
 }"""
 
 CONTRAST = """selectors=>{
   const parse=s=>{const v=s.match(/[\\d.]+/g)?.map(Number)||[0,0,0,0];return [v[0],v[1],v[2],v[3]??1]},blend=(a,b)=>[0,1,2].map(i=>a[i]*a[3]+b[i]*(1-a[3]));
   const lum=c=>c.slice(0,3).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4}).reduce((n,v,i)=>n+v*[.2126,.7152,.0722][i],0);
-  return selectors.map(selector=>{const el=document.querySelector(selector),parents=[];for(let p=el;p;p=p.parentElement)parents.push(p);let bg=[255,255,255];for(const p of parents.reverse())bg=blend(parse(getComputedStyle(p).backgroundColor),bg);const fg=blend(parse(getComputedStyle(el).color),bg),a=lum(fg),b=lum(bg);return {selector,ratio:(Math.max(a,b)+.05)/(Math.min(a,b)+.05),foreground:fg,background:bg}});
+  return selectors.filter(selector=>document.querySelector(selector)?.getClientRects().length).map(selector=>{const el=document.querySelector(selector),parents=[];for(let p=el;p;p=p.parentElement)parents.push(p);let bg=[255,255,255];for(const p of parents.reverse())bg=blend(parse(getComputedStyle(p).backgroundColor),bg);const fg=blend(parse(getComputedStyle(el).color),bg),a=lum(fg),b=lum(bg);return {selector,ratio:(Math.max(a,b)+.05)/(Math.min(a,b)+.05),foreground:fg,background:bg}});
 }"""
 
 
@@ -66,6 +66,31 @@ def row_click(page, index):
     row.click()
     expect(page.locator('#routeDialog')).not_to_be_visible()
     return hit
+
+
+def docked(page):
+    return page.evaluate("document.body.classList.contains('route-docked')")
+
+
+def open_route(page, opener='#openDetailedRoute'):
+    """Show the full route with search and status filter reset (dialog, or the docked tree)."""
+    if docked(page):
+        page.evaluate("""()=>{const s=document.querySelector('#routeSearch'),f=document.querySelector('#routeFilter');
+          s.value='';f.value='all';f.dispatchEvent(new Event('change',{bubbles:true}));s.focus()}""")
+        expect(page.locator('#routeDock .route-panel')).to_be_visible()
+    else:
+        page.locator(opener).click()
+        expect(page.locator('#routeDialog')).to_be_visible()
+
+
+def route_shown(page):
+    return docked(page) or page.locator('#routeDialog').is_visible()
+
+
+def run_control(page, name='run'):
+    """The transport bar carries run/cancel below 1100px; the recipe inspector above it."""
+    console, inspector = {'run': ('#consoleRun', '#runButton'), 'cancel': ('#consoleCancel', '#cancelRunButton')}[name]
+    return page.locator(console) if page.locator(console).is_visible() else page.locator(inspector)
 
 
 def main():
@@ -98,7 +123,7 @@ def main():
                 assert len(options)==117
                 for option,step in zip(options,route):
                     assert option['value']==str(step['index']) and step['id'] in option['label'] and step['name'] in option['label'],(option,step)
-                page.locator('#openDetailedRoute').click()
+                open_route(page)
                 last_module=page.locator(f'#routeList [data-module="{route[-1]["module"]}"]')
                 last_module.scroll_into_view_if_needed()
                 assert last_module.evaluate(HIT)['clickable']
@@ -114,10 +139,16 @@ def main():
                         expect(page.locator('#runButton')).to_be_disabled()
                 checks.append('All117 native options in8groups select and synchronize without executing')
                 print('PASS117 native selections and unchanged records',flush=True)
+                # The module shortcut rail is the narrow-screen control; the docked tree's
+                # module rows replace it on wide screens.
+                if docked(page):
+                    expect(page.locator('#moduleRail')).to_be_hidden()
+                    page.set_viewport_size({'width':1024,'height':900})
                 for module in dict.fromkeys(s['module'] for s in route):
                     step=next(s for s in route if s['module']==module)
                     page.locator(f'#moduleRail [data-route-jump="{step["index"]}"]').click()
                     synced(page,step,route)
+                page.set_viewport_size({'width':1440,'height':900})
                 checks.append('All8 module-rail choices synchronize the main picker and route')
                 page.locator('#operationSelect').focus()
                 for key,index in [('Home',0),('ArrowDown',1),('End',116)]:
@@ -136,33 +167,34 @@ def main():
                     page.screenshot(path=str(OUTPUT/f'{prefix}picker-{width}.png'))
                     if width==1440:
                         page.locator('.process-selector').screenshot(path=str(OUTPUT/f'{prefix}selector-control.png'))
-                    page.locator('#openDetailedRoute').click()
-                    expect(page.locator('#routeDialog')).to_be_visible()
-                    expect(page.locator('#routeTitle')).to_be_visible()
+                    open_route(page)
+                    if not docked(page):
+                        expect(page.locator('#routeTitle')).to_be_visible()
                     size=page.evaluate(ROUTE_SIZE)
                     assert size['list_height']>=160 and size['list_bottom']<=size['dialog_bottom']+1,(width,size)
                     assert size['list_scroll']>size['list_height']+300,(width,size)
                     page.screenshot(path=str(OUTPUT/f'{prefix}route-first-{width}.png'))
                     first_hit=row_click(page,0);synced(page,route[0],route)
-                    page.locator('#openRoute').click()
+                    open_route(page,'#openRoute')
                     last=page.locator('#routeList [data-step="116"]')
                     last.scroll_into_view_if_needed()
                     page.screenshot(path=str(OUTPUT/f'{prefix}route-last-{width}.png'))
                     last_hit=row_click(page,116);synced(page,route[116],route)
                     expect(page.locator('#runButton')).to_be_disabled()
-                    page.locator('#openDetailedRoute').click()
+                    open_route(page)
                     page.locator('#routeSearch').fill('OP117')
                     expect(page.locator('#routeList [data-step]')).to_have_count(1)
                     last_search=row_click(page,116);synced(page,route[116],route)
-                    page.locator('#openDetailedRoute').click()
+                    open_route(page)
                     expect(page.locator('#routeSearch')).to_have_value('')
                     expect(page.locator('#routeList [data-step]')).to_have_count(117)
                     if width==1440:
                         contrasts=page.evaluate(CONTRAST,['#routeTitle','#waferProgress','#routeFilterCount','.route-filter label','.module-number','.module-count','.route-step small','.route-subtitle'])
                         assert all(item['ratio']>=4.5 for item in contrasts),contrasts
-                    page.keyboard.press('Escape')
-                    expect(page.locator('#routeDialog')).not_to_be_visible()
-                    expect(page.locator('#openDetailedRoute')).to_be_focused()
+                    if not docked(page):
+                        page.keyboard.press('Escape')
+                        expect(page.locator('#routeDialog')).not_to_be_visible()
+                        expect(page.locator('#openDetailedRoute')).to_be_focused()
                     responsive.append({'width':width,'height':height,'route':size,'first':first_hit,'last':last_hit,'last_search':last_search})
                     print('PASS picker / route reachability',width,height,flush=True)
                 checks.append('Four viewport sizes: visible picker; first/last route rows scroll and click; exact OP117 search; no overflow')
@@ -170,23 +202,23 @@ def main():
                 page.set_viewport_size({'width':1440,'height':900})
                 page.locator('#operationSelect').select_option('0')
                 page.locator('#speedSelect').select_option('0.5')
-                page.locator('#consoleRun').click()
+                run_control(page).click()
                 expect(page.locator('#runState')).to_have_text('처리 중')
                 for paused in [False,True]:
                     expect(page.locator('#operationSelect')).to_be_disabled()
                     assert page.locator('#moduleRail [data-route-jump]:disabled').count()==8
                     expect(page.locator('#previousOperation')).to_be_disabled()
                     expect(page.locator('#nextOperation')).to_be_disabled()
-                    page.locator('#openDetailedRoute').click()
-                    expect(page.locator('#routeDialog')).to_be_visible()
+                    open_route(page)
                     assert page.locator('#routeList [data-step]:disabled').count()==117
-                    page.keyboard.press('Escape')
+                    if not docked(page):
+                        page.keyboard.press('Escape')
                     assert page.evaluate('FabApp.snapshot().selected')==0
                     unchanged_records(page)
                     if not paused:
-                        page.locator('#consoleRun').click()
+                        run_control(page).click()
                         expect(page.locator('#runState')).to_have_text('일시정지')
-                page.locator('#consoleCancel').click()
+                run_control(page,'cancel').click()
                 expect(page.locator('#operationSelect')).to_be_enabled()
                 page.locator('#operationSelect').select_option('116');synced(page,route[116],route)
                 checks.append('Running and paused navigation is locked; cancel restores selection without adding records')

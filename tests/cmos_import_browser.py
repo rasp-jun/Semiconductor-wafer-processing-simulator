@@ -96,7 +96,8 @@ def main():
 
                     reset()
                     choose('dialog.json')
-                    page.locator('#openRoute').click()
+                    if not page.evaluate("document.body.classList.contains('route-docked')"):
+                        page.locator('#openRoute').click()
                     page.locator('#editExperiment').click()
                     page.locator('#experimentNameInput').fill('원래 웨이퍼의 실험')
                     page.locator('#experimentNoteInput').fill('파일을 기다리는 동안 기록한 관찰')

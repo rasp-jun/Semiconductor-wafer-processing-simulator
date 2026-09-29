@@ -442,14 +442,17 @@
   $('#consoleRecipe').addEventListener('click',()=>{setWorkspace('equipment');$('#recipeTitle').scrollIntoView({block:'center'});$('#recipeFields input')?.focus({preventScroll:true});});
   function workspaceFromHash(){const name={'#processWorkspace':'equipment','#waferSection':'wafer','#processResults':'analysis'}[root.location?.hash];if(name)setWorkspace(name);}
   root.addEventListener('hashchange',workspaceFromHash);
-  // Wide screens dock the process route beside the equipment (tree | viewport | recipe);
-  // narrow screens keep it in the dialog. Only the panel's parent changes, never its state.
-  const routeDockQuery=root.matchMedia?.('(min-width: 1100px)');
+  // Wide, tall-enough screens dock the process route beside the equipment (tree | viewport |
+  // recipe); narrow or short screens keep it in the full-height dialog. Only the panel's
+  // parent changes, never its state.
+  const routeDockQuery=root.matchMedia?.('(min-width: 1100px) and (min-height: 600px)');
+  // The always-visible step picker rides at the top of the dock, costing the viewport no height.
+  const pickerHome=$('.process-selector')?.nextElementSibling;
   function placeRoute(){
-    const panel=$('.route-panel'),dock=$('#routeDock'),dialog=$('#routeDialog');if(!panel||!dock)return;
+    const panel=$('.route-panel'),dock=$('#routeDock'),dialog=$('#routeDialog'),picker=$('.process-selector');if(!panel||!dock)return;
     const docked=!!routeDockQuery?.matches;
-    if(docked&&panel.parentElement!==dock){if(dialog.open)dialog.close();dock.append(panel);}
-    else if(!docked&&panel.parentElement===dock)dialog.append(panel);
+    if(docked&&panel.parentElement!==dock){if(dialog.open)dialog.close();dock.append(panel);if(picker)dock.prepend(picker);}
+    else if(!docked&&panel.parentElement===dock){dialog.append(panel);if(picker&&pickerHome)pickerHome.before(picker);}
     document.body.classList.toggle('route-docked',docked);
   }
   routeDockQuery?.addEventListener?.('change',placeRoute);placeRoute();

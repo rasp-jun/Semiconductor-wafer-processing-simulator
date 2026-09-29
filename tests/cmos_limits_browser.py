@@ -7,6 +7,8 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright, expect
 
+REVEAL = "el=>{const menu=el.closest('details.st-more');if(menu)menu.open=true}"  # actions in the page overflow menu
+
 ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -66,7 +68,7 @@ def main():
                 expect(warning).to_contain_text('600')
 
                 with page.expect_download() as downloaded:
-                    page.locator('#exportButton').click()
+                    page.locator('#exportButton').evaluate(REVEAL);page.locator('#exportButton').click()
                 package = json.loads(Path(downloaded.value.path()).read_text(encoding='utf-8'))
                 records = next(w for w in package['wafers'] if w['id'] == 'DEPTH_LIMIT')['records']
                 limits = [w for w in records[-1]['warnings'] if w.get('category') == 'model-limit']

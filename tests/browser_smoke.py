@@ -11,6 +11,8 @@ from playwright.sync_api import sync_playwright
 from waitress import create_server
 from server.app import create_app
 
+REVEAL = "el=>{const menu=el.closest('details.st-more');if(menu)menu.open=true}"  # actions in the page overflow menu
+
 ROOT = Path(__file__).resolve().parent.parent
 
 def main():
@@ -49,11 +51,11 @@ def main():
                 page.locator('#isolateButton').click()
                 assert page.locator('#comparison').inner_text().find('HAR-01') >= 0
                 with page.expect_download() as downloaded:
-                    page.locator('#exportButton').click()
+                    page.locator('#exportButton').evaluate(REVEAL);page.locator('#exportButton').click()
                 plan = json.loads(Path(downloaded.value.path()).read_text(encoding='utf-8'))
                 assert plan['options']['review']['hypothesis'].startswith('HAR chamber')
                 with page.expect_download() as downloaded:
-                    page.locator('#traceCSV').click()
+                    page.locator('#traceCSV').evaluate(REVEAL);page.locator('#traceCSV').click()
                 csv = Path(downloaded.value.path()).read_text(encoding='utf-8-sig')
                 assert len(csv.splitlines()) > 100 and 'model_version' in csv
                 page.locator('#restoreBaseline').click()
@@ -65,7 +67,7 @@ def main():
                 bookmark = equipment_before['time']
                 assert 0 < bookmark < equipment_before['trace']['duration']
                 with page.expect_download() as downloaded:
-                    page.locator('#exportButton').click()
+                    page.locator('#exportButton').evaluate(REVEAL);page.locator('#exportButton').click()
                 equipment_file = Path(temporary) / 'equipment-bookmark.json'
                 downloaded.value.save_as(str(equipment_file))
                 exported_equipment = json.loads(equipment_file.read_text(encoding='utf-8'))

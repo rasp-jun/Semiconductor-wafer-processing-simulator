@@ -34,7 +34,8 @@ body.route-docked .workspace.cmos-studio {
   grid-template-columns: var(--route-w) minmax(0, 1fr);
 }
 body.route-docked .route-dock {
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: sticky;
   top: var(--topbar-h);
   height: calc(100dvh - var(--topbar-h));
@@ -53,19 +54,24 @@ body.route-docked .route-dock {
   position: static;
   display: flex !important;
   flex-direction: column;
-  height: 100%;
+  flex: 1;
+  height: auto;
   min-height: 0;
   padding: var(--sp-4) var(--sp-3) 0;
   background: none;
   border: 0;
   color: var(--ui-text);
 }
+/* The panel itself stays display:block (a legacy !important outranks this layer), so the
+ * drawer chain uses definite heights to give the step list a bounded, scrollable box. */
+.route-dock .route-panel {
+  overflow: hidden;
+}
 .route-dock :is(.route-drawer, .route-drawer-content) {
   display: flex;
   flex-direction: column;
-  flex: 1;
   min-height: 0;
-  height: auto;
+  height: 100%;
 }
 .route-dock .panel-label {
   display: flex;
@@ -385,6 +391,20 @@ body.route-docked .route-dock {
   white-space: nowrap;
 }
 .cmos-toolbar .route-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 var(--sp-3);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--radius);
+  background: var(--ui-surface);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+body.route-docked .cmos-toolbar .route-open {
   display: none;
 }
 .cmos-toolbar .lab-shortcuts {
@@ -485,9 +505,69 @@ body.route-docked .route-dock {
   cursor: not-allowed;
 }
 
-/* Pickers that the docked tree replaces on desktop. */
-body.route-docked :is(.process-selector, #moduleRail) {
+/* The module shortcut rail duplicates the docked tree's module rows on desktop. */
+body.route-docked #moduleRail {
   display: none !important;
+}
+
+/* Step picker at the top of the dock: always visible, synchronized with the tree. */
+.route-dock .process-selector {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  margin: 0;
+  padding: var(--sp-3) var(--sp-3) var(--sp-3);
+  border: 0;
+  border-bottom: 1px solid var(--ui-border);
+  border-radius: 0;
+  background: var(--ui-surface);
+  box-shadow: none;
+}
+.route-dock .process-selector > label {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  margin: 0;
+}
+.route-dock .process-selector > label span {
+  display: none;
+}
+.route-dock .process-selector > label strong {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--ui-text-muted);
+}
+.route-dock #operationSelect {
+  width: 100%;
+  min-height: 38px;
+  padding: 0 var(--sp-2);
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius);
+  background-color: var(--ui-surface);
+  color: var(--ui-text);
+  font: 600 var(--fs-sm) var(--font-sans);
+}
+.route-dock :is(#openDetailedRoute, #operationSelectionHint) {
+  display: none;
+}
+.route-dock .process-selection-context {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: 0;
+  font-size: var(--fs-xs);
+}
+.route-dock #returnToCurrent {
+  min-height: 28px;
+  padding: 0 var(--sp-2);
+  border: 1px solid var(--a-200);
+  border-radius: var(--radius-sm);
+  background: var(--ui-accent-soft);
+  color: var(--a-700);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
 }
 
 /* ── Equipment + recipe ── */
@@ -678,10 +758,15 @@ body.route-docked:is([data-console-view="equipment"], [data-console-view="all"])
     position: static;
     box-shadow: none;
   }
-  .cmos-console .fab-viewport,
+  .cmos-console .fab-viewport {
+    height: clamp(340px, 60vw, 480px);
+    min-height: 340px;
+  }
+  /* While operating, the viewer reserves a header strip, the phase rail and (below 600px)
+   * the surface monitor inside the canvas; keep the equipment view itself usable. */
   .cmos-console .fab-viewport[data-operation-active="true"] {
-    height: clamp(300px, 56vw, 460px);
-    min-height: 300px;
+    height: clamp(480px, 64vw, 560px);
+    min-height: 480px;
   }
 }
 @media (max-width: 1099px) {
@@ -703,7 +788,7 @@ body.route-docked:is([data-console-view="equipment"], [data-console-view="all"])
   /* One compact picker: the native select (grouped by module) plus the route dialog button. */
   .cmos-console .process-selector {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: var(--sp-2);
     margin: 0 0 var(--sp-3);
     padding: 0;
@@ -712,9 +797,22 @@ body.route-docked:is([data-console-view="equipment"], [data-console-view="all"])
     box-shadow: none;
   }
   .cmos-console .process-selector > label,
-  .cmos-console #openDetailedRoute,
   .cmos-console #operationSelectionHint {
     display: none;
+  }
+  .cmos-console #openDetailedRoute {
+    min-height: 44px;
+    padding: 0 var(--sp-3);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--radius);
+    background: var(--ui-surface);
+    color: var(--ui-text);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .cmos-console .process-selection-context {
+    grid-column: 1 / -1;
   }
   .cmos-console #operationSelect {
     width: 100%;
@@ -733,7 +831,7 @@ body.route-docked:is([data-console-view="equipment"], [data-console-view="all"])
     margin: 0;
   }
   .cmos-console #moduleRail {
-    display: none;
+    margin: 0 0 var(--sp-3);
   }
   .cmos-console .process-selection-context {
     order: 2;
@@ -947,5 +1045,163 @@ body[data-console-view="analysis"] :is(#processWorkspace, #waferSection) {
   }
   .cmos-toolbar {
     position: static;
+  }
+}
+
+/* Dock header, compacted: search and status filter share a row; the step list takes the rest. */
+.route-dock .route-drawer-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto auto auto minmax(0, 1fr);
+  column-gap: var(--sp-2);
+  align-content: stretch;
+}
+.route-dock .route-drawer-content > * {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+.route-dock .route-drawer-content > .search {
+  grid-column: 1;
+}
+.route-dock .route-drawer-content > .route-filter {
+  grid-column: 2;
+  margin: 0;
+}
+.route-dock .route-filter label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+.route-dock .route-filter select {
+  width: 104px;
+}
+.route-dock :is(.route-drawer-content > .panel-label) {
+  display: none;
+}
+.route-dock .route-experiment {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--sp-2);
+  row-gap: 6px;
+  margin-bottom: var(--sp-2);
+}
+.route-dock .route-experiment .experiment-summary {
+  grid-column: 1 / -1;
+}
+.route-dock .route-progress {
+  margin-bottom: var(--sp-2);
+}
+.route-dock .route-current-button {
+  min-height: 30px;
+  margin-bottom: var(--sp-2);
+}
+.route-dock .process-selector > * {
+  grid-column: 1 / -1;
+}
+
+/* Wide but short windows (route in its dialog): compact picker, no vertical module list. */
+@media (min-width: 1100px) {
+  body:not(.route-docked) #moduleRail {
+    display: none;
+  }
+  body:not(.route-docked) .cmos-console .process-selector,
+  .cmos-console:not(.route-docked) .process-selector {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--sp-2) var(--sp-3);
+    margin: 0 0 var(--sp-3);
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .cmos-console:not(.route-docked) .process-selector > label span,
+  .cmos-console:not(.route-docked) #operationSelectionHint {
+    display: none;
+  }
+  .cmos-console:not(.route-docked) .process-selector > label strong {
+    font-size: var(--fs-sm);
+    color: var(--ui-text-muted);
+  }
+  .cmos-console:not(.route-docked) #operationSelect {
+    min-height: 36px;
+    border: 1px solid var(--ui-border-strong);
+    border-radius: var(--radius);
+    background-color: var(--ui-surface);
+    font: 600 var(--fs-sm) var(--font-sans);
+  }
+  .cmos-console:not(.route-docked) .process-selection-context {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    margin: 0;
+  }
+}
+
+/* Narrow screens: picker and "full list" share a row; module shortcuts are one-line chips. */
+@media (max-width: 1099px) {
+  .cmos-console .process-selector > #operationSelect {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .cmos-console .process-selector > #openDetailedRoute {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .cmos-console .process-selector > .process-selection-context {
+    grid-row: 2;
+  }
+  .cmos-console #moduleRail {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    grid-template-columns: none;
+    max-height: none;
+    gap: 6px;
+    padding: 0 0 var(--sp-1);
+    overflow-x: auto;
+    scrollbar-width: none;
+    border: 0;
+    background: none;
+  }
+  .cmos-console #moduleRail button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: none;
+    min-height: 36px;
+    min-width: 0;
+    padding: 0 var(--sp-3);
+    border: 1px solid var(--ui-border);
+    border-radius: 999px;
+    background: var(--ui-surface);
+    overflow: hidden;
+  }
+  .cmos-console #moduleRail button[aria-current] {
+    border-color: var(--ui-accent);
+    background: var(--ui-accent-soft);
+  }
+  .cmos-console #moduleRail button > span {
+    font: 500 var(--fs-label) var(--font-mono);
+    color: var(--ui-text-subtle);
+  }
+  .cmos-console #moduleRail button strong {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--ui-text);
+  }
+  .cmos-console #moduleRail button small {
+    font: var(--fs-label) var(--font-mono);
+    color: var(--ui-text-muted);
+  }
+  .cmos-console #moduleRail button i {
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--ui-accent);
   }
 }
