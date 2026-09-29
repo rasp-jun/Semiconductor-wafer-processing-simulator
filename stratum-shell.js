@@ -40,16 +40,18 @@
   if (isPublic) groups[2][1][0] = ['workbench.html', '공개 버전 안내', '작업 공간 · 기록 보관', 'review'];
   const page = (location.pathname.split('/').pop() || 'index.html').replace('memory-fab.html', 'index.html');
   const current = groups.flatMap(group => group[1]).find(item => item[0] === page);
-  const storeKey = 'stratum-rail-collapsed';
-  // Studio pages start with the compact rail to give the viewport room; an explicit choice wins.
+  // The rail preference lives in a cookie, not localStorage: workspaces coordinate their own
+  // records through localStorage across tabs, and the shell stays out of that storage area.
+  const cookieName = 'stratum-rail';
   const read = () => {
-    try {
-      const stored = localStorage.getItem(storeKey);
-      if (stored !== null) return stored === '1';
-    } catch { /* storage unavailable */ }
+    const match = document.cookie.match(/(?:^|;\s*)stratum-rail=([01])/);
+    if (match) return match[1] === '1';
+    // Studio pages start with the compact rail to give the viewport room; an explicit choice wins.
     return body.dataset.railDefault === 'collapsed' && innerWidth < 1680;
   };
-  const write = value => { try { localStorage.setItem(storeKey, value ? '1' : '0'); } catch { /* storage unavailable */ } };
+  const write = value => {
+    document.cookie = `${cookieName}=${value ? 1 : 0}; path=/; max-age=31536000; SameSite=Lax`;
+  };
 
   const svg = (path, className = 'st-icon') => {
     const ns = 'http://www.w3.org/2000/svg';
