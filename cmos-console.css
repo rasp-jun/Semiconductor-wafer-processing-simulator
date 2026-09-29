@@ -1,14 +1,14 @@
 /* WaferFlow AXIS: the equipment is the workspace; the traveler is retractable. */
 :root {
   color-scheme: dark;
-  --ink: #e8edf2;
-  --navy: #e8edf2;
-  --muted: #9aa6b5;
-  --line: #37414f;
-  --paper: #151a21;
-  --teal: #efb76b;
-  --lime: #efb76b;
-  --accent: #efb76b;
+  --ink: var(--n-100);
+  --navy: var(--n-100);
+  --muted: var(--n-400);
+  --line: var(--n-700);
+  --paper: var(--n-900);
+  --teal: var(--w-400);
+  --lime: var(--w-400);
+  --accent: var(--w-400);
   --mono: "Cascadia Code", "Consolas", monospace;
 }
 * {
@@ -19,7 +19,7 @@ html {
   scroll-padding-top: 20px;
 }
 body {
-  background: #11161c;
+  background: var(--n-900);
   color: var(--ink);
   font:
     13px/1.6 system-ui,
@@ -35,8 +35,8 @@ select,
 textarea {
   font: inherit;
   color: var(--ink);
-  background: #202833;
-  border: 1px solid #45505f;
+  background: var(--n-800);
+  border: 1px solid var(--n-600);
   border-radius: 3px;
 }
 button {
@@ -47,8 +47,8 @@ button {
     border-color 0.15s;
 }
 button:hover {
-  background: #2c3744;
-  border-color: #83909e;
+  background: var(--n-700);
+  border-color: var(--n-400);
 }
 button:disabled {
   opacity: 0.42;
@@ -56,7 +56,7 @@ button:disabled {
 }
 input[type="checkbox"],
 input[type="range"] {
-  accent-color: #efb76b;
+  accent-color: var(--w-400);
 }
 input[type="checkbox"] {
   width: 15px;
@@ -69,54 +69,54 @@ select:focus-visible,
 textarea:focus-visible,
 summary:focus-visible,
 canvas:focus-visible {
-  outline: 2px solid #efb76b;
+  outline: 2px solid var(--w-400);
   outline-offset: 4px;
 }
 h1,
 h2,
 h3,
 h4 {
-  color: #eef2f5;
+  color: var(--n-50);
 }
 .eyebrow,
 .panel-label {
-  font: 10px var(--mono);
-  color: #9aa8b9;
+  font: 11px var(--mono);
+  color: var(--n-400);
   letter-spacing: 1.25px;
 }
 .text-button {
   border: 0;
   background: transparent;
-  color: #bcc9d7;
-  font-size: 11px;
+  color: var(--n-300);
+  font-size: 12px;
 }
 .primary-button {
   min-height: 43px;
-  background: #efb76b;
-  border-color: #efb76b;
-  color: #171b21;
+  background: var(--w-400);
+  border-color: var(--w-400);
+  color: var(--n-900);
   font-size: 12px;
   font-weight: 700;
   box-shadow: none;
 }
 .primary-button:hover {
-  background: #ffc980;
-  border-color: #ffc980;
+  background: var(--w-200);
+  border-color: var(--w-200);
 }
 .secondary-button {
-  background: #232e3b;
-  color: #d0dbe7;
-  border-color: #536174;
+  background: var(--n-800);
+  color: var(--n-200);
+  border-color: var(--n-500);
   min-height: 37px;
   font-size: 12px;
 }
 .error {
-  color: #ffb1a5 !important;
+  color: var(--d-200) !important;
 }
 .cancel-run-button {
-  background: #3f2929;
-  color: #ffd0c5;
-  border-color: #87534a;
+  background: var(--n-800);
+  color: var(--d-200);
+  border-color: var(--d-700);
   min-height: 37px;
 }
 .icon-button {
@@ -127,11 +127,11 @@ h4 {
 }
 .app-header {
   height: 68px;
-  background: #11161c;
-  border-bottom: 1px solid #38404b;
+  background: var(--n-900);
+  border-bottom: 1px solid var(--n-700);
   padding: 0 30px;
   gap: 48px;
-  color: #e8edf2;
+  color: var(--n-100);
 }
 .brand {
   font-size: 24px;
@@ -139,17 +139,17 @@ h4 {
   font-weight: 720;
   gap: 12px;
   flex-shrink: 0;
-  color: #edf1f5;
+  color: var(--n-50);
 }
 .brand-mark {
   width: 37px;
   height: 37px;
   display: grid;
   place-content: center;
-  border: 1px solid #b1bcc8;
+  border: 1px solid var(--n-300);
   border-radius: 50%;
   transform: none;
-  color: #e2e8ee;
+  color: var(--n-100);
   letter-spacing: -4px;
   padding-right: 5px;
   font-size: 24px;
@@ -159,48 +159,48 @@ h4 {
   content: "";
   position: absolute;
   inset: 5px;
-  border: 1px solid #566372;
+  border: 1px solid var(--n-500);
   border-radius: 50%;
 }
 .brand-mark span {
   display: contents;
-  color: #efb76b;
+  color: var(--w-400);
 }
 .brand small {
-  font: 8px var(--mono);
+  font: 11px var(--mono);
   letter-spacing: 1.3px;
-  color: #9aa8b9;
+  color: var(--n-400);
   margin-top: 4px;
 }
 .app-header nav {
-  font-size: 11px;
+  font-size: 12px;
   gap: 24px;
   overflow: auto;
   min-width: 0;
   scrollbar-width: none;
 }
 .app-header nav a {
-  color: #a4b0bf;
+  color: var(--n-300);
   white-space: nowrap;
 }
 .app-header nav a.active {
-  color: #efb76b;
-  border-bottom: 2px solid #efb76b;
+  color: var(--w-400);
+  border-bottom: 2px solid var(--w-400);
 }
 .header-right {
   gap: 16px;
 }
 .model-badge {
-  color: #b0bbc7;
-  font-size: 10px;
+  color: var(--n-300);
+  font-size: 12px;
 }
 .model-badge i {
-  background: #b9cfc2;
+  background: var(--n-300);
 }
 .lot-bar {
-  background: #1b222c;
-  color: #c6d2dd;
-  border-color: #37414f;
+  background: var(--n-850);
+  color: var(--n-200);
+  border-color: var(--n-700);
   min-height: 43px;
   padding: 8px 30px;
   gap: 15px;
@@ -210,35 +210,35 @@ h4 {
   gap: 14px;
 }
 .lot-identity .eyebrow {
-  font-size: 10px;
-  color: #9daabb;
+  font-size: 11px;
+  color: var(--n-300);
   letter-spacing: 0;
 }
 .lot-identity strong {
   font: 12px var(--mono);
-  color: #f0f3f6;
+  color: var(--n-50);
 }
 .tag {
-  font-size: 10px;
-  color: #aab8c8;
-  border-color: #455362;
+  font-size: 12px;
+  color: var(--n-300);
+  border-color: var(--n-600);
 }
 .lot-actions button {
-  font-size: 10px;
+  font-size: 12px;
   min-height: 27px;
   padding: 4px 9px;
   background: transparent;
-  border-color: #566170;
-  color: #dce4ec;
+  border-color: var(--n-500);
+  color: var(--n-150);
 }
 .lot-actions #newWafer {
-  background: #cdd7e1;
-  border-color: #cdd7e1;
-  color: #18212b;
+  background: var(--n-200);
+  border-color: var(--n-200);
+  color: var(--n-850);
 }
 .lot-actions #saveStatus {
-  font-size: 10px;
-  color: #a4bdac;
+  font-size: 12px;
+  color: var(--n-300);
 }
 .workspace {
   display: block;
@@ -264,8 +264,8 @@ main {
 }
 #openRoute {
   background: transparent;
-  border: 1px solid #576170;
-  color: #e0e7ee;
+  border: 1px solid var(--n-500);
+  color: var(--n-150);
   font-size: 12px;
   display: flex;
   align-items: center;
@@ -277,19 +277,19 @@ main {
   line-height: 1;
 }
 #openRoute b {
-  font: 10px var(--mono);
-  color: #efb76b;
-  border-left: 1px solid #4c5664;
+  font: 11px var(--mono);
+  color: var(--w-400);
+  border-left: 1px solid var(--n-600);
   padding-left: 12px;
 }
 .console-kicker {
-  font: 10px var(--mono);
+  font: 11px var(--mono);
   letter-spacing: 2px;
-  color: #8798ad;
+  color: var(--n-400);
 }
 .console-kicker i {
   font-style: normal;
-  color: #efb76b;
+  color: var(--w-400);
   margin: 0 8px;
 }
 .atlas-launch {
@@ -298,17 +298,17 @@ main {
   display: flex;
   gap: 10px;
   align-items: center;
-  font-size: 11px;
-  color: #d8e2ed;
+  font-size: 12px;
+  color: var(--n-150);
 }
 .atlas-launch > span {
   display: grid;
   place-content: center;
   width: 26px;
   height: 26px;
-  border: 1px solid #7c8999;
+  border: 1px solid var(--n-400);
   border-radius: 50%;
-  font: 10px var(--mono);
+  font: 11px var(--mono);
 }
 .operation-header {
   display: flex;
@@ -318,12 +318,12 @@ main {
   margin-bottom: 20px;
 }
 .operation-path {
-  font: 10px var(--mono);
-  color: #9aabbf;
+  font: 11px var(--mono);
+  color: var(--n-300);
   letter-spacing: 1.5px;
 }
 .operation-path > span:first-child {
-  color: #efb76b;
+  color: var(--w-400);
 }
 .operation-header h2 {
   font-size: 35px;
@@ -334,7 +334,7 @@ main {
 }
 .operation-header p {
   font-size: 12px;
-  color: #b1bdca;
+  color: var(--n-300);
   max-width: 850px;
   line-height: 1.75;
 }
@@ -342,26 +342,26 @@ main {
   min-width: 160px;
 }
 .state-badge {
-  border: 1px solid #69788a;
+  border: 1px solid var(--n-500);
   background: transparent;
   border-radius: 2px;
-  color: #d8e5dc;
+  color: var(--n-150);
   font: 11px var(--mono);
   padding: 6px 11px;
 }
 .state-badge.running {
-  background: #20362e;
-  border-color: #688a78;
-  color: #c3e6d4;
+  background: var(--n-800);
+  border-color: var(--g-500);
+  color: var(--g-200);
 }
 .state-badge.hold {
-  background: #3c3024;
-  color: #f2c483;
-  border-color: #aa8254;
+  background: var(--n-700);
+  color: var(--w-400);
+  border-color: var(--w-600);
 }
 .operation-state small {
-  font-size: 11px;
-  color: #a8b5c4;
+  font-size: 12px;
+  color: var(--n-300);
   margin-top: 8px;
   max-width: 205px;
 }
@@ -370,7 +370,7 @@ main {
   grid-template-columns: repeat(8, minmax(0, 1fr));
   gap: 2px;
   margin-bottom: 18px;
-  border-block: 1px solid #3d4756;
+  border-block: 1px solid var(--n-600);
   padding: 8px 0;
 }
 .module-rail button {
@@ -388,20 +388,20 @@ main {
 }
 .module-rail button > span {
   font: 17px var(--mono);
-  color: #73859b;
+  color: var(--n-400);
   grid-row: 1/3;
 }
 .module-rail button strong {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
-  color: #b3c0cf;
+  color: var(--n-300);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .module-rail button small {
-  font: 9px var(--mono);
-  color: #7e91a8;
+  font: 11px var(--mono);
+  color: var(--a-300);
 }
 .module-rail button i {
   position: absolute;
@@ -409,20 +409,20 @@ main {
   left: 0;
   width: var(--module-progress);
   height: 2px;
-  background: #617d86;
+  background: var(--n-500);
 }
 .module-rail button[aria-current] {
-  background: #2c343e;
+  background: var(--n-700);
 }
 .module-rail button[aria-current] > span,
 .module-rail button[aria-current] strong {
-  color: #efb76b;
+  color: var(--w-400);
 }
 .module-rail button[aria-current] i {
-  background: #efb76b;
+  background: var(--w-400);
 }
 .module-rail button:hover {
-  background: #25303d;
+  background: var(--n-800);
 }
 .lab-shortcuts {
   display: flex;
@@ -446,7 +446,7 @@ main {
   align-items: center;
   gap: 8px;
   white-space: nowrap;
-  color: #a2b0c1;
+  color: var(--n-300);
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -462,12 +462,12 @@ main {
   stroke-width: 1.5;
 }
 .workspace-switcher small {
-  font: 8px var(--mono);
-  color: #728399;
+  font: 11px var(--mono);
+  color: var(--n-400);
 }
 .lab-shortcuts .workspace-switcher a[aria-current] {
-  color: #f0c48a;
-  border-bottom: 2px solid #efb76b;
+  color: var(--w-400);
+  border-bottom: 2px solid var(--w-400);
 }
 .operation-navigation {
   display: flex;
@@ -477,11 +477,11 @@ main {
 .operation-navigation button {
   background: transparent;
   border: 0;
-  color: #c2cddb;
-  font-size: 11px;
+  color: var(--n-200);
+  font-size: 12px;
 }
 .all-workspaces {
-  font-size: 10px !important;
+  font-size: 12px !important;
 }
 body[data-console-view="equipment"] #waferSection,
 body[data-console-view="equipment"] #processResults,
@@ -496,8 +496,8 @@ body[data-console-view="analysis"] #waferSection {
   grid-template-columns: minmax(0, 1fr) 292px;
   gap: 0;
   align-items: stretch;
-  border: 1px solid #485260;
-  background: #161b21;
+  border: 1px solid var(--n-600);
+  background: var(--n-900);
 }
 .stage-column {
   display: flex;
@@ -510,10 +510,10 @@ body[data-console-view="analysis"] #waferSection {
   height: auto;
   border: 0;
   border-radius: 0;
-  background: #161b21;
+  background: var(--n-900);
   overflow: hidden;
   box-shadow: none;
-  color: #b3c0ce;
+  color: var(--n-300);
 }
 .stage-heading {
   display: flex;
@@ -528,20 +528,20 @@ body[data-console-view="analysis"] #waferSection {
   gap: 10px;
 }
 .stage-index {
-  font: 10px var(--mono);
-  color: #efb76b;
+  font: 11px var(--mono);
+  color: var(--w-400);
 }
 .stage-heading h3 {
   font: 11px var(--mono);
   letter-spacing: 2.6px;
-  color: #d3dde8;
+  color: var(--n-200);
 }
 .stage-heading-actions {
   gap: 15px !important;
 }
 .stage-badge {
-  font: 10px var(--mono);
-  color: #99b3a9;
+  font: 11px var(--mono);
+  color: var(--n-300);
 }
 .stage-badge:before {
   content: "";
@@ -554,15 +554,15 @@ body[data-console-view="analysis"] #waferSection {
 }
 #focusStage,
 #retryModel {
-  color: #b7c7d8;
-  font-size: 10px;
+  color: var(--n-300);
+  font-size: 12px;
   min-height: 28px;
   background: transparent;
   border: 0;
   padding: 3px 0;
 }
 #retryModel {
-  color: #efb76b;
+  color: var(--w-400);
 }
 .equipment-top {
   position: static;
@@ -574,14 +574,14 @@ body[data-console-view="analysis"] #waferSection {
   gap: 8px;
 }
 .equipment-top strong {
-  font: 10px var(--mono);
+  font: 11px var(--mono);
   letter-spacing: 0.8px;
-  color: #94a6bc;
+  color: var(--n-400);
 }
 .equipment-top small {
-  font: 8px var(--mono);
-  color: #98a9bb;
-  border: 1px solid #435268;
+  font: 11px var(--mono);
+  color: var(--n-400);
+  border: 1px solid var(--a-800);
   border-radius: 0;
   padding: 2px 5px;
 }
@@ -594,14 +594,14 @@ body[data-console-view="analysis"] #waferSection {
 .equipment-top-actions button {
   background: transparent;
   border: 0;
-  color: #c4d0dc;
-  font-size: 11px;
+  color: var(--n-200);
+  font-size: 12px;
   padding: 4px 0;
   min-height: 28px;
 }
 .cutaway-switch {
-  font-size: 11px;
-  color: #e1c392;
+  font-size: 12px;
+  color: var(--w-400);
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -609,7 +609,7 @@ body[data-console-view="analysis"] #waferSection {
 }
 .viewport-shell {
   position: relative;
-  background: #161b21;
+  background: var(--n-900);
   min-width: 0;
 }
 .fab-viewport {
@@ -632,19 +632,19 @@ body[data-console-view="analysis"] #waferSection {
   justify-content: space-between;
   gap: 12px;
   pointer-events: none;
-  font: 8px var(--mono);
+  font: 11px var(--mono);
   letter-spacing: 1px;
-  color: #93a3b6;
+  color: var(--n-400);
 }
 .viewport-hud b {
   font-size: 17px;
   font-weight: 400;
-  color: #cad7e5;
+  color: var(--n-200);
   margin-right: 8px;
 }
 .viewport-hud > span:last-child {
-  font-size: 9px;
-  color: #d3bb92;
+  font-size: 12px;
+  color: var(--w-400);
 }
 .viewport-axis {
   position: absolute;
@@ -652,8 +652,8 @@ body[data-console-view="analysis"] #waferSection {
   right: 28px;
   width: 39px;
   height: 42px;
-  font: 9px var(--mono);
-  color: #a6b5c6;
+  font: 11px var(--mono);
+  color: var(--n-300);
   pointer-events: none;
 }
 .viewport-axis i {
@@ -662,7 +662,7 @@ body[data-console-view="analysis"] #waferSection {
   top: 6px;
   width: 1px;
   height: 32px;
-  background: #738398;
+  background: var(--n-400);
 }
 .viewport-axis i:after {
   content: "";
@@ -671,7 +671,7 @@ body[data-console-view="analysis"] #waferSection {
   left: -12px;
   height: 1px;
   width: 33px;
-  background: #738398;
+  background: var(--n-400);
   transform: rotate(-30deg);
 }
 .viewport-axis b {
@@ -685,7 +685,7 @@ body[data-console-view="analysis"] #waferSection {
   right: -3px;
   bottom: 0;
   font-style: normal;
-  color: #d4b986;
+  color: var(--w-400);
 }
 .viewport-axis small {
   position: absolute;
@@ -698,14 +698,14 @@ body[data-console-view="analysis"] #waferSection {
   justify-content: space-between;
   gap: 15px;
   padding: 8px 23px;
-  font-size: 10px;
-  background: #1d2530;
-  border-block: 1px solid #344252;
-  color: #a8b7c9;
+  font-size: 12px;
+  background: var(--n-800);
+  border-block: 1px solid var(--n-700);
+  color: var(--n-300);
 }
 .viewport-caption > span:last-child {
-  color: #8295ac;
-  font-size: 9px;
+  color: var(--a-300);
+  font-size: 12px;
 }
 .stage-tools {
   display: flex;
@@ -714,29 +714,29 @@ body[data-console-view="analysis"] #waferSection {
   justify-content: space-between;
   gap: 8px 14px;
   padding: 10px 22px;
-  background: #171f29;
+  background: var(--n-850);
 }
 .camera-toolbar {
   position: static;
   display: flex;
   gap: 1px;
   padding: 0;
-  border: 1px solid #59697e;
+  border: 1px solid var(--n-500);
   border-radius: 2px;
   background: transparent;
 }
 .camera-toolbar button {
-  font-size: 10px;
+  font-size: 12px;
   min-height: 31px;
   padding: 5px 10px;
   background: transparent;
-  color: #b9c7d7;
+  color: var(--n-300);
   border: 0;
   border-radius: 0;
 }
 .camera-toolbar button.active {
-  background: #d5dfe9;
-  color: #182431;
+  background: var(--n-150);
+  color: var(--n-850);
 }
 .part-buttons {
   position: static;
@@ -745,10 +745,10 @@ body[data-console-view="analysis"] #waferSection {
   gap: 6px;
 }
 .part-buttons button {
-  font-size: 9px;
+  font-size: 12px;
   min-height: 27px;
   background: transparent;
-  color: #9eafc2;
+  color: var(--n-300);
   padding: 3px 0;
   border: 0;
 }
@@ -758,28 +758,28 @@ body[data-console-view="analysis"] #waferSection {
   margin-left: auto;
 }
 .stage-exports button {
-  font-size: 10px;
+  font-size: 12px;
   min-height: 27px;
   padding: 3px 0;
   border: 0;
   background: transparent;
-  color: #d9bb8b;
+  color: var(--w-400);
 }
 .motion-status {
   position: static;
   display: flex;
   justify-content: space-between;
   gap: 15px;
-  background: #222e3c;
-  color: #d1dae4;
+  background: var(--n-800);
+  color: var(--n-200);
   border: 0;
-  border-left: 2px solid #e6b26c;
-  font-size: 11px;
+  border-left: 2px solid var(--w-400);
+  font-size: 12px;
   padding: 9px 22px;
 }
 .motion-status > span:last-child {
   font: 11px var(--mono);
-  color: #efb76b;
+  color: var(--w-400);
 }
 .phase-strip {
   height: 42px;
@@ -787,28 +787,28 @@ body[data-console-view="analysis"] #waferSection {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border: 0;
-  background: #1a2430;
+  background: var(--n-850);
 }
 .phase-strip > [data-phase] {
-  font-size: 10px;
-  color: #7f92aa;
+  font-size: 12px;
+  color: var(--a-300);
   gap: 9px;
 }
 .phase-strip > [data-phase].active {
-  color: #f2c58a;
-  background: #303844;
+  color: var(--w-400);
+  background: var(--n-700);
 }
 .phase-progress {
-  background: #344457;
+  background: var(--n-700);
   height: 2px;
 }
 .phase-progress i {
-  background: #e7b16b;
+  background: var(--w-400);
 }
 .recipe-panel {
-  background: #212936;
+  background: var(--n-800);
   border: 0;
-  border-left: 1px solid #4c5869;
+  border-left: 1px solid var(--n-600);
   border-radius: 0;
   padding: 25px 23px;
   position: relative;
@@ -819,11 +819,11 @@ body[data-console-view="analysis"] #waferSection {
   display: block;
   width: 34px;
   height: 3px;
-  background: #efb76b;
+  background: var(--w-400);
   margin-bottom: 22px;
 }
 .recipe-panel .panel-label {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.8px;
   gap: 8px;
 }
@@ -835,17 +835,17 @@ body[data-console-view="analysis"] #waferSection {
   margin: 12px 0;
 }
 .material-context {
-  font: 10px/1.8 var(--mono);
-  color: #a8bace;
-  border-color: #48576a;
+  font: 11px/1.8 var(--mono);
+  color: var(--n-300);
+  border-color: var(--n-600);
   margin-bottom: 15px;
   padding-bottom: 14px;
 }
 .recipe-edit-hint {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.8;
-  color: #b7c4d4;
-  border-bottom: 1px dashed #526071;
+  color: var(--n-300);
+  border-bottom: 1px dashed var(--n-500);
   padding-bottom: 15px;
   margin-bottom: 14px;
 }
@@ -854,77 +854,77 @@ body[data-console-view="analysis"] #waferSection {
 }
 .recipe-field label {
   font-size: 12px;
-  color: #c3d0e0;
+  color: var(--n-200);
   margin-bottom: 8px;
 }
 .recipe-field label span {
-  font: 9px var(--mono);
-  color: #a0afc2;
+  font: 11px var(--mono);
+  color: var(--n-300);
 }
 .recipe-input {
   border: 0;
-  border-bottom: 1px solid #78879b;
+  border-bottom: 1px solid var(--n-400);
   border-radius: 0;
   background: transparent;
 }
 .recipe-input:focus-within {
-  border-color: #efb76b;
-  background: #293749;
+  border-color: var(--w-400);
+  background: var(--n-700);
 }
 .recipe-input input {
   font: 27px var(--mono);
-  color: #f1d2a3;
+  color: var(--w-200);
   padding: 6px 0 12px;
   background: transparent;
 }
 .recipe-input > span {
   font: 11px var(--mono);
-  color: #adbed3;
+  color: var(--n-300);
   padding: 0 2px 7px 12px;
 }
 .recipe-input input:invalid {
-  color: #ffc1b4;
+  color: var(--d-200);
 }
 .recipe-field-error {
-  font-size: 11px;
-  color: #ffc1b4;
+  font-size: 12px;
+  color: var(--d-200);
 }
 .recipe-panel .text-button {
-  color: #bfcfe2;
-  font-size: 11px;
+  color: var(--n-200);
+  font-size: 12px;
   margin: 6px 0;
 }
 .recipe-duration {
-  border-color: #526077;
-  font-size: 11px;
-  color: #bac8db;
+  border-color: var(--a-700);
+  font-size: 12px;
+  color: var(--n-300);
   padding-top: 16px;
   margin-top: 21px;
   max-width: none;
 }
 .recipe-duration strong {
   font: 14px var(--mono);
-  color: #e0e8f1;
+  color: var(--n-100);
 }
 .fault-label {
-  font-size: 11px;
-  color: #a9bbd1;
+  font-size: 12px;
+  color: var(--n-300);
 }
 .recipe-panel #faultSelect {
-  font-size: 11px;
-  color: #cfdae8;
+  font-size: 12px;
+  color: var(--n-200);
   padding: 9px;
-  background: #182330;
+  background: var(--n-850);
   max-width: none;
 }
 .field-note {
-  color: #a7b5c8;
-  font-size: 11px;
+  color: var(--n-300);
+  font-size: 12px;
   line-height: 1.7;
 }
 .run-feedback {
-  font-size: 11px;
-  color: #efc487;
+  font-size: 12px;
+  color: var(--w-400);
 }
 .recipe-panel .primary-button,
 .recipe-panel .secondary-button {
@@ -934,16 +934,16 @@ body[data-console-view="analysis"] #waferSection {
 /* Measured structures and experiment results retain a light drafting surface. */
 .section-panel,
 .results-panel {
-  border: 1px solid #4d5d6f;
+  border: 1px solid var(--n-600);
   border-radius: 0;
-  background: #edf0f4;
+  background: var(--n-100);
   overflow: hidden;
   margin: 0 0 18px;
 }
 .section-heading {
   padding: 22px 23px;
-  border-color: #b1becd;
-  background: #e0e6ec;
+  border-color: var(--n-300);
+  background: var(--n-150);
   gap: 16px;
 }
 .section-heading h3 {
@@ -953,42 +953,42 @@ body[data-console-view="analysis"] #waferSection {
   margin-top: 5px;
 }
 .section-heading h3 span {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0;
-  color: #4d5d6f;
+  color: var(--n-600);
   margin-left: 12px;
 }
 .section-options {
-  font-size: 11px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
   gap: 12px;
   flex-wrap: wrap;
 }
 .section-options button {
-  font-size: 10px;
-  border-color: #4d5d6f;
+  font-size: 12px;
+  border-color: var(--n-600);
   background: transparent;
-  color: #4d5d6f;
+  color: var(--n-600);
   min-height: 31px;
   padding: 5px 8px;
 }
 .section-options button[aria-pressed="true"] {
-  background: #ccd5df;
-  border-color: #4d5d6f;
+  background: var(--n-200);
+  border-color: var(--n-600);
 }
 .section-body {
   grid-template-columns: minmax(0, 1fr) 250px;
 }
 .cross-section-wrap {
-  background: #f0f2f5;
+  background: var(--n-50);
   padding: 23px 18px 17px;
 }
 #crossSection {
   height: 330px;
 }
 .section-caption {
-  font: 10px var(--mono);
-  color: #4d5d6f;
+  font: 11px var(--mono);
+  color: var(--n-600);
   margin: 9px 0 14px;
   padding: 0 35px;
 }
@@ -998,8 +998,8 @@ body[data-console-view="analysis"] #waferSection {
   justify-content: flex-start;
 }
 .material-legend span {
-  font-size: 10px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
 }
 .material-legend i {
   width: 8px;
@@ -1009,22 +1009,22 @@ body[data-console-view="analysis"] #waferSection {
 .section-inspector {
   display: block;
   padding: 22px 18px;
-  background: #e0e6ec;
-  border-color: #4d5d6f;
+  background: var(--n-150);
+  border-color: var(--n-600);
 }
 .section-inspector h4 {
   font: 18px var(--mono);
-  color: #495768;
+  color: var(--n-600);
   margin: 7px 0;
 }
 .section-inspector > p {
-  font-size: 11px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
   margin: 8px 0 16px;
 }
 .layer-row {
-  font-size: 11px;
-  border-bottom: 1px solid #b9c4d2;
+  font-size: 12px;
+  border-bottom: 1px solid var(--n-300);
   padding: 7px 0;
   margin: 0;
 }
@@ -1033,37 +1033,37 @@ body[data-console-view="analysis"] #waferSection {
   height: 16px;
 }
 .layer-row strong {
-  color: #4d5d6f;
+  color: var(--n-600);
 }
 .dopant-probe {
-  border-color: #b0bdcd;
+  border-color: var(--n-300);
   margin-top: 17px;
   padding-top: 15px;
 }
 .dopant-probe label {
-  color: #4d5d6f;
-  font-size: 11px;
+  color: var(--n-600);
+  font-size: 12px;
 }
 .dopant-probe p {
-  font-size: 11px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
 }
 .dopant-probe input {
-  accent-color: #4d5d6f;
+  accent-color: var(--n-600);
 }
 #dopantValue {
-  color: #4d5d6f;
-  border-color: #b3c0cf;
-  font-size: 11px;
+  color: var(--n-600);
+  border-color: var(--n-300);
+  font-size: 12px;
   padding-top: 11px;
 }
 #localChanges {
-  font-size: 11px;
-  border-color: #b0bdcd;
-  color: #4d5d6f;
+  font-size: 12px;
+  border-color: var(--n-300);
+  color: var(--n-600);
 }
 .local-change b {
-  color: #4d5d6f;
+  color: var(--n-600);
 }
 .film-profile {
   display: grid;
@@ -1071,33 +1071,33 @@ body[data-console-view="analysis"] #waferSection {
   gap: 12px 25px;
   padding: 22px;
   margin: 0;
-  background: #e5eaef;
-  border-color: #b0bdcd;
+  background: var(--n-100);
+  border-color: var(--n-300);
 }
 .film-profile-controls {
   grid-column: 1/-1;
   font-size: 12px;
-  color: #4d5d6f;
+  color: var(--n-600);
   gap: 16px;
 }
 .film-profile-controls select {
-  font-size: 11px;
+  font-size: 12px;
   padding: 6px 9px;
   margin-left: 5px;
-  background: #f0f3f6;
-  border-color: #4d5d6f;
-  color: #4d5d6f;
+  background: var(--n-50);
+  border-color: var(--n-600);
+  color: var(--n-600);
 }
 #profileContext {
   grid-column: 1/-1;
-  font-size: 11px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
 }
 #filmProfile {
   align-self: center;
-  border: 1px solid #b6c2d1;
+  border: 1px solid var(--n-300);
   min-width: 0;
-  background: #f0f2f5;
+  background: var(--n-50);
 }
 #filmProfile svg {
   width: 100%;
@@ -1106,14 +1106,14 @@ body[data-console-view="analysis"] #waferSection {
 }
 .film-profile-note {
   grid-column: 1/-1;
-  font-size: 11px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
 }
 .film-profile .table-wrap {
   align-self: center;
 }
 #profileStatistics table {
-  font-size: 11px;
+  font-size: 12px;
   min-width: 450px;
 }
 #profileStatistics th,
@@ -1121,18 +1121,18 @@ body[data-console-view="analysis"] #waferSection {
   padding: 10px 7px;
 }
 .change-summary {
-  font-size: 11px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
   margin: 0;
   padding: 12px 22px;
-  border-top: 1px solid #b0bdcc;
-  background: #e2e7ed;
+  border-top: 1px solid var(--n-300);
+  background: var(--n-100);
 }
 .model-note {
-  background: #dbe1e8;
-  color: #4d5d6f;
-  font-size: 10px;
-  border-color: #afbccc;
+  background: var(--n-150);
+  color: var(--n-600);
+  font-size: 12px;
+  border-color: var(--n-300);
   padding: 10px 22px;
 }
 .analysis-intro {
@@ -1140,11 +1140,11 @@ body[data-console-view="analysis"] #waferSection {
   justify-content: space-between;
   align-items: center;
   padding: 25px 25px 23px;
-  background: #dfe4ea;
-  border-bottom: 1px solid #4d5d6f;
+  background: var(--n-150);
+  border-bottom: 1px solid var(--n-600);
 }
 .analysis-intro .eyebrow {
-  color: #4d5d6f;
+  color: var(--n-600);
 }
 .analysis-intro h3 {
   font:
@@ -1155,19 +1155,19 @@ body[data-console-view="analysis"] #waferSection {
   margin: 6px 0;
 }
 .analysis-intro p {
-  color: #4d5d6f;
+  color: var(--n-600);
   font-size: 12px;
 }
 .analysis-mark {
   font:
     50px/1 Georgia,
     serif;
-  color: #4d5d6f;
+  color: var(--n-600);
   padding: 0 5px 0 20px;
 }
 .results-heading {
-  background: #eaedf1;
-  border-color: #4d5d6f;
+  background: var(--n-100);
+  border-color: var(--n-600);
   padding: 0 23px;
   gap: 0 18px;
 }
@@ -1176,23 +1176,23 @@ body[data-console-view="analysis"] #waferSection {
 }
 .tab-list button {
   font-size: 12px;
-  color: #4d5d6f;
+  color: var(--n-600);
   padding: 16px 1px;
 }
 .tab-list button.active {
-  color: #4d5d6f;
-  border-color: #4d5d6f;
+  color: var(--n-600);
+  border-color: var(--n-600);
 }
 .tab-list span {
-  background: #d5dce4;
-  color: #4d5d6f;
+  background: var(--n-200);
+  color: var(--n-600);
   border-radius: 0;
-  font-size: 10px;
+  font-size: 12px;
 }
 .result-exports .text-button,
 .result-exports #reportButton {
-  font-size: 10px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
 }
 .tab-panel {
   padding: 24px;
@@ -1200,13 +1200,13 @@ body[data-console-view="analysis"] #waferSection {
 }
 .metrics-grid {
   gap: 0;
-  border-block: 1px solid #4d5d6f;
+  border-block: 1px solid var(--n-600);
   padding: 20px 0;
 }
 .metric {
   background: transparent;
   border: 0;
-  border-right: 1px solid #b5c1cf;
+  border-right: 1px solid var(--n-300);
   padding: 0 19px;
   min-width: 0;
 }
@@ -1218,110 +1218,110 @@ body[data-console-view="analysis"] #waferSection {
   padding-right: 0;
 }
 .metric > span {
-  font-size: 11px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
 }
 .metric strong {
   font: 30px/1.5 var(--mono);
-  color: #4b5b6d;
+  color: var(--n-600);
   margin-top: 8px;
   overflow-wrap: anywhere;
 }
 .metric strong small {
-  font-size: 11px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
 }
 .metric p {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.8;
-  color: #4d5d6f;
+  color: var(--n-600);
   margin-top: 5px;
 }
 .measurement-note {
-  font-size: 11px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
   line-height: 1.9;
 }
 .warning-list {
-  background: #d7dee6;
-  border-color: #4d5d6f;
-  color: #4d5d6f;
+  background: var(--n-150);
+  border-color: var(--n-600);
+  color: var(--n-600);
   padding: 12px 15px;
   font-size: 12px;
 }
 .poly-observation {
-  background: #dbe1e8;
-  color: #4d5d6f;
-  border: 1px solid #4d5d6f;
+  background: var(--n-150);
+  color: var(--n-600);
+  border: 1px solid var(--n-600);
   padding: 13px;
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 16px;
 }
 .process-change {
   padding: 0 0 20px;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #4d5d6f;
+  border-bottom: 1px solid var(--n-600);
   border-radius: 0;
   margin-bottom: 20px;
 }
 .process-change-heading {
   font-size: 14px;
-  color: #4d5d6f;
+  color: var(--n-600);
 }
 .process-change-heading > span {
-  font-size: 11px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
 }
 .process-change-values {
   gap: 20px;
   margin: 20px 0;
 }
 .process-change-values span {
-  font-size: 11px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
 }
 .process-change-values strong {
   font: 34px/1.5 var(--mono);
-  color: #455364;
+  color: var(--n-600);
 }
 .process-change-values strong[data-change="delta"] {
-  color: #4d5d6f;
+  color: var(--n-600);
 }
 .process-change-values small {
-  font-size: 11px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
 }
 .process-change p {
-  color: #4d5d6f;
-  font-size: 11px;
+  color: var(--n-600);
+  font-size: 12px;
 }
 .preview-result-note {
-  background: #dce2e9;
-  border-color: #4d5d6f;
-  color: #4d5d6f;
+  background: var(--n-150);
+  border-color: var(--n-600);
+  color: var(--n-600);
   font-size: 12px;
 }
 table {
   font-size: 12px;
-  color: #4d5d6f;
+  color: var(--n-600);
 }
 th {
-  background: #e0e5eb;
-  color: #4d5d6f;
-  font-size: 11px;
+  background: var(--n-150);
+  color: var(--n-600);
+  font-size: 12px;
   font-weight: 500;
 }
 th,
 td {
-  border-color: #c1ccd8;
+  border-color: var(--n-200);
   padding: 12px;
 }
 td.mono {
-  font-size: 11px;
+  font-size: 12px;
 }
 tbody tr:hover {
-  background: #e7ebf0;
+  background: var(--n-100);
 }
 .table-wrap {
   scrollbar-color: #4d5d6f #ebeef2;
@@ -1330,19 +1330,19 @@ tbody tr:hover {
 .history-link {
   font-size: 12px;
   min-height: 28px;
-  color: #4d5d6f;
+  color: var(--n-600);
 }
 .history-link:hover {
-  color: #4d5d6f;
+  color: var(--n-600);
   background: transparent;
 }
 .empty-state {
   min-height: 200px;
   display: grid;
   align-content: center;
-  border-block: 1px dashed #4d5d6f;
+  border-block: 1px dashed var(--n-600);
   background: transparent;
-  color: #4d5d6f;
+  color: var(--n-600);
   font-size: 13px;
   padding: 35px 22px;
   line-height: 2;
@@ -1352,35 +1352,35 @@ tbody tr:hover {
   font:
     45px/1 Georgia,
     serif;
-  color: #4d5d6f;
+  color: var(--n-600);
   margin-bottom: 18px;
 }
 .sweep-heading strong {
   font-size: 18px;
   font-weight: 500;
-  color: #4d5d6f;
+  color: var(--n-600);
 }
 .sweep-heading p {
   font-size: 12px;
-  color: #4d5d6f;
+  color: var(--n-600);
   line-height: 1.9;
 }
 .sweep-controls {
   grid-template-columns: 1.4fr 1fr 1fr 130px;
   gap: 18px;
   padding: 19px 0;
-  border-block: 1px solid #aebccc;
+  border-block: 1px solid var(--n-300);
 }
 .sweep-controls label {
   font-size: 12px;
-  color: #4d5d6f;
+  color: var(--n-600);
 }
 .sweep-controls input,
 .sweep-controls select {
   font: 14px var(--mono);
   margin-top: 8px;
-  background: #f7f8fa;
-  border-color: #4d5d6f;
+  background: var(--n-25);
+  border-color: var(--n-600);
   padding: 10px;
 }
 .sweep-controls .primary-button {
@@ -1390,24 +1390,24 @@ tbody tr:hover {
 .compare-note {
   font-size: 12px;
   line-height: 1.8;
-  color: #4d5d6f;
+  color: var(--n-600);
   margin: 14px 0;
 }
 .sweep-result-title {
   font-size: 15px;
-  border-color: #b0bdcd;
+  border-color: var(--n-300);
   padding-top: 20px;
   margin-top: 20px;
 }
 .sweep-result-title small {
-  font-size: 11px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
 }
 .sweep-chart,
 .compare-chart {
   height: 230px;
-  background: #f3f5f8;
-  border-color: #bcc7d4;
+  background: var(--n-50);
+  border-color: var(--n-300);
   border-radius: 0;
   padding: 12px 0;
 }
@@ -1418,28 +1418,28 @@ tbody tr:hover {
   font-size: 10px;
 }
 .sweep-draft-notice {
-  background: #dbe1e8;
-  color: #4d5d6f;
+  background: var(--n-150);
+  color: var(--n-600);
   font-size: 12px;
 }
 .sweep-draft-notice.stale {
-  background: #d9dfe6;
-  color: #4d5d6f;
+  background: var(--n-150);
+  color: var(--n-600);
 }
 .comparison-toolbar {
   grid-template-columns: 1fr 1.7fr auto;
-  border-block: 1px solid #b2becd;
+  border-block: 1px solid var(--n-300);
   padding: 20px 0;
   gap: 20px;
 }
 .comparison-toolbar label {
   font-size: 12px;
-  color: #4d5d6f;
+  color: var(--n-600);
 }
 .comparison-toolbar select {
   font-size: 12px;
-  background: #f5f7f9;
-  border-color: #b2becd;
+  background: var(--n-50);
+  border-color: var(--n-300);
   padding: 10px;
   margin-top: 8px;
 }
@@ -1448,65 +1448,65 @@ tbody tr:hover {
 }
 .comparison-legend {
   font-size: 12px;
-  color: #4d5d6f;
+  color: var(--n-600);
   gap: 20px;
   margin: 20px 0 12px;
 }
 .comparison-legend > span:before {
-  border-top-color: #4d5d6f;
+  border-top-color: var(--n-600);
 }
 .comparison-legend > .reference:before {
-  border-top-color: #4d5d6f;
+  border-top-color: var(--n-600);
 }
 .comparison-legend small {
-  font-size: 10px;
-  color: #4d5d6f;
+  font-size: 12px;
+  color: var(--n-600);
 }
 .comparison-differences {
-  border-color: #b5c1cf;
+  border-color: var(--n-300);
 }
 .comparison-differences h4 {
   font-size: 14px;
-  color: #4d5d6f;
+  color: var(--n-600);
 }
 .comparison-differences h4 span,
 .comparison-differences > p {
   font-size: 12px;
-  color: #4d5d6f;
+  color: var(--n-600);
 }
 .measurement-details {
-  border-block: 1px solid #b3bfce;
+  border-block: 1px solid var(--n-300);
   margin-top: 17px;
 }
 .measurement-details summary {
   padding: 13px 0;
   cursor: pointer;
   font-size: 12px;
-  color: #4d5d6f;
+  color: var(--n-600);
 }
 .section-panel,
 .results-panel {
   color-scheme: light;
-  color: #3c536a;
+  color: var(--a-800);
 }
 .section-panel button,
 .results-panel button,
 .section-panel select,
 .results-panel select,
 .results-panel input {
-  background: #e1e9f0;
-  color: #36516b;
-  border-color: #8ea6ba;
+  background: var(--n-100);
+  color: var(--a-800);
+  border-color: var(--n-400);
 }
 .results-panel .primary-button {
-  background: #34526e;
-  color: #fff;
+  background: var(--a-800);
+  color: var(--n-0);
 }
 .section-panel h3,
 .section-panel h4,
 .results-panel h3,
 .results-panel h4 {
-  color: #29455f;
+  color: var(--a-800);
 }
 .analysis-intro h3 {
   font: 33px var(--mono);
@@ -1514,32 +1514,32 @@ tbody tr:hover {
 }
 .section-panel .eyebrow,
 .results-panel .eyebrow {
-  color: #52708a;
+  color: var(--a-400);
 }
 .section-preview {
-  background: #eef0ed;
-  color: #344756;
-  border-block: 1px solid #8d9baa;
+  background: var(--n-100);
+  color: var(--n-700);
+  border-block: 1px solid var(--n-400);
   padding: 10px 22px 8px;
 }
 .preview-title {
   display: flex;
   align-items: center;
   gap: 13px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .preview-title > span {
-  font: 9px var(--mono);
-  color: #8c5425;
+  font: 11px var(--mono);
+  color: var(--w-800);
 }
 .preview-title strong {
   font-weight: 500;
-  color: #435364;
+  color: var(--n-600);
 }
 .preview-title button {
-  font-size: 10px;
+  font-size: 12px;
   margin-left: auto;
-  color: #425e77;
+  color: var(--a-700);
   min-height: 25px;
   background: transparent;
   border: 0;
@@ -1561,17 +1561,17 @@ tbody tr:hover {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  font: 8px var(--mono);
-  color: #627383;
+  font: 11px var(--mono);
+  color: var(--n-500);
 }
 .preview-foot #previewSource {
-  font-size: 9px;
+  font-size: 12px;
 }
 .observation-deck {
   border: 0;
   border-radius: 0;
-  background: #1a2330;
-  color: #b3c4d7;
+  background: var(--n-850);
+  color: var(--n-300);
 }
 .observation-deck summary {
   display: flex;
@@ -1580,7 +1580,7 @@ tbody tr:hover {
   padding: 12px 22px;
   cursor: pointer;
   list-style: none;
-  font-size: 11px;
+  font-size: 12px;
 }
 .observation-deck summary:after {
   content: "+";
@@ -1591,24 +1591,24 @@ tbody tr:hover {
 }
 .deck-hint {
   margin-left: auto;
-  font: 8px var(--mono);
+  font: 11px var(--mono);
   letter-spacing: 1px;
-  color: #94a9c1;
+  color: var(--a-300);
 }
 .observation-deck-body {
   padding: 0 22px 18px;
-  border-top: 1px solid #39495e;
+  border-top: 1px solid var(--a-800);
 }
 .playback-options {
-  font-size: 11px;
-  color: #c4d2e4;
+  font-size: 12px;
+  color: var(--n-200);
   max-width: none;
 }
 .playback-options select {
-  background: #293b50;
-  color: #d6e1ee;
-  border: 1px solid #5e7390;
-  font-size: 11px;
+  background: var(--a-900);
+  color: var(--n-150);
+  border: 1px solid var(--a-400);
+  font-size: 12px;
   padding: 4px 8px;
 }
 .observation-controls {
@@ -1617,18 +1617,18 @@ tbody tr:hover {
   gap: 7px 15px;
   background: transparent;
   border: 0;
-  border-top: 1px solid #40536b;
+  border-top: 1px solid var(--a-800);
   padding: 14px 0 0;
   margin-top: 14px;
 }
 .observation-controls label {
-  font-size: 11px;
-  color: #becfe3;
+  font-size: 12px;
+  color: var(--n-200);
 }
 .observation-controls #stepMotionButton {
   width: auto;
   margin: 0;
-  font-size: 11px;
+  font-size: 12px;
   min-height: 31px;
 }
 .observation-scrub,
@@ -1639,8 +1639,8 @@ tbody tr:hover {
 .observation-controls p,
 #observationSeekHint,
 .timing-note {
-  font-size: 10px;
-  color: #a4b6cd;
+  font-size: 12px;
+  color: var(--n-300);
   line-height: 1.8;
 }
 .timing-note br {
@@ -1653,12 +1653,12 @@ tbody tr:hover {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   padding: 20px 0;
-  border-bottom: 1px solid #3c4c60;
+  border-bottom: 1px solid var(--n-600);
   margin-bottom: 18px;
 }
 .telemetry-cell {
   padding: 0 24px;
-  border-right: 1px solid #3b4b60;
+  border-right: 1px solid var(--a-800);
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: baseline;
@@ -1671,51 +1671,51 @@ tbody tr:hover {
   border: 0;
 }
 .telemetry-cell > span {
-  font-size: 11px;
-  color: #aabed6;
+  font-size: 12px;
+  color: var(--a-200);
 }
 .telemetry-cell > span small {
   display: none;
 }
 .telemetry-cell > strong {
   font: 18px var(--mono);
-  color: #d6e1ee;
+  color: var(--n-150);
 }
 .telemetry-cell strong small {
-  font-size: 10px;
-  color: #96abc4;
+  font-size: 12px;
+  color: var(--a-300);
 }
 .telemetry-cell p {
   grid-column: 1/-1;
-  font-size: 10px;
-  color: #95abc6;
+  font-size: 12px;
+  color: var(--a-300);
 }
 .telemetry-progress {
   height: 2px;
-  background: #40536b;
+  background: var(--a-800);
   grid-column: 1/-1;
 }
 .telemetry-progress i {
   display: block;
   height: 100%;
-  background: #d1ae7c;
+  background: var(--w-400);
 }
 .learning-guide {
   background: transparent;
   border: 0;
-  border-top: 1px solid #43566b;
+  border-top: 1px solid var(--a-800);
   border-radius: 0;
   margin-top: 15px;
-  color: #b0c4dc;
+  color: var(--a-200);
 }
 .learning-guide > summary {
   padding: 14px 0;
   font-size: 12px;
-  color: #c1d0e2;
+  color: var(--n-200);
 }
 .learning-guide-hint {
-  font-size: 10px;
-  color: #93a9c3;
+  font-size: 12px;
+  color: var(--a-300);
 }
 .learning-guide-body {
   padding: 12px 0 22px;
@@ -1726,18 +1726,18 @@ tbody tr:hover {
 .learning-grid li,
 .learning-scope {
   font-size: 12px;
-  color: #a4b9d2;
+  color: var(--a-200);
   line-height: 1.9;
 }
 .learning-grid h3 {
-  color: #d5e0ec;
+  color: var(--n-150);
 }
 .learning-grid dt {
-  color: #c5d4e5;
+  color: var(--n-200);
 }
 .status-bar {
-  font: 10px var(--mono);
-  color: #92a9c4;
+  font: 11px var(--mono);
+  color: var(--a-300);
   gap: 18px;
   padding: 20px 0 14px;
   flex-wrap: wrap;
@@ -1747,15 +1747,15 @@ tbody tr:hover {
   bottom: 0;
   z-index: 5;
   margin: 0 -30px;
-  background: #111923;
-  border-top: 1px solid #647388;
-  color: #dfe7ef;
+  background: var(--n-900);
+  border-top: 1px solid var(--n-500);
+  color: var(--n-150);
   padding: 12px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 15px;
-  box-shadow: 0 -12px 30px #090e1640;
+  box-shadow: 0 -12px 30px color-mix(in srgb, var(--n-950) 25%, transparent);
 }
 .transport-status {
   display: flex;
@@ -1766,13 +1766,13 @@ tbody tr:hover {
 .transport-light {
   width: 6px;
   height: 6px;
-  background: #b0c8be;
+  background: var(--n-300);
   flex-shrink: 0;
   border-radius: 50%;
 }
 .console-running .transport-light {
-  background: #efb76b;
-  box-shadow: 0 0 0 5px #efb76b16;
+  background: var(--w-400);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--w-400) 9%, transparent);
 }
 .transport-status > div {
   min-width: 0;
@@ -1780,12 +1780,12 @@ tbody tr:hover {
 .transport-status strong {
   display: block;
   font: 12px var(--mono);
-  color: #d9e2ed;
+  color: var(--n-150);
 }
 .transport-status small {
   display: block;
-  color: #9db0c7;
-  font-size: 11px;
+  color: var(--n-300);
+  font-size: 12px;
   margin-top: 3px;
   max-width: 48vw;
   white-space: nowrap;
@@ -1807,19 +1807,19 @@ tbody tr:hover {
   width: auto;
   min-width: 177px;
   margin: 0;
-  background: #efb76b;
-  border-color: #efb76b;
-  color: #151b23;
+  background: var(--w-400);
+  border-color: var(--w-400);
+  color: var(--n-900);
 }
 #consoleRecipe {
   background: transparent;
-  color: #c3d0df;
-  border-color: #61738a;
+  color: var(--n-200);
+  border-color: var(--a-400);
 }
 #consoleCancel {
-  color: #ffd0c5;
-  background: #503633;
-  border-color: #947066;
+  color: var(--d-200);
+  background: var(--n-700);
+  border-color: var(--d-500);
 }
 .stage-focused .fab-viewport {
   height: 66dvh;
@@ -1834,23 +1834,23 @@ tbody tr:hover {
   margin-bottom: 12px;
 }
 dialog {
-  background: #1c2734;
-  color: #cedce9;
-  border: 1px solid #75889d;
+  background: var(--n-800);
+  color: var(--n-200);
+  border: 1px solid var(--n-400);
   border-radius: 4px;
   max-height: 90dvh;
-  box-shadow: 0 30px 130px #0009;
+  box-shadow: 0 30px 130px color-mix(in srgb, var(--n-950) 60%, transparent);
 }
 dialog::backdrop {
-  background: #07111cbd;
+  background: color-mix(in srgb, var(--n-950) 74%, transparent);
   backdrop-filter: blur(8px);
 }
 .dialog-top,
 .equipment-dialog .dialog-top {
-  background: #263647;
-  border-color: #4d647d;
+  background: var(--n-700);
+  border-color: var(--a-700);
   padding: 24px 28px;
-  border-top: 3px solid #dcb076;
+  border-top: 3px solid var(--w-400);
 }
 .dialog-top h2,
 .equipment-dialog .dialog-top h2 {
@@ -1869,88 +1869,88 @@ dialog::backdrop {
 .guide-parameters em,
 .guide-references > span,
 .guide-footer p {
-  color: #b0c3d9;
+  color: var(--n-300);
   font-size: 12px;
 }
 .dialog-body h3 {
   font-size: 15px;
-  color: #e0e8f1;
+  color: var(--n-100);
 }
 .dialog-body a,
 .guide-references a {
-  color: #eac38f;
+  color: var(--w-400);
 }
 .info-grid article,
 .guide-flow > div,
 .guide-current {
-  background: #27394c;
-  border-color: #496782;
+  background: var(--a-900);
+  border-color: var(--a-700);
   border-radius: 0;
 }
 .guide-current {
-  border-left-color: #deb27a;
+  border-left-color: var(--w-400);
 }
 .guide-flow strong,
 .guide-parts h4,
 .guide-parameters b {
-  color: #dbe7f2;
+  color: var(--n-150);
 }
 .guide-flow span,
 .guide-steps li,
 .guide-chip,
 .equipment-dialog .equipment-role {
-  color: #a6c0d9;
+  color: var(--a-200);
 }
 .guide-parts article {
   background: transparent;
-  border-color: #4b6580;
+  border-color: var(--a-700);
   border-radius: 0;
 }
 .guide-parts button {
-  background: #344f69;
-  color: #d4e6f5;
+  background: var(--a-800);
+  color: var(--n-150);
 }
 .guide-part-number {
-  color: #e6bc86;
+  color: var(--w-400);
 }
 .guide-parameters,
 .guide-parameters > div,
 .guide-references,
 .source-list li {
-  border-color: #4a637c;
+  border-color: var(--a-700);
 }
 .source-list a {
-  color: #e8c595;
+  color: var(--w-400);
 }
 .source-list span {
-  font-size: 11px;
-  color: #a8bdd4;
+  font-size: 12px;
+  color: var(--a-200);
 }
 .guide-footer {
-  background: #293d50;
-  border-color: #597189;
+  background: var(--a-900);
+  border-color: var(--a-400);
 }
 .guide-footer button {
-  background: #d9b785;
-  color: #182838;
-  border-color: #d9b785;
+  background: var(--w-400);
+  color: var(--n-800);
+  border-color: var(--w-400);
 }
 .experiment-dialog label {
-  color: #c6d8e8;
+  color: var(--n-200);
 }
 .experiment-dialog label span {
-  color: #9eb7cc;
+  color: var(--a-300);
 }
 .experiment-dialog input,
 .experiment-dialog textarea {
-  background: #172635;
-  border-color: #607e98;
-  color: #dce8f3;
+  background: var(--n-800);
+  border-color: var(--a-400);
+  color: var(--n-150);
   padding: 12px;
   font-size: 14px;
 }
 .experiment-footer {
-  border-color: #58738a;
+  border-color: var(--a-400);
 }
 .reference-figure {
   display: grid;
@@ -1960,7 +1960,7 @@ dialog::backdrop {
 }
 .reference-figure figure {
   margin: 0;
-  background: #d8dedf;
+  background: var(--n-150);
   overflow: hidden;
 }
 .reference-figure img {
@@ -1968,39 +1968,39 @@ dialog::backdrop {
   display: block;
 }
 .reference-figure figcaption {
-  font: 10px var(--mono);
-  color: #45586d;
+  font: 11px var(--mono);
+  color: var(--a-800);
   padding: 7px 12px;
-  background: #c8d4df;
+  background: var(--n-200);
 }
 .reference-link {
   display: block;
-  border-block: 1px solid #5b738c;
+  border-block: 1px solid var(--a-400);
   padding: 14px 0;
   font-size: 14px;
 }
 .reference-scope {
   padding-top: 12px;
-  border-top: 1px solid #48627b;
+  border-top: 1px solid var(--a-700);
 }
 .toast {
-  background: #233e53;
-  color: #e5eef5;
-  border: 1px solid #688da9;
+  background: var(--a-900);
+  color: var(--n-100);
+  border: 1px solid var(--a-400);
   border-radius: 3px;
   z-index: 60;
   bottom: 88px;
   font-size: 12px;
 }
 .storage-recovery {
-  background: #4b3a24;
-  border-color: #a48657;
-  color: #f1d4a7;
+  background: var(--w-800);
+  border-color: var(--w-600);
+  color: var(--w-200);
 }
 .storage-recovery button {
-  background: #634d30;
-  border-color: #b29461;
-  color: #f5dfbc;
+  background: var(--w-800);
+  border-color: var(--w-600);
+  color: var(--w-200);
 }
 .route-dialog {
   margin: 0;
@@ -2009,17 +2009,17 @@ dialog::backdrop {
   width: 320px;
   max-width: 92vw;
   border: 0;
-  border-right: 1px solid #6d8297;
+  border-right: 1px solid var(--a-400);
   border-radius: 0;
   overflow: hidden;
-  background: #1d2a39;
+  background: var(--n-800);
 }
 .route-close {
   position: absolute;
   top: 14px;
   right: 15px;
   z-index: 2;
-  color: #d6e2ee;
+  color: var(--n-150);
 }
 .route-panel {
   position: static;
@@ -2029,9 +2029,9 @@ dialog::backdrop {
   height: 100%;
   min-height: 0;
   padding: 28px 20px 0;
-  background: #1d2a39;
+  background: var(--n-800);
   border: 0;
-  color: #b4c7dd;
+  color: var(--n-300);
 }
 .route-drawer {
   height: 100%;
@@ -2055,86 +2055,86 @@ dialog::backdrop {
   margin: 12px 0 4px;
 }
 .title-dot {
-  color: #efb76b;
+  color: var(--w-400);
   font-size: 24px;
   margin-left: 14px;
 }
 .route-subtitle {
-  font: 9px var(--mono);
+  font: 11px var(--mono);
   letter-spacing: 1px;
-  color: #a4bad1;
+  color: var(--a-200);
   margin: 0 0 23px;
 }
 .wafer-label {
-  font-size: 11px;
-  color: #bdd0e2;
+  font-size: 12px;
+  color: var(--n-200);
 }
 .route-panel select {
   font: 11px var(--mono);
   padding: 10px;
-  background: #293c4f;
-  color: #d9e5ef;
-  border-color: #647e96;
+  background: var(--a-900);
+  color: var(--n-150);
+  border-color: var(--a-400);
 }
 .experiment-summary button {
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #546e86;
-  color: #c1d5e7;
+  border-bottom: 1px solid var(--a-400);
+  color: var(--n-200);
   padding: 9px 0;
   font-size: 12px;
 }
 .experiment-summary p {
-  font-size: 11px;
-  color: #a9bed3;
+  font-size: 12px;
+  color: var(--n-300);
 }
 .route-progress {
   font: 11px var(--mono);
-  color: #a9c2d9;
+  color: var(--a-200);
   margin: 17px 0;
 }
 .progress-track {
   height: 3px;
-  background: #46627e;
+  background: var(--a-700);
   border-radius: 0;
 }
 .progress-track i {
   height: 3px;
-  background: #efb76b;
+  background: var(--w-400);
 }
 .search {
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #7891a7;
+  border-bottom: 1px solid var(--a-300);
   border-radius: 0;
   margin-bottom: 13px;
   padding: 0;
 }
 .search input {
   font-size: 12px;
-  color: #e1ebf3;
+  color: var(--n-100);
   padding: 10px 4px;
 }
 .search span {
-  color: #d2e1ed;
+  color: var(--n-150);
 }
 .route-filter {
-  font-size: 11px;
-  color: #b5cee1;
+  font-size: 12px;
+  color: var(--n-200);
 }
 .route-filter select {
-  font-size: 11px;
+  font-size: 12px;
   max-width: 140px;
   padding: 6px;
 }
 .route-filter-count {
-  font: 10px var(--mono);
-  color: #96b4ce;
+  font: 11px var(--mono);
+  color: var(--a-300);
 }
 .route-current-button {
   background: transparent;
-  color: #e5ba83;
-  font-size: 11px;
+  color: var(--w-400);
+  font-size: 12px;
   text-align: left;
   padding: 5px 0 12px;
 }
@@ -2153,17 +2153,17 @@ dialog::backdrop {
 }
 .module-toggle {
   font-size: 12px;
-  color: #d0e0ee;
+  color: var(--n-150);
   padding: 12px 7px;
   border-radius: 0;
 }
 .module-number,
 .module-count {
-  font: 9px var(--mono);
-  color: #97b4cc;
+  font: 11px var(--mono);
+  color: var(--a-300);
 }
 .module-toggle:hover {
-  background: #2a4158;
+  background: var(--a-800);
 }
 .route-step {
   font-size: 12px;
@@ -2171,12 +2171,12 @@ dialog::backdrop {
   padding: 10px 9px;
   border: 0;
   border-radius: 0;
-  color: #acc4da;
+  color: var(--a-200);
   gap: 11px;
 }
 .route-step small {
-  font-size: 9px;
-  color: #84a1bc;
+  font-size: 12px;
+  color: var(--a-300);
 }
 .route-step:before {
   content: "";
@@ -2185,50 +2185,50 @@ dialog::backdrop {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: #4b6d8b;
+  background: var(--a-700);
   z-index: 0;
 }
 .step-marker {
   z-index: 1;
-  background: #1d2a39;
-  border-color: #7895af;
+  background: var(--n-800);
+  border-color: var(--a-300);
   width: 14px;
   height: 14px;
   line-height: 12px;
-  font-size: 9px;
+  font-size: 12px;
 }
 .route-step.done .step-marker {
-  background: #385a62;
-  color: #d6e9df;
-  border-color: #8cb7b0;
+  background: var(--a-800);
+  color: var(--n-150);
+  border-color: var(--a-300);
 }
 .route-step.current .step-marker {
-  background: #eabc7e;
-  border-color: #eabc7e;
+  background: var(--w-400);
+  border-color: var(--w-400);
 }
 .route-step.selected {
-  background: #d0deea;
-  color: #1c354b;
+  background: var(--n-150);
+  color: var(--a-900);
 }
 .route-step.selected small {
-  color: #4c708f;
+  color: var(--a-400);
 }
 .route-step:hover {
-  background: #334d65;
-  color: #e1edf5;
+  background: var(--a-800);
+  color: var(--n-100);
 }
 .route-bottom {
-  font: 9px var(--mono);
+  font: 11px var(--mono);
   padding: 15px 0;
-  border-color: #56738b;
-  color: #9ebbd3;
+  border-color: var(--a-400);
+  color: var(--a-200);
 }
 .equipment-atlas {
   width: min(1430px, 96vw);
   max-height: 93dvh;
-  background: #e5e9eb;
-  border-color: #8193a5;
-  color: #2b4055;
+  background: var(--n-100);
+  border-color: var(--n-400);
+  color: var(--a-800);
   color-scheme: light;
   border-radius: 0;
 }
@@ -2242,13 +2242,13 @@ dialog::backdrop {
   align-items: flex-start;
   justify-content: space-between;
   gap: 20px;
-  border-bottom: 1px solid #a7b9c9;
+  border-bottom: 1px solid var(--n-300);
   flex-shrink: 0;
-  background: #dce3e9;
+  background: var(--n-150);
 }
 .atlas-header .eyebrow {
-  color: #526e86;
-  font-size: 9px;
+  color: var(--a-400);
+  font-size: 11px;
   letter-spacing: 1.8px;
 }
 .atlas-header h2 {
@@ -2257,18 +2257,18 @@ dialog::backdrop {
   line-height: 1.23;
   font-weight: 550;
   margin: 14px 0;
-  color: #2b4156;
+  color: var(--a-800);
 }
 .atlas-header h2 em {
   font-style: normal;
-  color: #8f633d;
+  color: var(--w-600);
 }
 .atlas-header p {
   font-size: 12px;
-  color: #587188;
+  color: var(--a-400);
 }
 .atlas-header button {
-  color: #405d76;
+  color: var(--a-800);
 }
 .atlas-toolbar {
   display: flex;
@@ -2276,24 +2276,24 @@ dialog::backdrop {
   justify-content: space-between;
   gap: 22px;
   padding: 13px 36px;
-  border-bottom: 1px solid #afbfcd;
+  border-bottom: 1px solid var(--n-300);
   flex-shrink: 0;
 }
 .atlas-toolbar > span {
-  font: 10px var(--mono);
+  font: 11px var(--mono);
   letter-spacing: 1px;
-  color: #59738b;
+  color: var(--a-400);
 }
 .atlas-toolbar label {
   display: flex;
   gap: 10px;
   align-items: center;
   min-width: 260px;
-  border-bottom: 1px solid #7490a6;
+  border-bottom: 1px solid var(--a-400);
 }
 .atlas-toolbar input {
   background: transparent;
-  color: #354f67;
+  color: var(--a-800);
   font-size: 12px;
   border: 0;
   padding: 8px 0;
@@ -2301,27 +2301,27 @@ dialog::backdrop {
   border-radius: 0;
 }
 .atlas-toolbar label > span {
-  color: #4e6c84;
+  color: var(--a-700);
   font-size: 22px;
 }
 .atlas-view-controls {
   display: flex;
   gap: 8px;
   padding: 10px 36px;
-  border-bottom: 1px solid #aebfcc;
+  border-bottom: 1px solid var(--n-300);
   flex-shrink: 0;
 }
 .atlas-view-controls button {
   background: transparent;
-  color: #4d6b85;
-  border-color: #93aabc;
+  color: var(--a-700);
+  border-color: var(--n-400);
   min-height: 30px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .atlas-view-controls button[aria-pressed="true"] {
-  background: #344d65;
-  color: #e3edf4;
-  border-color: #344d65;
+  background: var(--a-800);
+  color: var(--n-100);
+  border-color: var(--a-800);
 }
 .atlas-grid {
   display: grid;
@@ -2341,29 +2341,29 @@ dialog::backdrop {
   align-items: stretch;
   text-align: left;
   border: 0;
-  border-right: 1px solid #b2c1ce;
-  border-bottom: 1px solid #b2c1ce;
+  border-right: 1px solid var(--n-300);
+  border-bottom: 1px solid var(--n-300);
   border-radius: 0;
-  background: #edf0f0;
+  background: var(--n-100);
   padding: 20px 24px;
   position: relative;
   overflow: hidden;
-  color: #3b5870;
+  color: var(--a-800);
 }
 .atlas-machine:nth-child(3n) {
   border-right: 0;
 }
 .atlas-machine:hover {
-  background: #dce6ed;
+  background: var(--n-150);
 }
 .atlas-machine:focus-visible {
-  outline: 3px solid #956a3e;
+  outline: 3px solid var(--w-600);
   outline-offset: -5px;
 }
 .atlas-number {
-  font: 9px var(--mono);
+  font: 11px var(--mono);
   letter-spacing: 1.1px;
-  color: #546f85;
+  color: var(--a-400);
   position: relative;
   z-index: 1;
 }
@@ -2390,21 +2390,21 @@ dialog::backdrop {
   font-size: 20px;
   font-weight: 550;
   letter-spacing: -0.65px;
-  color: #344d65;
+  color: var(--a-800);
 }
 .atlas-machine-name > span {
   font-size: 23px;
-  color: #9c7047;
+  color: var(--w-600);
 }
 .atlas-english {
-  font: 9px/1.7 var(--mono);
-  color: #566f85;
+  font: 11px/1.7 var(--mono);
+  color: var(--a-400);
   letter-spacing: 0.5px;
   margin-top: 7px;
 }
 .atlas-principle {
   font-size: 12px;
-  color: #5e778d;
+  color: var(--a-400);
   line-height: 1.8;
   margin-top: 12px;
   display: -webkit-box;
@@ -2418,22 +2418,22 @@ dialog::backdrop {
   flex-wrap: wrap;
   gap: 12px;
   padding: 13px 36px;
-  background: #cddae5;
-  border-top: 1px solid #92aabe;
-  color: #486780;
-  font: 9px var(--mono);
+  background: var(--n-200);
+  border-top: 1px solid var(--n-400);
+  color: var(--a-700);
+  font: 11px var(--mono);
   flex-shrink: 0;
 }
 .atlas-footer > span:last-child {
   font:
-    11px system-ui,
+    12px system-ui,
     sans-serif;
 }
 .atlas-empty {
   grid-column: 1/-1;
   text-align: center;
   padding: 45px;
-  color: #4a6983;
+  color: var(--a-700);
 }
 @media (min-width: 1750px) {
   main {
@@ -2480,7 +2480,7 @@ dialog::backdrop {
     font-size: 31px;
   }
   .module-rail button strong {
-    font-size: 10px;
+    font-size: 12px;
   }
   .module-rail button {
     padding-inline: 5px;
@@ -2543,7 +2543,7 @@ dialog::backdrop {
     padding-inline: 17px;
   }
   .stage-badge {
-    font-size: 9px;
+    font-size: 12px;
   }
   .equipment-top {
     flex-wrap: wrap;
@@ -2561,20 +2561,20 @@ dialog::backdrop {
   }
   .camera-toolbar button {
     padding: 5px 7px;
-    font-size: 9px;
+    font-size: 12px;
   }
   .stage-exports {
     gap: 8px;
   }
   .stage-exports button {
-    font-size: 9px;
+    font-size: 12px;
   }
   .module-rail {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 10px 3px;
   }
   .module-rail button strong {
-    font-size: 11px;
+    font-size: 12px;
   }
   .module-rail button i {
     bottom: -3px;
@@ -2587,7 +2587,7 @@ dialog::backdrop {
     grid-template-columns: 1fr 1fr;
     gap: 9px 22px;
     border-left: 0;
-    border-top: 1px solid #b0c3d2;
+    border-top: 1px solid var(--n-300);
   }
   .section-inspector > p {
     display: block;
@@ -2632,7 +2632,7 @@ dialog::backdrop {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .atlas-machine:nth-child(3n) {
-    border-right: 1px solid #b2c1ce;
+    border-right: 1px solid var(--n-300);
   }
   .atlas-machine:nth-child(2n) {
     border-right: 0;
@@ -2651,7 +2651,7 @@ dialog::backdrop {
   }
   .recipe-panel {
     border-left: 0;
-    border-top: 1px solid #5a6c80;
+    border-top: 1px solid var(--n-500);
     padding: 24px;
   }
   .recipe-panel:before {
@@ -2684,7 +2684,7 @@ dialog::backdrop {
     min-height: 460px;
   }
   .console-kicker {
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 1px;
   }
   .operation-header h2 {
@@ -2752,7 +2752,7 @@ dialog::backdrop {
     gap: 10px;
   }
   .brand small {
-    font-size: 7px;
+    font-size: 12px;
   }
   .brand-mark {
     height: 31px;
@@ -2762,7 +2762,7 @@ dialog::backdrop {
   .app-header nav {
     order: 3;
     flex-basis: 100%;
-    font-size: 10px;
+    font-size: 12px;
     gap: 22px;
     height: 32px;
   }
@@ -2781,14 +2781,14 @@ dialog::backdrop {
     gap: 10px;
   }
   .lot-identity .eyebrow {
-    font-size: 10px;
+    font-size: 12px;
   }
   .lot-actions {
     gap: 7px;
     flex-wrap: wrap;
   }
   .lot-actions button {
-    font-size: 10px;
+    font-size: 12px;
     min-height: 31px;
   }
   .lot-actions #saveStatus {
@@ -2808,17 +2808,17 @@ dialog::backdrop {
     display: none;
   }
   #openRoute {
-    font-size: 11px;
+    font-size: 12px;
     gap: 9px;
     padding: 5px 10px;
     min-height: 34px;
   }
   #openRoute b {
-    font-size: 9px;
+    font-size: 12px;
     padding-left: 8px;
   }
   .atlas-launch {
-    font-size: 10px;
+    font-size: 12px;
     gap: 7px;
     padding: 4px;
   }
@@ -2832,7 +2832,7 @@ dialog::backdrop {
     margin-bottom: 17px;
   }
   .operation-path {
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 0.6px;
   }
   .operation-header h2 {
@@ -2841,7 +2841,7 @@ dialog::backdrop {
     margin-top: 7px;
   }
   .operation-header p {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1.8;
   }
   .operation-state {
@@ -2849,11 +2849,11 @@ dialog::backdrop {
     max-width: 95px;
   }
   .state-badge {
-    font-size: 10px;
+    font-size: 12px;
     padding: 5px 6px;
   }
   .operation-state small {
-    font-size: 9px;
+    font-size: 12px;
     max-width: 95px;
   }
   .module-rail {
@@ -2867,13 +2867,13 @@ dialog::backdrop {
     padding: 4px 2px;
   }
   .module-rail button > span {
-    font-size: 11px;
+    font-size: 12px;
   }
   .module-rail button strong {
-    font-size: 9px;
+    font-size: 12px;
   }
   .module-rail button small {
-    font-size: 8px;
+    font-size: 12px;
   }
   .lab-shortcuts {
     flex-wrap: wrap;
@@ -2885,7 +2885,7 @@ dialog::backdrop {
     gap: 19px;
   }
   .lab-shortcuts .workspace-switcher a {
-    font-size: 11px;
+    font-size: 12px;
     gap: 6px;
   }
   .workspace-switcher svg {
@@ -2900,7 +2900,7 @@ dialog::backdrop {
     gap: 14px;
   }
   .operation-navigation button {
-    font-size: 10px;
+    font-size: 12px;
     min-height: 28px;
     padding: 3px;
   }
@@ -2908,35 +2908,35 @@ dialog::backdrop {
     padding: 14px 14px 5px;
   }
   .stage-heading h3 {
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 1.7px;
   }
   .stage-badge {
-    font-size: 8px;
+    font-size: 12px;
   }
   .stage-heading-actions {
     gap: 9px !important;
   }
   #focusStage {
-    font-size: 9px;
+    font-size: 12px;
   }
   .stage-index {
-    font-size: 9px;
+    font-size: 12px;
   }
   .equipment-top {
     padding: 6px 14px 10px;
     gap: 7px;
   }
   .equipment-top strong {
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 0.45px;
   }
   .equipment-top small {
-    font-size: 7px;
+    font-size: 12px;
   }
   .equipment-top-actions button,
   .cutaway-switch {
-    font-size: 10px;
+    font-size: 12px;
   }
   .fab-viewport {
     height: 360px;
@@ -2946,18 +2946,18 @@ dialog::backdrop {
     left: 15px;
     right: 15px;
     top: 15px;
-    font-size: 6px;
+    font-size: 11px;
     letter-spacing: 0.5px;
   }
   .viewport-hud b {
     font-size: 12px;
   }
   .viewport-hud > span:last-child {
-    font-size: 8px;
+    font-size: 12px;
   }
   .viewport-caption {
     padding: 8px 14px;
-    font-size: 9px;
+    font-size: 12px;
   }
   .viewport-axis {
     right: 18px;
@@ -2973,7 +2973,7 @@ dialog::backdrop {
     justify-content: space-between;
   }
   .camera-toolbar button {
-    font-size: 10px;
+    font-size: 12px;
     padding: 6px 10px;
     flex: 1;
     min-height: 33px;
@@ -2984,60 +2984,60 @@ dialog::backdrop {
     gap: 11px;
   }
   .part-buttons button {
-    font-size: 9px;
+    font-size: 12px;
   }
   .stage-exports {
     margin-left: 0;
     gap: 20px;
   }
   .stage-exports button {
-    font-size: 10px;
+    font-size: 12px;
   }
   .motion-status {
-    font-size: 10px;
+    font-size: 12px;
     padding: 9px 13px;
   }
   .phase-strip {
     height: 40px;
   }
   .phase-strip > [data-phase] {
-    font-size: 9px;
+    font-size: 12px;
     gap: 4px;
   }
   .phase-strip > [data-phase] span {
-    font-size: 7px;
+    font-size: 12px;
   }
   .section-preview {
     padding: 10px 14px;
   }
   .preview-title {
-    font-size: 10px;
+    font-size: 12px;
     gap: 9px;
   }
   .preview-title > span {
-    font-size: 7px;
+    font-size: 12px;
   }
   .preview-title button {
-    font-size: 9px;
+    font-size: 12px;
   }
   #consoleSectionPreview {
     height: 95px;
   }
   .preview-foot {
-    font-size: 7px;
+    font-size: 12px;
   }
   .preview-foot #previewSource {
-    font-size: 8px;
+    font-size: 12px;
   }
   .observation-deck summary {
     padding: 14px;
-    font-size: 11px;
+    font-size: 12px;
   }
   .observation-deck-body {
     padding: 0 14px 15px;
   }
   .deck-hint {
-    font-size: 7px;
+    font-size: 12px;
   }
   .observation-controls {
     grid-template-columns: 1fr;
@@ -3054,16 +3054,16 @@ dialog::backdrop {
     gap: 0 19px;
   }
   .recipe-field label {
-    font-size: 11px;
+    font-size: 12px;
   }
   .recipe-field label span {
-    font-size: 8px;
+    font-size: 12px;
   }
   .recipe-input input {
     font-size: 24px;
   }
   .recipe-panel .text-button {
-    font-size: 11px;
+    font-size: 12px;
   }
   .console-telemetry {
     grid-template-columns: 1fr 1fr;
@@ -3081,13 +3081,13 @@ dialog::backdrop {
     padding-left: 0;
   }
   .telemetry-cell > span {
-    font-size: 10px;
+    font-size: 12px;
   }
   .telemetry-cell > strong {
     font-size: 18px;
   }
   .telemetry-cell p {
-    font-size: 9px;
+    font-size: 12px;
   }
   .section-heading {
     padding: 20px 16px;
@@ -3100,11 +3100,11 @@ dialog::backdrop {
     margin: 5px 0 0;
   }
   .section-options {
-    font-size: 10px;
+    font-size: 12px;
     gap: 8px;
   }
   .section-options button {
-    font-size: 10px;
+    font-size: 12px;
   }
   .cross-section-wrap {
     padding: 15px 8px;
@@ -3113,7 +3113,7 @@ dialog::backdrop {
     height: 255px;
   }
   .section-caption {
-    font-size: 9px;
+    font-size: 12px;
     padding: 0;
     margin-top: 10px;
   }
@@ -3122,7 +3122,7 @@ dialog::backdrop {
     padding: 0 6px;
   }
   .material-legend span {
-    font-size: 9px;
+    font-size: 12px;
   }
   .section-inspector {
     padding: 18px 15px;
@@ -3132,30 +3132,30 @@ dialog::backdrop {
     font-size: 17px;
   }
   .section-inspector > p {
-    font-size: 10px;
+    font-size: 12px;
   }
   .layer-row {
-    font-size: 10px;
+    font-size: 12px;
   }
   .film-profile {
     padding: 18px 14px;
     gap: 14px;
   }
   .film-profile-controls {
-    font-size: 11px;
+    font-size: 12px;
     flex-wrap: wrap;
   }
   .film-profile-controls select {
-    font-size: 10px;
+    font-size: 12px;
     padding: 6px;
   }
   .film-profile-note,
   #profileContext {
-    font-size: 10px;
+    font-size: 12px;
   }
   .change-summary,
   .model-note {
-    font-size: 10px;
+    font-size: 12px;
     padding: 11px 15px;
   }
   .analysis-intro {
@@ -3165,7 +3165,7 @@ dialog::backdrop {
     font-size: 27px;
   }
   .analysis-intro p {
-    font-size: 11px;
+    font-size: 12px;
   }
   .analysis-mark {
     font-size: 32px;
@@ -3179,7 +3179,7 @@ dialog::backdrop {
     gap: 21px;
   }
   .tab-list button {
-    font-size: 11px;
+    font-size: 12px;
     padding: 15px 0;
   }
   .result-exports {
@@ -3196,7 +3196,7 @@ dialog::backdrop {
   }
   .metric > span,
   .metric p {
-    font-size: 10px;
+    font-size: 12px;
   }
   .process-change-heading {
     font-size: 12px;
@@ -3208,14 +3208,14 @@ dialog::backdrop {
     gap: 10px;
   }
   .process-change-values span {
-    font-size: 10px;
+    font-size: 12px;
   }
   .sweep-controls {
     gap: 14px 10px;
   }
   .sweep-controls label,
   .comparison-toolbar label {
-    font-size: 11px;
+    font-size: 12px;
   }
   .sweep-controls input,
   .sweep-controls select,
@@ -3242,10 +3242,10 @@ dialog::backdrop {
     flex: 1;
   }
   .transport-status strong {
-    font-size: 10px;
+    font-size: 12px;
   }
   .transport-status small {
-    font-size: 9px;
+    font-size: 12px;
     max-width: 35vw;
   }
   .transport-actions {
@@ -3255,16 +3255,16 @@ dialog::backdrop {
     max-width: 55%;
   }
   .transport-actions button {
-    font-size: 10px;
+    font-size: 12px;
     min-height: 38px;
   }
   #consoleRun {
     min-width: 0;
-    font-size: 11px;
+    font-size: 12px;
     padding: 7px 11px;
   }
   #consoleCancel {
-    font-size: 9px;
+    font-size: 12px;
     min-height: 30px;
     padding: 5px 7px;
   }
@@ -3273,7 +3273,7 @@ dialog::backdrop {
     min-height: 480px;
   }
   .status-bar {
-    font-size: 8px;
+    font-size: 12px;
   }
   .equipment-atlas {
     width: calc(100vw - 14px);
@@ -3283,7 +3283,7 @@ dialog::backdrop {
     padding: 24px 20px 18px;
   }
   .atlas-header .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
     letter-spacing: 1px;
   }
   .atlas-header h2 {
@@ -3292,14 +3292,14 @@ dialog::backdrop {
     margin: 12px 0;
   }
   .atlas-header p {
-    font-size: 11px;
+    font-size: 12px;
   }
   .atlas-toolbar {
     padding: 11px 19px;
     gap: 10px;
   }
   .atlas-toolbar > span {
-    font-size: 8px;
+    font-size: 11px;
     white-space: nowrap;
     letter-spacing: 0;
   }
@@ -3308,7 +3308,7 @@ dialog::backdrop {
     max-width: 174px;
   }
   .atlas-toolbar input {
-    font-size: 11px;
+    font-size: 12px;
   }
   .atlas-view-controls {
     padding: 10px 19px;
@@ -3328,10 +3328,10 @@ dialog::backdrop {
   }
   .atlas-footer {
     padding: 11px 19px;
-    font-size: 8px;
+    font-size: 12px;
   }
   .atlas-footer > span:last-child {
-    font-size: 9px;
+    font-size: 12px;
   }
   .dialog-top,
   .equipment-dialog .dialog-top {
@@ -3349,7 +3349,7 @@ dialog::backdrop {
     gap: 7px;
   }
   .reference-figure figcaption {
-    font-size: 8px;
+    font-size: 12px;
   }
   .guide-flow > div {
     padding: 11px;
@@ -3361,7 +3361,7 @@ dialog::backdrop {
     width: 310px;
   }
   .toast {
-    font-size: 11px;
+    font-size: 12px;
     bottom: 94px;
   }
 }
@@ -3379,11 +3379,11 @@ dialog::backdrop {
   background: transparent;
   border-left: 0;
   padding: 0 0 15px;
-  color: #b7c4d4;
+  color: var(--n-300);
 }
 .recipe-input input:disabled {
   background: transparent;
-  color: #9daec1;
+  color: var(--n-300);
 }
 .equipment-panel {
   padding: 0;
@@ -3428,20 +3428,20 @@ dialog::backdrop {
   }
 }
 .warning-list {
-  background: #fff0d8;
-  border-color: #b58b4f;
-  color: #774510;
+  background: var(--n-50);
+  border-color: var(--w-600);
+  color: var(--w-800);
 }
 .sweep-draft-notice.stale {
-  background: #fff0d8;
-  color: #774510;
+  background: var(--n-50);
+  color: var(--w-800);
 }
 .process-change-values strong[data-change="delta"] {
-  color: #945514;
+  color: var(--w-800);
 }
 .tab-list button.active {
-  color: #704014;
-  border-color: #a86b27;
+  color: var(--w-800);
+  border-color: var(--w-600);
 }
 .fab-viewport {
   position: relative;
@@ -3449,18 +3449,18 @@ dialog::backdrop {
 .wafer-detail-frame {
   position: absolute;
   pointer-events: none;
-  border: 1px solid #71849b;
-  border-top: 2px solid #efb76b;
+  border: 1px solid var(--a-400);
+  border-top: 2px solid var(--w-400);
   z-index: 2;
-  color: #e9edf4;
-  box-shadow: 0 6px 22px #0004;
+  color: var(--n-100);
+  box-shadow: 0 6px 22px color-mix(in srgb, var(--n-950) 27%, transparent);
 }
 .wafer-detail-frame strong {
   position: absolute;
   left: 9px;
   top: 5px;
   font:
-    10px system-ui,
+    12px system-ui,
     sans-serif;
   font-weight: 600;
 }
@@ -3471,20 +3471,20 @@ dialog::backdrop {
   right: 0;
   text-align: center;
   font:
-    8px system-ui,
+    12px system-ui,
     sans-serif;
-  color: #b4c4d6;
+  color: var(--n-300);
 }
 .wafer-location {
   position: absolute;
   pointer-events: none;
   transform: translate(-50%, -100%) translateY(-15px);
   padding: 3px 6px;
-  border: 1px solid #d6ac71;
-  background: #19232dea;
-  color: #f6d398;
+  border: 1px solid var(--w-400);
+  background: color-mix(in srgb, var(--n-850) 92%, transparent);
+  color: var(--w-200);
   font:
-    10px system-ui,
+    12px system-ui,
     sans-serif;
   z-index: 1;
   white-space: nowrap;
@@ -3495,7 +3495,7 @@ dialog::backdrop {
   top: 100%;
   left: 50%;
   height: 14px;
-  border-left: 1px solid #efb76b;
+  border-left: 1px solid var(--w-400);
 }
 @media (max-width: 540px) {
   .fab-viewport {
@@ -3516,7 +3516,7 @@ dialog::backdrop {
     bottom: 37px;
     width: 160px;
     text-align: right;
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 @media (max-width: 600px) {
@@ -3547,24 +3547,24 @@ dialog::backdrop {
 
 /* Equipment edition 03: architectural identifiers follow the actual model. */
 .atlas-machine {
-  border-top: 2px solid var(--machine-accent, #efb76b);
+  border-top: 2px solid var(--machine-accent, var(--w-400));
 }
 .atlas-machine .atlas-number {
-  color: var(--machine-accent, #efb76b);
+  color: var(--machine-accent, var(--w-400));
 }
 .atlas-features {
   display: flex;
   flex-wrap: wrap;
   gap: 5px 13px;
   margin: 11px 0 6px;
-  font-size: 10px;
-  color: #c8d4df;
+  font-size: 12px;
+  color: var(--n-200);
   line-height: 1.9;
 }
 .atlas-features > span:before {
   content: "·";
   margin-right: 6px;
-  color: var(--machine-accent, #efb76b);
+  color: var(--machine-accent, var(--w-400));
 }
 .equipment-features {
   display: flex;
@@ -3572,16 +3572,16 @@ dialog::backdrop {
   gap: 8px 25px;
   padding-left: 18px;
   margin: 12px 0 22px;
-  color: #d4dfeb;
+  color: var(--n-150);
   font-size: 12px;
 }
 @media (max-width: 540px) {
   .atlas-features {
-    font-size: 10px;
+    font-size: 12px;
   }
   .equipment-features {
     display: block;
-    font-size: 11px;
+    font-size: 12px;
   }
   .equipment-features li {
     margin-bottom: 8px;

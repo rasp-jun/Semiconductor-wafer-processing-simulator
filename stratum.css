@@ -1,13 +1,13 @@
 /* STRATUM / Process Intelligence. Shared presentation; app state stays app-owned. */
 body.stratum {
-  --st-ink: #111827;
-  --st-midnight: #111622;
-  --st-paper: #f2f1ec;
-  --st-panel: #fbfaf6;
-  --st-line: #d4d5d1;
-  --st-muted: #66707e;
-  --st-cobalt: #375cf6;
-  --st-signal: #d3ee65;
+  --st-ink: var(--n-900);
+  --st-midnight: var(--n-900);
+  --st-paper: var(--n-50);
+  --st-panel: var(--n-25);
+  --st-line: var(--n-200);
+  --st-muted: var(--n-500);
+  --st-cobalt: var(--a-500);
+  --st-signal: var(--s-400);
   --st-mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
   --ink: var(--st-ink);
   --navy: var(--st-midnight);
@@ -39,7 +39,7 @@ body.stratum {
   accent-color: var(--st-cobalt);
 }
 .stratum :is(a, button, input, select, textarea, summary):focus-visible {
-  outline: 3px solid #7890ff;
+  outline: 3px solid var(--a-400);
   outline-offset: 3px;
 }
 .stratum :is(button, a) {
@@ -54,18 +54,18 @@ body.stratum {
 .stratum :is(.primary, .primary-button, button.dark) {
   background: var(--st-cobalt);
   border-color: var(--st-cobalt);
-  color: #fff;
+  color: var(--n-0);
   box-shadow: none;
 }
 .stratum :is(.primary, .primary-button, button.dark):hover:not(:disabled) {
-  background: #2347de;
-  border-color: #2347de;
-  color: #fff;
+  background: var(--a-600);
+  border-color: var(--a-600);
+  color: var(--n-0);
 }
 .stratum .eyebrow {
-  font: 10px/1.6 var(--st-mono);
+  font: 11px/1.6 var(--st-mono);
   letter-spacing: 1.6px;
-  color: #687387;
+  color: var(--n-500);
 }
 .stratum
   :is(.panel, .section-panel, .results-panel, .recipe-panel, .white-panel, .summary-card, .project-toolbar) {
@@ -81,19 +81,19 @@ body.stratum {
 }
 .stratum dialog {
   border-radius: 5px;
-  border-color: #bfc5d2;
-  box-shadow: 0 30px 100px #0c122452;
+  border-color: var(--n-300);
+  box-shadow: 0 30px 100px color-mix(in srgb, var(--n-900) 32%, transparent);
 }
 .stratum dialog::backdrop {
-  background: #0c1126bc;
+  background: color-mix(in srgb, var(--a-900) 74%, transparent);
   backdrop-filter: blur(5px);
 }
 .stratum :is(.dialog-head, .dialog-top, .dialog-heading) {
   background: var(--st-paper);
 }
 .stratum ::selection {
-  background: #c8d2ff;
-  color: #142757;
+  background: var(--a-200);
+  color: var(--a-900);
 }
 
 /* The symbol is a stack of material planes, resolved as vector geometry. */
@@ -106,7 +106,7 @@ body.stratum {
   letter-spacing: 0;
   margin: 0;
   padding: 0;
-  color: #f6f5f0;
+  color: var(--n-50);
   flex-shrink: 0;
 }
 .stratum .stratum-symbol {
@@ -131,9 +131,9 @@ body.stratum {
   display: block;
   margin: 8px 0 0;
   padding: 0;
-  font: 8px/1 var(--st-mono);
+  font: 11px/1 var(--st-mono);
   letter-spacing: 1.35px;
-  color: #98a2b5;
+  color: var(--n-400);
   white-space: nowrap;
 }
 .stratum [data-stratum-switcher] {
@@ -177,7 +177,7 @@ body.stratum {
 }
 .stratum .stratum-switch-arrow {
   font-size: 16px;
-  color: #748096;
+  color: var(--n-400);
   margin-left: auto;
 }
 .stratum .stratum-space-panel {
@@ -190,8 +190,8 @@ body.stratum {
   overflow: auto;
   padding: 17px;
   background: var(--st-panel);
-  border: 1px solid #b9c1d3;
-  box-shadow: 0 18px 50px #060c2830;
+  border: 1px solid var(--n-300);
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--a-900) 19%, transparent);
   border-radius: 3px;
   color: var(--st-ink);
   z-index: 80;
@@ -201,7 +201,7 @@ body.stratum {
   margin: 0 0 13px;
   padding: 0 0 13px;
   border-bottom: 1px solid var(--st-line);
-  font: 9px var(--st-mono);
+  font: 11px var(--st-mono);
   letter-spacing: 1.7px;
   color: var(--st-muted);
 }
@@ -236,16 +236,16 @@ body.stratum {
   letter-spacing: 0;
 }
 .stratum .stratum-space-panel nav a:hover {
-  background: #e9ecf4;
+  background: var(--n-100);
   color: var(--st-cobalt);
 }
 .stratum .stratum-space-panel nav a[aria-current] {
   background: var(--st-cobalt);
-  color: #fff;
+  color: var(--n-0);
   border: 0;
 }
 .stratum .stratum-space-code {
-  font: 10px var(--st-mono);
+  font: 11px var(--st-mono);
   opacity: 0.65;
   width: 20px;
   flex-shrink: 0;
@@ -256,7 +256,7 @@ body.stratum {
   display: block;
 }
 .stratum .stratum-space-panel small {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.4;
   color: inherit;
   opacity: 0.7;
@@ -271,8 +271,8 @@ body.stratum {
 /* Persistent location is legible across all nine workspaces. */
 .stratum :is(.rail, .sidebar, .review-sidebar) {
   background: var(--st-midnight);
-  border-right: 1px solid #2d3548;
-  color: #a6b0c3;
+  border-right: 1px solid var(--n-700);
+  color: var(--n-300);
 }
 .stratum :is(.rail, .review-sidebar) {
   width: 228px;
@@ -282,10 +282,10 @@ body.stratum {
   margin: 0 0 26px;
 }
 .stratum :is(.workspace-badge, .workspace-label, .workspace-picker) {
-  background: #181f2f;
-  border-color: #354058;
+  background: var(--n-850);
+  border-color: var(--a-800);
   border-radius: 2px;
-  color: #e0e4ee;
+  color: var(--n-150);
   box-shadow: none;
 }
 .stratum .workspace-badge {
@@ -293,8 +293,8 @@ body.stratum {
   padding: 12px;
 }
 .stratum .workspace-badge small {
-  color: #94a0b7;
-  font-size: 10px;
+  color: var(--n-400);
+  font-size: 12px;
   line-height: 1.6;
 }
 .stratum .workspace-badge i {
@@ -302,8 +302,8 @@ body.stratum {
   box-shadow: none;
 }
 .stratum :is(.nav-caption, .nav-label) {
-  color: #77849c;
-  font: 9px var(--st-mono);
+  color: var(--n-400);
+  font: 11px var(--st-mono);
   letter-spacing: 1.5px;
 }
 .stratum .rail nav {
@@ -316,21 +316,21 @@ body.stratum {
   align-items: center;
   min-height: 41px;
   padding: 10px 11px;
-  color: #a9b2c4;
+  color: var(--n-300);
   font-size: 12px;
   border: 1px solid transparent;
   border-radius: 2px;
   text-decoration: none;
 }
 .stratum .rail nav a span {
-  font: 10px var(--st-mono);
-  color: #77849c;
+  font: 11px var(--st-mono);
+  color: var(--n-400);
   width: 17px;
 }
 .stratum .rail nav a:is(.active, [aria-current]) {
-  background: #253758;
-  border-color: #384e75;
-  color: #f3f6ff;
+  background: var(--a-900);
+  border-color: var(--a-800);
+  color: var(--n-50);
   box-shadow: inset 2px 0 var(--st-signal);
   font-weight: 600;
 }
@@ -338,56 +338,56 @@ body.stratum {
   color: var(--st-signal);
 }
 .stratum .rail nav a:hover:not(.active) {
-  background: #1d273b;
-  color: #fff;
+  background: var(--n-800);
+  color: var(--n-0);
 }
 .stratum .rail-bottom {
-  border-color: #333d51;
+  border-color: var(--n-700);
   padding-top: 19px;
 }
 .stratum .rail-bottom :is(p, button) {
-  color: #b1bed5;
+  color: var(--n-300);
 }
 .stratum .rail-bottom small {
-  color: #8190aa;
+  color: var(--a-300);
   line-height: 1.7;
 }
 .stratum .rail-bottom .connection {
   color: var(--st-signal);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.7px;
 }
 .stratum .rail + .app-shell {
   margin-left: 228px;
 }
 .stratum :is(.topbar, .review-topbar) {
-  background: #fbfaf6;
+  background: var(--n-25);
   border-bottom: 1px solid var(--st-line);
   box-shadow: none;
 }
 .stratum .breadcrumb {
-  color: #758094;
-  font-size: 9px;
+  color: var(--n-400);
+  font-size: 11px;
   letter-spacing: 1px;
 }
 .stratum .topbar strong {
-  color: #283246;
+  color: var(--n-700);
 }
 .stratum .top-actions {
   flex-wrap: wrap;
 }
 .stratum .top-actions button {
   background: transparent;
-  color: #465066;
-  border-color: #cdd0d8;
-  font-size: 11px;
+  color: var(--n-600);
+  border-color: var(--n-200);
+  font-size: 12px;
   border-radius: 2px;
   min-height: 34px;
 }
 .stratum .top-actions button.dark {
   background: var(--st-ink);
   border-color: var(--st-ink);
-  color: #fff;
+  color: var(--n-0);
 }
 .stratum .topbar [data-stratum-switcher] {
   margin-right: auto;
@@ -413,7 +413,7 @@ body.stratum {
   margin-bottom: 24px;
   align-items: flex-end;
   padding-bottom: 23px;
-  border-bottom: 1px solid #aeb5c4;
+  border-bottom: 1px solid var(--n-300);
 }
 .stratum.memory-studio .page-title h1 {
   font-size: clamp(38px, 3.7vw, 62px);
@@ -427,7 +427,7 @@ body.stratum {
 }
 .stratum.memory-studio .page-title p {
   font-size: 12px;
-  color: #677185;
+  color: var(--n-500);
   line-height: 1.8;
   margin-top: 14px;
 }
@@ -435,21 +435,21 @@ body.stratum {
   padding-bottom: 4px;
 }
 .stratum .product-signature b {
-  color: #46516a;
-  font-size: 10px;
+  color: var(--a-800);
+  font-size: 12px;
 }
 .stratum .product-signature small {
-  color: #7a8495;
+  color: var(--n-400);
 }
 .stratum .signature-orbit {
   width: 55px;
   height: 55px;
-  border-color: #8497cb;
+  border-color: var(--a-300);
   border-radius: 0;
   transform: rotate(-30deg) skew(12deg);
 }
 .stratum .signature-orbit::before {
-  border-color: #bbc5df;
+  border-color: var(--n-300);
   border-radius: 0;
 }
 .stratum .signature-orbit i {
@@ -457,85 +457,85 @@ body.stratum {
   width: 28px;
   height: 28px;
   background:
-    repeating-linear-gradient(0deg, transparent 0 5px, #375cf65c 5px 6px),
-    repeating-linear-gradient(90deg, transparent 0 5px, #375cf65c 5px 6px), #e0e5f4;
+    repeating-linear-gradient(0deg, transparent 0 5px, color-mix(in srgb, var(--a-500) 36%, transparent) 5px 6px),
+    repeating-linear-gradient(90deg, transparent 0 5px, color-mix(in srgb, var(--a-500) 36%, transparent) 5px 6px), var(--n-150);
   box-shadow: none;
 }
 .stratum.memory-studio .workspace-links {
-  border-color: #ced2dc;
+  border-color: var(--n-200);
   gap: 27px;
 }
 .stratum.memory-studio .workspace-links a {
-  color: #687386;
-  font-size: 11px;
+  color: var(--n-500);
+  font-size: 12px;
 }
 .stratum.memory-studio .workspace-links a:first-child {
-  color: #223964;
+  color: var(--a-800);
   border-color: var(--st-cobalt);
 }
 .stratum.memory-studio .workspace-links a span {
-  color: #8b95a5;
+  color: var(--n-400);
 }
 .stratum.memory-studio .scenario-bar {
   border-radius: 3px;
-  background: #e8ebf3;
-  border-color: #cdd4e3;
+  background: var(--n-100);
+  border-color: var(--n-200);
   padding: 14px 16px;
 }
 .stratum.memory-studio .scenario-bar :is(p, label, .gate-switch) {
-  color: #536078;
+  color: var(--a-700);
 }
 .stratum.memory-studio .scenario-bar select {
-  background: #fbfcff;
-  color: #273750;
-  border-color: #bfc9dd;
+  background: var(--n-25);
+  color: var(--a-900);
+  border-color: var(--n-300);
   border-radius: 2px;
 }
 .stratum.memory-studio #resetPlan {
-  border-color: #c1cadc;
-  color: #536078;
+  border-color: var(--n-200);
+  color: var(--a-700);
 }
 .stratum.memory-studio #runPlan {
   background: var(--st-cobalt);
   border-color: var(--st-cobalt);
-  color: #fff;
+  color: var(--n-0);
 }
 .stratum.memory-studio .feedback {
-  color: #566681;
+  color: var(--a-700);
 }
 .stratum.memory-studio .kpi-grid {
   border-radius: 0;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #cdd2dd;
+  border-bottom: 1px solid var(--n-200);
   box-shadow: none;
   margin: 0 0 25px;
 }
 .stratum.memory-studio .kpi-grid article {
   padding: 16px 19px 21px;
-  border-color: #cdd2dd;
+  border-color: var(--n-200);
 }
 .stratum.memory-studio .kpi-grid article:first-child {
   padding-left: 0;
 }
 .stratum.memory-studio .kpi-grid article > span {
-  color: #677286;
-  font-size: 10px;
+  color: var(--n-500);
+  font-size: 12px;
 }
 .stratum.memory-studio .kpi-grid strong {
-  color: #1d2941;
+  color: var(--a-900);
   font-size: 33px;
   font-weight: 450;
   letter-spacing: -1px;
 }
 .stratum.memory-studio .kpi-grid strong.amber {
-  color: #9e621d;
+  color: var(--w-600);
 }
 .stratum.memory-studio .kpi-grid strong.mono {
-  color: #28395b;
+  color: var(--a-900);
 }
 .stratum.memory-studio .kpi-grid small {
-  color: #7a8495;
+  color: var(--n-400);
 }
 .stratum.memory-studio .workspace-grid {
   gap: 22px;
@@ -549,233 +549,233 @@ body.stratum {
   border-radius: 3px;
 }
 .stratum.memory-studio .fab-panel {
-  background: #131b2b;
-  border-color: #2d3b56;
-  color: #dce5f8;
+  background: var(--n-850);
+  border-color: var(--a-900);
+  color: var(--n-150);
   box-shadow: none;
   border-radius: 3px;
 }
 .stratum.memory-studio .fab-panel h2 {
-  color: #f1f4fa;
+  color: var(--n-50);
   font-size: 19px;
 }
 .stratum.memory-studio .fab-panel :is(.eyebrow, #fleetCount, .legend) {
-  color: #96a7c6;
+  color: var(--a-300);
 }
 .stratum.memory-studio .fab-panel .product-tabs {
-  border-color: #32425f;
+  border-color: var(--a-800);
 }
 .stratum.memory-studio .product-tabs button {
-  color: #aab8d3;
+  color: var(--a-200);
   border-radius: 2px;
 }
 .stratum.memory-studio .product-tabs button[aria-pressed="true"] {
-  background: #d3ee65;
-  border-color: #d3ee65;
-  color: #253415;
+  background: var(--s-400);
+  border-color: var(--s-400);
+  color: var(--s-800);
 }
 .stratum.memory-studio .product-tabs button:hover:not([aria-pressed="true"]) {
-  background: #253651;
-  border-color: #465e87;
-  color: #e3ecff;
+  background: var(--a-900);
+  border-color: var(--a-700);
+  color: var(--n-100);
 }
 .stratum.memory-studio .product-tabs > span {
-  color: #8395b7;
+  color: var(--a-300);
 }
 .stratum .fleet-telemetry {
-  background: #101827;
-  border-color: #2a3a58;
-  color: #8295b8;
+  background: var(--n-900);
+  border-color: var(--a-900);
+  color: var(--a-300);
 }
 .stratum .fleet-telemetry b {
-  color: #dce5f7;
+  color: var(--n-150);
 }
 .stratum .fleet-telemetry .floor-state {
-  color: #d4e893;
+  color: var(--s-300);
 }
 .stratum .fleet-telemetry .floor-state i {
   background: var(--st-signal);
 }
 .stratum.memory-studio .fab-map {
   background:
-    radial-gradient(#b6caf020 0.7px, transparent 0.7px) 0 0/16px 16px,
-    #172237;
+    radial-gradient(color-mix(in srgb, var(--a-200) 13%, transparent) 0.7px, transparent 0.7px) 0 0/16px 16px,
+    var(--a-900);
 }
 .stratum.memory-studio .bay {
-  border-color: #445878;
+  border-color: var(--a-800);
   border-radius: 2px;
-  background: #1c2d47;
+  background: var(--a-900);
   box-shadow: none;
 }
 .stratum.memory-studio .bay[data-selected="true"] {
-  background: #233855;
-  border-color: #90a7d9;
-  box-shadow: inset 0 2px #9eb3e4;
+  background: var(--a-900);
+  border-color: var(--a-300);
+  box-shadow: inset 0 2px var(--a-300);
 }
 .stratum.memory-studio .bay-head {
-  border-color: #4b628455;
+  border-color: color-mix(in srgb, var(--a-700) 33%, transparent);
 }
 .stratum.memory-studio .bay-head strong {
-  color: #e0e9f9;
+  color: var(--n-100);
 }
 .stratum.memory-studio .bay-head :is(b, small) {
-  color: #9aafd3;
+  color: var(--a-300);
 }
 .stratum.memory-studio .tool-label {
-  color: #b7c5de;
+  color: var(--n-300);
 }
 .stratum.memory-studio .tool-label > span {
-  color: #859ec6;
+  color: var(--a-300);
 }
 .stratum.memory-studio .chamber {
-  border-color: #536989;
-  background: #19283e;
-  color: #c2d0e7;
+  border-color: var(--a-700);
+  background: var(--a-900);
+  color: var(--n-200);
   border-radius: 2px;
 }
 .stratum.memory-studio .chamber small {
-  color: #94a9cb;
+  color: var(--a-300);
 }
 .stratum.memory-studio .chamber[data-state="running"] {
-  background: #355ef6;
-  color: #fff;
-  border-color: #7a97ff;
+  background: var(--a-500);
+  color: var(--n-0);
+  border-color: var(--a-300);
 }
 .stratum.memory-studio .chamber[data-state="running"] small {
-  color: #d8e2ff;
+  color: var(--a-100);
 }
 .stratum.memory-studio .chamber[data-state="excluded"] {
-  background: repeating-linear-gradient(135deg, #202c3e, #202c3e 4px, #2b3950 4px, #2b3950 5px);
-  border-color: #475a77;
-  color: #8b9bbb;
+  background: repeating-linear-gradient(135deg, var(--n-800), var(--n-800) 4px, var(--a-900) 4px, var(--a-900) 5px);
+  border-color: var(--a-800);
+  color: var(--a-300);
 }
 .stratum.memory-studio .chamber[data-issue="true"] {
-  background: #624a2c;
-  color: #fff0d4;
-  border-color: #d7b675;
+  background: var(--w-800);
+  color: var(--w-50);
+  border-color: var(--w-400);
 }
 .stratum.memory-studio .chamber[data-issue="true"] small {
-  color: #e0c695;
+  color: var(--w-400);
 }
 .stratum.memory-studio .chamber[aria-pressed="true"] {
-  outline-color: #d3ee65;
+  outline-color: var(--s-400);
 }
 .stratum.memory-studio .chamber .fill {
-  background: #b4c9ff;
+  background: var(--a-200);
 }
 .stratum.memory-studio :is(.map-caption, .playback) {
-  background: #101a2c;
-  border-color: #354764;
-  color: #9cafce;
+  background: var(--n-900);
+  border-color: var(--a-800);
+  color: var(--a-300);
 }
 .stratum.memory-studio .play-button {
   background: var(--st-signal);
-  color: #293412;
+  color: var(--s-800);
   border-radius: 2px;
 }
 .stratum.memory-studio .playback > button:not(.play-button) {
-  background: #233450;
-  color: #c4d2ee;
-  border-color: #4c6283;
+  background: var(--a-900);
+  color: var(--a-200);
+  border-color: var(--a-700);
 }
 .stratum.memory-studio .speed-label select {
-  background: #24334c;
-  border-color: #506282;
-  color: #dbe4f6;
+  background: var(--a-900);
+  border-color: var(--a-700);
+  color: var(--n-150);
 }
 .stratum.memory-studio :is(.time-block small, .speed-label) {
-  color: #97a8c4;
+  color: var(--a-300);
 }
 .stratum.memory-studio .equipment-showcase {
-  background: #162139;
-  border-color: #405375;
+  background: var(--a-900);
+  border-color: var(--a-800);
   border-radius: 2px;
 }
 .stratum.memory-studio :is(.showcase-meta, .showcase-axis) {
-  color: #9caccc;
+  color: var(--a-300);
 }
 .stratum.memory-studio .equipment-preview {
   filter: none;
 }
 .stratum.memory-studio .chamber-heading h2 {
-  color: #28385a;
+  color: var(--a-900);
 }
 .stratum.memory-studio .chamber-heading button {
-  color: #395181;
-  background: #edf1fa;
-  border-color: #c8d1e5;
+  color: var(--a-800);
+  background: var(--n-50);
+  border-color: var(--n-200);
 }
 .stratum.memory-studio :is(.tool-role, .panel-note, .empty, .watch p, .route-description) {
-  color: #65718a;
+  color: var(--a-400);
 }
 .stratum.memory-studio .chamber-now {
-  background: #edf0f7;
-  color: #5b6d8b;
-  border-color: #d5ddea;
+  background: var(--n-50);
+  color: var(--a-400);
+  border-color: var(--n-150);
 }
 .stratum.memory-studio .chamber-now strong {
-  color: #38527f;
+  color: var(--a-800);
 }
 .stratum.memory-studio :is(.lot-table th, .trace-toolbar) {
-  background: #edf0f5;
-  color: #60718b;
-  border-color: #d9dfea;
+  background: var(--n-50);
+  color: var(--a-400);
+  border-color: var(--n-150);
 }
 .stratum.memory-studio .lot-table td {
-  color: #455775;
-  border-color: #e0e3eb;
+  color: var(--a-800);
+  border-color: var(--n-150);
 }
 .stratum.memory-studio .lot-table td small {
-  color: #78879e;
+  color: var(--n-400);
 }
 .stratum.memory-studio .lot-table button {
-  color: #334f83;
+  color: var(--a-800);
 }
 .stratum.memory-studio .lot-table tbody tr.selected {
-  background: #e9eef9;
-  box-shadow: inset 3px 0 #375cf6;
+  background: var(--n-100);
+  box-shadow: inset 3px 0 var(--a-500);
 }
 .stratum.memory-studio .progress-track {
-  background: #dbe2ef;
+  background: var(--n-150);
 }
 .stratum.memory-studio .progress-track i {
   background: var(--st-cobalt);
 }
 .stratum.memory-studio .module {
-  background: #f3f4f7;
-  border-color: #d6ddea;
+  background: var(--n-50);
+  border-color: var(--n-150);
   border-radius: 2px;
 }
 .stratum.memory-studio .module :is(b, small) {
-  color: #657594;
+  color: var(--a-400);
 }
 .stratum.memory-studio .module:is(.done, .current) {
-  background: #e6ecfa;
-  border-color: #a4b8e9;
+  background: var(--n-100);
+  border-color: var(--a-300);
 }
 .stratum.memory-studio .module.held {
-  background: #faf0df;
-  border-color: #d6b480;
+  background: var(--n-50);
+  border-color: var(--w-400);
 }
 .stratum.memory-studio .operation.selected {
-  background: #e9eef9;
+  background: var(--n-100);
 }
 .stratum.memory-studio :is(.study-panel, .learning-guide) {
-  background: #eaece8;
-  border-color: #d1d5d0;
+  background: var(--n-100);
+  border-color: var(--n-200);
   border-radius: 2px;
 }
 .stratum.memory-studio .event-panel .event {
-  background: #fbfaf6;
+  background: var(--n-25);
 }
 .stratum.memory-studio .event b {
-  color: #46597a;
+  color: var(--a-700);
 }
 .stratum.memory-studio .event small {
-  color: #7e8aa0;
+  color: var(--n-400);
 }
 .stratum.stratum-evidence .page-title {
-  border-bottom: 1px solid #adb7c9;
+  border-bottom: 1px solid var(--n-300);
   padding-bottom: 25px;
 }
 .stratum.stratum-evidence .page-title h1 {
@@ -796,7 +796,7 @@ body.stratum {
   padding: 22px max(24px, calc((100% - 1240px) / 2));
   min-height: 84px;
   gap: 32px;
-  color: #c6d0e4;
+  color: var(--n-200);
 }
 .stratum.stratum-data > header > nav {
   gap: 24px;
@@ -805,7 +805,7 @@ body.stratum {
   align-items: center;
 }
 .stratum.stratum-data > header > nav a {
-  color: #a8b5cd;
+  color: var(--n-300);
   line-height: 2;
   white-space: nowrap;
 }
@@ -814,7 +814,7 @@ body.stratum {
   border-bottom: 1px solid var(--st-signal);
 }
 .stratum.stratum-data > header > a.stratum-brand {
-  color: #f6f5f0;
+  color: var(--n-50);
 }
 .stratum.stratum-data main {
   max-width: 1240px;
@@ -823,7 +823,7 @@ body.stratum {
 }
 .stratum.stratum-data .stratum-page-intro {
   position: relative;
-  border-bottom: 1px solid #aab4c6;
+  border-bottom: 1px solid var(--n-300);
   padding: 0 0 28px;
   margin-bottom: 30px;
 }
@@ -834,7 +834,7 @@ body.stratum {
   top: 0;
   font: 11px var(--st-mono);
   letter-spacing: 2px;
-  color: #7b89a2;
+  color: var(--a-400);
 }
 .stratum.stratum-data h1 {
   font-size: clamp(30px, 3.5vw, 48px);
@@ -847,15 +847,15 @@ body.stratum {
 .stratum.stratum-data .lead {
   font-size: 15px;
   line-height: 1.9;
-  color: #566680;
+  color: var(--a-700);
   max-width: 900px;
 }
 .stratum.stratum-data .scope {
   background: transparent;
   padding: 15px 0 0;
   border: 0;
-  color: #76829a;
-  font-size: 11px;
+  color: var(--n-400);
+  font-size: 12px;
   line-height: 1.95;
   max-width: 1000px;
   margin-bottom: 0;
@@ -863,87 +863,87 @@ body.stratum {
 .stratum.stratum-data main > section,
 .stratum.stratum-data #pilotResults > section {
   border-radius: 2px;
-  border: 1px solid #cbd3e0;
+  border: 1px solid var(--n-200);
   background: var(--st-panel);
   padding: 29px 31px;
   margin-top: 24px;
 }
 .stratum.stratum-data section h2 {
   font-size: 20px;
-  color: #1e304f;
+  color: var(--a-900);
   line-height: 1.5;
   padding-bottom: 17px;
-  border-bottom: 1px solid #d9dfe9;
+  border-bottom: 1px solid var(--n-150);
   margin-bottom: 21px;
 }
 .stratum.stratum-data :is(.hint, small) {
-  color: #78859b;
+  color: var(--n-400);
   line-height: 1.8;
 }
 .stratum.stratum-data :is(input, select, textarea, button) {
-  border-color: #c4cdde;
+  border-color: var(--n-200);
   border-radius: 2px;
-  color: #364867;
-  background: #fffefa;
+  color: var(--a-800);
+  background: var(--n-0);
 }
 .stratum.stratum-data label {
-  color: #596c8d;
+  color: var(--a-400);
   font-size: 12px;
 }
 .stratum.stratum-data button:not(:disabled):hover {
   border-color: var(--st-cobalt);
   color: var(--st-cobalt);
-  background: #f0f3fe;
+  background: var(--n-50);
 }
 .stratum.stratum-data button.primary {
-  color: #fff;
+  color: var(--n-0);
   background: var(--st-cobalt);
   border-color: var(--st-cobalt);
 }
 .stratum.stratum-data button.primary:not(:disabled):hover {
-  background: #2347de;
-  color: #fff;
+  background: var(--a-600);
+  color: var(--n-0);
 }
 .stratum.stratum-data :is(.metric, .card) {
-  background: #edf0f8;
-  border: 1px solid #d6deef;
+  background: var(--n-50);
+  border: 1px solid var(--n-150);
   border-radius: 2px;
   padding: 19px;
 }
 .stratum.stratum-data :is(.metric, .card) strong {
-  color: #294276;
+  color: var(--a-800);
   font-weight: 500;
   letter-spacing: -1px;
 }
 .stratum.stratum-data th {
-  background: #edf0f6;
-  color: #65799a;
+  background: var(--n-50);
+  color: var(--a-400);
   font-weight: 500;
 }
 .stratum.stratum-data :is(th, td) {
   padding: 13px 12px;
-  border-color: #dde3ed;
+  border-color: var(--n-150);
 }
 .stratum.stratum-data :is(.chart svg, #traceChart svg) {
-  background: #f7f8fb;
-  border: 1px solid #e0e5ef;
+  background: var(--n-25);
+  border: 1px solid var(--n-150);
 }
 .stratum.stratum-data details {
-  background: #f0f2f7;
+  background: var(--n-50);
   padding: 16px 18px;
   margin: 20px 0;
-  border: 1px solid #d3dbea;
+  border: 1px solid var(--n-200);
   border-radius: 2px;
 }
 .stratum.stratum-data details summary {
-  color: #4e668f;
+  color: var(--a-700);
   font-weight: 500;
 }
 .stratum.stratum-data a {
-  color: #315cd6;
+  color: var(--a-500);
 }
 .stratum.stratum-data #pilotStatus {
-  color: #576d94;
+  color: var(--a-400);
   line-height: 1.8;
 }
 .stratum.stratum-data .stratum-switcher {
@@ -953,9 +953,9 @@ body.stratum {
   background: none;
 }
 .stratum.stratum-data .stratum-switcher > summary {
-  background: #1d293e;
-  border-color: #44536f;
-  color: #edf2fc;
+  background: var(--a-900);
+  border-color: var(--a-800);
+  color: var(--n-50);
   font-weight: 500;
 }
 .stratum.stratum-data .stratum-switch-icon {
@@ -974,17 +974,17 @@ body.stratum {
   flex: 1;
 }
 .stratum.stratum-equipment > .topbar > nav a {
-  color: #a3b2cd;
-  font-size: 11px;
+  color: var(--a-300);
+  font-size: 12px;
 }
 .stratum.stratum-equipment > .topbar > nav [aria-current] {
-  color: #e2edbd;
+  color: var(--s-100);
   border-bottom: 2px solid var(--st-signal);
 }
 .stratum.stratum-equipment .topbar .stratum-switcher > summary {
-  background: #1c283d;
-  border-color: #3c4d6b;
-  color: #dbe5f6;
+  background: var(--a-900);
+  border-color: var(--a-800);
+  color: var(--n-150);
 }
 .stratum.stratum-equipment .topbar .stratum-switch-icon {
   color: var(--st-signal);
@@ -993,15 +993,15 @@ body.stratum {
   margin-right: 0;
 }
 .stratum.stratum-equipment .offline {
-  color: #9fb0d1;
-  font-size: 8px;
+  color: var(--a-300);
+  font-size: 12px;
 }
 .stratum.stratum-equipment .shell {
   padding-top: 34px;
 }
 .stratum.stratum-equipment .page-heading {
   padding-bottom: 26px;
-  border-bottom: 1px solid #aeb9cc;
+  border-bottom: 1px solid var(--n-300);
   margin-bottom: 23px;
 }
 .stratum.stratum-equipment .page-heading h1 {
@@ -1011,17 +1011,17 @@ body.stratum {
 }
 .stratum.stratum-equipment .page-heading h1 > span {
   font: 14px var(--st-mono);
-  color: #8191aa;
+  color: var(--a-300);
   margin-left: 18px;
 }
 .stratum.stratum-equipment .provenance-banner {
   border-radius: 2px;
-  background: #ecece7;
-  border-color: #d6d9d0;
+  background: var(--n-100);
+  border-color: var(--n-200);
   padding: 13px 16px;
 }
 .stratum.stratum-equipment .provenance-banner p {
-  color: #6a715e;
+  color: var(--n-500);
 }
 .stratum.stratum-equipment .recipe-panel {
   background: var(--st-panel);
@@ -1034,12 +1034,12 @@ body.stratum {
 }
 .stratum.stratum-equipment .input-wrap {
   border-radius: 2px;
-  border-color: #ccd5e6;
-  background: #f3f5fa;
+  border-color: var(--n-200);
+  background: var(--n-50);
 }
 .stratum.stratum-equipment .input-wrap:focus-within {
   border-color: var(--st-cobalt);
-  box-shadow: 0 0 0 2px #dce4ff;
+  box-shadow: 0 0 0 2px var(--n-150);
 }
 .stratum.stratum-equipment :is(.pill, .feedback) {
   border-radius: 2px;
@@ -1047,16 +1047,16 @@ body.stratum {
 
 /* Photo optics stay on a dark stage; its controls share the new identity. */
 .stratum.stratum-photo {
-  --bg: #111827;
-  --side: #111622;
-  --panel: #182336;
-  --line: #334158;
-  --muted: #93a1b9;
-  --text: #e2e9f7;
-  --lime: #d3ee65;
-  --teal: #8aa7ff;
-  background: #111827;
-  color: #e2e9f7;
+  --bg: var(--n-900);
+  --side: var(--n-900);
+  --panel: var(--n-850);
+  --line: var(--a-800);
+  --muted: var(--n-400);
+  --text: var(--n-100);
+  --lime: var(--s-400);
+  --teal: var(--a-300);
+  background: var(--n-900);
+  color: var(--n-100);
   color-scheme: dark;
 }
 .stratum.stratum-photo .sidebar {
@@ -1067,20 +1067,20 @@ body.stratum {
   margin-left: 228px;
 }
 .stratum.stratum-photo .topbar {
-  background: #141d2e;
-  border-color: #35425a;
+  background: var(--n-850);
+  border-color: var(--a-800);
   gap: 18px;
 }
 .stratum.stratum-photo .topbar strong {
-  color: #d6e0f4;
+  color: var(--n-150);
 }
 .stratum.stratum-photo .topbar [data-stratum-switcher] {
   margin-right: 0;
 }
 .stratum.stratum-photo .topbar .stratum-switcher > summary {
-  background: #21304a;
-  border-color: #465976;
-  color: #e2ebfc;
+  background: var(--a-900);
+  border-color: var(--a-800);
+  color: var(--n-100);
 }
 .stratum.stratum-photo .topbar .stratum-switch-icon {
   color: var(--st-signal);
@@ -1095,9 +1095,9 @@ body.stratum {
   min-height: 46px;
 }
 .stratum.stratum-photo .nav-item.active {
-  background: #243755;
-  border-color: #405477;
-  color: #edf5ff;
+  background: var(--a-900);
+  border-color: var(--a-800);
+  color: var(--n-50);
   box-shadow: inset 2px 0 var(--st-signal);
 }
 .stratum.stratum-photo .nav-item.active svg {
@@ -1108,20 +1108,20 @@ body.stratum {
   padding: 12px 10px;
 }
 .stratum.stratum-photo .workspace-picker strong {
-  font-size: 10px;
+  font-size: 12px;
 }
 .stratum.stratum-photo .workspace-picker > span:last-child {
   display: none;
 }
 .stratum.stratum-photo .workspace-icon {
-  background: #2a3c5f;
-  border-color: #566c91;
-  color: #c4d1ee;
+  background: var(--a-800);
+  border-color: var(--a-400);
+  color: var(--a-200);
   border-radius: 1px;
 }
 .stratum.stratum-photo .page-heading {
   padding: 23px 0 27px;
-  border-bottom: 1px solid #526078;
+  border-bottom: 1px solid var(--a-700);
   margin-bottom: 25px;
 }
 .stratum.stratum-photo .page-heading h1 {
@@ -1130,7 +1130,7 @@ body.stratum {
   letter-spacing: -1.5px;
 }
 .stratum.stratum-photo .page-description {
-  color: #9aadc9;
+  color: var(--a-300);
   font-size: 12px;
 }
 .stratum.stratum-photo
@@ -1139,21 +1139,21 @@ body.stratum {
   box-shadow: none;
 }
 .stratum.stratum-photo .mission-banner {
-  background: #22304a;
-  border-color: #425572;
+  background: var(--a-900);
+  border-color: var(--a-800);
 }
 .stratum.stratum-photo .mission-copy p {
-  color: #acb9ce;
+  color: var(--n-300);
 }
 .stratum.stratum-photo .mission-emblem {
-  background: #314566;
-  border-color: #617693;
-  color: #d3ee65;
+  background: var(--a-800);
+  border-color: var(--a-400);
+  color: var(--s-400);
   border-radius: 3px;
 }
 .stratum.stratum-photo .learn-card {
-  background: #1c2a40;
-  border-color: #3d4c66;
+  background: var(--a-900);
+  border-color: var(--a-800);
   padding: 18px 13px;
 }
 .stratum.stratum-photo .learn-card h3 {
@@ -1163,82 +1163,82 @@ body.stratum {
   display: none;
 }
 .stratum.stratum-photo .learn-card p {
-  color: #8c9fbd;
+  color: var(--a-300);
 }
 .stratum.stratum-photo .learn-card button {
-  color: #d3ee65;
-  border-color: #405272;
+  color: var(--s-400);
+  border-color: var(--a-800);
 }
 .stratum.stratum-photo :is(.machine-heading, .machine-transport, .machine-equipment-card) {
-  background: #17243a;
-  border-color: #3b4e6a;
+  background: var(--a-900);
+  border-color: var(--a-800);
 }
 .stratum.stratum-photo .equipment-nav {
-  background: #121f34;
-  border-color: #3d506f;
+  background: var(--a-900);
+  border-color: var(--a-800);
 }
 .stratum.stratum-photo .equipment-tab.active {
-  background: #263e64;
+  background: var(--a-800);
   box-shadow: inset 0 -2px var(--st-signal);
 }
 .stratum.stratum-photo .secondary {
-  border-color: #4c5e7b;
-  color: #b9c8e1;
-  background: #21304a;
+  border-color: var(--a-700);
+  color: var(--n-300);
+  background: var(--a-900);
   border-radius: 2px;
 }
 .stratum.stratum-photo .primary {
   background: var(--st-cobalt);
-  color: #fff;
+  color: var(--n-0);
 }
 .stratum.stratum-photo .stratum-space-panel {
   color-scheme: light;
 }
 .stratum.stratum-photo dialog {
-  background: #17243a;
-  color: #e4eafa;
+  background: var(--a-900);
+  color: var(--n-100);
 }
 .stratum.stratum-photo dialog :is(.dialog-head, .dialog-top) {
-  background: #1b2940;
-  border-color: #4d5c77;
+  background: var(--a-900);
+  border-color: var(--a-700);
 }
 
 /* Versioned engineering review and connection screen. */
 .stratum.stratum-review .auth-story {
-  background: linear-gradient(140deg, #111827, #1b2b4e);
+  background: linear-gradient(140deg, var(--n-900), var(--a-900));
   padding-top: 44px;
 }
 .stratum.stratum-review .auth-story .stratum-brand {
   margin-bottom: 0;
 }
 .stratum.stratum-review .auth-story-copy .eyebrow {
-  color: #9fadd0;
+  color: var(--a-300);
 }
 .stratum.stratum-review .auth-story-copy h1 {
   font-weight: 450;
   letter-spacing: -2.5px;
 }
 .stratum.stratum-review .auth-story-copy > p:not(.eyebrow) {
-  color: #9facc7;
+  color: var(--a-300);
 }
 .stratum.stratum-review .auth-steps {
-  color: #bccb8a;
-  border-top: 1px solid #52627e;
+  color: var(--s-400);
+  border-top: 1px solid var(--a-700);
   padding-top: 22px;
   max-width: 370px;
 }
 .stratum.stratum-review .auth-steps b {
-  color: #dce5fa;
+  color: var(--n-150);
 }
 .stratum.stratum-review .auth-wafer {
   filter: hue-rotate(34deg) saturate(0.8);
   opacity: 0.38;
 }
 .stratum.stratum-review .auth-caption {
-  color: #8a9bbc;
+  color: var(--a-300);
 }
 .stratum.stratum-review .release-label {
-  color: #67799b;
+  color: var(--a-400);
 }
 .stratum.stratum-review .auth-form-wrap {
   max-width: 490px;
@@ -1257,26 +1257,26 @@ body.stratum {
 }
 .stratum.stratum-review .review-sidebar nav button {
   border-radius: 2px;
-  color: #aab8d0;
+  color: var(--n-300);
 }
 .stratum.stratum-review .review-sidebar nav button.active {
-  background: #263b5b;
-  border-color: #476081;
-  color: #edf2fe;
+  background: var(--a-800);
+  border-color: var(--a-700);
+  color: var(--n-50);
   box-shadow: inset 2px 0 var(--st-signal);
 }
 .stratum.stratum-review .sidebar-note {
-  background: #1b2940;
-  border-color: #3a4d6d;
+  background: var(--a-900);
+  border-color: var(--a-800);
   border-radius: 2px;
 }
 .stratum.stratum-review .sidebar-note p {
-  color: #99aac8;
+  color: var(--a-300);
 }
 .stratum.stratum-review .workspace-avatar {
-  background: #263a5a;
-  color: #bfd0f1;
-  border-color: #4d6489;
+  background: var(--a-900);
+  color: var(--a-200);
+  border-color: var(--a-700);
   border-radius: 2px;
 }
 .stratum.stratum-review .review-topbar {
@@ -1284,7 +1284,7 @@ body.stratum {
 }
 .stratum.stratum-review .review-page-title {
   padding-bottom: 24px;
-  border-bottom: 1px solid #b2bbcd;
+  border-bottom: 1px solid var(--n-300);
 }
 .stratum.stratum-review .review-page-title h1 {
   font-size: 33px;
@@ -1293,19 +1293,19 @@ body.stratum {
 }
 .stratum.stratum-review .summary-card {
   border: 0;
-  border-bottom: 1px solid #c8d2e3;
-  border-right: 1px solid #d7deea;
+  border-bottom: 1px solid var(--n-200);
+  border-right: 1px solid var(--n-150);
   background: transparent;
 }
 .stratum.stratum-review .summary-card strong {
-  color: #294470;
+  color: var(--a-800);
 }
 .stratum.stratum-review .project-toolbar {
-  background: #e9edf5;
+  background: var(--n-100);
 }
 .stratum.stratum-review .project-toolbar select {
-  background: #fafbfe;
-  color: #344d78;
+  background: var(--n-25);
+  color: var(--a-800);
   border-radius: 2px;
 }
 
@@ -1334,7 +1334,7 @@ body.stratum {
   }
   .stratum.stratum-data > header > nav {
     gap: 14px;
-    font-size: 11px;
+    font-size: 12px;
   }
   .stratum.memory-studio .workspace-grid {
     grid-template-columns: minmax(0, 1fr) 280px;
@@ -1378,7 +1378,7 @@ body.stratum {
     height: auto;
     padding: 19px 20px;
     border-right: 0;
-    border-bottom: 1px solid #34425c;
+    border-bottom: 1px solid var(--a-800);
     display: block;
   }
   .stratum .rail .stratum-brand {
@@ -1408,7 +1408,7 @@ body.stratum {
     white-space: nowrap;
     min-height: 39px;
     flex-shrink: 0;
-    font-size: 11px;
+    font-size: 12px;
     padding: 9px 11px;
     width: auto;
   }
@@ -1416,7 +1416,7 @@ body.stratum {
     display: flex;
   }
   .stratum .rail nav a span {
-    font-size: 9px;
+    font-size: 12px;
     width: auto;
   }
   .stratum .rail + .app-shell {
@@ -1433,7 +1433,7 @@ body.stratum {
     width: 100%;
     padding: 19px 20px;
     border-right: 0;
-    border-bottom: 1px solid #34425c;
+    border-bottom: 1px solid var(--a-800);
   }
   .stratum :is(.rail, .sidebar, .review-sidebar) .stratum-brand {
     margin: 0;
@@ -1465,11 +1465,11 @@ body.stratum {
     white-space: nowrap;
     min-height: 39px;
     flex-shrink: 0;
-    font-size: 11px;
+    font-size: 12px;
     padding: 9px 11px;
   }
   .stratum .rail nav a span {
-    font-size: 9px;
+    font-size: 12px;
     width: auto;
   }
   .stratum .rail + .app-shell,
@@ -1494,7 +1494,7 @@ body.stratum {
     white-space: nowrap;
     flex-shrink: 0;
     min-height: 39px;
-    font-size: 11px;
+    font-size: 12px;
     gap: 7px;
     padding: 9px 12px;
   }
@@ -1516,7 +1516,7 @@ body.stratum {
   }
   .stratum.stratum-photo .topbar-right .model-badge {
     flex: 1;
-    font-size: 10px;
+    font-size: 12px;
   }
   .stratum.stratum-photo .topbar-right > .avatar {
     display: none;
@@ -1586,12 +1586,12 @@ body.stratum {
     letter-spacing: 1px;
   }
   .stratum .stratum-brand .stratum-wordmark small {
-    font-size: 6.5px;
+    font-size: 11px;
     margin-top: 6px;
     letter-spacing: 1px;
   }
   .stratum .stratum-switcher > summary {
-    font-size: 11px;
+    font-size: 12px;
     gap: 8px;
     min-height: 37px;
     padding: 8px 10px;
@@ -1614,7 +1614,7 @@ body.stratum {
     gap: 6px;
   }
   .stratum.memory-studio .top-actions button {
-    font-size: 10px;
+    font-size: 12px;
     padding: 7px 9px;
     min-height: 35px;
   }
@@ -1629,7 +1629,7 @@ body.stratum {
     font-size: 41px;
   }
   .stratum.memory-studio .page-title p {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1.85;
     max-width: 290px;
   }
@@ -1640,7 +1640,7 @@ body.stratum {
     padding-bottom: 2px;
   }
   .stratum.memory-studio .workspace-links a {
-    font-size: 10px;
+    font-size: 12px;
     white-space: nowrap;
   }
   .stratum.memory-studio .scenario-bar {
@@ -1648,7 +1648,7 @@ body.stratum {
     gap: 12px;
   }
   .stratum.memory-studio .kpi-grid {
-    border-top: 1px solid #d3d9e4;
+    border-top: 1px solid var(--n-200);
     margin-top: 8px;
   }
   .stratum.memory-studio .kpi-grid article {
@@ -1678,10 +1678,10 @@ body.stratum {
     position: static;
     display: block;
     margin-bottom: 15px;
-    font-size: 9px;
+    font-size: 12px;
   }
   .stratum.stratum-data .stratum-page-intro .eyebrow {
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 1px;
   }
   .stratum.stratum-data h1 {
@@ -1695,7 +1695,7 @@ body.stratum {
     line-height: 1.8;
   }
   .stratum.stratum-data .scope {
-    font-size: 10px;
+    font-size: 12px;
   }
   .stratum.stratum-data main > section,
   .stratum.stratum-data #pilotResults > section {
@@ -1727,7 +1727,7 @@ body.stratum {
     font-size: 33px;
   }
   .stratum.stratum-equipment .page-heading h1 > span {
-    font-size: 11px;
+    font-size: 12px;
     margin-left: 10px;
   }
   .stratum.stratum-photo .page-heading {
@@ -1740,13 +1740,13 @@ body.stratum {
     gap: 8px;
   }
   .stratum.stratum-photo .page-description {
-    font-size: 11px;
+    font-size: 12px;
   }
   .stratum.stratum-photo .topbar-right {
     gap: 8px;
   }
   .stratum.stratum-photo .topbar-right .model-badge {
-    font-size: 9px;
+    font-size: 12px;
   }
   .stratum.stratum-photo .topbar-right .divider {
     display: none;
@@ -1759,7 +1759,7 @@ body.stratum {
     right: 12px;
   }
   .stratum.stratum-review .review-topbar .connection {
-    font-size: 9px;
+    font-size: 12px;
   }
   .stratum.stratum-review .review-topbar .connection > span {
     display: none;
@@ -1785,12 +1785,12 @@ body.stratum {
 .stratum .stratum-public-notice {
   padding: 15px 22px;
   font:
-    11px/1.8 "Segoe UI",
+    12px/1.8 "Segoe UI",
     "Malgun Gothic",
     sans-serif;
-  background: #e6e9f0;
-  color: #586980;
-  border-top: 1px solid #cfd7e6;
+  background: var(--n-100);
+  color: var(--a-700);
+  border-top: 1px solid var(--n-200);
   text-align: center;
 }
 .stratum .stratum-public-links {
@@ -1804,22 +1804,22 @@ body.stratum {
   gap: 8px 13px;
   align-items: center;
   padding: 19px 0;
-  border-bottom: 1px solid #d8dfeb;
+  border-bottom: 1px solid var(--n-150);
   text-decoration: none;
 }
 .stratum .stratum-public-links a > span {
   grid-row: 1/3;
-  font: 10px var(--st-mono);
-  color: #8b99b0;
+  font: 11px var(--st-mono);
+  color: var(--n-400);
 }
 .stratum .stratum-public-links b {
   font-size: 14px;
-  color: #334d78;
+  color: var(--a-800);
 }
 .stratum .stratum-public-links small {
   grid-column: 2;
   grid-row: 2;
-  font-size: 11px;
+  font-size: 12px;
 }
 .stratum .stratum-public-links i {
   grid-column: 3;

@@ -1,7 +1,7 @@
 /* Equipment workspace: deliberate hierarchy, readable controls and part inspection. */
 :root {
-  --machine-accent: #cdea9b;
-  --machine-muted: #9aafba;
+  --machine-accent: var(--s-300);
+  --machine-muted: var(--n-300);
 }
 .page-description {
   font-size: 12px;
@@ -9,7 +9,7 @@
 .eyebrow,
 .beta,
 .tiny-label {
-  font-size: 9px;
+  font-size: 12px;
 }
 .mission-copy p,
 .stage-explainer p,
@@ -23,7 +23,7 @@
   font-size: 12px;
 }
 .workspace-picker strong {
-  font-size: 10px;
+  font-size: 12px;
 }
 .mission-banner {
   padding: 16px 22px;
@@ -32,38 +32,38 @@
   font-size: 16px;
 }
 .machine-panel {
-  border-color: #3d535e;
+  border-color: var(--n-600);
   border-radius: 12px;
-  box-shadow: 0 16px 60px #050b1038;
+  box-shadow: 0 16px 60px color-mix(in srgb, var(--n-950) 22%, transparent);
 }
 .machine-heading {
   padding: 16px 22px;
-  background: #1b2931;
+  background: var(--n-800);
 }
 .machine-heading h2 {
   font-size: 14px;
   font-weight: 600;
 }
 .machine-version {
-  font-size: 9px;
+  font-size: 12px;
 }
 .machine-heading-right {
   gap: 7px !important;
 }
 .machine-tool {
-  font-size: 10px;
+  font-size: 12px;
   min-height: 32px;
 }
 .equipment-nav {
-  background: #16232c;
+  background: var(--n-850);
 }
 .equipment-tab {
   padding: 17px 14px 16px;
   transition: background 0.2s;
 }
 .equipment-tab > span {
-  font-size: 9px;
-  color: #89a4b3;
+  font-size: 11px;
+  color: var(--n-400);
   letter-spacing: 0.5px;
 }
 .equipment-tab > strong {
@@ -72,28 +72,28 @@
   margin: 8px 0 6px;
 }
 .equipment-tab > small {
-  font-size: 9px;
+  font-size: 12px;
   line-height: 1.5;
-  color: #8da5b0;
+  color: var(--n-400);
   white-space: normal;
 }
 .equipment-tab.active {
-  background: linear-gradient(180deg, #263c35, #223530);
+  background: linear-gradient(180deg, var(--n-700), var(--n-800));
   box-shadow: inset 0 -3px var(--machine-accent);
 }
 .equipment-tab.active > small {
-  color: #b3c9a8;
+  color: var(--g-200);
 }
 .machine-viewport {
   height: 600px;
-  background: #111d25;
+  background: var(--n-850);
 }
 .machine-viewport::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 48%, #07121b44);
+  background: radial-gradient(ellipse at center, transparent 48%, color-mix(in srgb, var(--n-950) 27%, transparent));
   z-index: 1;
 }
 .machine-hud {
@@ -101,21 +101,21 @@
   left: 26px;
   z-index: 4;
   padding: 14px 16px;
-  background: #12232cf2;
+  background: color-mix(in srgb, var(--n-850) 95%, transparent);
   backdrop-filter: none;
-  border: 1px solid #5a738480;
+  border: 1px solid color-mix(in srgb, var(--n-500) 50%, transparent);
   border-radius: 7px;
   min-width: 0;
   max-width: calc(100% - 52px);
   text-shadow: none;
-  box-shadow: 0 4px 18px #06101833;
+  box-shadow: 0 4px 18px color-mix(in srgb, var(--n-950) 20%, transparent);
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
 .machine-hud .tiny-label {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 2px;
-  color: #96b4c0;
+  color: var(--n-300);
 }
 .machine-hud > strong {
   font-size: 25px;
@@ -124,18 +124,18 @@
   letter-spacing: -0.9px;
 }
 .machine-hud > div {
-  font-size: 11px;
-  color: #cbe8a6;
+  font-size: 12px;
+  color: var(--s-300);
   gap: 8px;
 }
 .machine-hud i {
   width: 5px;
   height: 5px;
-  box-shadow: 0 0 0 4px #cbea9412;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--s-300) 7%, transparent);
 }
 .machine-hud p {
-  font-size: 10px;
-  color: #a4bfcb;
+  font-size: 12px;
+  color: var(--n-300);
   margin-top: 12px;
 }
 .machine-camera {
@@ -143,24 +143,24 @@
   right: 24px;
 }
 .machine-camera > span {
-  font-size: 10px;
+  font-size: 12px;
 }
 .machine-camera button {
   width: 35px;
   height: 35px;
-  border-color: #47606e;
+  border-color: var(--n-600);
 }
 .machine-camera button.selected {
-  color: #d9efad;
-  border-color: #9ab67b;
-  background: #324235;
+  color: var(--s-300);
+  border-color: var(--s-600);
+  background: var(--n-700);
 }
 .machine-canvas-caption {
   bottom: 18px;
   left: 26px;
   right: 26px;
-  font-size: 9px;
-  color: #a0b4be;
+  font-size: 12px;
+  color: var(--n-300);
 }
 .machine-annotations {
   position: absolute;
@@ -194,14 +194,14 @@
   align-items: center;
   gap: 8px;
   pointer-events: auto;
-  background: #182a34f0;
+  background: color-mix(in srgb, var(--n-800) 94%, transparent);
   backdrop-filter: blur(6px);
-  border: 1px solid #536e7980;
+  border: 1px solid color-mix(in srgb, var(--n-500) 50%, transparent);
   border-radius: 5px;
   padding: 6px 10px 6px 6px;
   white-space: nowrap;
-  font-size: 10px;
-  box-shadow: 0 3px 20px #06101540;
+  font-size: 12px;
+  box-shadow: 0 3px 20px color-mix(in srgb, var(--n-950) 25%, transparent);
   transition:
     background 0.15s,
     border-color 0.15s;
@@ -212,20 +212,20 @@
   place-items: center;
   width: 23px;
   height: 23px;
-  background: #2f454e;
+  background: var(--n-700);
   border-radius: 3px;
-  font: 10px var(--mono);
-  color: #bcd3db;
+  font: 11px var(--mono);
+  color: var(--n-200);
 }
 .component-label:hover,
 .component-label.active {
-  background: #263c32;
-  border-color: #bddb90;
-  color: #e1efc6;
+  background: var(--n-700);
+  border-color: var(--s-400);
+  color: var(--s-100);
 }
 .component-label.active b {
-  background: #cdea9b;
-  color: #23341e;
+  background: var(--s-300);
+  color: var(--g-700);
 }
 .machine-component-info {
   position: absolute;
@@ -234,17 +234,17 @@
   z-index: 3;
   width: 250px;
   padding: 16px 18px;
-  border: 1px solid #53697080;
+  border: 1px solid color-mix(in srgb, var(--n-500) 50%, transparent);
   border-radius: 7px;
-  background: #172630e8;
+  background: color-mix(in srgb, var(--n-800) 91%, transparent);
   backdrop-filter: blur(12px);
-  box-shadow: 0 6px 30px #07121a33;
+  box-shadow: 0 6px 30px color-mix(in srgb, var(--n-950) 20%, transparent);
   pointer-events: none;
 }
 .machine-component-info > .tiny-label {
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 1.5px;
-  color: #8eacb8;
+  color: var(--n-400);
 }
 .machine-component-info > div {
   display: flex;
@@ -259,12 +259,12 @@
 .machine-component-info h3 {
   font-size: 13px;
   font-weight: 500;
-  color: #e0e9ec;
+  color: var(--n-100);
 }
 .machine-component-info p {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.85;
-  color: #aabfc9;
+  color: var(--n-300);
   margin-top: 9px;
   word-break: keep-all;
 }
@@ -274,35 +274,35 @@
   left: 26px;
   z-index: 2;
   pointer-events: none;
-  text-shadow: 0 2px 12px #06121c;
+  text-shadow: 0 2px 12px var(--n-950);
 }
 .machine-process-readout > span {
   display: block;
-  font: 8px var(--mono);
-  color: #8faab7;
+  font: 11px var(--mono);
+  color: var(--n-400);
   letter-spacing: 1.4px;
 }
 .machine-process-readout > strong {
   display: block;
   font: 25px var(--mono);
-  color: #dbebed;
+  color: var(--n-100);
   margin-top: 8px;
   letter-spacing: -1px;
 }
 .machine-process-readout > small {
   display: block;
-  font-size: 10px;
-  color: #9bb2be;
+  font-size: 12px;
+  color: var(--n-300);
   margin-top: 7px;
 }
 .machine-equipment-card {
-  background: #192b33;
+  background: var(--n-800);
   padding: 20px 24px;
   gap: 25px;
   grid-template-columns: 1fr 1.5fr 1.2fr;
 }
 .machine-equipment-card .tiny-label {
-  font-size: 9px;
+  font-size: 12px;
 }
 .machine-equipment-card h3 {
   font-size: 17px;
@@ -313,38 +313,38 @@
   line-height: 1.85;
 }
 .machine-equipment-card > div:nth-child(2) > span {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.7;
 }
 .machine-change > span {
-  font-size: 10px;
+  font-size: 12px;
 }
 .machine-change > strong {
-  font-size: 11px;
+  font-size: 12px;
 }
 .machine-transport {
   padding: 19px 24px;
   gap: 20px;
 }
 .machine-play {
-  font-size: 11px;
+  font-size: 12px;
   min-width: 130px;
   padding: 12px 15px;
 }
 .machine-transport select {
-  font-size: 11px;
+  font-size: 12px;
   padding: 8px 5px;
 }
 .machine-speed-label {
-  font-size: 10px;
+  font-size: 12px;
 }
 .machine-timeline > div:first-child {
-  font-size: 8px;
+  font-size: 11px;
   margin-bottom: 13px;
   letter-spacing: 0.5px;
 }
 .machine-timeline > div:first-child > span:last-child {
-  font-size: 10px;
+  font-size: 12px;
 }
 .machine-progress-track {
   position: relative;
@@ -381,10 +381,10 @@
   width: 12px;
   height: 12px;
   margin-top: -4px;
-  border: 2px solid #e8f5cf;
+  border: 2px solid var(--s-100);
   border-radius: 50%;
-  background: #b6d77f;
-  box-shadow: 0 0 0 4px #cbea9410;
+  background: var(--s-400);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--s-300) 6%, transparent);
 }
 #machineScrubber::-moz-range-track {
   height: 4px;
@@ -393,12 +393,12 @@
 #machineScrubber::-moz-range-thumb {
   width: 9px;
   height: 9px;
-  border: 2px solid #e8f5cf;
+  border: 2px solid var(--s-100);
   border-radius: 50%;
-  background: #b6d77f;
+  background: var(--s-400);
 }
 .machine-transport .machine-next {
-  font-size: 10px;
+  font-size: 12px;
   min-height: 36px;
 }
 .machine-phase-bar {
@@ -406,7 +406,7 @@
   grid-template-columns: repeat(4, 1fr);
   padding: 0 24px 16px;
   gap: 10px;
-  background: #17252e;
+  background: var(--n-850);
 }
 .machine-phase-bar button {
   display: flex;
@@ -414,36 +414,36 @@
   gap: 9px;
   text-align: left;
   padding: 10px 12px;
-  color: #93aebb;
-  background: #1a2c36;
-  border: 1px solid #354b56;
+  color: var(--n-300);
+  background: var(--n-800);
+  border: 1px solid var(--n-600);
   border-radius: 5px;
-  font-size: 10px;
+  font-size: 12px;
 }
 .machine-phase-bar button span {
-  font: 9px var(--mono);
-  color: #819ca7;
+  font: 11px var(--mono);
+  color: var(--n-400);
 }
 .machine-phase-bar button small {
   margin-left: auto;
-  font: 8px var(--mono);
-  color: #7795a4;
+  font: 11px var(--mono);
+  color: var(--a-300);
 }
 .machine-phase-bar button.active {
-  background: #2a3c31;
-  border-color: #697e50;
-  color: #dfedc5;
+  background: var(--n-700);
+  border-color: var(--s-800);
+  color: var(--s-100);
 }
 .machine-phase-bar button.active span {
-  color: #cdea9b;
+  color: var(--s-300);
 }
 .machine-phase-bar button:hover {
-  border-color: #8da39a;
+  border-color: var(--n-400);
 }
 .machine-footnote {
   padding: 12px 24px;
-  font-size: 9px;
-  color: #8da6b2;
+  font-size: 12px;
+  color: var(--n-400);
   line-height: 1.8;
 }
 .machine-tool:disabled {
@@ -488,10 +488,10 @@
     padding: 13px;
   }
   .equipment-tab > span {
-    font-size: 8px;
+    font-size: 12px;
   }
   .equipment-tab > small {
-    font-size: 9px;
+    font-size: 12px;
   }
   .machine-equipment-card {
     grid-template-columns: 1fr 1.5fr;
@@ -499,7 +499,7 @@
   .machine-change {
     grid-column: 1/-1;
     border-left: 0;
-    border-top: 1px solid #3d5556;
+    border-top: 1px solid var(--n-600);
     padding: 12px 0 0;
     display: flex;
     align-items: center;
@@ -521,7 +521,7 @@
     padding: 13px;
   }
   .machine-component-info p {
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 @media (max-width: 700px) {
@@ -543,7 +543,7 @@
     justify-content: space-between;
   }
   .machine-heading-right > .machine-tool {
-    font-size: 9px;
+    font-size: 12px;
     padding: 6px;
     min-height: 32px;
   }
@@ -551,13 +551,13 @@
     padding: 12px 9px;
   }
   .equipment-tab > strong {
-    font-size: 10px;
+    font-size: 12px;
   }
   .equipment-tab > small {
-    font-size: 8px;
+    font-size: 12px;
   }
   .equipment-tab > span {
-    font-size: 8px;
+    font-size: 12px;
   }
   .machine-viewport {
     height: 570px;
@@ -574,13 +574,13 @@
     margin: 8px 0;
   }
   .machine-hud .tiny-label {
-    font-size: 8px;
+    font-size: 12px;
   }
   .machine-hud > div {
-    font-size: 10px;
+    font-size: 12px;
   }
   .machine-hud p {
-    font-size: 9px;
+    font-size: 12px;
   }
   .machine-camera {
     top: 15px;
@@ -591,7 +591,7 @@
     height: 32px;
   }
   .machine-camera > span {
-    font-size: 9px;
+    font-size: 12px;
   }
   .machine-component-info {
     left: 17px;
@@ -610,7 +610,7 @@
     font-size: 12px;
   }
   .machine-component-info p {
-    font-size: 10px;
+    font-size: 12px;
     line-height: 1.7;
     margin-top: 6px;
   }
@@ -618,7 +618,7 @@
     display: none;
   }
   .component-label {
-    font-size: 9px;
+    font-size: 12px;
     padding: 4px 7px 4px 4px;
     gap: 6px;
   }
@@ -633,7 +633,7 @@
     left: 17px;
     right: 17px;
     bottom: 16px;
-    font-size: 8px;
+    font-size: 12px;
   }
   .machine-equipment-card {
     grid-template-columns: 1fr;
@@ -641,22 +641,22 @@
     gap: 12px;
   }
   .machine-equipment-card .tiny-label {
-    font-size: 8px;
+    font-size: 12px;
   }
   .machine-equipment-card h3 {
     font-size: 15px;
   }
   .machine-equipment-card p {
-    font-size: 11px;
+    font-size: 12px;
   }
   .machine-change {
     padding-top: 12px;
   }
   .machine-change > span {
-    font-size: 9px;
+    font-size: 12px;
   }
   .machine-change > strong {
-    font-size: 10px;
+    font-size: 12px;
   }
   .machine-transport {
     padding: 17px;
@@ -664,10 +664,10 @@
   }
   .machine-play {
     min-width: 122px;
-    font-size: 11px;
+    font-size: 12px;
   }
   .machine-transport .machine-next {
-    font-size: 10px;
+    font-size: 12px;
   }
   .machine-timeline {
     order: 5;
@@ -680,14 +680,14 @@
     padding: 9px 6px;
     justify-content: center;
     gap: 5px;
-    font-size: 9px;
+    font-size: 12px;
   }
   .machine-phase-bar button span {
-    font-size: 8px;
+    font-size: 12px;
   }
   .machine-footnote {
     padding: 11px 17px;
-    font-size: 8px;
+    font-size: 12px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -703,19 +703,19 @@
   gap: 14px;
   margin-bottom: 22px;
   padding: 16px 20px;
-  border: 1px solid #709785;
-  background: #243e35;
+  border: 1px solid var(--g-500);
+  background: var(--n-700);
   border-radius: 7px;
 }
 .workspace-revision-banner p {
   flex: 1;
   font-size: 12px;
   line-height: 1.8;
-  color: #c6d9cb;
+  color: var(--n-200);
 }
 .workspace-revision-banner a,
 .workspace-revision-banner button {
-  font-size: 10px;
+  font-size: 12px;
   flex-shrink: 0;
 }
 @media (max-width: 900px) {
@@ -726,7 +726,7 @@
     flex-basis: 100%;
   }
   .topbar-right > .button {
-    font-size: 8px;
+    font-size: 12px;
     padding: 7px;
   }
   .topbar-right {

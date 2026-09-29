@@ -3,8 +3,8 @@
 }
 body {
   margin: 0;
-  background: #eff4f2;
-  color: #203c33;
+  background: var(--n-50);
+  color: var(--n-700);
   font:
     14px/1.75 system-ui,
     sans-serif;
@@ -14,7 +14,7 @@ header {
   display: flex;
   gap: 30px;
   align-items: center;
-  background: #17342e;
+  background: var(--n-800);
   color: white;
 }
 header > a {
@@ -22,7 +22,7 @@ header > a {
   font-weight: 650;
 }
 a {
-  color: #137665;
+  color: var(--a-700);
 }
 header a {
   color: inherit;
@@ -51,7 +51,7 @@ h3 {
   font-size: 15px;
 }
 .eyebrow {
-  color: #688b77;
+  color: var(--g-500);
   letter-spacing: 2px;
   font-size: 11px;
 }
@@ -60,19 +60,19 @@ h3 {
 }
 .scope {
   padding: 16px 20px;
-  border-left: 3px solid #719c7b;
-  background: #e0eee5;
+  border-left: 3px solid var(--g-500);
+  background: var(--n-100);
 }
 section {
   margin-top: 22px;
   padding: 24px;
   background: white;
-  border: 1px solid #d6e2da;
+  border: 1px solid var(--n-150);
   border-radius: 10px;
 }
 .hint,
 small {
-  color: #647d70;
+  color: var(--n-500);
   font-size: 12px;
 }
 .actions {
@@ -96,7 +96,7 @@ select,
 button {
   font: inherit;
   padding: 10px 12px;
-  border: 1px solid #b7ccbf;
+  border: 1px solid var(--n-300);
   border-radius: 5px;
   background: white;
   color: inherit;
@@ -118,9 +118,9 @@ button:disabled {
   cursor: default;
 }
 .primary {
-  background: #267258;
+  background: var(--a-800);
   color: white;
-  border-color: #267258;
+  border-color: var(--a-800);
 }
 .check {
   display: flex;
@@ -144,16 +144,16 @@ th,
 td {
   text-align: left;
   padding: 10px;
-  border-bottom: 1px solid #dce7df;
+  border-bottom: 1px solid var(--n-150);
 }
 th {
-  background: #edf4ef;
+  background: var(--n-50);
 }
 td {
   font-variant-numeric: tabular-nums;
 }
 #dataStatus.error {
-  color: #a44737;
+  color: var(--d-700);
 }
 #sourceInfo,
 #resultContext {
@@ -162,7 +162,7 @@ td {
 #traceChart svg {
   width: 100%;
   height: auto;
-  background: #f5f8f6;
+  background: var(--n-50);
   margin: 12px 0;
 }
 summary {
@@ -171,7 +171,7 @@ summary {
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 3px solid #94bc9d;
+  outline: 3px solid var(--g-400);
   outline-offset: 2px;
 }
 [hidden] {
@@ -199,7 +199,7 @@ select:focus-visible {
     grid-template-columns: 1fr;
   }
   input[type="file"] {
-    font-size: 11px;
+    font-size: 12px;
   }
 }
 
@@ -207,8 +207,8 @@ select:focus-visible {
   .table-wrap::after {
     content: "표를 좌우로 밀면 나머지 열을 볼 수 있습니다.";
     display: block;
-    font-size: 11px;
-    color: #647d70;
+    font-size: 12px;
+    color: var(--n-500);
     margin: 8px 0;
   }
 }

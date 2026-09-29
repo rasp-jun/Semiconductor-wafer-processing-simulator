@@ -1,14 +1,14 @@
 /* STRATUM — a process instrument with a persistent route and material notebook. */
 body.stratum.cmos-console {
-  --ink: #172235;
-  --navy: #172235;
-  --muted: #657084;
-  --line: #d5d9df;
-  --paper: #f3f3ef;
-  --teal: #375cf6;
-  --accent: #375cf6;
-  --lime: #d3ee65;
-  background: #f3f3ef;
+  --ink: var(--n-850);
+  --navy: var(--n-850);
+  --muted: var(--n-500);
+  --line: var(--n-200);
+  --paper: var(--n-50);
+  --teal: var(--a-500);
+  --accent: var(--a-500);
+  --lime: var(--s-400);
+  background: var(--n-50);
   color: var(--ink);
   color-scheme: light;
 }
@@ -16,54 +16,54 @@ body.stratum.cmos-console {
 .stratum.cmos-console h2,
 .stratum.cmos-console h3,
 .stratum.cmos-console h4 {
-  color: #172235;
+  color: var(--n-850);
 }
 .stratum.cmos-console button,
 .stratum.cmos-console input,
 .stratum.cmos-console select,
 .stratum.cmos-console textarea {
-  color: #243249;
-  background: #fff;
-  border-color: #c5cbd3;
+  color: var(--a-900);
+  background: var(--n-0);
+  border-color: var(--n-200);
   border-radius: 3px;
 }
 .stratum.cmos-console button:hover {
-  background: #e8ecf6;
-  border-color: #7c8cb2;
+  background: var(--n-100);
+  border-color: var(--a-400);
 }
 .stratum.cmos-console :is(button, a, input, select, textarea, summary, canvas):focus-visible {
-  outline: 2px solid #375cf6;
+  outline: 2px solid var(--a-500);
   outline-offset: 3px;
 }
 .stratum.cmos-console input:is([type="checkbox"], [type="range"]) {
-  accent-color: #375cf6;
+  accent-color: var(--a-500);
 }
 .stratum.cmos-console .primary-button {
-  background: #375cf6;
-  border-color: #375cf6;
-  color: #fff;
+  background: var(--a-500);
+  border-color: var(--a-500);
+  color: var(--n-0);
   min-height: 44px;
   font-weight: 650;
 }
 .stratum.cmos-console .primary-button:hover {
-  background: #2545d2;
-  border-color: #2545d2;
+  background: var(--a-600);
+  border-color: var(--a-600);
 }
 .stratum.cmos-console .secondary-button {
-  background: #eef1f7;
-  color: #344361;
-  border-color: #c9d1df;
+  background: var(--n-50);
+  color: var(--a-800);
+  border-color: var(--n-200);
 }
 .stratum.cmos-console .eyebrow,
 .stratum.cmos-console .panel-label {
-  color: #68768b;
+  color: var(--n-500);
 }
 .stratum.cmos-console .app-header {
   height: 72px;
   min-height: 72px;
   padding: 0 28px;
-  background: #111927;
-  border-color: #293345;
+  background: var(--n-900);
+  border-color: var(--n-700);
   gap: 38px;
 }
 .stratum.cmos-console .app-header > nav {
@@ -73,63 +73,63 @@ body.stratum.cmos-console {
 }
 .stratum.cmos-console .app-header > nav a {
   font-size: 12px;
-  color: #aeb9cb;
+  color: var(--n-300);
   padding: 24px 0;
 }
 .stratum.cmos-console .app-header > nav a.active {
-  color: #f5f7fc;
-  border-bottom: 2px solid #d3ee65;
+  color: var(--n-50);
+  border-bottom: 2px solid var(--s-400);
 }
 .stratum.cmos-console .app-header .stratum-brand {
-  color: #fff;
+  color: var(--n-0);
 }
 .stratum.cmos-console .header-right {
   margin-left: auto;
   gap: 16px;
 }
 .stratum.cmos-console #aboutButton {
-  color: #aeb9cb;
+  color: var(--n-300);
   background: transparent;
   border: 0;
 }
 .stratum.cmos-console .lot-bar {
   padding: 9px 28px;
-  background: #e8eae8;
-  color: #243249;
-  border-color: #d2d7da;
+  background: var(--n-100);
+  color: var(--a-900);
+  border-color: var(--n-200);
   min-height: 48px;
 }
 .stratum.cmos-console .lot-identity .eyebrow {
-  font: 9px var(--mono);
-  color: #66717b;
+  font: 11px var(--mono);
+  color: var(--n-500);
   letter-spacing: 0.7px;
 }
 .stratum.cmos-console .lot-identity strong {
-  color: #263b61;
+  color: var(--a-800);
   font-size: 12px;
 }
 .stratum.cmos-console .tag {
   border: 0;
-  border-left: 1px solid #bfc7cb;
+  border-left: 1px solid var(--n-300);
   border-radius: 0;
-  color: #636e7a;
-  font-size: 10px;
+  color: var(--n-500);
+  font-size: 12px;
   padding-left: 15px;
 }
 .stratum.cmos-console .lot-actions button {
-  color: #38465d;
+  color: var(--a-800);
   background: transparent;
-  border-color: #bbc4cf;
+  border-color: var(--n-300);
   min-height: 30px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .stratum.cmos-console .lot-actions #newWafer {
-  background: #fff;
-  color: #263750;
-  border-color: #bfc9d7;
+  background: var(--n-0);
+  color: var(--a-900);
+  border-color: var(--n-300);
 }
 .stratum.cmos-console .lot-actions #saveStatus {
-  color: #476451;
+  color: var(--g-700);
 }
 .stratum.cmos-console .workspace {
   max-width: 1920px;
@@ -153,37 +153,37 @@ body.stratum.cmos-console {
   gap: 25px;
 }
 .stratum.cmos-console #openRoute {
-  border-color: #bec6d0;
+  border-color: var(--n-300);
   background: transparent;
-  color: #283a54;
-  font-size: 11px;
+  color: var(--a-900);
+  font-size: 12px;
   min-height: 36px;
 }
 .stratum.cmos-console #openRoute b {
-  color: #375cf6;
-  border-color: #c0c8d6;
+  color: var(--a-500);
+  border-color: var(--n-300);
 }
 .stratum.cmos-console .console-kicker {
-  font: 10px var(--mono);
+  font: 11px var(--mono);
   letter-spacing: 1.4px;
-  color: #69778b;
+  color: var(--n-500);
 }
 .stratum.cmos-console .console-kicker i {
-  color: #375cf6;
+  color: var(--a-500);
 }
 .stratum.cmos-console .console-registers {
   display: flex;
   gap: 16px;
 }
 .stratum.cmos-console .console-registers button {
-  color: #3b4d69;
+  color: var(--a-800);
   background: transparent;
   border: 0;
-  font-size: 11px;
+  font-size: 12px;
 }
 .stratum.cmos-console .console-registers button > span {
-  color: #375cf6;
-  border-color: #b4bfd4;
+  color: var(--a-500);
+  border-color: var(--n-300);
   border-radius: 0;
 }
 .stratum.cmos-console .operation-header {
@@ -193,12 +193,12 @@ body.stratum.cmos-console {
   min-height: 88px;
 }
 .stratum.cmos-console .operation-path {
-  color: #7b8594;
-  font: 10px var(--mono);
+  color: var(--n-400);
+  font: 11px var(--mono);
   letter-spacing: 1px;
 }
 .stratum.cmos-console .operation-path > span:first-child {
-  color: #375cf6;
+  color: var(--a-500);
 }
 .stratum.cmos-console .operation-header h2 {
   font-size: 34px;
@@ -210,7 +210,7 @@ body.stratum.cmos-console {
 .stratum.cmos-console .operation-header p {
   font-size: 12px;
   line-height: 1.65;
-  color: #626f80;
+  color: var(--n-500);
   max-width: 800px;
   margin: 0;
 }
@@ -219,27 +219,27 @@ body.stratum.cmos-console {
   min-width: 128px;
 }
 .stratum.cmos-console .operation-state small {
-  color: #69778a;
-  font-size: 10px;
+  color: var(--n-500);
+  font-size: 12px;
   max-width: 190px;
 }
 .stratum.cmos-console .state-badge {
-  color: #3d5266;
-  border: 1px solid #b8c4cf;
-  background: #edf0ef;
+  color: var(--a-800);
+  border: 1px solid var(--n-300);
+  background: var(--n-100);
   font: 11px var(--mono);
   border-radius: 2px;
   padding: 6px 10px;
 }
 .stratum.cmos-console .state-badge.running {
-  background: #eaf2d4;
-  border-color: #a9ba7d;
-  color: #3b5122;
+  background: var(--s-100);
+  border-color: var(--s-600);
+  color: var(--s-800);
 }
 .stratum.cmos-console .state-badge.hold {
-  background: #fff0df;
-  border-color: #cc9754;
-  color: #795026;
+  background: var(--n-50);
+  border-color: var(--w-400);
+  color: var(--w-800);
 }
 .stratum.cmos-console #cmosMain > .module-rail {
   grid-column: 1;
@@ -250,16 +250,16 @@ body.stratum.cmos-console {
   position: sticky;
   top: 20px;
   border: 0;
-  border-left: 1px solid #c9cfd5;
+  border-left: 1px solid var(--n-200);
   padding: 0 0 0 13px;
   margin: 0;
   gap: 6px;
 }
 .stratum.cmos-console .module-rail:before {
   content: "PROCESS SEQUENCE";
-  font: 8px var(--mono);
+  font: 11px var(--mono);
   letter-spacing: 1.2px;
-  color: #7c8797;
+  color: var(--n-400);
   padding: 2px 0 14px;
 }
 .stratum.cmos-console .module-rail button {
@@ -275,13 +275,13 @@ body.stratum.cmos-console {
 }
 .stratum.cmos-console .module-rail button > span {
   font: 19px var(--mono);
-  color: #8b98ab;
+  color: var(--n-400);
   grid-row: 1/3;
   align-self: center;
 }
 .stratum.cmos-console .module-rail button strong {
-  font-size: 11px;
-  color: #59677c;
+  font-size: 12px;
+  color: var(--n-500);
   white-space: normal;
   word-break: keep-all;
   line-height: 1.45;
@@ -289,21 +289,21 @@ body.stratum.cmos-console {
   overflow: visible;
 }
 .stratum.cmos-console .module-rail button small {
-  font: 9px var(--mono);
-  color: #8792a4;
+  font: 11px var(--mono);
+  color: var(--n-400);
 }
 .stratum.cmos-console .module-rail button i {
   height: 2px;
   bottom: 0;
-  background: #375cf6;
+  background: var(--a-500);
   max-width: 100%;
 }
 .stratum.cmos-console .module-rail button[aria-current] {
-  background: #e3e8f8;
+  background: var(--n-100);
 }
 .stratum.cmos-console .module-rail button[aria-current] > span,
 .stratum.cmos-console .module-rail button[aria-current] strong {
-  color: #2d4ddd;
+  color: var(--a-600);
 }
 .stratum.cmos-console .module-rail button[aria-current]:before {
   content: "";
@@ -312,50 +312,50 @@ body.stratum.cmos-console {
   top: 22px;
   width: 7px;
   height: 7px;
-  background: #375cf6;
+  background: var(--a-500);
   border-radius: 50%;
-  box-shadow: 0 0 0 4px #f3f3ef;
+  box-shadow: 0 0 0 4px var(--n-50);
 }
 .stratum.cmos-console .module-rail button:hover {
-  background: #e3e7ef;
+  background: var(--n-100);
 }
 .stratum.cmos-console .lab-shortcuts {
   padding-bottom: 0;
   margin-bottom: 16px;
-  border-bottom: 1px solid #cbd1da;
+  border-bottom: 1px solid var(--n-200);
   gap: 12px;
 }
 .stratum.cmos-console .workspace-switcher {
   gap: 26px;
 }
 .stratum.cmos-console .lab-shortcuts .workspace-switcher a {
-  color: #728095;
+  color: var(--n-500);
   font-size: 12px;
   padding: 11px 0;
   margin-bottom: -1px;
 }
 .stratum.cmos-console .lab-shortcuts .workspace-switcher a[aria-current] {
-  color: #1f355d;
-  border-bottom: 2px solid #375cf6;
+  color: var(--a-900);
+  border-bottom: 2px solid var(--a-500);
 }
 .stratum.cmos-console .workspace-switcher small {
-  color: #8392a7;
+  color: var(--n-400);
 }
 .stratum.cmos-console .operation-navigation button {
-  color: #65758b;
+  color: var(--n-500);
   background: transparent;
   border: 0;
   padding-inline: 3px;
 }
 .stratum.cmos-console .work-grid {
   grid-template-columns: minmax(0, 1fr) 280px;
-  border: 1px solid #c6ccd4;
-  background: #fff;
+  border: 1px solid var(--n-200);
+  background: var(--n-0);
   align-items: stretch;
 }
 .stratum.cmos-console .equipment-panel {
-  background: #161b21;
-  color: #c4d1e4;
+  background: var(--n-900);
+  color: var(--n-200);
   padding: 0;
   top: auto;
 }
@@ -363,55 +363,55 @@ body.stratum.cmos-console {
   padding: 18px 21px 8px;
 }
 .stratum.cmos-console .stage-heading h3 {
-  color: #ecf0f6;
+  color: var(--n-100);
   font:
     600 12px system-ui,
     sans-serif;
   letter-spacing: 0;
 }
 .stratum.cmos-console .stage-heading h3 small {
-  font: 8px var(--mono);
+  font: 11px var(--mono);
   letter-spacing: 1.3px;
   margin-left: 12px;
-  color: #7d90a9;
+  color: var(--a-300);
 }
 .stratum.cmos-console .stage-index {
-  color: #d3ee65;
-  font-size: 10px;
+  color: var(--s-400);
+  font-size: 12px;
 }
 .stratum.cmos-console .stage-badge {
-  color: #a9b5c7;
-  font-size: 9px;
+  color: var(--n-300);
+  font-size: 12px;
 }
 .stratum.cmos-console #focusStage,
 .stratum.cmos-console #retryModel {
   background: transparent;
-  color: #d3ee65;
+  color: var(--s-400);
   border: 0;
-  font-size: 10px;
+  font-size: 12px;
 }
 .stratum.cmos-console .equipment-top {
   padding: 4px 21px 11px;
 }
 .stratum.cmos-console .equipment-top strong {
-  color: #8ca0bc;
-  font-size: 9px;
+  color: var(--a-300);
+  font-size: 11px;
   letter-spacing: 0.7px;
 }
 .stratum.cmos-console .equipment-top small {
-  color: #889bb6;
-  border-color: #3e4b61;
+  color: var(--a-300);
+  border-color: var(--a-800);
 }
 .stratum.cmos-console .equipment-top-actions button {
   background: transparent;
   border: 0;
-  color: #b9c8dd;
+  color: var(--n-300);
 }
 .stratum.cmos-console .cutaway-switch {
-  color: #d3ee65;
+  color: var(--s-400);
 }
 .stratum.cmos-console .equipment-panel input[type="checkbox"] {
-  accent-color: #d3ee65;
+  accent-color: var(--s-400);
 }
 .stratum.cmos-console .fab-viewport {
   height: clamp(380px, 45dvh, 560px);
@@ -421,46 +421,46 @@ body.stratum.cmos-console {
   top: 15px;
   left: 21px;
   right: 21px;
-  color: #8999ae;
+  color: var(--n-400);
   letter-spacing: 1px;
 }
 .stratum.cmos-console .viewport-hud > span:last-child {
-  color: #b8c8a3;
+  color: var(--s-300);
 }
 .stratum.cmos-console .viewport-caption {
-  color: #a1b1c6;
-  background: #1c2634;
-  border-color: #344054;
+  color: var(--n-300);
+  background: var(--n-800);
+  border-color: var(--n-700);
   padding-inline: 21px;
-  font-size: 10px;
+  font-size: 12px;
 }
 .stratum.cmos-console .viewport-caption > span:last-child {
   display: none;
 }
 .stratum.cmos-console .stage-tools {
-  background: #161f2d;
+  background: var(--n-850);
   padding: 10px 21px;
   gap: 10px;
 }
 .stratum.cmos-console .camera-toolbar {
-  border: 1px solid #475671;
+  border: 1px solid var(--a-800);
   border-radius: 2px;
 }
 .stratum.cmos-console .camera-toolbar button {
-  color: #aebed5;
+  color: var(--n-300);
   border: 0;
   background: transparent;
-  font-size: 10px;
+  font-size: 12px;
   min-height: 32px;
 }
 .stratum.cmos-console .camera-toolbar button.active {
-  color: #132342;
-  background: #dbe3f2;
+  color: var(--a-900);
+  background: var(--n-150);
 }
 .stratum.cmos-console .stage-exports button {
   background: transparent;
   border: 0;
-  color: #c6d2e4;
+  color: var(--n-200);
 }
 .stratum.cmos-console .part-buttons {
   flex-basis: 100%;
@@ -468,66 +468,66 @@ body.stratum.cmos-console {
   gap: 12px;
 }
 .stratum.cmos-console .part-buttons button {
-  color: #8398b8;
+  color: var(--a-300);
   background: transparent;
   border: 0;
-  font-size: 10px;
+  font-size: 12px;
 }
 .stratum.cmos-console .motion-status {
-  border-left: 2px solid #d3ee65;
-  background: #223047;
-  color: #d3deef;
+  border-left: 2px solid var(--s-400);
+  background: var(--a-900);
+  color: var(--n-150);
   padding: 11px 21px;
 }
 .stratum.cmos-console .motion-status > span:last-child {
-  color: #d3ee65;
+  color: var(--s-400);
 }
 .stratum.cmos-console .phase-strip {
-  background: #1a2433;
+  background: var(--n-850);
   height: 39px;
 }
 .stratum.cmos-console .phase-strip > [data-phase].active {
-  background: #34413b;
-  color: #d3ee65;
+  background: var(--n-700);
+  color: var(--s-400);
 }
 .stratum.cmos-console .phase-progress i {
-  background: #d3ee65;
+  background: var(--s-400);
 }
 .stratum.cmos-console .recipe-panel {
-  background: #fff;
-  color: #25364f;
-  border-left: 1px solid #c6ccd4;
+  background: var(--n-0);
+  color: var(--a-900);
+  border-left: 1px solid var(--n-200);
   padding: 22px;
   align-self: stretch;
 }
 .stratum.cmos-console .recipe-panel:before {
-  background: #375cf6;
+  background: var(--a-500);
   width: 26px;
   height: 3px;
   margin-bottom: 16px;
 }
 .stratum.cmos-console .recipe-panel .panel-label {
-  font: 9px var(--mono);
-  color: #778496;
+  font: 11px var(--mono);
+  color: var(--n-400);
 }
 .stratum.cmos-console .recipe-panel h3 {
   font-size: 23px;
   letter-spacing: -0.7px;
   margin: 12px 0;
-  color: #22334d;
+  color: var(--a-900);
 }
 .stratum.cmos-console .material-context {
-  color: #657890;
-  border-color: #dce0e7;
-  font-size: 10px;
+  color: var(--a-400);
+  border-color: var(--n-150);
+  font-size: 12px;
   margin-bottom: 12px;
   padding-bottom: 12px;
 }
 .stratum.cmos-console .recipe-edit-hint {
-  color: #708096;
+  color: var(--n-500);
   background: transparent;
-  border-color: #d7dee8;
-  font-size: 11px;
+  border-color: var(--n-150);
+  font-size: 12px;
   padding-bottom: 12px;
   margin-bottom: 12px;
   line-height: 1.7;
@@ -536,24 +536,24 @@ body.stratum.cmos-console {
   margin: 15px 0 23px;
 }
 .stratum.cmos-console .recipe-field label {
-  color: #344760;
+  color: var(--a-800);
   font-size: 12px;
 }
 .stratum.cmos-console .recipe-field label span {
-  color: #8a95a5;
-  font-size: 9px;
+  color: var(--n-400);
+  font-size: 12px;
 }
 .stratum.cmos-console .recipe-input {
   border: 0;
-  border-bottom: 1px solid #afbcd1;
+  border-bottom: 1px solid var(--n-300);
   background: transparent;
 }
 .stratum.cmos-console .recipe-input:focus-within {
-  background: #f1f4ff;
-  border-color: #375cf6;
+  background: var(--n-50);
+  border-color: var(--a-500);
 }
 .stratum.cmos-console .recipe-input input {
-  color: #223e75;
+  color: var(--a-800);
   background: transparent;
   font: 29px var(--mono);
   padding: 5px 0 9px;
@@ -561,123 +561,123 @@ body.stratum.cmos-console {
   min-width: 0;
 }
 .stratum.cmos-console .recipe-input input:disabled {
-  color: #7c8ca7;
+  color: var(--a-400);
   background: transparent;
 }
 .stratum.cmos-console .recipe-input input.is-edited {
-  color: #375cf6;
+  color: var(--a-500);
 }
 .stratum.cmos-console .recipe-input > span {
-  color: #7587a4;
+  color: var(--a-400);
 }
 .stratum.cmos-console .recipe-panel .text-button {
-  color: #65758f;
+  color: var(--a-400);
   background: transparent;
   border: 0;
-  font-size: 11px;
+  font-size: 12px;
 }
 .stratum.cmos-console .recipe-duration {
-  color: #64748b;
-  border-color: #d8dfe9;
+  color: var(--a-400);
+  border-color: var(--n-150);
   margin-top: 16px;
 }
 .stratum.cmos-console .recipe-duration strong {
-  color: #344b76;
+  color: var(--a-800);
 }
 .stratum.cmos-console .fault-label {
-  color: #4c5c73;
-  font-size: 11px;
+  color: var(--a-800);
+  font-size: 12px;
 }
 .stratum.cmos-console #faultSelect {
-  background: #f4f6fa;
-  color: #35445c;
-  border-color: #c4cfdf;
-  font-size: 11px;
+  background: var(--n-50);
+  color: var(--a-800);
+  border-color: var(--n-200);
+  font-size: 12px;
 }
 .stratum.cmos-console .field-note {
-  color: #778599;
-  font-size: 10px;
+  color: var(--n-400);
+  font-size: 12px;
 }
 .stratum.cmos-console .recipe-panel .primary-button {
   margin-top: 10px;
   min-height: 44px;
 }
 .stratum.cmos-console .run-feedback {
-  color: #815538;
-  background: #faf2e9;
+  color: var(--w-800);
+  background: var(--n-50);
 }
 .stratum.cmos-console .run-feedback:empty {
   display: none;
 }
 .stratum.cmos-console .cancel-run-button {
-  color: #9d463c;
-  background: #fff2f0;
-  border-color: #dbb6b0;
+  color: var(--d-700);
+  background: var(--n-50);
+  border-color: var(--d-200);
 }
 .stratum.cmos-console .error,
 .stratum.cmos-console .recipe-field-error {
-  color: #b64536 !important;
+  color: var(--d-700) !important;
 }
 .stratum.cmos-console .observation-deck {
-  background: #e9edf3;
-  color: #435774;
-  border-top: 1px solid #c4cedd;
+  background: var(--n-100);
+  color: var(--a-800);
+  border-top: 1px solid var(--n-200);
 }
 .stratum.cmos-console .observation-deck summary {
   padding: 13px 21px;
-  color: #344867;
+  color: var(--a-800);
   font-weight: 600;
-  font-size: 11px;
+  font-size: 12px;
 }
 .stratum.cmos-console .observation-deck .deck-hint {
-  color: #8493a9;
+  color: var(--n-400);
   font-weight: 400;
 }
 .stratum.cmos-console .observation-deck-body {
   padding: 0 21px 15px;
-  border-top: 1px solid #cbd4e2;
+  border-top: 1px solid var(--n-200);
 }
 .stratum.cmos-console .playback-options {
-  color: #465b78;
+  color: var(--a-700);
   padding-top: 13px;
 }
 .stratum.cmos-console .playback-options select {
-  background: #fff;
-  border-color: #b7c5d9;
-  color: #3c4f70;
+  background: var(--n-0);
+  border-color: var(--n-300);
+  color: var(--a-800);
 }
 .stratum.cmos-console .observation-controls {
-  border-color: #c5cfde;
-  color: #506784;
+  border-color: var(--n-200);
+  color: var(--a-700);
   background: transparent;
   padding-top: 14px;
 }
 .stratum.cmos-console .observation-controls p,
 .stratum.cmos-console .timing-note {
-  color: #6c7d94;
-  font-size: 10px;
+  color: var(--a-400);
+  font-size: 12px;
   line-height: 1.7;
 }
 .stratum.cmos-console .observation-scrub,
 .stratum.cmos-console #observationSeekValue {
-  color: #375cf6;
+  color: var(--a-500);
 }
 .stratum.cmos-console #stepMotionButton {
-  background: #f5f7fc;
-  border-color: #b7c6de;
-  color: #3c5276;
+  background: var(--n-50);
+  border-color: var(--n-300);
+  color: var(--a-800);
 }
 .stratum.cmos-console .section-preview {
-  background: #fafaf6;
-  color: #445570;
-  border-color: #ced5df;
+  background: var(--n-25);
+  color: var(--a-800);
+  border-color: var(--n-200);
   padding: 12px 21px 10px;
 }
 .stratum.cmos-console .preview-title > span {
-  color: #375cf6;
+  color: var(--a-500);
 }
 .stratum.cmos-console .preview-title button {
-  color: #486493;
+  color: var(--a-700);
   background: transparent;
   border: 0;
 }
@@ -685,279 +685,279 @@ body.stratum.cmos-console {
   height: 94px;
 }
 .stratum.cmos-console .preview-foot {
-  color: #7d8ba0;
+  color: var(--n-400);
 }
 .stratum.cmos-console .console-telemetry {
   padding: 20px 0;
-  border-bottom: 1px solid #ccd2db;
+  border-bottom: 1px solid var(--n-200);
   margin-bottom: 20px;
   gap: 0;
 }
 .stratum.cmos-console .telemetry-cell {
-  border-color: #cdd4df;
+  border-color: var(--n-200);
   padding-inline: 20px;
 }
 .stratum.cmos-console .telemetry-cell:first-child {
   padding-left: 0;
 }
 .stratum.cmos-console .telemetry-cell > span {
-  color: #536680;
-  font-size: 11px;
+  color: var(--a-700);
+  font-size: 12px;
 }
 .stratum.cmos-console .telemetry-cell > span small {
-  color: #8996a8;
-  font-size: 8px;
+  color: var(--n-400);
+  font-size: 12px;
 }
 .stratum.cmos-console .telemetry-cell > strong {
-  color: #233d65;
+  color: var(--a-800);
   font-size: 22px;
   font-weight: 500;
 }
 .stratum.cmos-console .telemetry-cell > strong small {
-  color: #8b98aa;
-  font-size: 10px;
+  color: var(--n-400);
+  font-size: 12px;
 }
 .stratum.cmos-console .telemetry-cell p {
-  color: #8592a4;
-  font-size: 10px;
+  color: var(--n-400);
+  font-size: 12px;
 }
 .stratum.cmos-console .telemetry-progress {
-  background: #d8dfe8;
+  background: var(--n-150);
 }
 .stratum.cmos-console .telemetry-progress i {
-  background: #375cf6;
+  background: var(--a-500);
 }
 .stratum.cmos-console .section-panel,
 .stratum.cmos-console .results-panel {
-  border: 1px solid #cbd3dd;
-  background: #fff;
+  border: 1px solid var(--n-200);
+  background: var(--n-0);
   border-radius: 0;
 }
 .stratum.cmos-console .section-heading,
 .stratum.cmos-console .analysis-intro {
-  background: #f5f6f4;
-  border-color: #d3d9e2;
+  background: var(--n-50);
+  border-color: var(--n-200);
 }
 .stratum.cmos-console .section-heading h3,
 .stratum.cmos-console .analysis-intro h3 {
-  color: #23354e;
+  color: var(--a-900);
 }
 .stratum.cmos-console .analysis-intro .eyebrow {
-  color: #375cf6;
+  color: var(--a-500);
 }
 .stratum.cmos-console .analysis-mark {
-  color: #375cf6;
+  color: var(--a-500);
 }
 .stratum.cmos-console .section-inspector {
-  background: #eff2f6;
-  border-color: #cdd7e3;
+  background: var(--n-50);
+  border-color: var(--n-200);
 }
 .stratum.cmos-console .results-heading {
-  background: #fff;
-  border-color: #d1d9e4;
+  background: var(--n-0);
+  border-color: var(--n-200);
 }
 .stratum.cmos-console .tab-list button {
-  color: #718197;
+  color: var(--n-400);
   background: transparent;
   border: 0;
   border-bottom: 2px solid transparent;
 }
 .stratum.cmos-console .tab-list button.active {
-  color: #375cf6;
-  border-bottom-color: #375cf6;
+  color: var(--a-500);
+  border-bottom-color: var(--a-500);
 }
 .stratum.cmos-console .result-exports .text-button {
-  color: #486493;
+  color: var(--a-700);
 }
 .stratum.cmos-console .tab-panel {
-  background: #fff;
-  color: #435770;
+  background: var(--n-0);
+  color: var(--a-800);
 }
 .stratum.cmos-console .learning-guide {
-  border-color: #d0d7e1;
-  color: #5c6e87;
+  border-color: var(--n-200);
+  color: var(--a-400);
   background: transparent;
 }
 .stratum.cmos-console .learning-guide > summary {
-  color: #5b6e8c;
+  color: var(--a-400);
 }
 .stratum.cmos-console .learning-guide-hint {
-  color: #8291a5;
+  color: var(--n-400);
 }
 .stratum.cmos-console .learning-guide-body {
-  background: #fff;
-  color: #52657e;
-  border-color: #d1d9e4;
+  background: var(--n-0);
+  color: var(--a-700);
+  border-color: var(--n-200);
 }
 .stratum.cmos-console .status-bar {
-  color: #8b98aa;
-  border-color: #d1d8e2;
-  font-size: 9px;
+  color: var(--n-400);
+  border-color: var(--n-200);
+  font-size: 12px;
 }
 .stratum.cmos-console #cmosMain > .console-transport {
   grid-column: 1/-1;
   bottom: 0;
-  background: #111d30;
-  border-color: #42516a;
+  background: var(--a-900);
+  border-color: var(--a-800);
   padding: 13px 28px;
   margin-inline: -28px;
-  box-shadow: 0 -8px 24px #172c4b15;
+  box-shadow: 0 -8px 24px color-mix(in srgb, var(--a-900) 8%, transparent);
   min-height: 73px;
 }
 .stratum.cmos-console .transport-status strong {
   font: 11px var(--mono);
-  color: #e2e8f3;
+  color: var(--n-100);
 }
 .stratum.cmos-console .transport-status small {
-  color: #8a9db9;
+  color: var(--a-300);
 }
 .stratum.cmos-console .transport-light {
-  background: #afbdce;
+  background: var(--n-300);
 }
 .stratum.cmos-console.console-running .transport-light {
-  background: #d3ee65;
-  box-shadow: 0 0 0 4px #d3ee6519;
+  background: var(--s-400);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--s-400) 10%, transparent);
 }
 .stratum.cmos-console .transport-actions button {
   background: transparent;
-  border-color: #485b79;
-  color: #c6d3e5;
-  font-size: 11px;
+  border-color: var(--a-700);
+  color: var(--n-200);
+  font-size: 12px;
 }
 .stratum.cmos-console #consoleRun {
-  background: #d3ee65;
-  color: #182736;
-  border-color: #d3ee65;
+  background: var(--s-400);
+  color: var(--n-800);
+  border-color: var(--s-400);
   min-width: 190px;
   font-size: 12px;
   min-height: 44px;
 }
 .stratum.cmos-console #consoleRun:hover {
-  background: #e2fa87;
+  background: var(--s-300);
 }
 .stratum.cmos-console .route-dialog {
-  background: #eef0f4;
-  border-color: #c5cfdd;
+  background: var(--n-50);
+  border-color: var(--n-200);
   width: 350px;
 }
 .stratum.cmos-console .route-panel {
-  background: #eef0f4;
-  color: #475b77;
+  background: var(--n-50);
+  color: var(--a-800);
 }
 .stratum.cmos-console .route-panel h1 {
-  color: #203858;
+  color: var(--a-900);
 }
 .stratum.cmos-console .route-panel button,
 .stratum.cmos-console .route-panel select,
 .stratum.cmos-console .route-panel input {
-  background: #fff;
-  color: #435778;
-  border-color: #c5cfdf;
+  background: var(--n-0);
+  color: var(--a-800);
+  border-color: var(--n-200);
 }
 .stratum.cmos-console .route-panel .route-subtitle,
 .stratum.cmos-console .route-panel .wafer-label {
-  color: #697d9a;
+  color: var(--a-400);
 }
 .stratum.cmos-console .route-panel .route-step {
   background: transparent;
-  color: #5a6f8e;
+  color: var(--a-400);
 }
 .stratum.cmos-console .route-panel .route-step.selected {
-  background: #dde5fa;
-  color: #294cd6;
-  border-color: #8d9fea;
+  background: var(--n-150);
+  color: var(--a-600);
+  border-color: var(--a-300);
 }
 .stratum.cmos-console dialog {
-  border: 1px solid #bac7da;
+  border: 1px solid var(--n-300);
   border-radius: 4px;
-  background: #f7f8fa;
-  color: #354963;
+  background: var(--n-25);
+  color: var(--a-800);
 }
 .stratum.cmos-console dialog::backdrop {
-  background: #0c172cb5;
+  background: color-mix(in srgb, var(--a-900) 71%, transparent);
   backdrop-filter: blur(5px);
 }
 .stratum.cmos-console .dialog-top {
-  background: #f3f5f8;
-  border-color: #d0d9e4;
+  background: var(--n-50);
+  border-color: var(--n-200);
 }
 .stratum.cmos-console .dialog-body {
-  color: #526781;
-  background: #fff;
+  color: var(--a-700);
+  background: var(--n-0);
 }
 .stratum.cmos-console .atlas-header {
-  background: #111d30;
+  background: var(--a-900);
 }
 .stratum.cmos-console .atlas-header h2 {
-  color: #f0f4fb;
+  color: var(--n-50);
 }
 .stratum.cmos-console .atlas-header h2 em {
-  color: #d3ee65;
+  color: var(--s-400);
 }
 .stratum.cmos-console .atlas-header .eyebrow,
 .stratum.cmos-console .atlas-header p {
-  color: #9fb0ca;
+  color: var(--a-300);
 }
 .stratum.cmos-console #closeEquipmentAtlas {
-  color: #ced8e8;
+  color: var(--n-200);
   background: transparent;
   border: 0;
 }
 .stratum.cmos-console .atlas-toolbar,
 .stratum.cmos-console .atlas-view-controls,
 .stratum.cmos-console .atlas-footer {
-  background: #e9edf4;
-  border-color: #c1cddd;
-  color: #617898;
+  background: var(--n-100);
+  border-color: var(--n-200);
+  color: var(--a-400);
 }
 .stratum.cmos-console .atlas-grid {
-  background: #f7f8f9;
+  background: var(--n-25);
 }
 .stratum.cmos-console .atlas-machine {
-  background: #f7f8f9;
-  border-color: #cdd6e2;
+  background: var(--n-25);
+  border-color: var(--n-200);
 }
 .stratum.cmos-console .atlas-machine:hover {
-  background: #eaf0fc;
+  background: var(--n-50);
 }
 .stratum.cmos-console .atlas-designation,
 .stratum.cmos-console .atlas-machine-name > span {
-  color: #375cf6;
+  color: var(--a-500);
 }
 .stratum.cmos-console .review-bar {
-  background: #111d30;
-  border-color: #354967;
+  background: var(--a-900);
+  border-color: var(--a-800);
 }
 .stratum.cmos-console .review-bar h2 {
-  color: #f1f4fa;
+  color: var(--n-50);
 }
 .stratum.cmos-console .review-overline {
-  color: #405ac0;
+  color: var(--a-600);
 }
 .stratum.cmos-console .review-bar .review-overline {
-  color: #d3ee65;
+  color: var(--s-400);
 }
 .stratum.cmos-console .review-welcome h3 em {
-  color: #3450bd;
+  color: var(--a-600);
 }
 .stratum.cmos-console .review-example-setting i,
 .stratum.cmos-console .review-example-arrow {
-  color: #375cf6;
+  color: var(--a-500);
 }
 .stratum.cmos-console .atlas-features,
 .stratum.cmos-console .equipment-features {
-  color: #4e627f;
+  color: var(--a-700);
 }
 .stratum.cmos-console .observation-controls label {
-  color: #445b7b;
+  color: var(--a-700);
 }
 .stratum.cmos-console #observationSeekHint {
-  color: #52667f;
-  font-size: 11px;
+  color: var(--a-700);
+  font-size: 12px;
 }
 .stratum.cmos-console .observation-controls p,
 .stratum.cmos-console .timing-note {
-  color: #52667f;
+  color: var(--a-700);
 }
 .stratum.cmos-console .recipe-edit-hint,
 .stratum.cmos-console .module-rail button small,
@@ -967,12 +967,12 @@ body.stratum.cmos-console {
 .stratum.cmos-console .telemetry-cell > strong small,
 .stratum.cmos-console .telemetry-cell > span small,
 .stratum.cmos-console .preview-foot {
-  color: #5e6d83;
+  color: var(--n-500);
 }
 .stratum.cmos-console .review-bar button {
   background: transparent;
-  color: #d3ddef;
-  border-color: #455a7a;
+  color: var(--n-150);
+  border-color: var(--a-700);
 }
 .stratum.cmos-console.stage-focused #cmosMain {
   grid-template-columns: minmax(0, 1fr);
@@ -1018,7 +1018,7 @@ body.stratum.cmos-console {
     grid-template-columns: repeat(8, minmax(105px, 1fr));
     overflow: auto;
     border: 0;
-    border-block: 1px solid #cdd4dd;
+    border-block: 1px solid var(--n-200);
     padding: 7px 0;
     gap: 5px;
     margin: 0 0 12px;
@@ -1036,7 +1036,7 @@ body.stratum.cmos-console {
     font-size: 15px;
   }
   .stratum.cmos-console .module-rail button strong {
-    font-size: 10px;
+    font-size: 12px;
   }
   .stratum.cmos-console .module-rail button[aria-current]:before {
     display: none;
@@ -1071,7 +1071,7 @@ body.stratum.cmos-console {
   }
   .stratum.cmos-console .recipe-panel {
     border-left: 0;
-    border-top: 1px solid #ccd5e1;
+    border-top: 1px solid var(--n-200);
     padding: 24px;
   }
   .stratum.cmos-console #recipeFields {
@@ -1090,7 +1090,7 @@ body.stratum.cmos-console {
     min-height: 460px;
   }
   .stratum.cmos-console .console-kicker {
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.7px;
   }
   .stratum.cmos-console .console-registers {
@@ -1137,7 +1137,7 @@ body.stratum.cmos-console {
     flex: 1;
   }
   .stratum.cmos-console .lot-identity .eyebrow {
-    font-size: 8px;
+    font-size: 12px;
   }
   .stratum.cmos-console .lot-actions {
     gap: 7px;
@@ -1146,7 +1146,7 @@ body.stratum.cmos-console {
   }
   .stratum.cmos-console .lot-actions button {
     min-height: 33px;
-    font-size: 10px;
+    font-size: 12px;
     flex: 1;
   }
   .stratum.cmos-console #cmosMain {
@@ -1164,7 +1164,7 @@ body.stratum.cmos-console {
     gap: 2px;
   }
   .stratum.cmos-console .console-registers button {
-    font-size: 10px;
+    font-size: 12px;
     padding: 4px 5px;
     gap: 5px;
   }
@@ -1172,7 +1172,7 @@ body.stratum.cmos-console {
     display: none;
   }
   .stratum.cmos-console #openRoute {
-    font-size: 10px;
+    font-size: 12px;
     gap: 6px;
     padding: 5px 8px;
   }
@@ -1191,11 +1191,11 @@ body.stratum.cmos-console {
     line-height: 1.35;
   }
   .stratum.cmos-console .operation-header p {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1.75;
   }
   .stratum.cmos-console .operation-path {
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 0.5px;
   }
   .stratum.cmos-console .operation-state {
@@ -1203,10 +1203,10 @@ body.stratum.cmos-console {
     max-width: 85px;
   }
   .stratum.cmos-console .operation-state small {
-    font-size: 9px;
+    font-size: 12px;
   }
   .stratum.cmos-console .state-badge {
-    font-size: 10px;
+    font-size: 12px;
     padding: 5px 7px;
   }
   .stratum.cmos-console #cmosMain > .module-rail {
@@ -1222,7 +1222,7 @@ body.stratum.cmos-console {
     gap: 19px;
   }
   .stratum.cmos-console .lab-shortcuts .workspace-switcher a {
-    font-size: 11px;
+    font-size: 12px;
     gap: 5px;
     padding: 11px 0;
   }
@@ -1232,23 +1232,23 @@ body.stratum.cmos-console {
   }
   .stratum.cmos-console .operation-navigation button {
     min-height: 29px;
-    font-size: 10px;
+    font-size: 12px;
   }
   .stratum.cmos-console .stage-heading {
     padding: 16px 13px 6px;
     gap: 5px;
   }
   .stratum.cmos-console .stage-heading h3 {
-    font-size: 11px;
+    font-size: 12px;
   }
   .stratum.cmos-console .stage-heading-actions {
     gap: 8px !important;
   }
   .stratum.cmos-console .stage-badge {
-    font-size: 8px;
+    font-size: 12px;
   }
   .stratum.cmos-console #focusStage {
-    font-size: 9px;
+    font-size: 12px;
   }
   .stratum.cmos-console .equipment-top {
     padding: 5px 13px 10px;
@@ -1256,7 +1256,7 @@ body.stratum.cmos-console {
     flex-wrap: wrap;
   }
   .stratum.cmos-console .equipment-top strong {
-    font-size: 8px;
+    font-size: 12px;
   }
   .stratum.cmos-console .equipment-top .equipment-top-actions {
     gap: 12px;
@@ -1264,7 +1264,7 @@ body.stratum.cmos-console {
   }
   .stratum.cmos-console .equipment-top-actions button,
   .stratum.cmos-console .cutaway-switch {
-    font-size: 10px;
+    font-size: 12px;
   }
   .stratum.cmos-console .fab-viewport {
     height: 390px;
@@ -1277,11 +1277,11 @@ body.stratum.cmos-console {
   .stratum.cmos-console .viewport-hud {
     left: 13px;
     right: 13px;
-    font-size: 6px;
+    font-size: 12px;
   }
   .stratum.cmos-console .viewport-caption {
     padding-inline: 13px;
-    font-size: 9px;
+    font-size: 12px;
   }
   .stratum.cmos-console .stage-tools {
     padding: 11px 13px;
@@ -1290,7 +1290,7 @@ body.stratum.cmos-console {
     width: 100%;
   }
   .stratum.cmos-console .camera-toolbar button {
-    font-size: 10px;
+    font-size: 12px;
     min-height: 35px;
     padding-inline: 7px;
     flex: 1;
@@ -1299,14 +1299,14 @@ body.stratum.cmos-console {
     gap: 11px;
   }
   .stratum.cmos-console .part-buttons button {
-    font-size: 9px;
+    font-size: 12px;
   }
   .stratum.cmos-console .motion-status {
     padding: 10px 13px;
-    font-size: 10px;
+    font-size: 12px;
   }
   .stratum.cmos-console .motion-status > span:last-child {
-    font-size: 10px;
+    font-size: 12px;
     white-space: nowrap;
   }
   .stratum.cmos-console .observation-deck summary {
@@ -1346,15 +1346,15 @@ body.stratum.cmos-console {
   }
   .stratum.cmos-console #consoleRun {
     min-width: 0;
-    font-size: 11px;
+    font-size: 12px;
     padding-inline: 12px;
     min-height: 41px;
   }
   .stratum.cmos-console .transport-status strong {
-    font-size: 10px;
+    font-size: 12px;
   }
   .stratum.cmos-console .transport-status small {
-    font-size: 9px;
+    font-size: 12px;
     max-width: 35vw;
   }
   .stratum.cmos-console .transport-actions {
@@ -1362,7 +1362,7 @@ body.stratum.cmos-console {
     gap: 6px;
   }
   .stratum.cmos-console .transport-actions button {
-    font-size: 10px;
+    font-size: 12px;
   }
   .stratum.cmos-console #consoleRecipe {
     display: none;
@@ -1377,9 +1377,9 @@ body.stratum.cmos-console {
   grid-template-columns: 108px minmax(0, 1fr) auto;
   align-items: center;
   gap: 9px 16px;
-  background: #fff;
-  border: 1px solid #c8d1e2;
-  border-left: 3px solid #375cf6;
+  background: var(--n-0);
+  border: 1px solid var(--n-200);
+  border-left: 3px solid var(--a-500);
   padding: 14px 17px;
   margin: 0 0 14px;
 }
@@ -1389,14 +1389,14 @@ body.stratum.cmos-console {
   line-height: 1.5;
 }
 .stratum.cmos-console .process-selector label > span {
-  font: 8px var(--mono);
+  font: 11px var(--mono);
   letter-spacing: 1.1px;
-  color: #65758c;
+  color: var(--a-400);
 }
 .stratum.cmos-console .process-selector label > strong {
   font-size: 12px;
   font-weight: 650;
-  color: #263e66;
+  color: var(--a-800);
 }
 .stratum.cmos-console #operationSelect {
   width: 100%;
@@ -1405,9 +1405,9 @@ body.stratum.cmos-console {
   font:
     600 13px system-ui,
     sans-serif;
-  color: #213857;
-  background: #f4f6fc;
-  border-color: #aebddd;
+  color: var(--a-900);
+  background: var(--n-50);
+  border-color: var(--a-200);
   padding: 9px 35px 9px 12px;
   cursor: pointer;
 }
@@ -1420,14 +1420,14 @@ body.stratum.cmos-console {
   font:
     13px system-ui,
     sans-serif;
-  background: #fff;
-  color: #263e66;
+  background: var(--n-0);
+  color: var(--a-800);
 }
 .stratum.cmos-console #openDetailedRoute {
-  background: #eef2fd;
-  border-color: #b5c3e6;
-  color: #2d4dc0;
-  font-size: 11px;
+  background: var(--n-50);
+  border-color: var(--a-200);
+  color: var(--a-600);
+  font-size: 12px;
   min-height: 42px;
   white-space: nowrap;
 }
@@ -1440,42 +1440,42 @@ body.stratum.cmos-console {
   flex-wrap: wrap;
 }
 .stratum.cmos-console #operationSelectionHint {
-  color: #53647c;
-  font-size: 11px;
+  color: var(--a-700);
+  font-size: 12px;
   line-height: 1.6;
   margin: 0;
   flex: 1;
 }
 .stratum.cmos-console .selection-status {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 650;
   line-height: 1.5;
   padding: 3px 7px;
-  background: #eaf0df;
-  color: #3d5421;
+  background: var(--n-100);
+  color: var(--s-800);
   white-space: nowrap;
   border-radius: 2px;
 }
 .stratum.cmos-console .selection-status[data-state="future"] {
-  background: #fff0da;
-  color: #77501d;
+  background: var(--n-50);
+  color: var(--w-800);
 }
 .stratum.cmos-console .selection-status[data-state="done"] {
-  background: #e8edf4;
-  color: #435570;
+  background: var(--n-100);
+  color: var(--a-800);
 }
 .stratum.cmos-console .selection-status[data-state="running"] {
-  background: #e7edff;
-  color: #304fc0;
+  background: var(--n-100);
+  color: var(--a-600);
 }
 .stratum.cmos-console #returnToCurrent {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   padding: 4px 8px;
   min-height: 30px;
   background: transparent;
-  color: #2d4dc0;
-  border-color: #c1cbea;
+  color: var(--a-600);
+  border-color: var(--a-200);
   white-space: nowrap;
 }
 .stratum.cmos-console .route-panel .route-step {
@@ -1484,8 +1484,8 @@ body.stratum.cmos-console {
   line-height: 1.55;
 }
 .stratum.cmos-console .route-panel .route-step small {
-  color: #61718b;
-  font-size: 10px;
+  color: var(--a-400);
+  font-size: 12px;
   margin-top: 3px;
 }
 .stratum.cmos-console .route-panel .module-toggle {
@@ -1493,8 +1493,8 @@ body.stratum.cmos-console {
   min-height: 43px;
 }
 .stratum.cmos-console .route-close {
-  color: #294260;
-  background: #eef0f4;
+  color: var(--a-800);
+  background: var(--n-50);
 }
 .stratum.cmos-console #routeDialog {
   padding: 0;
@@ -1545,9 +1545,9 @@ body.stratum.cmos-console {
 .stratum.cmos-console #routeDialog .route-bottom {
   display: block;
   flex: none;
-  font-size: 9px;
-  color: #5b6e86;
-  border-color: #c5ceda;
+  font-size: 12px;
+  color: var(--a-400);
+  border-color: var(--n-200);
   padding: 12px 0;
   margin-top: 0;
 }
@@ -1555,18 +1555,18 @@ body.stratum.cmos-console {
 .stratum.cmos-console #routeFilterCount,
 .stratum.cmos-console #routeDialog .route-filter,
 .stratum.cmos-console #routeDialog .module-count {
-  color: #586b84;
+  color: var(--a-700);
 }
 .stratum.cmos-console #routeDialog .module-number,
 .stratum.cmos-console #routeDialog .route-step small,
 .stratum.cmos-console #routeDialog .route-subtitle {
-  color: #4b5e77;
+  color: var(--a-700);
 }
 .stratum.cmos-console #routeDialog .progress-track {
-  background: #d4dce8;
+  background: var(--n-200);
 }
 .stratum.cmos-console #routeDialog .progress-track i {
-  background: #375cf6;
+  background: var(--a-500);
 }
 .stratum.cmos-console #routeDialog .route-progress {
   align-self: stretch;
@@ -1583,23 +1583,23 @@ body.stratum.cmos-console {
 .stratum.cmos-console #routeDialog .route-subtitle,
 .stratum.cmos-console #routeDialog .wafer-label {
   display: block;
-  color: #4b5e77;
-  font-size: 11px;
+  color: var(--a-700);
+  font-size: 12px;
 }
 .stratum.cmos-console #routeDialog .route-subtitle {
   margin-bottom: 12px;
 }
 .stratum.cmos-console #routeDialog .search {
-  background: #fff;
-  border-color: #bbc7db;
+  background: var(--n-0);
+  border-color: var(--n-300);
   margin-bottom: 10px;
 }
 .stratum.cmos-console #routeDialog .search input {
   background: transparent;
-  color: #293e5c;
+  color: var(--a-800);
 }
 .stratum.cmos-console #routeDialog .route-step.selected {
-  border-left: 3px solid #375cf6;
+  border-left: 3px solid var(--a-500);
   padding-left: 12px;
 }
 @media (max-height: 700px) {
@@ -1636,7 +1636,7 @@ body.stratum.cmos-console {
     grid-column: 2;
     grid-row: 1;
     min-height: 36px;
-    font-size: 10px;
+    font-size: 12px;
     padding: 6px 9px;
   }
   .stratum.cmos-console #operationSelect {
@@ -1648,7 +1648,7 @@ body.stratum.cmos-console {
   }
   .stratum.cmos-console #operationSelectionHint {
     grid-column: 1/-1;
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 .stratum.cmos-console #routeDialog {
@@ -1662,7 +1662,7 @@ body.stratum.cmos-console {
   margin: 8px 0 4px;
 }
 .stratum.cmos-console #routeDialog .route-subtitle {
-  font-size: 9px;
+  font-size: 11px;
   margin: 0 0 10px;
   letter-spacing: 0.6px;
 }
@@ -1686,7 +1686,7 @@ body.stratum.cmos-console {
   width: 100%;
   height: 36px;
   padding: 6px 8px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .stratum.cmos-console #routeDialog .experiment-summary {
   grid-column: auto;
@@ -1695,16 +1695,16 @@ body.stratum.cmos-console {
 }
 .stratum.cmos-console #routeDialog .experiment-summary button {
   height: 36px;
-  font-size: 11px;
+  font-size: 12px;
   padding: 6px 8px;
-  border: 1px solid #c5cbd3;
-  background: #fff;
+  border: 1px solid var(--n-200);
+  background: var(--n-0);
 }
 .stratum.cmos-console #routeDialog .experiment-summary p {
   margin: 5px 0 0;
   max-height: 32px;
-  font-size: 10px;
-  color: #52647c;
+  font-size: 12px;
+  color: var(--a-700);
 }
 .stratum.cmos-console #routeDialog .route-progress {
   margin: 9px 0;
@@ -1716,7 +1716,7 @@ body.stratum.cmos-console {
   min-height: 42px;
   padding: 0 8px;
   margin: 0;
-  border: 1px solid #bbc7db;
+  border: 1px solid var(--n-300);
   border-radius: 3px;
 }
 .stratum.cmos-console #routeSearch {
@@ -1732,20 +1732,20 @@ body.stratum.cmos-console {
   width: 30px;
   height: 30px;
   border: 0;
-  background: #eaf0fa;
-  color: #354d77;
+  background: var(--n-100);
+  color: var(--a-800);
   padding: 0;
   font-size: 12px;
 }
 .stratum.cmos-console .route-search-hint {
   margin: 5px 0 7px;
-  color: #596d89;
-  font-size: 10px;
+  color: var(--a-400);
+  font-size: 12px;
 }
 .stratum.cmos-console #routeDialog .route-filter {
   margin: 0;
   gap: 12px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .stratum.cmos-console #routeDialog .route-filter select {
   max-width: none;
@@ -1761,61 +1761,61 @@ body.stratum.cmos-console {
 }
 .stratum.cmos-console #routeFilterCount {
   margin: 5px 0;
-  font-size: 10px;
+  font-size: 12px;
 }
 .stratum.cmos-console #resetRouteFilters {
-  font-size: 10px;
+  font-size: 12px;
   min-height: 26px;
   padding: 3px 5px;
   border: 0;
   background: transparent;
-  color: #304cb2;
+  color: var(--a-700);
 }
 .stratum.cmos-console #jumpCurrent {
   min-height: 33px;
   padding: 5px 8px;
   margin-bottom: 7px;
-  border: 1px solid #becbe5;
-  background: #e8edf9;
-  color: #304cb2;
-  font-size: 11px;
+  border: 1px solid var(--n-200);
+  background: var(--n-100);
+  color: var(--a-700);
+  font-size: 12px;
 }
 .stratum.cmos-console #routeDialog .route-step {
-  color: #31455e;
+  color: var(--a-800);
   box-shadow: none;
   gap: 10px;
   padding: 9px 7px 9px 12px;
 }
 .stratum.cmos-console #routeDialog .route-step:hover {
-  background: #e0e7f7;
-  color: #233d66;
+  background: var(--n-100);
+  color: var(--a-800);
 }
 .stratum.cmos-console #routeDialog .route-step.selected {
-  background: #e4eaff;
-  border-left: 3px solid #375cf6;
+  background: var(--n-100);
+  border-left: 3px solid var(--a-500);
   padding-left: 9px;
-  color: #2749bb;
+  color: var(--a-700);
 }
 .stratum.cmos-console #routeDialog .route-step:before {
   left: 18px;
-  background: #c4cfdf;
+  background: var(--n-200);
 }
 .stratum.cmos-console #routeDialog .route-step.selected:before {
   left: 15px;
 }
 .stratum.cmos-console #routeDialog .step-marker {
-  background: #f1f4f9;
-  border-color: #869bb9;
+  background: var(--n-50);
+  border-color: var(--a-300);
 }
 .stratum.cmos-console #routeDialog .route-step.done .step-marker {
-  background: #e4eedf;
-  color: #3b6126;
-  border-color: #98af83;
+  background: var(--n-100);
+  color: var(--g-700);
+  border-color: var(--s-600);
 }
 .stratum.cmos-console #routeDialog .route-step.current .step-marker {
-  background: #375cf6;
-  border-color: #375cf6;
-  box-shadow: 0 0 0 3px #e0e6ff;
+  background: var(--a-500);
+  border-color: var(--a-500);
+  box-shadow: 0 0 0 3px var(--n-100);
 }
 .stratum.cmos-console .route-step > span:nth-child(2) {
   flex: 1;
@@ -1823,33 +1823,33 @@ body.stratum.cmos-console {
 }
 .stratum.cmos-console .route-step-status {
   margin-left: auto;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 500;
-  color: #536680;
+  color: var(--a-700);
   white-space: nowrap;
 }
 .stratum.cmos-console .route-step.current .route-step-status {
-  color: #294cca;
+  color: var(--a-600);
 }
 .stratum.cmos-console #routeDialog .route-no-results {
   padding: 24px 8px;
   text-align: center;
-  color: #506581;
+  color: var(--a-700);
   font-size: 12px;
 }
 .stratum.cmos-console .route-no-results strong {
   font-weight: 650;
-  color: #2b405f;
+  color: var(--a-800);
 }
 .stratum.cmos-console .route-no-results p {
-  font-size: 11px;
+  font-size: 12px;
   margin: 8px 0 14px;
 }
 .stratum.cmos-console .route-no-results button {
   padding: 9px 12px;
-  border-color: #a8b9df;
-  background: #e9efff;
-  color: #2a4bbb;
+  border-color: var(--a-200);
+  background: var(--n-100);
+  color: var(--a-700);
   font-size: 12px;
 }
 .stratum.cmos-console #routeDialog .route-bottom {
@@ -1861,11 +1861,11 @@ body.stratum.cmos-console {
     gap: 7px;
   }
   .stratum.cmos-console .process-selection-context #operationSelectionHint {
-    font-size: 10px;
+    font-size: 12px;
     min-width: 100px;
   }
   .stratum.cmos-console #returnToCurrent {
-    font-size: 10px;
+    font-size: 12px;
     min-height: 32px;
     margin-left: auto;
   }
@@ -1894,7 +1894,7 @@ body.stratum.cmos-console {
     margin: 6px 0;
   }
   .stratum.cmos-console #routeDialog .route-progress > div:first-child {
-    font-size: 9px;
+    font-size: 12px;
   }
   .stratum.cmos-console #routeDialog .progress-track {
     margin-top: 4px;
@@ -1932,7 +1932,7 @@ body.stratum.cmos-console {
     padding: 0;
   }
   .stratum.cmos-console {
-    background: #fff;
-    color: #111;
+    background: var(--n-0);
+    color: var(--n-950);
   }
 }

@@ -1,0 +1,118 @@
+/*
+ * STRATUM design tokens — the single source of color, type, space and depth.
+ *
+ * Every page loads this file first. Legacy stylesheets reference these tokens
+ * (their raw color literals were mapped by tools/ui_tokens.py), so a change
+ * here re-themes the whole product. Instrument viewports (3D equipment,
+ * consoles) use the dark end of the same neutral ramp.
+ */
+:root {
+  /* Neutral ramp: warm paper at the light end, instrument slate at the dark end. */
+  --n-0: #ffffff;
+  --n-25: #fbfbf9;
+  --n-50: #f5f5f1;
+  --n-100: #ecebe6;
+  --n-150: #e3e2dc;
+  --n-200: #d6d6d0;
+  --n-300: #babdbf;
+  --n-400: #8e949c;
+  --n-500: #646c78;
+  --n-600: #4a5260;
+  --n-700: #343b47;
+  --n-800: #232934;
+  --n-850: #1a1f28;
+  --n-900: #13171e;
+  --n-950: #0c0f14;
+
+  /* Accent: STRATUM cobalt. Also used for information states. */
+  --a-50: #eef2ff;
+  --a-100: #dfe6ff;
+  --a-200: #c0cdff;
+  --a-300: #93a8ff;
+  --a-400: #6682fb;
+  --a-500: #375cf6;
+  --a-600: #2448df;
+  --a-700: #1d39b1;
+  --a-800: #1a2f84;
+  --a-900: #15224f;
+
+  /* Signal: the lime that means "run / live". Never used for body text on light. */
+  --s-100: #f1fad0;
+  --s-300: #e2f59a;
+  --s-400: #d3ee65;
+  --s-600: #8ba523;
+  --s-800: #4d5c12;
+
+  /* Status ramps. */
+  --g-50: #ecf8f0;
+  --g-200: #b7e3c5;
+  --g-400: #4cc07c;
+  --g-500: #1f9a55;
+  --g-700: #16703f;
+  --w-50: #fff6e6;
+  --w-200: #fbd9a0;
+  --w-400: #efb76b;
+  --w-600: #b86e12;
+  --w-800: #6f430b;
+  --d-50: #fff0ee;
+  --d-200: #ffc5b9;
+  --d-400: #f07a64;
+  --d-500: #dc4530;
+  --d-700: #a3291a;
+
+  /* Semantic roles — prefer these in new code. */
+  --bg: var(--n-50);
+  --surface: var(--n-0);
+  --surface-sunken: var(--n-100);
+  --surface-raised: var(--n-0);
+  --border: var(--n-200);
+  --border-strong: var(--n-300);
+  --text: var(--n-900);
+  --text-muted: var(--n-500);
+  --text-subtle: var(--n-400);
+  --accent: var(--a-500);
+  --accent-hover: var(--a-600);
+  --accent-soft: var(--a-50);
+  --focus: var(--a-400);
+  --console-bg: var(--n-900);
+  --console-surface: var(--n-850);
+  --console-border: var(--n-700);
+  --console-text: var(--n-100);
+  --console-muted: var(--n-400);
+
+  /* Type. Pretendard/SUIT are used when installed; otherwise the platform Korean UI face. */
+  --font-sans: "Pretendard Variable", "Pretendard", "SUIT Variable", "Segoe UI Variable Text", "Segoe UI",
+    "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  --fs-label: 11px; /* mono / uppercase labels only */
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-md: 14px;
+  --fs-lg: 16px;
+  --fs-xl: 20px;
+  --fs-2xl: 24px;
+  --fs-3xl: 32px;
+
+  /* Space (4px grid), shape, depth, motion. */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --shadow-1: 0 1px 2px rgb(19 23 30 / 0.06), 0 1px 1px rgb(19 23 30 / 0.04);
+  --shadow-2: 0 4px 14px rgb(19 23 30 / 0.08), 0 1px 3px rgb(19 23 30 / 0.06);
+  --shadow-3: 0 18px 48px rgb(12 15 20 / 0.22), 0 4px 12px rgb(12 15 20 / 0.12);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 160ms;
+
+  /* Shell geometry. */
+  --rail-w: 232px;
+  --rail-w-collapsed: 60px;
+  --topbar-h: 56px;
+}

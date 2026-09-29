@@ -1,31 +1,31 @@
 .back-link {
-  font-size: 10px;
-  color: #718996;
+  font-size: 12px;
+  color: var(--n-400);
   padding: 8px;
 }
 .evidence-state {
   padding: 10px 14px;
-  border: 1px solid #dccfb4;
-  color: #8c7346;
-  background: #fff9ed;
+  border: 1px solid var(--n-200);
+  color: var(--w-600);
+  background: var(--n-25);
   border-radius: 6px;
-  font-size: 11px;
+  font-size: 12px;
   white-space: nowrap;
 }
 .scope-notice {
   padding: 13px 17px;
-  border: 1px solid #d7e4e9;
-  background: #eaf1f5;
+  border: 1px solid var(--n-150);
+  background: var(--n-100);
   border-radius: 7px;
   display: flex;
   gap: 13px;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.8;
-  color: #718995;
+  color: var(--n-400);
 }
 .scope-notice b {
   white-space: nowrap;
-  color: #3a6678;
+  color: var(--a-700);
 }
 .evidence-steps {
   display: grid;
@@ -34,9 +34,9 @@
   margin-top: 22px;
 }
 .evidence-steps > div {
-  border: 1px solid #dfe8ec;
+  border: 1px solid var(--n-150);
   border-radius: 7px;
-  background: #fff;
+  background: var(--n-0);
   padding: 14px 17px;
   display: grid;
   grid-template-columns: 30px 1fr;
@@ -47,23 +47,23 @@
   font:
     20px Consolas,
     monospace;
-  color: #aec1cc;
+  color: var(--n-300);
   align-self: center;
 }
 .evidence-steps b {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
 }
 .evidence-steps small {
-  font-size: 9px;
-  color: #8da4af;
+  font-size: 12px;
+  color: var(--n-400);
 }
 .evidence-steps .done {
-  border-color: #a6ccc5;
-  background: #f3faf7;
+  border-color: var(--a-200);
+  background: var(--n-25);
 }
 .evidence-steps .done span {
-  color: #378e84;
+  color: var(--a-400);
 }
 .evidence-grid {
   display: grid;
@@ -81,14 +81,14 @@
   padding: 0 20px 19px;
 }
 .setup-label {
-  font-size: 10px;
-  color: #6a8391;
+  font-size: 12px;
+  color: var(--n-500);
   display: block;
   margin: 12px 0;
 }
 .setup-label select {
   width: 100%;
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 7px;
   padding: 10px;
 }
@@ -99,26 +99,26 @@
   margin-top: 14px;
 }
 .data-actions button {
-  font-size: 10px;
+  font-size: 12px;
   padding: 10px 8px;
 }
 .data-actions button:first-child {
   grid-column: span 2;
 }
 .dataset-info {
-  background: #f5f8fa;
-  border: 1px solid #e5edf1;
+  background: var(--n-50);
+  border: 1px solid var(--n-100);
   border-radius: 6px;
   padding: 13px;
   margin-top: 18px;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.8;
-  color: #76909e;
+  color: var(--n-400);
   overflow-wrap: anywhere;
 }
 .dataset-info strong {
   display: block;
-  color: #2d6575;
+  color: var(--a-700);
   margin-bottom: 8px;
   font-size: 12px;
 }
@@ -129,13 +129,13 @@
 }
 .data-stats b {
   font-size: 21px;
-  color: #275668;
+  color: var(--a-800);
   display: block;
   line-height: 1.3;
 }
 .data-stats span {
-  font-size: 9px;
-  color: #8ba3af;
+  font-size: 12px;
+  color: var(--n-400);
 }
 .dataset-info dl {
   display: grid;
@@ -144,16 +144,16 @@
   margin: 0;
 }
 .dataset-info dt {
-  color: #95a8b2;
+  color: var(--n-400);
 }
 .dataset-info dd {
   margin: 0;
 }
 .fingerprint {
   font:
-    8px/1.6 Consolas,
+    11px/1.6 Consolas,
     monospace;
-  color: #8ca2ad;
+  color: var(--n-400);
   overflow-wrap: anywhere;
   margin-top: 12px;
 }
@@ -161,23 +161,23 @@
   margin-top: 17px;
 }
 .format-help summary {
-  font-size: 10px;
-  color: #6d8a99;
+  font-size: 12px;
+  color: var(--n-400);
 }
 .format-help p {
-  font-size: 10px;
-  color: #8ca1ac;
+  font-size: 12px;
+  color: var(--n-400);
   line-height: 1.8;
   margin: 12px 0;
 }
 .limits-caption {
-  font-size: 10px;
-  color: #4d7384;
+  font-size: 12px;
+  color: var(--a-400);
   margin-top: 20px;
 }
 .limits-caption span {
-  font-size: 8px;
-  color: #9aadb6;
+  font-size: 12px;
+  color: var(--n-300);
   display: block;
   margin-top: 5px;
 }
@@ -188,8 +188,8 @@
   margin: 11px 0 18px;
 }
 .limit-fields label {
-  font-size: 8px;
-  color: #8097a3;
+  font-size: 12px;
+  color: var(--n-400);
 }
 .limit-fields input {
   width: 100%;
@@ -209,9 +209,9 @@
   place-items: center;
   width: 42px;
   height: 42px;
-  border: 1px solid #c9dfe5;
-  background: #edf6f7;
-  color: #629dab;
+  border: 1px solid var(--n-200);
+  background: var(--n-50);
+  color: var(--a-300);
   border-radius: 9px;
   font-size: 22px;
   margin: 0 auto 18px;
@@ -219,17 +219,17 @@
 .evidence-empty h3 {
   font-size: 16px;
   font-weight: 550;
-  color: #698793;
+  color: var(--n-400);
 }
 .evidence-empty p {
-  font-size: 11px;
-  color: #98aab3;
+  font-size: 12px;
+  color: var(--n-400);
   line-height: 1.8;
   margin-top: 10px;
 }
 .evaluation-action {
-  border-top: 1px solid #e5edf1;
-  background: #f7fafb;
+  border-top: 1px solid var(--n-100);
+  background: var(--n-25);
   padding: 15px 20px;
   display: flex;
   gap: 15px;
@@ -237,12 +237,12 @@
   justify-content: space-between;
 }
 .evaluation-action p {
-  font-size: 10px;
-  color: #8199a5;
+  font-size: 12px;
+  color: var(--n-400);
   line-height: 1.8;
 }
 .evaluation-action button {
-  font-size: 10px;
+  font-size: 12px;
   white-space: nowrap;
 }
 .fit-details {
@@ -252,19 +252,19 @@
   font:
     23px Consolas,
     monospace;
-  color: #1f6f78;
+  color: var(--a-700);
   letter-spacing: -0.7px;
-  background: #eff7f5;
-  border: 1px solid #d7e9e4;
+  background: var(--n-50);
+  border: 1px solid var(--n-150);
   border-radius: 6px;
   padding: 16px;
   margin: 3px 0 15px;
 }
 .fit-equation small {
   display: block;
-  font: 9px sans-serif;
+  font: 11px sans-serif;
   letter-spacing: 0;
-  color: #6a978f;
+  color: var(--a-300);
   margin-top: 8px;
 }
 .fit-split {
@@ -273,20 +273,20 @@
   gap: 20px;
 }
 .fit-split > div {
-  font-size: 10px;
-  color: #7d95a1;
+  font-size: 12px;
+  color: var(--n-400);
   line-height: 1.8;
 }
 .fit-split b {
   font-size: 14px;
   font-weight: 600;
-  color: #365e71;
+  color: var(--a-800);
   display: block;
   margin-bottom: 4px;
 }
 .fit-split small {
-  font-size: 9px;
-  color: #99a9b1;
+  font-size: 12px;
+  color: var(--n-400);
 }
 .split-lots {
   margin-top: 13px;
@@ -296,22 +296,22 @@
 }
 .split-lots span {
   font:
-    8px Consolas,
+    11px Consolas,
     monospace;
   padding: 5px 6px;
-  border: 1px solid #dce9ee;
-  background: #eff6f8;
+  border: 1px solid var(--n-100);
+  background: var(--n-50);
   border-radius: 4px;
-  color: #557b8d;
+  color: var(--a-400);
 }
 .split-lots span.validation {
-  background: #fbf5e9;
-  border-color: #ecdec3;
-  color: #a78850;
+  background: var(--n-50);
+  border-color: var(--n-150);
+  color: var(--w-600);
 }
 .fit-footnote {
-  font-size: 9px;
-  color: #94a8b2;
+  font-size: 12px;
+  color: var(--n-400);
   line-height: 1.8;
   margin-top: 13px;
 }
@@ -323,36 +323,36 @@
 }
 .evidence-metrics article {
   padding: 12px;
-  border: 1px solid #dfe9ee;
+  border: 1px solid var(--n-100);
   border-radius: 6px;
-  background: #f8fbfc;
+  background: var(--n-25);
   min-width: 0;
 }
 .evidence-metrics span {
-  font-size: 9px;
-  color: #7e98a5;
+  font-size: 12px;
+  color: var(--n-400);
   display: block;
 }
 .evidence-metrics b {
   font:
     22px Consolas,
     monospace;
-  color: #205e71;
+  color: var(--a-800);
   display: block;
   margin: 10px 0 7px;
 }
 .evidence-metrics small {
-  font-size: 8px;
+  font-size: 12px;
   display: block;
-  color: #91a5af;
+  color: var(--n-400);
   line-height: 1.7;
 }
 .result-notice {
   padding: 13px 16px;
-  background: #fff6e6;
-  border: 1px solid #ead8b8;
-  color: #8c6d35;
-  font-size: 10px;
+  background: var(--n-50);
+  border: 1px solid var(--w-200);
+  color: var(--w-600);
+  font-size: 12px;
   line-height: 1.8;
   margin: 0 20px 17px;
   border-radius: 5px;
@@ -364,20 +364,20 @@
   padding: 0 20px 15px;
 }
 .plots > div {
-  border: 1px solid #e3ebef;
+  border: 1px solid var(--n-100);
   border-radius: 7px;
   padding: 13px;
-  background: #fff;
+  background: var(--n-0);
   min-width: 0;
 }
 .plots h3 {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 550;
-  color: #5a7e8e;
+  color: var(--a-400);
 }
 .plots h3 small {
-  font-size: 8px;
-  color: #97aab4;
+  font-size: 12px;
+  color: var(--n-400);
   float: right;
 }
 .plots svg {
@@ -387,8 +387,8 @@
   margin-top: 10px;
 }
 .plots p {
-  font-size: 8px;
-  color: #99adb7;
+  font-size: 12px;
+  color: var(--n-300);
   margin-top: 8px;
 }
 .plot-label {
@@ -403,38 +403,38 @@
   padding: 4px 20px 18px;
 }
 .criterion {
-  background: #eff7f4;
-  border: 1px solid #d8e8df;
-  color: #648f7e;
+  background: var(--n-50);
+  border: 1px solid var(--n-150);
+  color: var(--a-400);
   border-radius: 4px;
   padding: 6px 8px;
-  font-size: 8px;
+  font-size: 12px;
 }
 .criterion.failed {
-  background: #fcf0e8;
-  border-color: #ecd2be;
-  color: #b07b49;
+  background: var(--n-50);
+  border-color: var(--n-200);
+  color: var(--w-600);
 }
 .evidence-table {
   width: 100%;
   border-collapse: collapse;
   white-space: nowrap;
-  font-size: 10px;
+  font-size: 12px;
 }
 .evidence-table th {
   text-align: right;
-  font-size: 8px;
-  color: #899faa;
+  font-size: 12px;
+  color: var(--n-400);
   font-weight: 500;
-  background: #f4f8fa;
+  background: var(--n-50);
   padding: 11px 14px;
-  border-block: 1px solid #e3edf1;
+  border-block: 1px solid var(--n-100);
 }
 .evidence-table td {
   text-align: right;
   padding: 10px 14px;
-  border-bottom: 1px solid #ebf1f4;
-  color: #5f8190;
+  border-bottom: 1px solid var(--n-50);
+  color: var(--a-400);
   font-family: Consolas, "Malgun Gothic", monospace;
 }
 .evidence-table th:first-child,
@@ -446,12 +446,12 @@
 }
 .observation-details {
   margin: 0;
-  border-top: 1px solid #e2ebef;
+  border-top: 1px solid var(--n-100);
 }
 .observation-details summary {
   padding: 15px 20px;
-  font-size: 10px;
-  color: #6b8c9d;
+  font-size: 12px;
+  color: var(--a-400);
 }
 .observation-details .tiny {
   padding: 0 20px 14px;
@@ -460,8 +460,8 @@
   padding: 0 20px 20px;
 }
 .domain-content > p {
-  font-size: 11px;
-  color: #6d8b9b;
+  font-size: 12px;
+  color: var(--a-400);
   line-height: 1.9;
   margin-bottom: 15px;
 }
@@ -475,14 +475,14 @@
   margin: 17px 0;
 }
 .prediction-fields label {
-  font-size: 9px;
-  color: #7192a2;
+  font-size: 12px;
+  color: var(--a-300);
 }
 .prediction-fields small {
-  color: #a0b1bb;
+  color: var(--n-300);
   display: block;
   margin-top: 4px;
-  font-size: 8px;
+  font-size: 12px;
 }
 .prediction-fields input {
   width: 100%;
@@ -491,10 +491,10 @@
   margin-top: 7px;
 }
 .prediction-result {
-  font-size: 11px;
-  color: #528b87;
+  font-size: 12px;
+  color: var(--a-400);
   line-height: 1.9;
-  background: #f0f7f5;
+  background: var(--n-50);
   border-radius: 5px;
   padding: 12px 14px;
   margin-top: 13px;
@@ -503,8 +503,8 @@
   display: none;
 }
 .prediction-result.error {
-  color: #aa743d;
-  background: #fcf3e6;
+  color: var(--w-600);
+  background: var(--n-50);
 }
 .method-panel {
   margin-top: 20px;
@@ -516,35 +516,35 @@
   gap: 25px;
 }
 .method-grid h3 {
-  font-size: 11px;
+  font-size: 12px;
   margin-bottom: 9px;
 }
 .method-grid p {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.9;
-  color: #8299a4;
+  color: var(--n-400);
 }
 .method-grid a {
-  color: #508694;
+  color: var(--a-400);
 }
 .method-grid small {
-  font-size: 8px;
-  color: #9caeb7;
+  font-size: 12px;
+  color: var(--n-300);
   line-height: 1.9;
   display: block;
   margin-top: 9px;
 }
 .status.success {
-  background: #e6f3ed;
-  color: #477e63;
+  background: var(--n-100);
+  color: var(--g-700);
 }
 .status.warning {
-  background: #fcf0dc;
-  color: #a7803e;
+  background: var(--n-50);
+  color: var(--w-600);
 }
 .status.synthetic {
-  background: #f1eafa;
-  color: #886aaa;
+  background: var(--n-100);
+  color: var(--a-400);
 }
 @media (max-width: 1250px) {
   .evidence-grid {
@@ -604,13 +604,13 @@
     font-size: 17px;
   }
   .evidence-steps b {
-    font-size: 10px;
+    font-size: 12px;
   }
   .evidence-steps small {
-    font-size: 8px;
+    font-size: 12px;
   }
   .scope-notice {
-    font-size: 10px;
+    font-size: 12px;
     gap: 8px;
   }
   .plots {
@@ -629,7 +629,7 @@
     gap: 12px;
   }
   .fit-split small {
-    font-size: 8px;
+    font-size: 12px;
   }
   .fit-equation {
     font-size: 20px;
