@@ -1,179 +1,1852 @@
+/* Legacy layer: new STRATUM UI rules (stratum-ui.css) take precedence without specificity overrides. */
+@layer legacy {
 /* STRATUM / Process Intelligence. Shared presentation; app state stays app-owned. */
-body.stratum{--st-ink:#111827;--st-midnight:#111622;--st-paper:#f2f1ec;--st-panel:#fbfaf6;--st-line:#d4d5d1;--st-muted:#66707e;--st-cobalt:#375cf6;--st-signal:#d3ee65;--st-mono:"Cascadia Code","SFMono-Regular",Consolas,monospace;--ink:var(--st-ink);--navy:var(--st-midnight);--dark:var(--st-midnight);--teal:var(--st-cobalt);--green:var(--st-cobalt);--muted:var(--st-muted);--line:var(--st-line);--paper:var(--st-paper);--page:var(--st-paper);--bg:var(--st-paper);--surface:var(--st-panel);--mint:var(--st-signal);--nav:var(--st-midnight);background:var(--st-paper);color:var(--st-ink);font-family:"Segoe UI Variable","Segoe UI","Malgun Gothic",sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-.stratum *,.stratum *::before,.stratum *::after{box-sizing:border-box}
-.stratum :is(button,input,select,textarea){font-family:inherit;border-radius:3px;accent-color:var(--st-cobalt)}
-.stratum :is(a,button,input,select,textarea,summary):focus-visible{outline:3px solid #7890ff;outline-offset:3px}
-.stratum :is(button,a){transition:background .16s,color .16s,border-color .16s}
-.stratum a{text-underline-offset:4px}
-.stratum :is(.primary,.primary-button,button.dark){background:var(--st-cobalt);border-color:var(--st-cobalt);color:#fff;box-shadow:none}
-.stratum :is(.primary,.primary-button,button.dark):hover:not(:disabled){background:#2347de;border-color:#2347de;color:#fff}
-.stratum .eyebrow{font:10px/1.6 var(--st-mono);letter-spacing:1.6px;color:#687387}
-.stratum :is(.panel,.section-panel,.results-panel,.recipe-panel,.white-panel,.summary-card,.project-toolbar){border-radius:3px;box-shadow:none;border-color:var(--st-line)}
-.stratum :is(.panel-head,.panel-top,.dialog-head,.dialog-top,.dialog-heading){border-color:var(--st-line)}
-.stratum h2{letter-spacing:-.45px}
-.stratum dialog{border-radius:5px;border-color:#bfc5d2;box-shadow:0 30px 100px #0c122452}
-.stratum dialog::backdrop{background:#0c1126bc;backdrop-filter:blur(5px)}
-.stratum :is(.dialog-head,.dialog-top,.dialog-heading){background:var(--st-paper)}
-.stratum ::selection{background:#c8d2ff;color:#142757}
+body.stratum {
+  --st-ink: var(--n-900);
+  --st-midnight: var(--n-900);
+  --st-paper: var(--n-50);
+  --st-panel: var(--n-25);
+  --st-line: var(--n-200);
+  --st-muted: var(--n-500);
+  --st-cobalt: var(--a-500);
+  --st-signal: var(--s-400);
+  --st-mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  --ink: var(--st-ink);
+  --navy: var(--st-midnight);
+  --dark: var(--st-midnight);
+  --teal: var(--st-cobalt);
+  --green: var(--st-cobalt);
+  --muted: var(--st-muted);
+  --line: var(--st-line);
+  --paper: var(--st-paper);
+  --page: var(--st-paper);
+  --bg: var(--st-paper);
+  --surface: var(--st-panel);
+  --mint: var(--st-signal);
+  --nav: var(--st-midnight);
+  background: var(--st-paper);
+  color: var(--st-ink);
+  font-family: "Segoe UI Variable", "Segoe UI", "Malgun Gothic", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.stratum *,
+.stratum *::before,
+.stratum *::after {
+  box-sizing: border-box;
+}
+.stratum :is(button, input, select, textarea) {
+  font-family: inherit;
+  border-radius: 3px;
+  accent-color: var(--st-cobalt);
+}
+.stratum :is(a, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid var(--a-400);
+  outline-offset: 3px;
+}
+.stratum :is(button, a) {
+  transition:
+    background 0.16s,
+    color 0.16s,
+    border-color 0.16s;
+}
+.stratum a {
+  text-underline-offset: 4px;
+}
+.stratum :is(.primary, .primary-button, button.dark) {
+  background: var(--st-cobalt);
+  border-color: var(--st-cobalt);
+  color: var(--n-0);
+  box-shadow: none;
+}
+.stratum :is(.primary, .primary-button, button.dark):hover:not(:disabled) {
+  background: var(--a-600);
+  border-color: var(--a-600);
+  color: var(--n-0);
+}
+.stratum .eyebrow {
+  font: 11px/1.6 var(--st-mono);
+  letter-spacing: 1.6px;
+  color: var(--n-500);
+}
+.stratum
+  :is(.panel, .section-panel, .results-panel, .recipe-panel, .white-panel, .summary-card, .project-toolbar) {
+  border-radius: 3px;
+  box-shadow: none;
+  border-color: var(--st-line);
+}
+.stratum :is(.panel-head, .panel-top, .dialog-head, .dialog-top, .dialog-heading) {
+  border-color: var(--st-line);
+}
+.stratum h2 {
+  letter-spacing: -0.45px;
+}
+.stratum dialog {
+  border-radius: 5px;
+  border-color: var(--n-300);
+  box-shadow: 0 30px 100px color-mix(in srgb, var(--n-900) 32%, transparent);
+}
+.stratum dialog::backdrop {
+  background: color-mix(in srgb, var(--a-900) 74%, transparent);
+  backdrop-filter: blur(5px);
+}
+.stratum :is(.dialog-head, .dialog-top, .dialog-heading) {
+  background: var(--st-paper);
+}
+.stratum ::selection {
+  background: var(--a-200);
+  color: var(--a-900);
+}
 
 /* The symbol is a stack of material planes, resolved as vector geometry. */
-.stratum a.stratum-brand{display:flex;align-items:center;gap:11px;white-space:nowrap;text-decoration:none;letter-spacing:0;margin:0;padding:0;color:#f6f5f0;flex-shrink:0}
-.stratum .stratum-symbol{display:block;width:33px;height:38px;flex-shrink:0;color:var(--st-signal);overflow:visible}
-.stratum .stratum-brand>.stratum-wordmark{display:block;font:680 22px/.95 "Segoe UI Variable","Segoe UI",sans-serif;letter-spacing:1.4px;color:inherit}
-.stratum .stratum-brand .stratum-wordmark small{position:static;display:block;margin:8px 0 0;padding:0;font:8px/1 var(--st-mono);letter-spacing:1.35px;color:#98a2b5;white-space:nowrap}
-.stratum [data-stratum-switcher]{position:relative;flex-shrink:0;z-index:70}
-.stratum .stratum-switcher{margin:0;padding:0;border:0;background:none;border-radius:0;color:var(--st-ink)}
-.stratum .stratum-switcher>summary{display:flex;align-items:center;gap:12px;min-height:38px;padding:8px 11px;list-style:none;cursor:pointer;border:1px solid var(--st-line);background:var(--st-panel);border-radius:3px;font-size:12px;font-weight:600;white-space:nowrap}
-.stratum .stratum-switcher>summary::-webkit-details-marker{display:none}
-.stratum .stratum-switcher[open]>summary{border-color:var(--st-cobalt);box-shadow:0 0 0 1px var(--st-cobalt)}
-.stratum .stratum-switch-icon{font:20px/1 var(--st-mono);color:var(--st-cobalt)}
-.stratum .stratum-switch-arrow{font-size:16px;color:#748096;margin-left:auto}
-.stratum .stratum-space-panel{position:fixed;left:var(--stratum-menu-left,12px);right:auto;top:var(--stratum-menu-top,88px);width:342px;max-height:var(--stratum-menu-height,min(670px,calc(100dvh - 100px)));overflow:auto;padding:17px;background:var(--st-panel);border:1px solid #b9c1d3;box-shadow:0 18px 50px #060c2830;border-radius:3px;color:var(--st-ink);z-index:80;text-align:left}
-.stratum .stratum-space-heading{margin:0 0 13px;padding:0 0 13px;border-bottom:1px solid var(--st-line);font:9px var(--st-mono);letter-spacing:1.7px;color:var(--st-muted)}
-.stratum .stratum-space-panel nav{display:grid;gap:3px;margin:0;padding:0;align-self:auto;flex:initial;width:100%;height:auto;min-height:0;max-height:none;min-width:0;overflow:visible;white-space:normal}
-.stratum .stratum-space-panel nav a{display:flex;align-items:center;gap:13px;min-height:54px;padding:9px 10px;margin:0;border:0;border-radius:2px;text-decoration:none;background:transparent;color:var(--st-ink);font-size:12px;letter-spacing:0}
-.stratum .stratum-space-panel nav a:hover{background:#e9ecf4;color:var(--st-cobalt)}
-.stratum .stratum-space-panel nav a[aria-current]{background:var(--st-cobalt);color:#fff;border:0}
-.stratum .stratum-space-code{font:10px var(--st-mono);opacity:.65;width:20px;flex-shrink:0}
-.stratum .stratum-space-panel b{font-size:12px;font-weight:600;display:block}
-.stratum .stratum-space-panel small{font-size:10px;line-height:1.4;color:inherit;opacity:.7;display:block;margin-top:4px}
-.stratum .stratum-space-arrow{margin-left:auto;font-size:13px}
+.stratum a.stratum-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  white-space: nowrap;
+  text-decoration: none;
+  letter-spacing: 0;
+  margin: 0;
+  padding: 0;
+  color: var(--n-50);
+  flex-shrink: 0;
+}
+.stratum .stratum-symbol {
+  display: block;
+  width: 33px;
+  height: 38px;
+  flex-shrink: 0;
+  color: var(--st-signal);
+  overflow: visible;
+}
+.stratum .stratum-brand > .stratum-wordmark {
+  display: block;
+  font:
+    680 22px/0.95 "Segoe UI Variable",
+    "Segoe UI",
+    sans-serif;
+  letter-spacing: 1.4px;
+  color: inherit;
+}
+.stratum .stratum-brand .stratum-wordmark small {
+  position: static;
+  display: block;
+  margin: 8px 0 0;
+  padding: 0;
+  font: 11px/1 var(--st-mono);
+  letter-spacing: 1.35px;
+  color: var(--n-400);
+  white-space: nowrap;
+}
+.stratum [data-stratum-switcher] {
+  position: relative;
+  flex-shrink: 0;
+  z-index: 70;
+}
+.stratum .stratum-switcher {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 0;
+  color: var(--st-ink);
+}
+.stratum .stratum-switcher > summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 38px;
+  padding: 8px 11px;
+  list-style: none;
+  cursor: pointer;
+  border: 1px solid var(--st-line);
+  background: var(--st-panel);
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.stratum .stratum-switcher > summary::-webkit-details-marker {
+  display: none;
+}
+.stratum .stratum-switcher[open] > summary {
+  border-color: var(--st-cobalt);
+  box-shadow: 0 0 0 1px var(--st-cobalt);
+}
+.stratum .stratum-switch-icon {
+  font: 20px/1 var(--st-mono);
+  color: var(--st-cobalt);
+}
+.stratum .stratum-switch-arrow {
+  font-size: 16px;
+  color: var(--n-400);
+  margin-left: auto;
+}
+.stratum .stratum-space-panel {
+  position: fixed;
+  left: var(--stratum-menu-left, 12px);
+  right: auto;
+  top: var(--stratum-menu-top, 88px);
+  width: 342px;
+  max-height: var(--stratum-menu-height, min(670px, calc(100dvh - 100px)));
+  overflow: auto;
+  padding: 17px;
+  background: var(--st-panel);
+  border: 1px solid var(--n-300);
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--a-900) 19%, transparent);
+  border-radius: 3px;
+  color: var(--st-ink);
+  z-index: 80;
+  text-align: left;
+}
+.stratum .stratum-space-heading {
+  margin: 0 0 13px;
+  padding: 0 0 13px;
+  border-bottom: 1px solid var(--st-line);
+  font: 11px var(--st-mono);
+  letter-spacing: 1.7px;
+  color: var(--st-muted);
+}
+.stratum .stratum-space-panel nav {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  align-self: auto;
+  flex: initial;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  min-width: 0;
+  overflow: visible;
+  white-space: normal;
+}
+.stratum .stratum-space-panel nav a {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 54px;
+  padding: 9px 10px;
+  margin: 0;
+  border: 0;
+  border-radius: 2px;
+  text-decoration: none;
+  background: transparent;
+  color: var(--st-ink);
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.stratum .stratum-space-panel nav a:hover {
+  background: var(--n-100);
+  color: var(--st-cobalt);
+}
+.stratum .stratum-space-panel nav a[aria-current] {
+  background: var(--st-cobalt);
+  color: var(--n-0);
+  border: 0;
+}
+.stratum .stratum-space-code {
+  font: 11px var(--st-mono);
+  opacity: 0.65;
+  width: 20px;
+  flex-shrink: 0;
+}
+.stratum .stratum-space-panel b {
+  font-size: 12px;
+  font-weight: 600;
+  display: block;
+}
+.stratum .stratum-space-panel small {
+  font-size: 12px;
+  line-height: 1.4;
+  color: inherit;
+  opacity: 0.7;
+  display: block;
+  margin-top: 4px;
+}
+.stratum .stratum-space-arrow {
+  margin-left: auto;
+  font-size: 13px;
+}
 
 /* Persistent location is legible across all nine workspaces. */
-.stratum :is(.rail,.sidebar,.review-sidebar){background:var(--st-midnight);border-right:1px solid #2d3548;color:#a6b0c3}
-.stratum :is(.rail,.review-sidebar){width:228px;padding:27px 18px 20px}
-.stratum :is(.rail,.sidebar,.review-sidebar) .stratum-brand{margin:0 0 26px}
-.stratum :is(.workspace-badge,.workspace-label,.workspace-picker){background:#181f2f;border-color:#354058;border-radius:2px;color:#e0e4ee;box-shadow:none}
-.stratum .workspace-badge{margin:0 0 29px;padding:12px}
-.stratum .workspace-badge small{color:#94a0b7;font-size:10px;line-height:1.6}
-.stratum .workspace-badge i{background:var(--st-signal);box-shadow:none}
-.stratum :is(.nav-caption,.nav-label){color:#77849c;font:9px var(--st-mono);letter-spacing:1.5px}
-.stratum .rail nav{display:grid;gap:3px}
-.stratum .rail nav a{display:flex;gap:12px;align-items:center;min-height:41px;padding:10px 11px;color:#a9b2c4;font-size:12px;border:1px solid transparent;border-radius:2px;text-decoration:none}
-.stratum .rail nav a span{font:10px var(--st-mono);color:#77849c;width:17px}
-.stratum .rail nav a:is(.active,[aria-current]){background:#253758;border-color:#384e75;color:#f3f6ff;box-shadow:inset 2px 0 var(--st-signal);font-weight:600}
-.stratum .rail nav a:is(.active,[aria-current]) span{color:var(--st-signal)}
-.stratum .rail nav a:hover:not(.active){background:#1d273b;color:#fff}
-.stratum .rail-bottom{border-color:#333d51;padding-top:19px}
-.stratum .rail-bottom :is(p,button){color:#b1bed5}
-.stratum .rail-bottom small{color:#8190aa;line-height:1.7}
-.stratum .rail-bottom .connection{color:var(--st-signal);font-size:9px;letter-spacing:.7px}
-.stratum .rail+.app-shell{margin-left:228px}
-.stratum :is(.topbar,.review-topbar){background:#fbfaf6;border-bottom:1px solid var(--st-line);box-shadow:none}
-.stratum .breadcrumb{color:#758094;font-size:9px;letter-spacing:1px}
-.stratum .topbar strong{color:#283246}
-.stratum .top-actions{flex-wrap:wrap}
-.stratum .top-actions button{background:transparent;color:#465066;border-color:#cdd0d8;font-size:11px;border-radius:2px;min-height:34px}
-.stratum .top-actions button.dark{background:var(--st-ink);border-color:var(--st-ink);color:#fff}
-.stratum .topbar [data-stratum-switcher]{margin-right:auto}
-.stratum :is(.topbar,.review-topbar)>[data-stratum-switcher]{display:block}
+.stratum :is(.rail, .sidebar, .review-sidebar) {
+  background: var(--st-midnight);
+  border-right: 1px solid var(--n-700);
+  color: var(--n-300);
+}
+.stratum :is(.rail, .review-sidebar) {
+  width: 228px;
+  padding: 27px 18px 20px;
+}
+.stratum :is(.rail, .sidebar, .review-sidebar) .stratum-brand {
+  margin: 0 0 26px;
+}
+.stratum :is(.workspace-badge, .workspace-label, .workspace-picker) {
+  background: var(--n-850);
+  border-color: var(--a-800);
+  border-radius: 2px;
+  color: var(--n-150);
+  box-shadow: none;
+}
+.stratum .workspace-badge {
+  margin: 0 0 29px;
+  padding: 12px;
+}
+.stratum .workspace-badge small {
+  color: var(--n-400);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.stratum .workspace-badge i {
+  background: var(--st-signal);
+  box-shadow: none;
+}
+.stratum :is(.nav-caption, .nav-label) {
+  color: var(--n-400);
+  font: 11px var(--st-mono);
+  letter-spacing: 1.5px;
+}
+.stratum .rail nav {
+  display: grid;
+  gap: 3px;
+}
+.stratum .rail nav a {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 41px;
+  padding: 10px 11px;
+  color: var(--n-300);
+  font-size: 12px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  text-decoration: none;
+}
+.stratum .rail nav a span {
+  font: 11px var(--st-mono);
+  color: var(--n-400);
+  width: 17px;
+}
+.stratum .rail nav a:is(.active, [aria-current]) {
+  background: var(--a-900);
+  border-color: var(--a-800);
+  color: var(--n-50);
+  box-shadow: inset 2px 0 var(--st-signal);
+  font-weight: 600;
+}
+.stratum .rail nav a:is(.active, [aria-current]) span {
+  color: var(--st-signal);
+}
+.stratum .rail nav a:hover:not(.active) {
+  background: var(--n-800);
+  color: var(--n-0);
+}
+.stratum .rail-bottom {
+  border-color: var(--n-700);
+  padding-top: 19px;
+}
+.stratum .rail-bottom :is(p, button) {
+  color: var(--n-300);
+}
+.stratum .rail-bottom small {
+  color: var(--a-300);
+  line-height: 1.7;
+}
+.stratum .rail-bottom .connection {
+  color: var(--st-signal);
+  font-size: 11px;
+  letter-spacing: 0.7px;
+}
+.stratum .rail + .app-shell {
+  margin-left: 228px;
+}
+.stratum :is(.topbar, .review-topbar) {
+  background: var(--n-25);
+  border-bottom: 1px solid var(--st-line);
+  box-shadow: none;
+}
+.stratum .breadcrumb {
+  color: var(--n-400);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+.stratum .topbar strong {
+  color: var(--n-700);
+}
+.stratum .top-actions {
+  flex-wrap: wrap;
+}
+.stratum .top-actions button {
+  background: transparent;
+  color: var(--n-600);
+  border-color: var(--n-200);
+  font-size: 12px;
+  border-radius: 2px;
+  min-height: 34px;
+}
+.stratum .top-actions button.dark {
+  background: var(--st-ink);
+  border-color: var(--st-ink);
+  color: var(--n-0);
+}
+.stratum .topbar [data-stratum-switcher] {
+  margin-right: auto;
+}
+.stratum :is(.topbar, .review-topbar) > [data-stratum-switcher] {
+  display: block;
+}
 
 /* Memory fab: a ruled analytical canvas surrounding an instrument-dark floor. */
-.stratum.memory-studio main{padding:29px 30px 25px;max-width:1880px}
-.stratum.memory-studio .topbar{gap:22px;padding:12px 30px;min-height:70px}
-.stratum.memory-studio .topbar>div:not(.top-actions):not([data-stratum-switcher]){display:none}
-.stratum.memory-studio .page-title{margin-bottom:24px;align-items:flex-end;padding-bottom:23px;border-bottom:1px solid #aeb5c4}
-.stratum.memory-studio .page-title h1{font-size:clamp(38px,3.7vw,62px);font-weight:450;letter-spacing:-2.7px;line-height:1.06;margin:9px 0 0}
-.stratum.memory-studio .page-title .title-dot{color:var(--st-cobalt)}
-.stratum.memory-studio .page-title p{font-size:12px;color:#677185;line-height:1.8;margin-top:14px}
-.stratum .product-signature{padding-bottom:4px}.stratum .product-signature b{color:#46516a;font-size:10px}.stratum .product-signature small{color:#7a8495}
-.stratum .signature-orbit{width:55px;height:55px;border-color:#8497cb;border-radius:0;transform:rotate(-30deg) skew(12deg)}
-.stratum .signature-orbit::before{border-color:#bbc5df;border-radius:0}
-.stratum .signature-orbit i{border-radius:0;width:28px;height:28px;background:repeating-linear-gradient(0deg,transparent 0 5px,#375cf65c 5px 6px),repeating-linear-gradient(90deg,transparent 0 5px,#375cf65c 5px 6px),#e0e5f4;box-shadow:none}
-.stratum.memory-studio .workspace-links{border-color:#ced2dc;gap:27px}.stratum.memory-studio .workspace-links a{color:#687386;font-size:11px}.stratum.memory-studio .workspace-links a:first-child{color:#223964;border-color:var(--st-cobalt)}.stratum.memory-studio .workspace-links a span{color:#8b95a5}
-.stratum.memory-studio .scenario-bar{border-radius:3px;background:#e8ebf3;border-color:#cdd4e3;padding:14px 16px}
-.stratum.memory-studio .scenario-bar :is(p,label,.gate-switch){color:#536078}.stratum.memory-studio .scenario-bar select{background:#fbfcff;color:#273750;border-color:#bfc9dd;border-radius:2px}
-.stratum.memory-studio #resetPlan{border-color:#c1cadc;color:#536078}.stratum.memory-studio #runPlan{background:var(--st-cobalt);border-color:var(--st-cobalt);color:#fff}
-.stratum.memory-studio .feedback{color:#566681}
-.stratum.memory-studio .kpi-grid{border-radius:0;background:transparent;border:0;border-bottom:1px solid #cdd2dd;box-shadow:none;margin:0 0 25px}
-.stratum.memory-studio .kpi-grid article{padding:16px 19px 21px;border-color:#cdd2dd}.stratum.memory-studio .kpi-grid article:first-child{padding-left:0}
-.stratum.memory-studio .kpi-grid article>span{color:#677286;font-size:10px}.stratum.memory-studio .kpi-grid strong{color:#1d2941;font-size:33px;font-weight:450;letter-spacing:-1px}.stratum.memory-studio .kpi-grid strong.amber{color:#9e621d}.stratum.memory-studio .kpi-grid strong.mono{color:#28395b}.stratum.memory-studio .kpi-grid small{color:#7a8495}
-.stratum.memory-studio .workspace-grid{gap:22px;grid-template-columns:minmax(0,1fr) 310px}.stratum.memory-studio :is(.flow-column,.analysis-column){gap:22px}
-.stratum.memory-studio .panel{background:var(--st-panel);border-radius:3px}.stratum.memory-studio .fab-panel{background:#131b2b;border-color:#2d3b56;color:#dce5f8;box-shadow:none;border-radius:3px}
-.stratum.memory-studio .fab-panel h2{color:#f1f4fa;font-size:19px}.stratum.memory-studio .fab-panel :is(.eyebrow,#fleetCount,.legend){color:#96a7c6}
-.stratum.memory-studio .fab-panel .product-tabs{border-color:#32425f}.stratum.memory-studio .product-tabs button{color:#aab8d3;border-radius:2px}.stratum.memory-studio .product-tabs button[aria-pressed=true]{background:#d3ee65;border-color:#d3ee65;color:#253415}.stratum.memory-studio .product-tabs button:hover:not([aria-pressed=true]){background:#253651;border-color:#465e87;color:#e3ecff}.stratum.memory-studio .product-tabs>span{color:#8395b7}
-.stratum .fleet-telemetry{background:#101827;border-color:#2a3a58;color:#8295b8}.stratum .fleet-telemetry b{color:#dce5f7}.stratum .fleet-telemetry .floor-state{color:#d4e893}.stratum .fleet-telemetry .floor-state i{background:var(--st-signal)}
-.stratum.memory-studio .fab-map{background:radial-gradient(#b6caf020 .7px,transparent .7px) 0 0/16px 16px,#172237}
-.stratum.memory-studio .bay{border-color:#445878;border-radius:2px;background:#1c2d47;box-shadow:none}.stratum.memory-studio .bay[data-selected=true]{background:#233855;border-color:#90a7d9;box-shadow:inset 0 2px #9eb3e4}
-.stratum.memory-studio .bay-head{border-color:#4b628455}.stratum.memory-studio .bay-head strong{color:#e0e9f9}.stratum.memory-studio .bay-head :is(b,small){color:#9aafd3}.stratum.memory-studio .tool-label{color:#b7c5de}.stratum.memory-studio .tool-label>span{color:#859ec6}
-.stratum.memory-studio .chamber{border-color:#536989;background:#19283e;color:#c2d0e7;border-radius:2px}.stratum.memory-studio .chamber small{color:#94a9cb}.stratum.memory-studio .chamber[data-state=running]{background:#355ef6;color:#fff;border-color:#7a97ff}.stratum.memory-studio .chamber[data-state=running] small{color:#d8e2ff}.stratum.memory-studio .chamber[data-state=excluded]{background:repeating-linear-gradient(135deg,#202c3e,#202c3e 4px,#2b3950 4px,#2b3950 5px);border-color:#475a77;color:#8b9bbb}.stratum.memory-studio .chamber[data-issue=true]{background:#624a2c;color:#fff0d4;border-color:#d7b675}.stratum.memory-studio .chamber[data-issue=true] small{color:#e0c695}.stratum.memory-studio .chamber[aria-pressed=true]{outline-color:#d3ee65}.stratum.memory-studio .chamber .fill{background:#b4c9ff}
-.stratum.memory-studio :is(.map-caption,.playback){background:#101a2c;border-color:#354764;color:#9cafce}.stratum.memory-studio .play-button{background:var(--st-signal);color:#293412;border-radius:2px}.stratum.memory-studio .playback>button:not(.play-button){background:#233450;color:#c4d2ee;border-color:#4c6283}.stratum.memory-studio .speed-label select{background:#24334c;border-color:#506282;color:#dbe4f6}.stratum.memory-studio :is(.time-block small,.speed-label){color:#97a8c4}
-.stratum.memory-studio .equipment-showcase{background:#162139;border-color:#405375;border-radius:2px}.stratum.memory-studio :is(.showcase-meta,.showcase-axis){color:#9caccc}.stratum.memory-studio .equipment-preview{filter:none}.stratum.memory-studio .chamber-heading h2{color:#28385a}.stratum.memory-studio .chamber-heading button{color:#395181;background:#edf1fa;border-color:#c8d1e5}
-.stratum.memory-studio :is(.tool-role,.panel-note,.empty,.watch p,.route-description){color:#65718a}.stratum.memory-studio .chamber-now{background:#edf0f7;color:#5b6d8b;border-color:#d5ddea}.stratum.memory-studio .chamber-now strong{color:#38527f}
-.stratum.memory-studio :is(.lot-table th,.trace-toolbar){background:#edf0f5;color:#60718b;border-color:#d9dfea}.stratum.memory-studio .lot-table td{color:#455775;border-color:#e0e3eb}.stratum.memory-studio .lot-table td small{color:#78879e}.stratum.memory-studio .lot-table button{color:#334f83}.stratum.memory-studio .lot-table tbody tr.selected{background:#e9eef9;box-shadow:inset 3px 0 #375cf6}
-.stratum.memory-studio .progress-track{background:#dbe2ef}.stratum.memory-studio .progress-track i{background:var(--st-cobalt)}.stratum.memory-studio .module{background:#f3f4f7;border-color:#d6ddea;border-radius:2px}.stratum.memory-studio .module :is(b,small){color:#657594}.stratum.memory-studio .module:is(.done,.current){background:#e6ecfa;border-color:#a4b8e9}.stratum.memory-studio .module.held{background:#faf0df;border-color:#d6b480}.stratum.memory-studio .operation.selected{background:#e9eef9}
-.stratum.memory-studio :is(.study-panel,.learning-guide){background:#eaece8;border-color:#d1d5d0;border-radius:2px}.stratum.memory-studio .event-panel .event{background:#fbfaf6}.stratum.memory-studio .event b{color:#46597a}.stratum.memory-studio .event small{color:#7e8aa0}
-.stratum.stratum-evidence .page-title{border-bottom:1px solid #adb7c9;padding-bottom:25px}.stratum.stratum-evidence .page-title h1{font-size:38px;letter-spacing:-1.6px}
-.stratum.stratum-evidence .topbar>div:not(.top-actions):not([data-stratum-switcher]){display:none}
-.stratum.stratum-evidence .topbar{gap:18px}
+.stratum.memory-studio main {
+  padding: 29px 30px 25px;
+  max-width: 1880px;
+}
+.stratum.memory-studio .topbar {
+  gap: 22px;
+  padding: 12px 30px;
+  min-height: 70px;
+}
+.stratum.memory-studio .topbar > div:not(.top-actions):not([data-stratum-switcher]) {
+  display: none;
+}
+.stratum.memory-studio .page-title {
+  margin-bottom: 24px;
+  align-items: flex-end;
+  padding-bottom: 23px;
+  border-bottom: 1px solid var(--n-300);
+}
+.stratum.memory-studio .page-title h1 {
+  font-size: clamp(38px, 3.7vw, 62px);
+  font-weight: 450;
+  letter-spacing: -2.7px;
+  line-height: 1.06;
+  margin: 9px 0 0;
+}
+.stratum.memory-studio .page-title .title-dot {
+  color: var(--st-cobalt);
+}
+.stratum.memory-studio .page-title p {
+  font-size: 12px;
+  color: var(--n-500);
+  line-height: 1.8;
+  margin-top: 14px;
+}
+.stratum .product-signature {
+  padding-bottom: 4px;
+}
+.stratum .product-signature b {
+  color: var(--a-800);
+  font-size: 12px;
+}
+.stratum .product-signature small {
+  color: var(--n-400);
+}
+.stratum .signature-orbit {
+  width: 55px;
+  height: 55px;
+  border-color: var(--a-300);
+  border-radius: 0;
+  transform: rotate(-30deg) skew(12deg);
+}
+.stratum .signature-orbit::before {
+  border-color: var(--n-300);
+  border-radius: 0;
+}
+.stratum .signature-orbit i {
+  border-radius: 0;
+  width: 28px;
+  height: 28px;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 5px, color-mix(in srgb, var(--a-500) 36%, transparent) 5px 6px),
+    repeating-linear-gradient(90deg, transparent 0 5px, color-mix(in srgb, var(--a-500) 36%, transparent) 5px 6px), var(--n-150);
+  box-shadow: none;
+}
+.stratum.memory-studio .workspace-links {
+  border-color: var(--n-200);
+  gap: 27px;
+}
+.stratum.memory-studio .workspace-links a {
+  color: var(--n-500);
+  font-size: 12px;
+}
+.stratum.memory-studio .workspace-links a:first-child {
+  color: var(--a-800);
+  border-color: var(--st-cobalt);
+}
+.stratum.memory-studio .workspace-links a span {
+  color: var(--n-400);
+}
+.stratum.memory-studio .scenario-bar {
+  border-radius: 3px;
+  background: var(--n-100);
+  border-color: var(--n-200);
+  padding: 14px 16px;
+}
+.stratum.memory-studio .scenario-bar :is(p, label, .gate-switch) {
+  color: var(--a-700);
+}
+.stratum.memory-studio .scenario-bar select {
+  background: var(--n-25);
+  color: var(--a-900);
+  border-color: var(--n-300);
+  border-radius: 2px;
+}
+.stratum.memory-studio #resetPlan {
+  border-color: var(--n-200);
+  color: var(--a-700);
+}
+.stratum.memory-studio #runPlan {
+  background: var(--st-cobalt);
+  border-color: var(--st-cobalt);
+  color: var(--n-0);
+}
+.stratum.memory-studio .feedback {
+  color: var(--a-700);
+}
+.stratum.memory-studio .kpi-grid {
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--n-200);
+  box-shadow: none;
+  margin: 0 0 25px;
+}
+.stratum.memory-studio .kpi-grid article {
+  padding: 16px 19px 21px;
+  border-color: var(--n-200);
+}
+.stratum.memory-studio .kpi-grid article:first-child {
+  padding-left: 0;
+}
+.stratum.memory-studio .kpi-grid article > span {
+  color: var(--n-500);
+  font-size: 12px;
+}
+.stratum.memory-studio .kpi-grid strong {
+  color: var(--a-900);
+  font-size: 33px;
+  font-weight: 450;
+  letter-spacing: -1px;
+}
+.stratum.memory-studio .kpi-grid strong.amber {
+  color: var(--w-600);
+}
+.stratum.memory-studio .kpi-grid strong.mono {
+  color: var(--a-900);
+}
+.stratum.memory-studio .kpi-grid small {
+  color: var(--n-400);
+}
+.stratum.memory-studio .workspace-grid {
+  gap: 22px;
+  grid-template-columns: minmax(0, 1fr) 310px;
+}
+.stratum.memory-studio :is(.flow-column, .analysis-column) {
+  gap: 22px;
+}
+.stratum.memory-studio .panel {
+  background: var(--st-panel);
+  border-radius: 3px;
+}
+.stratum.memory-studio .fab-panel {
+  background: var(--n-850);
+  border-color: var(--a-900);
+  color: var(--n-150);
+  box-shadow: none;
+  border-radius: 3px;
+}
+.stratum.memory-studio .fab-panel h2 {
+  color: var(--n-50);
+  font-size: 19px;
+}
+.stratum.memory-studio .fab-panel :is(.eyebrow, #fleetCount, .legend) {
+  color: var(--a-300);
+}
+.stratum.memory-studio .fab-panel .product-tabs {
+  border-color: var(--a-800);
+}
+.stratum.memory-studio .product-tabs button {
+  color: var(--a-200);
+  border-radius: 2px;
+}
+.stratum.memory-studio .product-tabs button[aria-pressed="true"] {
+  background: var(--s-400);
+  border-color: var(--s-400);
+  color: var(--s-800);
+}
+.stratum.memory-studio .product-tabs button:hover:not([aria-pressed="true"]) {
+  background: var(--a-900);
+  border-color: var(--a-700);
+  color: var(--n-100);
+}
+.stratum.memory-studio .product-tabs > span {
+  color: var(--a-300);
+}
+.stratum .fleet-telemetry {
+  background: var(--n-900);
+  border-color: var(--a-900);
+  color: var(--a-300);
+}
+.stratum .fleet-telemetry b {
+  color: var(--n-150);
+}
+.stratum .fleet-telemetry .floor-state {
+  color: var(--s-300);
+}
+.stratum .fleet-telemetry .floor-state i {
+  background: var(--st-signal);
+}
+.stratum.memory-studio .fab-map {
+  background:
+    radial-gradient(color-mix(in srgb, var(--a-200) 13%, transparent) 0.7px, transparent 0.7px) 0 0/16px 16px,
+    var(--a-900);
+}
+.stratum.memory-studio .bay {
+  border-color: var(--a-800);
+  border-radius: 2px;
+  background: var(--a-900);
+  box-shadow: none;
+}
+.stratum.memory-studio .bay[data-selected="true"] {
+  background: var(--a-900);
+  border-color: var(--a-300);
+  box-shadow: inset 0 2px var(--a-300);
+}
+.stratum.memory-studio .bay-head {
+  border-color: color-mix(in srgb, var(--a-700) 33%, transparent);
+}
+.stratum.memory-studio .bay-head strong {
+  color: var(--n-100);
+}
+.stratum.memory-studio .bay-head :is(b, small) {
+  color: var(--a-300);
+}
+.stratum.memory-studio .tool-label {
+  color: var(--n-300);
+}
+.stratum.memory-studio .tool-label > span {
+  color: var(--a-300);
+}
+.stratum.memory-studio .chamber {
+  border-color: var(--a-700);
+  background: var(--a-900);
+  color: var(--n-200);
+  border-radius: 2px;
+}
+.stratum.memory-studio .chamber small {
+  color: var(--a-300);
+}
+.stratum.memory-studio .chamber[data-state="running"] {
+  background: var(--a-500);
+  color: var(--n-0);
+  border-color: var(--a-300);
+}
+.stratum.memory-studio .chamber[data-state="running"] small {
+  color: var(--a-100);
+}
+.stratum.memory-studio .chamber[data-state="excluded"] {
+  background: repeating-linear-gradient(135deg, var(--n-800), var(--n-800) 4px, var(--a-900) 4px, var(--a-900) 5px);
+  border-color: var(--a-800);
+  color: var(--a-300);
+}
+.stratum.memory-studio .chamber[data-issue="true"] {
+  background: var(--w-800);
+  color: var(--w-50);
+  border-color: var(--w-400);
+}
+.stratum.memory-studio .chamber[data-issue="true"] small {
+  color: var(--w-400);
+}
+.stratum.memory-studio .chamber[aria-pressed="true"] {
+  outline-color: var(--s-400);
+}
+.stratum.memory-studio .chamber .fill {
+  background: var(--a-200);
+}
+.stratum.memory-studio :is(.map-caption, .playback) {
+  background: var(--n-900);
+  border-color: var(--a-800);
+  color: var(--a-300);
+}
+.stratum.memory-studio .play-button {
+  background: var(--st-signal);
+  color: var(--s-800);
+  border-radius: 2px;
+}
+.stratum.memory-studio .playback > button:not(.play-button) {
+  background: var(--a-900);
+  color: var(--a-200);
+  border-color: var(--a-700);
+}
+.stratum.memory-studio .speed-label select {
+  background: var(--a-900);
+  border-color: var(--a-700);
+  color: var(--n-150);
+}
+.stratum.memory-studio :is(.time-block small, .speed-label) {
+  color: var(--a-300);
+}
+.stratum.memory-studio .equipment-showcase {
+  background: var(--a-900);
+  border-color: var(--a-800);
+  border-radius: 2px;
+}
+.stratum.memory-studio :is(.showcase-meta, .showcase-axis) {
+  color: var(--a-300);
+}
+.stratum.memory-studio .equipment-preview {
+  filter: none;
+}
+.stratum.memory-studio .chamber-heading h2 {
+  color: var(--a-900);
+}
+.stratum.memory-studio .chamber-heading button {
+  color: var(--a-800);
+  background: var(--n-50);
+  border-color: var(--n-200);
+}
+.stratum.memory-studio :is(.tool-role, .panel-note, .empty, .watch p, .route-description) {
+  color: var(--a-400);
+}
+.stratum.memory-studio .chamber-now {
+  background: var(--n-50);
+  color: var(--a-400);
+  border-color: var(--n-150);
+}
+.stratum.memory-studio .chamber-now strong {
+  color: var(--a-800);
+}
+.stratum.memory-studio :is(.lot-table th, .trace-toolbar) {
+  background: var(--n-50);
+  color: var(--a-400);
+  border-color: var(--n-150);
+}
+.stratum.memory-studio .lot-table td {
+  color: var(--a-800);
+  border-color: var(--n-150);
+}
+.stratum.memory-studio .lot-table td small {
+  color: var(--n-400);
+}
+.stratum.memory-studio .lot-table button {
+  color: var(--a-800);
+}
+.stratum.memory-studio .lot-table tbody tr.selected {
+  background: var(--n-100);
+  box-shadow: inset 3px 0 var(--a-500);
+}
+.stratum.memory-studio .progress-track {
+  background: var(--n-150);
+}
+.stratum.memory-studio .progress-track i {
+  background: var(--st-cobalt);
+}
+.stratum.memory-studio .module {
+  background: var(--n-50);
+  border-color: var(--n-150);
+  border-radius: 2px;
+}
+.stratum.memory-studio .module :is(b, small) {
+  color: var(--a-400);
+}
+.stratum.memory-studio .module:is(.done, .current) {
+  background: var(--n-100);
+  border-color: var(--a-300);
+}
+.stratum.memory-studio .module.held {
+  background: var(--n-50);
+  border-color: var(--w-400);
+}
+.stratum.memory-studio .operation.selected {
+  background: var(--n-100);
+}
+.stratum.memory-studio :is(.study-panel, .learning-guide) {
+  background: var(--n-100);
+  border-color: var(--n-200);
+  border-radius: 2px;
+}
+.stratum.memory-studio .event-panel .event {
+  background: var(--n-25);
+}
+.stratum.memory-studio .event b {
+  color: var(--a-700);
+}
+.stratum.memory-studio .event small {
+  color: var(--n-400);
+}
+.stratum.stratum-evidence .page-title {
+  border-bottom: 1px solid var(--n-300);
+  padding-bottom: 25px;
+}
+.stratum.stratum-evidence .page-title h1 {
+  font-size: 38px;
+  letter-spacing: -1.6px;
+}
+.stratum.stratum-evidence .topbar > div:not(.top-actions):not([data-stratum-switcher]) {
+  display: none;
+}
+.stratum.stratum-evidence .topbar {
+  gap: 18px;
+}
 
 /* Log-based tools share a reading-first canvas, numbered sections and sober inputs. */
-.stratum.stratum-data>header{position:relative;background:var(--st-midnight);padding:22px max(24px,calc((100% - 1240px)/2));min-height:84px;gap:32px;color:#c6d0e4}
-.stratum.stratum-data>header>nav{gap:24px;flex:1;font-size:12px;align-items:center}.stratum.stratum-data>header>nav a{color:#a8b5cd;line-height:2;white-space:nowrap}.stratum.stratum-data>header>nav a[aria-current]{color:var(--st-signal);border-bottom:1px solid var(--st-signal)}
-.stratum.stratum-data>header>a.stratum-brand{color:#f6f5f0}
-.stratum.stratum-data main{max-width:1240px;margin:0 auto;padding:46px 24px 64px}.stratum.stratum-data .stratum-page-intro{position:relative;border-bottom:1px solid #aab4c6;padding:0 0 28px;margin-bottom:30px}.stratum.stratum-data .stratum-page-intro::before{content:attr(data-index);position:absolute;right:0;top:0;font:11px var(--st-mono);letter-spacing:2px;color:#7b89a2}
-.stratum.stratum-data h1{font-size:clamp(30px,3.5vw,48px);font-weight:500;letter-spacing:-2px;line-height:1.3;margin:15px 0 17px;max-width:1000px}.stratum.stratum-data .lead{font-size:15px;line-height:1.9;color:#566680;max-width:900px}.stratum.stratum-data .scope{background:transparent;padding:15px 0 0;border:0;color:#76829a;font-size:11px;line-height:1.95;max-width:1000px;margin-bottom:0}
-.stratum.stratum-data main>section,.stratum.stratum-data #pilotResults>section{border-radius:2px;border:1px solid #cbd3e0;background:var(--st-panel);padding:29px 31px;margin-top:24px}.stratum.stratum-data section h2{font-size:20px;color:#1e304f;line-height:1.5;padding-bottom:17px;border-bottom:1px solid #d9dfe9;margin-bottom:21px}
-.stratum.stratum-data :is(.hint,small){color:#78859b;line-height:1.8}.stratum.stratum-data :is(input,select,textarea,button){border-color:#c4cdde;border-radius:2px;color:#364867;background:#fffefa}.stratum.stratum-data label{color:#596c8d;font-size:12px}.stratum.stratum-data button:not(:disabled):hover{border-color:var(--st-cobalt);color:var(--st-cobalt);background:#f0f3fe}.stratum.stratum-data button.primary{color:#fff;background:var(--st-cobalt);border-color:var(--st-cobalt)}.stratum.stratum-data button.primary:not(:disabled):hover{background:#2347de;color:#fff}
-.stratum.stratum-data :is(.metric,.card){background:#edf0f8;border:1px solid #d6deef;border-radius:2px;padding:19px}.stratum.stratum-data :is(.metric,.card) strong{color:#294276;font-weight:500;letter-spacing:-1px}.stratum.stratum-data th{background:#edf0f6;color:#65799a;font-weight:500}.stratum.stratum-data :is(th,td){padding:13px 12px;border-color:#dde3ed}.stratum.stratum-data :is(.chart svg,#traceChart svg){background:#f7f8fb;border:1px solid #e0e5ef}
-.stratum.stratum-data details{background:#f0f2f7;padding:16px 18px;margin:20px 0;border:1px solid #d3dbea;border-radius:2px}.stratum.stratum-data details summary{color:#4e668f;font-weight:500}.stratum.stratum-data a{color:#315cd6}.stratum.stratum-data #pilotStatus{color:#576d94;line-height:1.8}
-.stratum.stratum-data .stratum-switcher{padding:0;margin:0;border:0;background:none}.stratum.stratum-data .stratum-switcher>summary{background:#1d293e;border-color:#44536f;color:#edf2fc;font-weight:500}.stratum.stratum-data .stratum-switch-icon{color:var(--st-signal)}
+.stratum.stratum-data > header {
+  position: relative;
+  background: var(--st-midnight);
+  padding: 22px max(24px, calc((100% - 1240px) / 2));
+  min-height: 84px;
+  gap: 32px;
+  color: var(--n-200);
+}
+.stratum.stratum-data > header > nav {
+  gap: 24px;
+  flex: 1;
+  font-size: 12px;
+  align-items: center;
+}
+.stratum.stratum-data > header > nav a {
+  color: var(--n-300);
+  line-height: 2;
+  white-space: nowrap;
+}
+.stratum.stratum-data > header > nav a[aria-current] {
+  color: var(--st-signal);
+  border-bottom: 1px solid var(--st-signal);
+}
+.stratum.stratum-data > header > a.stratum-brand {
+  color: var(--n-50);
+}
+.stratum.stratum-data main {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 46px 24px 64px;
+}
+.stratum.stratum-data .stratum-page-intro {
+  position: relative;
+  border-bottom: 1px solid var(--n-300);
+  padding: 0 0 28px;
+  margin-bottom: 30px;
+}
+.stratum.stratum-data .stratum-page-intro::before {
+  content: attr(data-index);
+  position: absolute;
+  right: 0;
+  top: 0;
+  font: 11px var(--st-mono);
+  letter-spacing: 2px;
+  color: var(--a-400);
+}
+.stratum.stratum-data h1 {
+  font-size: clamp(30px, 3.5vw, 48px);
+  font-weight: 500;
+  letter-spacing: -2px;
+  line-height: 1.3;
+  margin: 15px 0 17px;
+  max-width: 1000px;
+}
+.stratum.stratum-data .lead {
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--a-700);
+  max-width: 900px;
+}
+.stratum.stratum-data .scope {
+  background: transparent;
+  padding: 15px 0 0;
+  border: 0;
+  color: var(--n-400);
+  font-size: 12px;
+  line-height: 1.95;
+  max-width: 1000px;
+  margin-bottom: 0;
+}
+.stratum.stratum-data main > section,
+.stratum.stratum-data #pilotResults > section {
+  border-radius: 2px;
+  border: 1px solid var(--n-200);
+  background: var(--st-panel);
+  padding: 29px 31px;
+  margin-top: 24px;
+}
+.stratum.stratum-data section h2 {
+  font-size: 20px;
+  color: var(--a-900);
+  line-height: 1.5;
+  padding-bottom: 17px;
+  border-bottom: 1px solid var(--n-150);
+  margin-bottom: 21px;
+}
+.stratum.stratum-data :is(.hint, small) {
+  color: var(--n-400);
+  line-height: 1.8;
+}
+.stratum.stratum-data :is(input, select, textarea, button) {
+  border-color: var(--n-200);
+  border-radius: 2px;
+  color: var(--a-800);
+  background: var(--n-0);
+}
+.stratum.stratum-data label {
+  color: var(--a-400);
+  font-size: 12px;
+}
+.stratum.stratum-data button:not(:disabled):hover {
+  border-color: var(--st-cobalt);
+  color: var(--st-cobalt);
+  background: var(--n-50);
+}
+.stratum.stratum-data button.primary {
+  color: var(--n-0);
+  background: var(--st-cobalt);
+  border-color: var(--st-cobalt);
+}
+.stratum.stratum-data button.primary:not(:disabled):hover {
+  background: var(--a-600);
+  color: var(--n-0);
+}
+.stratum.stratum-data :is(.metric, .card) {
+  background: var(--n-50);
+  border: 1px solid var(--n-150);
+  border-radius: 2px;
+  padding: 19px;
+}
+.stratum.stratum-data :is(.metric, .card) strong {
+  color: var(--a-800);
+  font-weight: 500;
+  letter-spacing: -1px;
+}
+.stratum.stratum-data th {
+  background: var(--n-50);
+  color: var(--a-400);
+  font-weight: 500;
+}
+.stratum.stratum-data :is(th, td) {
+  padding: 13px 12px;
+  border-color: var(--n-150);
+}
+.stratum.stratum-data :is(.chart svg, #traceChart svg) {
+  background: var(--n-25);
+  border: 1px solid var(--n-150);
+}
+.stratum.stratum-data details {
+  background: var(--n-50);
+  padding: 16px 18px;
+  margin: 20px 0;
+  border: 1px solid var(--n-200);
+  border-radius: 2px;
+}
+.stratum.stratum-data details summary {
+  color: var(--a-700);
+  font-weight: 500;
+}
+.stratum.stratum-data a {
+  color: var(--a-500);
+}
+.stratum.stratum-data #pilotStatus {
+  color: var(--a-400);
+  line-height: 1.8;
+}
+.stratum.stratum-data .stratum-switcher {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+}
+.stratum.stratum-data .stratum-switcher > summary {
+  background: var(--a-900);
+  border-color: var(--a-800);
+  color: var(--n-50);
+  font-weight: 500;
+}
+.stratum.stratum-data .stratum-switch-icon {
+  color: var(--st-signal);
+}
 
 /* Equipment response console. */
-.stratum.stratum-equipment>.topbar{background:var(--st-midnight);height:80px;padding:0 32px;gap:28px}.stratum.stratum-equipment>.topbar>nav{gap:25px;flex:1}.stratum.stratum-equipment>.topbar>nav a{color:#a3b2cd;font-size:11px}.stratum.stratum-equipment>.topbar>nav [aria-current]{color:#e2edbd;border-bottom:2px solid var(--st-signal)}
-.stratum.stratum-equipment .topbar .stratum-switcher>summary{background:#1c283d;border-color:#3c4d6b;color:#dbe5f6}.stratum.stratum-equipment .topbar .stratum-switch-icon{color:var(--st-signal)}.stratum.stratum-equipment .topbar [data-stratum-switcher]{margin-right:0}.stratum.stratum-equipment .offline{color:#9fb0d1;font-size:8px}
-.stratum.stratum-equipment .shell{padding-top:34px}.stratum.stratum-equipment .page-heading{padding-bottom:26px;border-bottom:1px solid #aeb9cc;margin-bottom:23px}.stratum.stratum-equipment .page-heading h1{font-size:38px;font-weight:500;letter-spacing:-1.8px}.stratum.stratum-equipment .page-heading h1>span{font:14px var(--st-mono);color:#8191aa;margin-left:18px}
-.stratum.stratum-equipment .provenance-banner{border-radius:2px;background:#ecece7;border-color:#d6d9d0;padding:13px 16px}.stratum.stratum-equipment .provenance-banner p{color:#6a715e}.stratum.stratum-equipment .recipe-panel{background:var(--st-panel);border-top:3px solid var(--st-cobalt);padding:21px}.stratum.stratum-equipment .recipe-panel h2{font-size:23px;font-weight:550}.stratum.stratum-equipment .input-wrap{border-radius:2px;border-color:#ccd5e6;background:#f3f5fa}.stratum.stratum-equipment .input-wrap:focus-within{border-color:var(--st-cobalt);box-shadow:0 0 0 2px #dce4ff}.stratum.stratum-equipment :is(.pill,.feedback){border-radius:2px}
+.stratum.stratum-equipment > .topbar {
+  background: var(--st-midnight);
+  height: 80px;
+  padding: 0 32px;
+  gap: 28px;
+}
+.stratum.stratum-equipment > .topbar > nav {
+  gap: 25px;
+  flex: 1;
+}
+.stratum.stratum-equipment > .topbar > nav a {
+  color: var(--a-300);
+  font-size: 12px;
+}
+.stratum.stratum-equipment > .topbar > nav [aria-current] {
+  color: var(--s-100);
+  border-bottom: 2px solid var(--st-signal);
+}
+.stratum.stratum-equipment .topbar .stratum-switcher > summary {
+  background: var(--a-900);
+  border-color: var(--a-800);
+  color: var(--n-150);
+}
+.stratum.stratum-equipment .topbar .stratum-switch-icon {
+  color: var(--st-signal);
+}
+.stratum.stratum-equipment .topbar [data-stratum-switcher] {
+  margin-right: 0;
+}
+.stratum.stratum-equipment .offline {
+  color: var(--a-300);
+  font-size: 12px;
+}
+.stratum.stratum-equipment .shell {
+  padding-top: 34px;
+}
+.stratum.stratum-equipment .page-heading {
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--n-300);
+  margin-bottom: 23px;
+}
+.stratum.stratum-equipment .page-heading h1 {
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: -1.8px;
+}
+.stratum.stratum-equipment .page-heading h1 > span {
+  font: 14px var(--st-mono);
+  color: var(--a-300);
+  margin-left: 18px;
+}
+.stratum.stratum-equipment .provenance-banner {
+  border-radius: 2px;
+  background: var(--n-100);
+  border-color: var(--n-200);
+  padding: 13px 16px;
+}
+.stratum.stratum-equipment .provenance-banner p {
+  color: var(--n-500);
+}
+.stratum.stratum-equipment .recipe-panel {
+  background: var(--st-panel);
+  border-top: 3px solid var(--st-cobalt);
+  padding: 21px;
+}
+.stratum.stratum-equipment .recipe-panel h2 {
+  font-size: 23px;
+  font-weight: 550;
+}
+.stratum.stratum-equipment .input-wrap {
+  border-radius: 2px;
+  border-color: var(--n-200);
+  background: var(--n-50);
+}
+.stratum.stratum-equipment .input-wrap:focus-within {
+  border-color: var(--st-cobalt);
+  box-shadow: 0 0 0 2px var(--n-150);
+}
+.stratum.stratum-equipment :is(.pill, .feedback) {
+  border-radius: 2px;
+}
 
 /* Photo optics stay on a dark stage; its controls share the new identity. */
-.stratum.stratum-photo{--bg:#111827;--side:#111622;--panel:#182336;--line:#334158;--muted:#93a1b9;--text:#e2e9f7;--lime:#d3ee65;--teal:#8aa7ff;background:#111827;color:#e2e9f7;color-scheme:dark}
-.stratum.stratum-photo .sidebar{width:228px;padding:27px 18px 0}.stratum.stratum-photo .main-shell{margin-left:228px}.stratum.stratum-photo .topbar{background:#141d2e;border-color:#35425a;gap:18px}.stratum.stratum-photo .topbar strong{color:#d6e0f4}.stratum.stratum-photo .topbar [data-stratum-switcher]{margin-right:0}.stratum.stratum-photo .topbar .stratum-switcher>summary{background:#21304a;border-color:#465976;color:#e2ebfc}.stratum.stratum-photo .topbar .stratum-switch-icon{color:var(--st-signal)}.stratum.stratum-photo .topbar-right{gap:12px;flex-wrap:wrap}
-.stratum.stratum-photo .nav-item{border-radius:2px;font-size:12px;min-height:46px}.stratum.stratum-photo .nav-item.active{background:#243755;border-color:#405477;color:#edf5ff;box-shadow:inset 2px 0 var(--st-signal)}.stratum.stratum-photo .nav-item.active svg{color:var(--st-signal)}.stratum.stratum-photo .workspace-picker{margin-bottom:27px;padding:12px 10px}.stratum.stratum-photo .workspace-picker strong{font-size:10px}.stratum.stratum-photo .workspace-picker>span:last-child{display:none}.stratum.stratum-photo .workspace-icon{background:#2a3c5f;border-color:#566c91;color:#c4d1ee;border-radius:1px}
-.stratum.stratum-photo .page-heading{padding:23px 0 27px;border-bottom:1px solid #526078;margin-bottom:25px}.stratum.stratum-photo .page-heading h1{font-size:32px;font-weight:500;letter-spacing:-1.5px}.stratum.stratum-photo .page-description{color:#9aadc9;font-size:12px}.stratum.stratum-photo :is(.machine-panel,.mission-banner,.learn-card,.metric-card,.panel,.recipe-panel){border-radius:2px;box-shadow:none}
-.stratum.stratum-photo .mission-banner{background:#22304a;border-color:#425572}.stratum.stratum-photo .mission-copy p{color:#acb9ce}.stratum.stratum-photo .mission-emblem{background:#314566;border-color:#617693;color:#d3ee65;border-radius:3px}.stratum.stratum-photo .learn-card{background:#1c2a40;border-color:#3d4c66;padding:18px 13px}.stratum.stratum-photo .learn-card h3{margin-top:22px}.stratum.stratum-photo .learn-card .orbit{display:none}.stratum.stratum-photo .learn-card p{color:#8c9fbd}.stratum.stratum-photo .learn-card button{color:#d3ee65;border-color:#405272}
-.stratum.stratum-photo :is(.machine-heading,.machine-transport,.machine-equipment-card){background:#17243a;border-color:#3b4e6a}.stratum.stratum-photo .equipment-nav{background:#121f34;border-color:#3d506f}.stratum.stratum-photo .equipment-tab.active{background:#263e64;box-shadow:inset 0 -2px var(--st-signal)}.stratum.stratum-photo .secondary{border-color:#4c5e7b;color:#b9c8e1;background:#21304a;border-radius:2px}.stratum.stratum-photo .primary{background:var(--st-cobalt);color:#fff}.stratum.stratum-photo .stratum-space-panel{color-scheme:light}.stratum.stratum-photo dialog{background:#17243a;color:#e4eafa}.stratum.stratum-photo dialog :is(.dialog-head,.dialog-top){background:#1b2940;border-color:#4d5c77}
+.stratum.stratum-photo {
+  --bg: var(--n-900);
+  --side: var(--n-900);
+  --panel: var(--n-850);
+  --line: var(--a-800);
+  --muted: var(--n-400);
+  --text: var(--n-100);
+  --lime: var(--s-400);
+  --teal: var(--a-300);
+  background: var(--n-900);
+  color: var(--n-100);
+  color-scheme: dark;
+}
+.stratum.stratum-photo .sidebar {
+  width: 228px;
+  padding: 27px 18px 0;
+}
+.stratum.stratum-photo .main-shell {
+  margin-left: 228px;
+}
+.stratum.stratum-photo .topbar {
+  background: var(--n-850);
+  border-color: var(--a-800);
+  gap: 18px;
+}
+.stratum.stratum-photo .topbar strong {
+  color: var(--n-150);
+}
+.stratum.stratum-photo .topbar [data-stratum-switcher] {
+  margin-right: 0;
+}
+.stratum.stratum-photo .topbar .stratum-switcher > summary {
+  background: var(--a-900);
+  border-color: var(--a-800);
+  color: var(--n-100);
+}
+.stratum.stratum-photo .topbar .stratum-switch-icon {
+  color: var(--st-signal);
+}
+.stratum.stratum-photo .topbar-right {
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.stratum.stratum-photo .nav-item {
+  border-radius: 2px;
+  font-size: 12px;
+  min-height: 46px;
+}
+.stratum.stratum-photo .nav-item.active {
+  background: var(--a-900);
+  border-color: var(--a-800);
+  color: var(--n-50);
+  box-shadow: inset 2px 0 var(--st-signal);
+}
+.stratum.stratum-photo .nav-item.active svg {
+  color: var(--st-signal);
+}
+.stratum.stratum-photo .workspace-picker {
+  margin-bottom: 27px;
+  padding: 12px 10px;
+}
+.stratum.stratum-photo .workspace-picker strong {
+  font-size: 12px;
+}
+.stratum.stratum-photo .workspace-picker > span:last-child {
+  display: none;
+}
+.stratum.stratum-photo .workspace-icon {
+  background: var(--a-800);
+  border-color: var(--a-400);
+  color: var(--a-200);
+  border-radius: 1px;
+}
+.stratum.stratum-photo .page-heading {
+  padding: 23px 0 27px;
+  border-bottom: 1px solid var(--a-700);
+  margin-bottom: 25px;
+}
+.stratum.stratum-photo .page-heading h1 {
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -1.5px;
+}
+.stratum.stratum-photo .page-description {
+  color: var(--a-300);
+  font-size: 12px;
+}
+.stratum.stratum-photo
+  :is(.machine-panel, .mission-banner, .learn-card, .metric-card, .panel, .recipe-panel) {
+  border-radius: 2px;
+  box-shadow: none;
+}
+.stratum.stratum-photo .mission-banner {
+  background: var(--a-900);
+  border-color: var(--a-800);
+}
+.stratum.stratum-photo .mission-copy p {
+  color: var(--n-300);
+}
+.stratum.stratum-photo .mission-emblem {
+  background: var(--a-800);
+  border-color: var(--a-400);
+  color: var(--s-400);
+  border-radius: 3px;
+}
+.stratum.stratum-photo .learn-card {
+  background: var(--a-900);
+  border-color: var(--a-800);
+  padding: 18px 13px;
+}
+.stratum.stratum-photo .learn-card h3 {
+  margin-top: 22px;
+}
+.stratum.stratum-photo .learn-card .orbit {
+  display: none;
+}
+.stratum.stratum-photo .learn-card p {
+  color: var(--a-300);
+}
+.stratum.stratum-photo .learn-card button {
+  color: var(--s-400);
+  border-color: var(--a-800);
+}
+.stratum.stratum-photo :is(.machine-heading, .machine-transport, .machine-equipment-card) {
+  background: var(--a-900);
+  border-color: var(--a-800);
+}
+.stratum.stratum-photo .equipment-nav {
+  background: var(--a-900);
+  border-color: var(--a-800);
+}
+.stratum.stratum-photo .equipment-tab.active {
+  background: var(--a-800);
+  box-shadow: inset 0 -2px var(--st-signal);
+}
+.stratum.stratum-photo .secondary {
+  border-color: var(--a-700);
+  color: var(--n-300);
+  background: var(--a-900);
+  border-radius: 2px;
+}
+.stratum.stratum-photo .primary {
+  background: var(--st-cobalt);
+  color: var(--n-0);
+}
+.stratum.stratum-photo .stratum-space-panel {
+  color-scheme: light;
+}
+.stratum.stratum-photo dialog {
+  background: var(--a-900);
+  color: var(--n-100);
+}
+.stratum.stratum-photo dialog :is(.dialog-head, .dialog-top) {
+  background: var(--a-900);
+  border-color: var(--a-700);
+}
 
 /* Versioned engineering review and connection screen. */
-.stratum.stratum-review .auth-story{background:linear-gradient(140deg,#111827,#1b2b4e);padding-top:44px}.stratum.stratum-review .auth-story .stratum-brand{margin-bottom:0}.stratum.stratum-review .auth-story-copy .eyebrow{color:#9fadd0}.stratum.stratum-review .auth-story-copy h1{font-weight:450;letter-spacing:-2.5px}.stratum.stratum-review .auth-story-copy>p:not(.eyebrow){color:#9facc7}.stratum.stratum-review .auth-steps{color:#bccb8a;border-top:1px solid #52627e;padding-top:22px;max-width:370px}.stratum.stratum-review .auth-steps b{color:#dce5fa}.stratum.stratum-review .auth-wafer{filter:hue-rotate(34deg) saturate(.8);opacity:.38}.stratum.stratum-review .auth-caption{color:#8a9bbc}
-.stratum.stratum-review .release-label{color:#67799b}.stratum.stratum-review .auth-form-wrap{max-width:490px;padding:55px 38px}.stratum.stratum-review .auth-form-wrap h2{font-size:30px;font-weight:550;letter-spacing:-1.5px}.stratum.stratum-review .auth-form-wrap [data-stratum-switcher]{margin-bottom:28px}
-.stratum.stratum-review .review-body{margin-left:228px}.stratum.stratum-review .review-sidebar nav button{border-radius:2px;color:#aab8d0}.stratum.stratum-review .review-sidebar nav button.active{background:#263b5b;border-color:#476081;color:#edf2fe;box-shadow:inset 2px 0 var(--st-signal)}.stratum.stratum-review .sidebar-note{background:#1b2940;border-color:#3a4d6d;border-radius:2px}.stratum.stratum-review .sidebar-note p{color:#99aac8}.stratum.stratum-review .workspace-avatar{background:#263a5a;color:#bfd0f1;border-color:#4d6489;border-radius:2px}.stratum.stratum-review .review-topbar{gap:16px}.stratum.stratum-review .review-page-title{padding-bottom:24px;border-bottom:1px solid #b2bbcd}.stratum.stratum-review .review-page-title h1{font-size:33px;font-weight:500;letter-spacing:-1.5px}.stratum.stratum-review .summary-card{border:0;border-bottom:1px solid #c8d2e3;border-right:1px solid #d7deea;background:transparent}.stratum.stratum-review .summary-card strong{color:#294470}.stratum.stratum-review .project-toolbar{background:#e9edf5}.stratum.stratum-review .project-toolbar select{background:#fafbfe;color:#344d78;border-radius:2px}
+.stratum.stratum-review .auth-story {
+  background: linear-gradient(140deg, var(--n-900), var(--a-900));
+  padding-top: 44px;
+}
+.stratum.stratum-review .auth-story .stratum-brand {
+  margin-bottom: 0;
+}
+.stratum.stratum-review .auth-story-copy .eyebrow {
+  color: var(--a-300);
+}
+.stratum.stratum-review .auth-story-copy h1 {
+  font-weight: 450;
+  letter-spacing: -2.5px;
+}
+.stratum.stratum-review .auth-story-copy > p:not(.eyebrow) {
+  color: var(--a-300);
+}
+.stratum.stratum-review .auth-steps {
+  color: var(--s-400);
+  border-top: 1px solid var(--a-700);
+  padding-top: 22px;
+  max-width: 370px;
+}
+.stratum.stratum-review .auth-steps b {
+  color: var(--n-150);
+}
+.stratum.stratum-review .auth-wafer {
+  filter: hue-rotate(34deg) saturate(0.8);
+  opacity: 0.38;
+}
+.stratum.stratum-review .auth-caption {
+  color: var(--a-300);
+}
+.stratum.stratum-review .release-label {
+  color: var(--a-400);
+}
+.stratum.stratum-review .auth-form-wrap {
+  max-width: 490px;
+  padding: 55px 38px;
+}
+.stratum.stratum-review .auth-form-wrap h2 {
+  font-size: 30px;
+  font-weight: 550;
+  letter-spacing: -1.5px;
+}
+.stratum.stratum-review .auth-form-wrap [data-stratum-switcher] {
+  margin-bottom: 28px;
+}
+.stratum.stratum-review .review-body {
+  margin-left: 228px;
+}
+.stratum.stratum-review .review-sidebar nav button {
+  border-radius: 2px;
+  color: var(--n-300);
+}
+.stratum.stratum-review .review-sidebar nav button.active {
+  background: var(--a-800);
+  border-color: var(--a-700);
+  color: var(--n-50);
+  box-shadow: inset 2px 0 var(--st-signal);
+}
+.stratum.stratum-review .sidebar-note {
+  background: var(--a-900);
+  border-color: var(--a-800);
+  border-radius: 2px;
+}
+.stratum.stratum-review .sidebar-note p {
+  color: var(--a-300);
+}
+.stratum.stratum-review .workspace-avatar {
+  background: var(--a-900);
+  color: var(--a-200);
+  border-color: var(--a-700);
+  border-radius: 2px;
+}
+.stratum.stratum-review .review-topbar {
+  gap: 16px;
+}
+.stratum.stratum-review .review-page-title {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--n-300);
+}
+.stratum.stratum-review .review-page-title h1 {
+  font-size: 33px;
+  font-weight: 500;
+  letter-spacing: -1.5px;
+}
+.stratum.stratum-review .summary-card {
+  border: 0;
+  border-bottom: 1px solid var(--n-200);
+  border-right: 1px solid var(--n-150);
+  background: transparent;
+}
+.stratum.stratum-review .summary-card strong {
+  color: var(--a-800);
+}
+.stratum.stratum-review .project-toolbar {
+  background: var(--n-100);
+}
+.stratum.stratum-review .project-toolbar select {
+  background: var(--n-25);
+  color: var(--a-800);
+  border-radius: 2px;
+}
 
-@media(min-width:1500px){.stratum.memory-studio main{padding-inline:38px}.stratum.memory-studio .topbar{padding-inline:38px}}
-@media(max-width:1200px){.stratum.stratum-equipment>.topbar{gap:20px;padding-inline:22px}.stratum.stratum-equipment>.topbar>nav{display:none}.stratum.stratum-equipment .topbar [data-stratum-switcher]{margin-left:auto}.stratum.stratum-data>header{gap:23px;padding:20px 24px}.stratum.stratum-data>header>nav{gap:14px;font-size:11px}.stratum.memory-studio .workspace-grid{grid-template-columns:minmax(0,1fr) 280px}.stratum.memory-studio .product-signature{display:none}.stratum.memory-studio .topbar{gap:14px}.stratum.memory-studio .top-actions{gap:5px}.stratum.stratum-photo .topbar-right>.button{display:none}}
-@media(max-width:1000px){.stratum.memory-studio .workspace-grid{grid-template-columns:minmax(0,1fr)}.stratum.memory-studio .analysis-column{grid-template-columns:repeat(2,minmax(0,1fr));display:grid}.stratum.stratum-data>header>nav{display:none}.stratum.stratum-data>header [data-stratum-switcher]{margin-left:auto}.stratum.stratum-review .review-topbar>div:first-child{display:none}}
-@media(max-width:1100px){
- .stratum .rail{position:relative;inset:auto;width:100%;height:auto;padding:19px 20px;border-right:0;border-bottom:1px solid #34425c;display:block}
- .stratum .rail .stratum-brand{justify-content:flex-start;margin:0}.stratum .rail .stratum-brand>.stratum-wordmark{display:block}
- .stratum .rail :is(.workspace-badge,.nav-caption,.rail-bottom){display:none}
- .stratum .rail nav{display:flex;margin:19px 0 0;overflow-x:auto;flex-wrap:nowrap;padding:0 0 2px;gap:4px;scrollbar-width:thin;scrollbar-color:#465977 transparent}
- .stratum .rail nav a,.stratum .rail nav a:last-child{display:flex;justify-content:flex-start;white-space:nowrap;min-height:39px;flex-shrink:0;font-size:11px;padding:9px 11px;width:auto}
- .stratum .rail nav a:nth-child(n+4){display:flex}.stratum .rail nav a span{font-size:9px;width:auto}
- .stratum .rail+.app-shell{margin-left:0}
- .stratum :is(.topbar,.review-topbar)>[data-stratum-switcher]{display:block}
+@media (min-width: 1500px) {
+  .stratum.memory-studio main {
+    padding-inline: 38px;
+  }
+  .stratum.memory-studio .topbar {
+    padding-inline: 38px;
+  }
 }
-@media(max-width:800px){
- .stratum :is(.rail,.sidebar,.review-sidebar){position:relative;inset:auto;width:100%;padding:19px 20px;border-right:0;border-bottom:1px solid #34425c}.stratum :is(.rail,.sidebar,.review-sidebar) .stratum-brand{margin:0}.stratum :is(.rail,.sidebar) :is(.workspace-badge,.workspace-picker,.nav-caption,.nav-label,.rail-bottom,.learn-card,.sidebar-bottom){display:none}
- .stratum .rail nav{display:flex;margin-top:19px;overflow-x:auto;flex-wrap:nowrap;padding:0 0 2px;gap:4px;scrollbar-width:thin;scrollbar-color:#465977 transparent}.stratum .rail nav a{white-space:nowrap;min-height:39px;flex-shrink:0;font-size:11px;padding:9px 11px}.stratum .rail nav a span{font-size:9px;width:auto}
- .stratum .rail+.app-shell,.stratum.stratum-photo .main-shell,.stratum.stratum-review .review-body{margin-left:0}.stratum.stratum-photo .app-shell{display:block}.stratum.stratum-photo .sidebar{width:100%;padding:19px 20px}.stratum.stratum-photo .main-nav{display:flex;overflow-x:auto;margin-top:18px;gap:4px}.stratum.stratum-photo .nav-item{white-space:nowrap;flex-shrink:0;min-height:39px;font-size:11px;gap:7px;padding:9px 12px}.stratum.stratum-photo .nav-item :is(small,i){display:none}
- .stratum.stratum-photo .topbar{padding:13px 20px;height:auto;min-height:65px;flex-wrap:wrap}.stratum.stratum-photo .topbar>.breadcrumb{display:none}.stratum.stratum-photo .topbar-right{width:100%;gap:11px}.stratum.stratum-photo .topbar-right .model-badge{flex:1;font-size:10px}.stratum.stratum-photo .topbar-right>.avatar{display:none}
- .stratum.memory-studio .topbar{padding:13px 20px;flex-wrap:wrap;gap:12px}.stratum.memory-studio .top-actions{margin-left:auto;gap:6px}.stratum.memory-studio main{padding:27px 20px 22px}.stratum.memory-studio .page-title h1{font-size:46px;letter-spacing:-2px}
- .stratum.stratum-equipment .topbar .offline{display:none}.stratum.stratum-equipment .page-heading{align-items:flex-start}.stratum.stratum-equipment .page-heading h1{font-size:31px}
- .stratum.stratum-review .review-sidebar{display:block}.stratum.stratum-review .review-sidebar :is(.workspace-label,.nav-caption,.sim-link,.sidebar-note,.user-row,.password-link){display:none}.stratum.stratum-review .review-sidebar nav{display:flex;overflow-x:auto;margin-top:17px;gap:4px}.stratum.stratum-review .review-sidebar nav button{white-space:nowrap;flex-shrink:0}.stratum.stratum-review .review-topbar{padding:13px 20px;height:auto;flex-wrap:wrap}.stratum.stratum-review .review-topbar .connection{margin-left:auto}
+@media (max-width: 1200px) {
+  .stratum.stratum-equipment > .topbar {
+    gap: 20px;
+    padding-inline: 22px;
+  }
+  .stratum.stratum-equipment > .topbar > nav {
+    display: none;
+  }
+  .stratum.stratum-equipment .topbar [data-stratum-switcher] {
+    margin-left: auto;
+  }
+  .stratum.stratum-data > header {
+    gap: 23px;
+    padding: 20px 24px;
+  }
+  .stratum.stratum-data > header > nav {
+    gap: 14px;
+    font-size: 12px;
+  }
+  .stratum.memory-studio .workspace-grid {
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
+  .stratum.memory-studio .product-signature {
+    display: none;
+  }
+  .stratum.memory-studio .topbar {
+    gap: 14px;
+  }
+  .stratum.memory-studio .top-actions {
+    gap: 5px;
+  }
+  .stratum.stratum-photo .topbar-right > .button {
+    display: none;
+  }
 }
-@media(max-width:540px){
- .stratum a.stratum-brand{gap:9px}.stratum .stratum-symbol{width:26px;height:31px}.stratum .stratum-wordmark{font-size:19px;letter-spacing:1px}.stratum .stratum-brand .stratum-wordmark small{font-size:6.5px;margin-top:6px;letter-spacing:1px}
- .stratum .stratum-switcher>summary{font-size:11px;gap:8px;min-height:37px;padding:8px 10px}.stratum .stratum-space-panel{position:fixed;left:12px;right:12px;top:var(--stratum-menu-top,88px);width:auto;max-height:var(--stratum-menu-height,calc(100dvh - 104px));padding:15px}.stratum .stratum-space-panel nav a{min-height:51px}
- .stratum.memory-studio .top-actions{width:100%;justify-content:flex-start;gap:6px}.stratum.memory-studio .top-actions button{font-size:10px;padding:7px 9px;min-height:35px}.stratum.memory-studio main{padding:25px 15px 20px}.stratum.memory-studio .page-title{padding-bottom:21px;margin-bottom:17px}.stratum.memory-studio .page-title h1{font-size:41px}.stratum.memory-studio .page-title p{font-size:11px;line-height:1.85;max-width:290px}.stratum.memory-studio .workspace-links{gap:18px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}.stratum.memory-studio .workspace-links a{font-size:10px;white-space:nowrap}.stratum.memory-studio .scenario-bar{padding:12px;gap:12px}.stratum.memory-studio .kpi-grid{border-top:1px solid #d3d9e4;margin-top:8px}.stratum.memory-studio .kpi-grid article{padding:16px}.stratum.memory-studio .kpi-grid article:first-child{padding-left:4px}.stratum.memory-studio .analysis-column{grid-template-columns:minmax(0,1fr)}
- .stratum.stratum-data>header{padding:19px 15px;flex-direction:row;align-items:center;gap:10px;min-height:79px}.stratum.stratum-data main{padding:29px 15px 40px}.stratum.stratum-data .stratum-page-intro{padding-bottom:23px;margin-bottom:22px}.stratum.stratum-data .stratum-page-intro::before{position:static;display:block;margin-bottom:15px;font-size:9px}.stratum.stratum-data .stratum-page-intro .eyebrow{font-size:8px;letter-spacing:1px}.stratum.stratum-data h1{font-size:31px;letter-spacing:-1.6px;line-height:1.35;margin:12px 0 15px}.stratum.stratum-data .lead{font-size:13px;line-height:1.8}.stratum.stratum-data .scope{font-size:10px}.stratum.stratum-data main>section,.stratum.stratum-data #pilotResults>section{padding:22px 18px}.stratum.stratum-data section h2{font-size:18px;padding-bottom:15px}.stratum.stratum-data .fields{grid-template-columns:minmax(0,1fr)}
- .stratum.stratum-equipment>.topbar{height:auto;min-height:80px;flex-direction:row;padding:19px 15px;gap:13px}.stratum.stratum-equipment .shell{padding:28px 15px}.stratum.stratum-equipment .page-heading{padding-bottom:21px;flex-direction:column;gap:16px}.stratum.stratum-equipment .page-heading h1{font-size:33px}.stratum.stratum-equipment .page-heading h1>span{font-size:11px;margin-left:10px}
- .stratum.stratum-photo .page-heading{padding-top:0}.stratum.stratum-photo .page-heading h1{font-size:25px;letter-spacing:-1px;flex-wrap:wrap;gap:8px}.stratum.stratum-photo .page-description{font-size:11px}.stratum.stratum-photo .topbar-right{gap:8px}.stratum.stratum-photo .topbar-right .model-badge{font-size:9px}.stratum.stratum-photo .topbar-right .divider{display:none}
- .stratum.stratum-review .auth-form-wrap{padding:30px 24px}.stratum.stratum-review .auth-form-wrap .stratum-space-panel{left:12px;right:12px}.stratum.stratum-review .review-topbar .connection{font-size:9px}.stratum.stratum-review .review-topbar .connection>span{display:none}.stratum.stratum-review .review-page-title h1{font-size:27px}
+@media (max-width: 1000px) {
+  .stratum.memory-studio .workspace-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .stratum.memory-studio .analysis-column {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: grid;
+  }
+  .stratum.stratum-data > header > nav {
+    display: none;
+  }
+  .stratum.stratum-data > header [data-stratum-switcher] {
+    margin-left: auto;
+  }
+  .stratum.stratum-review .review-topbar > div:first-child {
+    display: none;
+  }
 }
-@media(prefers-reduced-motion:reduce){.stratum *,.stratum *::before,.stratum *::after{scroll-behavior:auto!important;transition:none!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
-.stratum.memory-studio .topbar>div[data-stratum-switcher],.stratum.stratum-review .review-topbar>div[data-stratum-switcher]{display:block}
-.stratum .stratum-public-notice{padding:15px 22px;font:11px/1.8 "Segoe UI","Malgun Gothic",sans-serif;background:#e6e9f0;color:#586980;border-top:1px solid #cfd7e6;text-align:center}
-.stratum .stratum-public-links{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}
-.stratum .stratum-public-links a{display:grid;grid-template-columns:28px 1fr 20px;gap:8px 13px;align-items:center;padding:19px 0;border-bottom:1px solid #d8dfeb;text-decoration:none}
-.stratum .stratum-public-links a>span{grid-row:1/3;font:10px var(--st-mono);color:#8b99b0}.stratum .stratum-public-links b{font-size:14px;color:#334d78}.stratum .stratum-public-links small{grid-column:2;grid-row:2;font-size:11px}.stratum .stratum-public-links i{grid-column:3;grid-row:1/3;font-style:normal;font-size:18px}
-@media(max-width:650px){.stratum .stratum-public-links{grid-template-columns:1fr}}
-@media print{.stratum [data-stratum-switcher]{display:none!important}.stratum.stratum-data main{max-width:none;padding:0}.stratum.stratum-data section{break-inside:avoid}.stratum.stratum-data>header{display:none}}
+@media (max-width: 1100px) {
+  .stratum .rail {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    padding: 19px 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--a-800);
+    display: block;
+  }
+  .stratum .rail .stratum-brand {
+    justify-content: flex-start;
+    margin: 0;
+  }
+  .stratum .rail .stratum-brand > .stratum-wordmark {
+    display: block;
+  }
+  .stratum .rail :is(.workspace-badge, .nav-caption, .rail-bottom) {
+    display: none;
+  }
+  .stratum .rail nav {
+    display: flex;
+    margin: 19px 0 0;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: 0 0 2px;
+    gap: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: #465977 transparent;
+  }
+  .stratum .rail nav a,
+  .stratum .rail nav a:last-child {
+    display: flex;
+    justify-content: flex-start;
+    white-space: nowrap;
+    min-height: 39px;
+    flex-shrink: 0;
+    font-size: 12px;
+    padding: 9px 11px;
+    width: auto;
+  }
+  .stratum .rail nav a:nth-child(n + 4) {
+    display: flex;
+  }
+  .stratum .rail nav a span {
+    font-size: 12px;
+    width: auto;
+  }
+  .stratum .rail + .app-shell {
+    margin-left: 0;
+  }
+  .stratum :is(.topbar, .review-topbar) > [data-stratum-switcher] {
+    display: block;
+  }
+}
+@media (max-width: 800px) {
+  .stratum :is(.rail, .sidebar, .review-sidebar) {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    padding: 19px 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--a-800);
+  }
+  .stratum :is(.rail, .sidebar, .review-sidebar) .stratum-brand {
+    margin: 0;
+  }
+  .stratum
+    :is(.rail, .sidebar)
+    :is(
+      .workspace-badge,
+      .workspace-picker,
+      .nav-caption,
+      .nav-label,
+      .rail-bottom,
+      .learn-card,
+      .sidebar-bottom
+    ) {
+    display: none;
+  }
+  .stratum .rail nav {
+    display: flex;
+    margin-top: 19px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: 0 0 2px;
+    gap: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: #465977 transparent;
+  }
+  .stratum .rail nav a {
+    white-space: nowrap;
+    min-height: 39px;
+    flex-shrink: 0;
+    font-size: 12px;
+    padding: 9px 11px;
+  }
+  .stratum .rail nav a span {
+    font-size: 12px;
+    width: auto;
+  }
+  .stratum .rail + .app-shell,
+  .stratum.stratum-photo .main-shell,
+  .stratum.stratum-review .review-body {
+    margin-left: 0;
+  }
+  .stratum.stratum-photo .app-shell {
+    display: block;
+  }
+  .stratum.stratum-photo .sidebar {
+    width: 100%;
+    padding: 19px 20px;
+  }
+  .stratum.stratum-photo .main-nav {
+    display: flex;
+    overflow-x: auto;
+    margin-top: 18px;
+    gap: 4px;
+  }
+  .stratum.stratum-photo .nav-item {
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-height: 39px;
+    font-size: 12px;
+    gap: 7px;
+    padding: 9px 12px;
+  }
+  .stratum.stratum-photo .nav-item :is(small, i) {
+    display: none;
+  }
+  .stratum.stratum-photo .topbar {
+    padding: 13px 20px;
+    height: auto;
+    min-height: 65px;
+    flex-wrap: wrap;
+  }
+  .stratum.stratum-photo .topbar > .breadcrumb {
+    display: none;
+  }
+  .stratum.stratum-photo .topbar-right {
+    width: 100%;
+    gap: 11px;
+  }
+  .stratum.stratum-photo .topbar-right .model-badge {
+    flex: 1;
+    font-size: 12px;
+  }
+  .stratum.stratum-photo .topbar-right > .avatar {
+    display: none;
+  }
+  .stratum.memory-studio .topbar {
+    padding: 13px 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .stratum.memory-studio .top-actions {
+    margin-left: auto;
+    gap: 6px;
+  }
+  .stratum.memory-studio main {
+    padding: 27px 20px 22px;
+  }
+  .stratum.memory-studio .page-title h1 {
+    font-size: 46px;
+    letter-spacing: -2px;
+  }
+  .stratum.stratum-equipment .topbar .offline {
+    display: none;
+  }
+  .stratum.stratum-equipment .page-heading {
+    align-items: flex-start;
+  }
+  .stratum.stratum-equipment .page-heading h1 {
+    font-size: 31px;
+  }
+  .stratum.stratum-review .review-sidebar {
+    display: block;
+  }
+  .stratum.stratum-review
+    .review-sidebar
+    :is(.workspace-label, .nav-caption, .sim-link, .sidebar-note, .user-row, .password-link) {
+    display: none;
+  }
+  .stratum.stratum-review .review-sidebar nav {
+    display: flex;
+    overflow-x: auto;
+    margin-top: 17px;
+    gap: 4px;
+  }
+  .stratum.stratum-review .review-sidebar nav button {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .stratum.stratum-review .review-topbar {
+    padding: 13px 20px;
+    height: auto;
+    flex-wrap: wrap;
+  }
+  .stratum.stratum-review .review-topbar .connection {
+    margin-left: auto;
+  }
+}
+@media (max-width: 540px) {
+  .stratum a.stratum-brand {
+    gap: 9px;
+  }
+  .stratum .stratum-symbol {
+    width: 26px;
+    height: 31px;
+  }
+  .stratum .stratum-wordmark {
+    font-size: 19px;
+    letter-spacing: 1px;
+  }
+  .stratum .stratum-brand .stratum-wordmark small {
+    font-size: 11px;
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+  .stratum .stratum-switcher > summary {
+    font-size: 12px;
+    gap: 8px;
+    min-height: 37px;
+    padding: 8px 10px;
+  }
+  .stratum .stratum-space-panel {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    top: var(--stratum-menu-top, 88px);
+    width: auto;
+    max-height: var(--stratum-menu-height, calc(100dvh - 104px));
+    padding: 15px;
+  }
+  .stratum .stratum-space-panel nav a {
+    min-height: 51px;
+  }
+  .stratum.memory-studio .top-actions {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 6px;
+  }
+  .stratum.memory-studio .top-actions button {
+    font-size: 12px;
+    padding: 7px 9px;
+    min-height: 35px;
+  }
+  .stratum.memory-studio main {
+    padding: 25px 15px 20px;
+  }
+  .stratum.memory-studio .page-title {
+    padding-bottom: 21px;
+    margin-bottom: 17px;
+  }
+  .stratum.memory-studio .page-title h1 {
+    font-size: 41px;
+  }
+  .stratum.memory-studio .page-title p {
+    font-size: 12px;
+    line-height: 1.85;
+    max-width: 290px;
+  }
+  .stratum.memory-studio .workspace-links {
+    gap: 18px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .stratum.memory-studio .workspace-links a {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .stratum.memory-studio .scenario-bar {
+    padding: 12px;
+    gap: 12px;
+  }
+  .stratum.memory-studio .kpi-grid {
+    border-top: 1px solid var(--n-200);
+    margin-top: 8px;
+  }
+  .stratum.memory-studio .kpi-grid article {
+    padding: 16px;
+  }
+  .stratum.memory-studio .kpi-grid article:first-child {
+    padding-left: 4px;
+  }
+  .stratum.memory-studio .analysis-column {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .stratum.stratum-data > header {
+    padding: 19px 15px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    min-height: 79px;
+  }
+  .stratum.stratum-data main {
+    padding: 29px 15px 40px;
+  }
+  .stratum.stratum-data .stratum-page-intro {
+    padding-bottom: 23px;
+    margin-bottom: 22px;
+  }
+  .stratum.stratum-data .stratum-page-intro::before {
+    position: static;
+    display: block;
+    margin-bottom: 15px;
+    font-size: 12px;
+  }
+  .stratum.stratum-data .stratum-page-intro .eyebrow {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  .stratum.stratum-data h1 {
+    font-size: 31px;
+    letter-spacing: -1.6px;
+    line-height: 1.35;
+    margin: 12px 0 15px;
+  }
+  .stratum.stratum-data .lead {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .stratum.stratum-data .scope {
+    font-size: 12px;
+  }
+  .stratum.stratum-data main > section,
+  .stratum.stratum-data #pilotResults > section {
+    padding: 22px 18px;
+  }
+  .stratum.stratum-data section h2 {
+    font-size: 18px;
+    padding-bottom: 15px;
+  }
+  .stratum.stratum-data .fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .stratum.stratum-equipment > .topbar {
+    height: auto;
+    min-height: 80px;
+    flex-direction: row;
+    padding: 19px 15px;
+    gap: 13px;
+  }
+  .stratum.stratum-equipment .shell {
+    padding: 28px 15px;
+  }
+  .stratum.stratum-equipment .page-heading {
+    padding-bottom: 21px;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .stratum.stratum-equipment .page-heading h1 {
+    font-size: 33px;
+  }
+  .stratum.stratum-equipment .page-heading h1 > span {
+    font-size: 12px;
+    margin-left: 10px;
+  }
+  .stratum.stratum-photo .page-heading {
+    padding-top: 0;
+  }
+  .stratum.stratum-photo .page-heading h1 {
+    font-size: 25px;
+    letter-spacing: -1px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .stratum.stratum-photo .page-description {
+    font-size: 12px;
+  }
+  .stratum.stratum-photo .topbar-right {
+    gap: 8px;
+  }
+  .stratum.stratum-photo .topbar-right .model-badge {
+    font-size: 12px;
+  }
+  .stratum.stratum-photo .topbar-right .divider {
+    display: none;
+  }
+  .stratum.stratum-review .auth-form-wrap {
+    padding: 30px 24px;
+  }
+  .stratum.stratum-review .auth-form-wrap .stratum-space-panel {
+    left: 12px;
+    right: 12px;
+  }
+  .stratum.stratum-review .review-topbar .connection {
+    font-size: 12px;
+  }
+  .stratum.stratum-review .review-topbar .connection > span {
+    display: none;
+  }
+  .stratum.stratum-review .review-page-title h1 {
+    font-size: 27px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stratum *,
+  .stratum *::before,
+  .stratum *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+.stratum.memory-studio .topbar > div[data-stratum-switcher],
+.stratum.stratum-review .review-topbar > div[data-stratum-switcher] {
+  display: block;
+}
+.stratum .stratum-public-notice {
+  padding: 15px 22px;
+  font:
+    12px/1.8 "Segoe UI",
+    "Malgun Gothic",
+    sans-serif;
+  background: var(--n-100);
+  color: var(--a-700);
+  border-top: 1px solid var(--n-200);
+  text-align: center;
+}
+.stratum .stratum-public-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 30px;
+}
+.stratum .stratum-public-links a {
+  display: grid;
+  grid-template-columns: 28px 1fr 20px;
+  gap: 8px 13px;
+  align-items: center;
+  padding: 19px 0;
+  border-bottom: 1px solid var(--n-150);
+  text-decoration: none;
+}
+.stratum .stratum-public-links a > span {
+  grid-row: 1/3;
+  font: 11px var(--st-mono);
+  color: var(--n-400);
+}
+.stratum .stratum-public-links b {
+  font-size: 14px;
+  color: var(--a-800);
+}
+.stratum .stratum-public-links small {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 12px;
+}
+.stratum .stratum-public-links i {
+  grid-column: 3;
+  grid-row: 1/3;
+  font-style: normal;
+  font-size: 18px;
+}
+@media (max-width: 650px) {
+  .stratum .stratum-public-links {
+    grid-template-columns: 1fr;
+  }
+}
+@media print {
+  .stratum [data-stratum-switcher] {
+    display: none !important;
+  }
+  .stratum.stratum-data main {
+    max-width: none;
+    padding: 0;
+  }
+  .stratum.stratum-data section {
+    break-inside: avoid;
+  }
+  .stratum.stratum-data > header {
+    display: none;
+  }
+}
+}

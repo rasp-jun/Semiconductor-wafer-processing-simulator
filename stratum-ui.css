@@ -1,0 +1,890 @@
+/*
+ * STRATUM UI — shell, components and workspace layouts.
+ *
+ * Cascade: @layer base (element defaults) < @layer legacy (older page styles)
+ * < unlayered rules in this file. Rules here therefore win without specificity
+ * contests; keep selectors short and scoped to a component or a page class.
+ * Tokens live in stratum-tokens.css.
+ */
+
+/* ───────────────────────── Base ───────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  :where(button, input, select, textarea) {
+    font: inherit;
+    color: inherit;
+  }
+  :where(img, svg, canvas) {
+    max-width: 100%;
+  }
+}
+
+body.stratum {
+  margin: 0;
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "tnum" 0;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.stratum :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--ui-focus);
+  outline-offset: 2px;
+}
+.stratum ::selection {
+  background: var(--a-200);
+  color: var(--a-900);
+}
+.stratum :is(code, kbd, samp, .mono) {
+  font-family: var(--font-mono);
+}
+@media (prefers-reduced-motion: reduce) {
+  .stratum *,
+  .stratum *::before,
+  .stratum *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* The hidden attribute always wins: new component rules set display values that would
+ * otherwise reveal elements scripts have hidden (e.g. role-gated tabs, pending buttons). */
+.stratum [hidden] {
+  display: none !important;
+}
+
+/* Skip links become visible only on focus. */
+.stratum :is(.skip-link, .skip) {
+  position: fixed;
+  left: var(--sp-3);
+  top: var(--sp-3);
+  z-index: 1000;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius);
+  background: var(--n-900);
+  color: var(--n-0);
+  transform: translateY(-200%);
+  transition: transform var(--dur) var(--ease);
+}
+.stratum :is(.skip-link, .skip):focus {
+  transform: none;
+}
+
+/* ───────────────────────── Shell ───────────────────────── */
+body.stratum {
+  padding-left: var(--rail-w);
+  transition: padding-left var(--dur) var(--ease);
+}
+html.st-rail-collapsed body.stratum {
+  padding-left: var(--rail-w-collapsed);
+}
+/* Navigation that each page used to carry on its own — replaced by the rail. */
+.stratum :is(.app-header > nav, header > nav:not(.st-tabs), .topbar > nav, [data-stratum-switcher]),
+.stratum :is(header, .topbar, .app-header, .review-sidebar, .auth-story) > .stratum-brand {
+  display: none !important;
+}
+
+.st-rail {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  width: var(--rail-w);
+  background: var(--n-900);
+  color: var(--n-300);
+  border-right: 1px solid var(--n-800);
+  transition: width var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.st-rail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--topbar-h);
+  padding: 0 var(--sp-4);
+  border-bottom: 1px solid var(--n-800);
+}
+.st-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--n-0);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 15px;
+}
+.st-brand-mark {
+  width: 24px;
+  height: 26px;
+  flex: none;
+}
+.st-rail-close {
+  display: none;
+}
+.st-rail-groups {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--sp-3) var(--sp-2);
+  scrollbar-width: thin;
+  scrollbar-color: var(--n-700) transparent;
+}
+.st-rail-group + .st-rail-group {
+  margin-top: var(--sp-4);
+}
+.st-rail-label {
+  margin: 0 0 var(--sp-1);
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--n-400);
+  white-space: nowrap;
+}
+.st-rail ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.st-rail-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 44px;
+  padding: 6px var(--sp-3);
+  border-radius: var(--radius);
+  color: var(--n-300);
+  text-decoration: none;
+}
+.st-rail-link:hover {
+  background: var(--n-800);
+  color: var(--n-0);
+}
+.st-rail-link[aria-current="page"] {
+  background: var(--n-800);
+  color: var(--n-0);
+}
+.st-rail-link[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--s-400);
+}
+.st-icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.st-rail-link[aria-current="page"] .st-icon {
+  color: var(--s-400);
+}
+.st-rail-text {
+  display: grid;
+  min-width: 0;
+  line-height: 1.3;
+}
+.st-rail-text b {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.st-rail-text small {
+  font-size: var(--fs-xs);
+  color: var(--n-400);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.st-rail-foot {
+  padding: var(--sp-3) var(--sp-2) var(--sp-4);
+  border-top: 1px solid var(--n-800);
+}
+.st-rail-scope {
+  margin: 0 0 var(--sp-2);
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-xs);
+  color: var(--n-400);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.st-rail-collapse {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  min-height: 40px;
+  padding: 0 var(--sp-3);
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--n-400);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.st-rail-collapse:hover {
+  background: var(--n-800);
+  color: var(--n-0);
+}
+.st-rail-collapse .st-icon {
+  transition: transform var(--dur) var(--ease);
+}
+
+/* Collapsed rail: icons only, names as hover tips. */
+html.st-rail-collapsed .st-rail {
+  width: var(--rail-w-collapsed);
+}
+html.st-rail-collapsed .st-rail :is(.st-brand-word, .st-rail-text, .st-rail-scope, .st-rail-collapse span) {
+  display: none;
+}
+html.st-rail-collapsed .st-rail-head {
+  justify-content: center;
+  padding: 0;
+}
+html.st-rail-collapsed .st-rail-label {
+  height: 1px;
+  margin: var(--sp-2) var(--sp-2);
+  padding: 0;
+  overflow: hidden;
+  color: transparent;
+  background: var(--n-800);
+}
+html.st-rail-collapsed .st-rail-link,
+html.st-rail-collapsed .st-rail-collapse {
+  justify-content: center;
+  padding: 0;
+}
+html.st-rail-collapsed .st-rail-collapse .st-icon {
+  transform: rotate(180deg);
+}
+html.st-rail-collapsed .st-rail-link:is(:hover, :focus-visible)::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--n-950);
+  color: var(--n-0);
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+  box-shadow: var(--shadow-2);
+  pointer-events: none;
+}
+
+.st-mobilebar,
+.st-scrim {
+  display: none;
+}
+
+@media (max-width: 899px) {
+  body.stratum,
+  html.st-rail-collapsed body.stratum {
+    padding-left: 0;
+  }
+  .st-mobilebar {
+    position: sticky;
+    top: 0;
+    z-index: 55;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    height: 52px;
+    padding: 0 var(--sp-3) 0 var(--sp-2);
+    background: var(--n-900);
+    color: var(--n-0);
+  }
+  .st-menu-button,
+  .st-rail-close {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: var(--radius);
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .st-menu-button:hover,
+  .st-rail-close:hover {
+    background: var(--n-800);
+  }
+  .st-mobile-title {
+    margin-left: auto;
+    font-size: var(--fs-sm);
+    color: var(--n-300);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .st-rail,
+  html.st-rail-collapsed .st-rail {
+    width: min(300px, 86vw);
+    transform: translateX(-102%);
+    box-shadow: var(--shadow-3);
+  }
+  html.st-rail-collapsed .st-rail :is(.st-brand-word, .st-rail-text, .st-rail-scope) {
+    display: revert;
+  }
+  html.st-rail-collapsed .st-rail-text {
+    display: grid;
+  }
+  html.st-rail-collapsed .st-rail-head {
+    justify-content: space-between;
+    padding: 0 var(--sp-2) 0 var(--sp-4);
+  }
+  html.st-rail-collapsed .st-rail-label {
+    height: auto;
+    margin: 0 0 var(--sp-1);
+    padding: 0 var(--sp-3);
+    color: var(--n-400);
+    background: none;
+  }
+  html.st-rail-collapsed .st-rail-link {
+    justify-content: flex-start;
+    padding: 6px var(--sp-3);
+  }
+  .st-rail-head {
+    padding: 0 var(--sp-2) 0 var(--sp-4);
+  }
+  .st-rail-foot .st-rail-collapse {
+    display: none;
+  }
+  /* Hidden (not just off-screen) while closed, so its links leave the tab order. */
+  .st-rail {
+    visibility: hidden;
+    transition: transform var(--dur) var(--ease), visibility 0s linear var(--dur);
+  }
+  body.st-rail-open .st-rail {
+    transform: none;
+    visibility: visible;
+    transition: transform var(--dur) var(--ease), visibility 0s;
+  }
+  body.st-rail-open .st-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 58;
+    background: color-mix(in srgb, var(--n-950) 55%, transparent);
+    backdrop-filter: blur(2px);
+  }
+}
+
+/* ───────────────────────── Page header ─────────────────────────
+ * One header pattern for every workspace: title, context, actions. */
+.st-pagehead {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  min-height: var(--topbar-h);
+  padding: var(--sp-2) var(--sp-6);
+  background: color-mix(in srgb, var(--ui-surface) 92%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--ui-border);
+  color: var(--ui-text);
+  margin: 0;
+  width: auto;
+  max-width: none;
+  box-shadow: none;
+  opacity: 1;
+}
+.st-pagehead-title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  min-width: 0;
+  margin-right: auto;
+}
+.st-pagehead h1 {
+  margin: 0;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.st-pagehead-meta {
+  min-width: 0;
+  font-size: var(--fs-sm);
+  color: var(--ui-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.st-pagehead-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--sp-2);
+}
+@media (max-width: 899px) {
+  .st-pagehead {
+    position: static;
+    backdrop-filter: none; /* would become the containing block of fixed menus */
+    background: var(--ui-surface);
+    flex-wrap: wrap;
+    padding: var(--sp-3) var(--sp-4);
+  }
+  .st-pagehead-title {
+    flex-wrap: wrap;
+    row-gap: 2px;
+    width: 100%;
+  }
+  .st-pagehead-actions {
+    justify-content: flex-start;
+  }
+}
+
+/* ───────────────────────── Components ───────────────────────── */
+.st-btn,
+.st-pagehead-actions :is(button, .button, a.button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 var(--sp-3);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--radius);
+  background: var(--ui-surface);
+  color: var(--ui-text);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  box-shadow: var(--shadow-1);
+  cursor: pointer;
+  transition: background var(--dur), border-color var(--dur), color var(--dur);
+}
+.st-btn:hover:not(:disabled),
+.st-pagehead-actions :is(button, .button, a.button):hover:not(:disabled) {
+  background: var(--n-50);
+  border-color: var(--ui-border-strong);
+}
+.st-btn:disabled,
+.st-pagehead-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.st-btn-primary,
+.st-pagehead-actions :is(button, .button, a.button):is(.dark, .primary, .st-btn-primary) {
+  background: var(--ui-accent);
+  border-color: var(--ui-accent);
+  color: var(--n-0);
+}
+.st-btn-primary:hover:not(:disabled),
+.st-pagehead-actions :is(button, .button, a.button):is(.dark, .primary, .st-btn-primary):hover:not(:disabled) {
+  background: var(--ui-accent-hover);
+  border-color: var(--ui-accent-hover);
+}
+.st-btn-ghost,
+.st-pagehead-actions :is(button, .button, a.button).st-btn-ghost {
+  background: none;
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--ui-text-muted);
+}
+.st-btn-ghost:hover:not(:disabled),
+.st-pagehead-actions :is(button, .button, a.button).st-btn-ghost:hover:not(:disabled) {
+  background: var(--n-100);
+  color: var(--ui-text);
+}
+.st-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-xs);
+  color: var(--ui-text-muted);
+  white-space: nowrap;
+}
+.st-status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--g-500);
+}
+
+.st-status.error {
+  color: var(--d-700);
+}
+.st-status.error::before {
+  background: var(--d-500);
+}
+
+/* Overflow menu for secondary page actions. */
+.st-more {
+  position: relative;
+}
+.st-more > summary {
+  list-style: none;
+}
+.st-more > summary::-webkit-details-marker {
+  display: none;
+}
+.st-more:not([open]) > .st-more-panel {
+  display: none;
+}
+.st-more-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 70;
+  display: grid;
+  min-width: 200px;
+  padding: var(--sp-1);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--radius-lg);
+  background: var(--ui-surface);
+  box-shadow: var(--shadow-3);
+}
+.st-pagehead-actions .st-more-panel :is(button, a) {
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 36px;
+  border: 0;
+  box-shadow: none;
+  background: none;
+  font-weight: 400;
+}
+.st-pagehead-actions .st-more-panel :is(button, a):hover:not(:disabled) {
+  background: var(--n-100);
+}
+@media (max-width: 899px) {
+  .st-more-panel {
+    left: 0;
+    right: auto;
+  }
+}
+
+/* Scope / disclaimer note: a quiet callout instead of 10px footnotes. */
+.st-note {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--radius-lg);
+  background: var(--ui-surface-sunken);
+  color: var(--n-600);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+}
+.st-note b {
+  color: var(--ui-text);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ───────────────────────── Workspace frames ─────────────────────────
+ * Pages that used to reserve room for their own sidebar now sit beside the shared rail. */
+.stratum :is(.memory-studio, .stratum-evidence) .app-shell,
+.stratum.memory-studio .app-shell,
+.stratum.stratum-evidence .app-shell {
+  display: block;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+  min-height: 100dvh;
+}
+.stratum.memory-studio #main,
+.stratum.stratum-evidence #main {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: var(--sp-5) var(--sp-6) var(--sp-10);
+}
+@media (max-width: 899px) {
+  .stratum.memory-studio #main,
+  .stratum.stratum-evidence #main {
+    padding: var(--sp-4) var(--sp-4) var(--sp-8);
+  }
+}
+
+.stratum.stratum-data main {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: var(--sp-6) var(--sp-6) var(--sp-10);
+}
+.stratum.stratum-data .st-scope {
+  margin: 0 0 var(--sp-5);
+}
+.stratum.stratum-equipment main.shell {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: var(--sp-5) var(--sp-6) var(--sp-10);
+}
+@media (max-width: 899px) {
+  .stratum.stratum-data main,
+  .stratum.stratum-equipment main.shell {
+    padding: var(--sp-4) var(--sp-4) var(--sp-8);
+  }
+}
+
+/* ───────────────────────── Photo lab ─────────────────────────
+ * The photo lab was built dark end to end. Inside its content column the token
+ * ramps are mirrored, so the same legacy rules render on the light product
+ * surface; the 3D machine viewport restores the instrument (dark) ramps.
+ * Legacy custom properties resolve where they are declared, so they are
+ * re-declared here to pick up the mirrored ramps. */
+.stratum.stratum-photo .app-shell {
+  display: block;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  background: var(--ui-bg);
+}
+.stratum.stratum-photo .main-shell {
+  --n-0: #0c0f14;
+  --n-25: #13171e;
+  --n-50: #1a1f28;
+  --n-100: #232934;
+  --n-150: #343b47;
+  --n-200: #4a5260;
+  --n-300: #646c78;
+  --n-400: #636a75;
+  --n-500: #8e949c;
+  --n-600: #babdbf;
+  --n-700: #d6d6d0;
+  --n-800: #e3e2dc;
+  --n-850: #fbfbf9;
+  --n-900: #f5f5f1;
+  --n-950: #ffffff;
+  --a-50: #15224f;
+  --a-100: #1a2f84;
+  --a-200: #2448df;
+  --a-300: #2448df;
+  --a-400: #375cf6;
+  --a-600: #93a8ff;
+  --a-700: #c0cdff;
+  --a-800: #dfe6ff;
+  --a-900: #eef2ff;
+  --s-100: #4d5c12;
+  --s-300: #4d5c12;
+  --s-400: #4d5c12;
+  --s-600: #4d5c12;
+  --s-800: #f1fad0;
+  --w-400: #a45f0c;
+  --w-200: #7a4608;
+  --w-50: #fff6e6;
+  --g-400: #16703f;
+  --g-200: #1f9a55;
+  --d-400: #c2381f;
+  --d-200: #a3291a;
+  --bg: var(--n-900);
+  --side: var(--n-950);
+  --panel: var(--n-850);
+  --line: var(--n-700);
+  --muted: var(--n-400);
+  --text: var(--n-100);
+  --lime: var(--s-300);
+  --teal: var(--a-200);
+  --orange: var(--w-400);
+  --machine-accent: var(--s-300);
+  --machine-muted: var(--n-300);
+  margin: 0;
+  min-width: 0;
+  background: var(--n-900);
+  color: var(--n-100);
+}
+.stratum.stratum-photo .main-shell .machine-viewport {
+  --n-0: #ffffff;
+  --n-25: #fbfbf9;
+  --n-50: #f5f5f1;
+  --n-100: #ecebe6;
+  --n-150: #e3e2dc;
+  --n-200: #d6d6d0;
+  --n-300: #babdbf;
+  --n-400: #8e949c;
+  --n-500: #646c78;
+  --n-600: #4a5260;
+  --n-700: #343b47;
+  --n-800: #232934;
+  --n-850: #1a1f28;
+  --n-900: #13171e;
+  --n-950: #0c0f14;
+  --n-400: #a2a8b0;
+  --s-300: #e2f59a;
+  --s-400: #d3ee65;
+  --s-600: #8ba523;
+  --machine-accent: var(--s-300);
+  --machine-muted: var(--n-300);
+  --text: var(--n-100);
+  --muted: var(--n-400);
+  --line: var(--n-700);
+  color: var(--text);
+}
+.st-tabs {
+  display: flex;
+  flex-basis: 100%;
+  gap: 2px;
+  margin: 0 calc(-1 * var(--sp-2)) calc(-1 * var(--sp-2));
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.st-tabs > :is(button, a) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 40px;
+  padding: 0 var(--sp-3);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: none;
+  color: var(--ui-text-muted);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.st-tabs > :is(button, a):hover {
+  color: var(--ui-text);
+}
+.st-tabs > :is(.active, [aria-current="page"]) {
+  border-bottom-color: var(--ui-accent);
+  color: var(--ui-text);
+}
+.st-tabs > * > span[data-icon] {
+  display: inline-grid;
+  width: 16px;
+  height: 16px;
+}
+.st-tabs > * > span[data-icon] svg {
+  width: 16px;
+  height: 16px;
+}
+.st-tabs .nav-item > i {
+  display: none;
+}
+.st-tabs > * :is(small, i[id]) {
+  min-width: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--ui-surface-sunken);
+  color: var(--ui-text-muted);
+  font-size: var(--fs-label);
+  text-align: center;
+}
+.stratum :is(.photo-pagehead, .review-pagehead) {
+  flex-wrap: wrap;
+  padding-bottom: var(--sp-2);
+}
+.stratum.stratum-photo .photo-pagehead .breadcrumb strong {
+  color: var(--ui-text);
+  font-weight: 600;
+}
+
+/* ───────────────────────── Review records (workbench) ───────────────────────── */
+.stratum.stratum-review .auth-screen {
+  display: block;
+  min-height: 100dvh;
+  padding: 0;
+  background: var(--ui-bg);
+}
+.stratum.stratum-review .auth-form-wrap {
+  width: auto;
+  max-width: 520px;
+  margin: var(--sp-10) auto;
+  padding: var(--sp-8);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--radius-lg);
+  background: var(--ui-surface);
+  box-shadow: var(--shadow-2);
+  color: var(--ui-text);
+}
+.stratum.stratum-review .review-shell {
+  display: block;
+  min-height: 100dvh;
+}
+.stratum.stratum-review .review-shell[hidden] {
+  display: none;
+}
+.stratum.stratum-review .review-body {
+  margin: 0;
+  min-width: 0;
+}
+.stratum.stratum-review #reviewMain {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--sp-5) var(--sp-6) var(--sp-10);
+}
+.stratum.stratum-review .review-tabs > button > span {
+  width: 16px;
+  text-align: center;
+  color: var(--ui-text-subtle);
+}
+.stratum.stratum-review .user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-xs);
+  line-height: 1.2;
+}
+.stratum.stratum-review .user-chip small {
+  display: block;
+  color: var(--ui-text-muted);
+}
+@media (max-width: 899px) {
+  .stratum.stratum-review .auth-form-wrap {
+    margin: var(--sp-4);
+    padding: var(--sp-5);
+  }
+  .stratum.stratum-review #reviewMain {
+    padding: var(--sp-4) var(--sp-4) var(--sp-8);
+  }
+}
+/* Section tab labels stay visible on phones; the tab row scrolls instead. */
+.st-tabs .nav-item > span:not([data-icon]) {
+  display: inline;
+}
+
+/* ───────────────────────── Print ─────────────────────────
+ * Reports print without the application chrome. */
+@media print {
+  body.stratum,
+  html.st-rail-collapsed body.stratum {
+    padding-left: 0;
+  }
+  .st-rail,
+  .st-mobilebar,
+  .st-scrim,
+  .st-pagehead-actions,
+  .st-tabs {
+    display: none !important;
+  }
+  .st-pagehead {
+    position: static;
+    backdrop-filter: none;
+    background: none;
+  }
+}

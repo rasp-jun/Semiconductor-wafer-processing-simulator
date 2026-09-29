@@ -1,10 +1,12 @@
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#111622"><title>STRATUM · 장비 운전</title><link rel="stylesheet" href="equipment.css"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="stratum.css"><script src="stratum-shell.js" defer></script></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#111622"><title>STRATUM · 장비 운전</title><link rel="stylesheet" href="stratum-tokens.css"><link rel="stylesheet" href="equipment.css"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="stratum.css"><link rel="stylesheet" href="stratum-ui.css"><script src="stratum-shell.js" defer></script></head>
 <body class="stratum stratum-equipment">
-  <header class="topbar"><a class="brand stratum-brand" href="index.html" aria-label="STRATUM 메모리 팹"><svg class="stratum-symbol" viewBox="0 0 40 44" aria-hidden="true"><path d="m2 12 18-9 18 9-18 9z" fill="currentColor"/><path d="m2 24 18 9 18-9v7l-18 9-18-9z" fill="#375cf6"/><path d="m2 17 18 9 18-9v4l-18 9-18-9z" fill="#f2f1ec"/></svg><span class="stratum-wordmark">STRATUM<small>PROCESS INTELLIGENCE</small></span></a><nav aria-label="작업 공간"><a href="index.html">메모리 팹 통합</a><a href="cmos-lab.html">공정 스튜디오</a><a href="equipment.html" aria-current="page">장비 운전실</a><a href="workbench.html">검토 기록</a><a href="fab-data.html">데이터 연동</a></nav><div data-stratum-switcher></div><span class="offline"><i></i> OFFLINE SIMULATION</span></header>
+  <header class="st-pagehead">
+      <div class="st-pagehead-title"><h1>장비 운전</h1><span class="st-pagehead-meta">Ion Mill — 조건을 설정하고 장비의 응답과 단계별 동작을 함께 확인합니다.</span></div>
+      <div class="st-pagehead-actions"><span class="st-status">오프라인 시뮬레이션</span><button id="sourceButton" class="st-btn-ghost">자료 출처 · 모델 범위</button><button id="importButton">로그 불러오기 ↑</button><input id="importFile" type="file" accept=".json,application/json" hidden><button id="exportButton">운전 기록 ↓</button></div>
+    </header>
   <main class="shell">
-    <div class="page-heading"><div><span class="eyebrow">EQUIPMENT WORKSPACE / 01</span><h1>장비 운전실 <span>Ion Mill</span></h1><p>조건을 설정하고, 장비의 응답과 단계별 동작을 함께 확인하세요.</p></div><div class="heading-actions"><button id="sourceButton">자료 출처 · 모델 범위</button><button id="importButton">로그 불러오기 ↑</button><input id="importFile" type="file" accept=".json,application/json" hidden><button id="exportButton">운전 기록 ↓</button></div></div>
     <div class="provenance-banner"><span id="dataBadge" class="pill amber">자체 생성 예제</span><p id="dataDescription">공개 장비 채널을 참고한 범용 이온 밀링 모델입니다. 수치·단위·동작 시간은 자체 설정값이며 삼성·SK하이닉스의 실측 데이터가 아닙니다.</p><button id="returnSimulation" hidden>예제 모델로 돌아가기</button></div>
     <div id="feedback" class="feedback" role="status" aria-live="polite" hidden></div>
     <div class="console-grid">

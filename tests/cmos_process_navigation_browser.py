@@ -9,7 +9,7 @@ from pathlib import Path
 
 from playwright.sync_api import expect, sync_playwright
 from waitress import create_server
-from cmos_process_picker_browser import ROOT, QuietHandler, HIT, ROUTE_SIZE, CONTRAST
+from cmos_process_picker_browser import ROOT, QuietHandler, HIT, ROUTE_SIZE, CONTRAST, open_route, route_shown, run_control
 from server.app import create_app
 
 OUTPUT=ROOT/'.test-tools'/'stratum'/'process-navigation'
@@ -42,6 +42,8 @@ def search(page,query,expected):
 def close_route(page):
     # Native search inputs consume Escape themselves; test modal dismissal with
     # focus on its close button instead of confusing two browser behaviors.
+    if page.evaluate("document.body.classList.contains('route-docked')"):
+        return
     page.locator('#closeRoute').focus();page.keyboard.press('Escape')
     expect(page.locator('#routeDialog')).not_to_be_visible()
 
@@ -77,7 +79,7 @@ def main():
                 assert_records(page,original)
                 checks.append('Future preview returns to the real cursor with focus and preserved records')
 
-                page.locator('#openDetailedRoute').click()
+                open_route(page)
                 cases=[('1',[0]),('7',[6]),('117',[116]),('OP117',[116]),('OP 117',[116]),('op7',[6]),('OP 7',[6]),('OP-7',[6]),('OP007',[6]),('  Op   117  ',[116]),('ＯＰ １１７',[116]),('０７',[6]),('0',[]),('118',[]),('OP0',[]),('OP118',[]),('STI etch',[20,27]),('etch STI',[20,27]),('STI   ETCH',[20,27]),('OP 21 STI etch',[20]),('OP117 etch',[])]
                 for query,expected in cases:
                     search(page,query,expected);searches.append({'query':query,'matches':expected})
@@ -86,12 +88,13 @@ def main():
                 checks.append('21 numeric / normalized / AND search cases; whitespace restores all117')
 
                 search(page,'STI etch',[20,27])
-                page.keyboard.press('Enter');expect(page.locator('#routeDialog')).to_be_visible();selected(page,0)
+                page.keyboard.press('Enter');assert route_shown(page);selected(page,0)
                 page.keyboard.press('ArrowDown');expect(page.locator('#routeList [data-step="20"]')).to_be_focused()
                 page.keyboard.press('Enter');expect(page.locator('#routeDialog')).not_to_be_visible();selected(page,20,'future')
-                page.locator('#openDetailedRoute').click();search(page,'OP 117',[116])
+                open_route(page);search(page,'OP 117',[116])
                 page.locator('#routeSearch').evaluate('(el)=>el.dispatchEvent(new KeyboardEvent("keydown",{key:"Enter",code:"Enter",bubbles:true,isComposing:true}))')
-                expect(page.locator('#routeDialog')).to_be_visible();selected(page,20)
+                assert route_shown(page);selected(page,20)
+                page.locator('#routeSearch').focus()
                 page.keyboard.press('Enter');expect(page.locator('#routeDialog')).not_to_be_visible();selected(page,116,'future')
                 assert_records(page,original)
                 checks.append('Multiple results stay open; ArrowDown reaches first row; unique Enter selects; composing Enter ignored')
@@ -111,7 +114,7 @@ def main():
                 assert_records(page,baseline)
                 checks.append('Three committed processes distinguish done / ready / future and return exactly to OP004')
 
-                page.locator('#openDetailedRoute').click()
+                open_route(page)
                 page.locator('#routeFilter').select_option('done');search(page,'OP002',[1])
                 page.locator('#clearRouteSearch').click()
                 expect(page.locator('#routeSearch')).to_be_focused();expect(page.locator('#routeSearch')).to_have_value('')
@@ -131,7 +134,7 @@ def main():
                 checks.append('Clear preserves state filter; empty and toolbar reset clear both; all restore search focus')
 
                 for width,height in SIZES:
-                    page.set_viewport_size({'width':width,'height':height});page.locator('#openDetailedRoute').click()
+                    page.set_viewport_size({'width':width,'height':height});page.wait_for_timeout(100);open_route(page)
                     page.locator('#routeSearch').fill('OP')
                     expect(page.locator('#routeList [data-step]')).to_have_count(117)
                     layout=page.evaluate(ROUTE_SIZE)
@@ -153,13 +156,13 @@ def main():
                 print('PASS search, committed history, reset focus and six screen sizes',flush=True)
 
                 page.set_viewport_size({'width':1440,'height':900})
-                page.locator('#speedSelect').select_option('0.5');page.locator('#consoleRun').click()
+                page.locator('#speedSelect').select_option('0.5');run_control(page).click()
                 for paused in [False,True]:
                     selected(page,3,'running');expect(page.locator('#operationSelect')).to_be_disabled()
                     expect(page.locator('#returnToCurrent')).to_be_disabled()
-                    page.locator('#openDetailedRoute').click();search(page,'OP117',[116])
+                    open_route(page);search(page,'OP117',[116])
                     expect(page.locator('#routeList [data-step="116"]')).to_be_disabled()
-                    page.keyboard.press('Enter');expect(page.locator('#routeDialog')).to_be_visible();selected(page,3)
+                    page.keyboard.press('Enter');assert route_shown(page);selected(page,3)
                     page.locator('#clearRouteSearch').click()
                     assert page.locator('#routeList [data-step]:disabled').count()==117
                     page.locator('#routeFilter').select_option('done');page.locator('#resetRouteFilters').click()
@@ -168,8 +171,8 @@ def main():
                     assert page.locator('#routeList [data-step]:disabled').count()==117
                     close_route(page);assert_records(page,baseline)
                     if not paused:
-                        page.locator('#consoleRun').click();expect(page.locator('#runState')).to_have_text('일시정지')
-                page.locator('#consoleCancel').click();selected(page,3,'ready');assert_records(page,baseline)
+                        run_control(page).click();expect(page.locator('#runState')).to_have_text('일시정지')
+                run_control(page,'cancel').click();selected(page,3,'ready');assert_records(page,baseline)
                 checks.append('Search and all reset paths keep rows disabled during running and pause; Enter cannot switch; cancellation preserves history')
 
                 page.evaluate('data=>FabApp.importData({schema:"waferflow-fab-history-v1",modelVersion:data.modelVersion,wafers:[{id:"NAV117",records:data.records}]})',fixtures)
@@ -178,7 +181,7 @@ def main():
                 expect(page.locator('#operationSelectionHint')).to_contain_text('117개 공정 완료')
                 page.locator('#operationSelect').select_option('0');selected(page,0,'done')
                 expect(page.locator('#returnToCurrent')).not_to_be_visible()
-                page.locator('#openDetailedRoute').click();expect(page.locator('#jumpCurrent')).to_contain_text('전체 공정 완료')
+                open_route(page);expect(page.locator('#jumpCurrent')).to_contain_text('전체 공정 완료')
                 page.locator('#jumpCurrent').click();selected(page,116,'done');close_route(page)
                 assert_records(page,complete)
                 checks.append('A complete117-step wafer has no nonexistent next step; last-record navigation remains correct')

@@ -64,9 +64,9 @@ def main():
                     assert not page.evaluate(DIRTY)
                     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
                     assert page.evaluate('''() => {
-                        const header=document.querySelector('.topbar').getBoundingClientRect();
+                        const header=document.querySelector('.st-pagehead').getBoundingClientRect();
                         const badge=document.querySelector('.model-badge').getBoundingClientRect();
-                        return badge.height<24 && [...document.querySelectorAll('.breadcrumb,.topbar-right>*')].filter(el=>getComputedStyle(el).display!=='none').every(el=>{const box=el.getBoundingClientRect();return box.top>=header.top&&box.bottom<=header.bottom+1&&box.left>=header.left&&box.right<=header.right+1;});
+                        return badge.height<24 && [...document.querySelectorAll('.st-pagehead-title,.st-pagehead-actions>*')].filter(el=>getComputedStyle(el).display!=='none').every(el=>{const box=el.getBoundingClientRect();return box.top>=header.top&&box.bottom<=header.bottom+1&&box.left>=header.left&&box.right<=header.right+1;});
                     }''')
                     page.screenshot(path=str(output / f'recovery-{width}.png'))
                     results.append({'width': width, 'exactOriginalDownload': True, 'completeCurrentDownload': True, 'noOverflow': True})
