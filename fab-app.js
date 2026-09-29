@@ -442,10 +442,22 @@
   $('#consoleRecipe').addEventListener('click',()=>{setWorkspace('equipment');$('#recipeTitle').scrollIntoView({block:'center'});$('#recipeFields input')?.focus({preventScroll:true});});
   function workspaceFromHash(){const name={'#processWorkspace':'equipment','#waferSection':'wafer','#processResults':'analysis'}[root.location?.hash];if(name)setWorkspace(name);}
   root.addEventListener('hashchange',workspaceFromHash);
+  // Wide screens dock the process route beside the equipment (tree | viewport | recipe);
+  // narrow screens keep it in the dialog. Only the panel's parent changes, never its state.
+  const routeDockQuery=root.matchMedia?.('(min-width: 1100px)');
+  function placeRoute(){
+    const panel=$('.route-panel'),dock=$('#routeDock'),dialog=$('#routeDialog');if(!panel||!dock)return;
+    const docked=!!routeDockQuery?.matches;
+    if(docked&&panel.parentElement!==dock){if(dialog.open)dialog.close();dock.append(panel);}
+    else if(!docked&&panel.parentElement===dock)dialog.append(panel);
+    document.body.classList.toggle('route-docked',docked);
+  }
+  routeDockQuery?.addEventListener?.('change',placeRoute);placeRoute();
   function openDetailedRoute(){
     $('#routeSearch').value='';$('#routeFilter').value='all';
     state.expanded.add(E.route[state.selected].module);renderRoute();
-    $('#routeDialog').showModal();
+    if(document.body.classList.contains('route-docked'))$('#routeSearch').focus();
+    else $('#routeDialog').showModal();
     $('#routeList .selected')?.scrollIntoView?.({block:'nearest'});
   }
   $('#openRoute').addEventListener('click',openDetailedRoute);

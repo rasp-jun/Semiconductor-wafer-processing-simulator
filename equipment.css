@@ -1,4 +1,5 @@
-@charset "UTF-8";
+/* Legacy layer: new STRATUM UI rules (stratum-ui.css) take precedence without specificity overrides. */
+@layer legacy {
 :root {
   color-scheme: light;
   --ink: var(--a-900);
@@ -1408,4 +1409,5 @@ dialog::backdrop {
   .review-workspace .section-heading h2 {
     font-size: 14px;
   }
+}
 }

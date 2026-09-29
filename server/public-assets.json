@@ -6,6 +6,8 @@
   "studio.css",
   "stratum-tokens.css",
   "stratum.css",
+  "stratum-ui.css",
+  "stratum-ui-cmos.css",
   "stratum-shell.js",
   "stratum-cmos.css",
   "memory-fab-engine.js",

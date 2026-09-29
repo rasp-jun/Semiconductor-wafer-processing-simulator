@@ -1,3 +1,5 @@
+/* Legacy layer: new STRATUM UI rules (stratum-ui.css) take precedence without specificity overrides. */
+@layer legacy {
 .back-link {
   font-size: 12px;
   color: var(--n-400);
@@ -634,4 +636,5 @@
   .fit-equation {
     font-size: 20px;
   }
+}
 }

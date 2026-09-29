@@ -1,3 +1,5 @@
+/* Legacy layer: new STRATUM UI rules (stratum-ui.css) take precedence without specificity overrides. */
+@layer legacy {
 /* AXIS Review Room: an experiment folio inside the instrument. */
 .cmos-console .review-dialog h3,
 .cmos-console .review-dialog h4,
@@ -1010,4 +1012,5 @@
     position: relative;
     z-index: 1;
   }
+}
 }

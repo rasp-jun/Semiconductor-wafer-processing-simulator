@@ -1,0 +1,581 @@
+/*
+ * STRATUM UI — shell, components and workspace layouts.
+ *
+ * Cascade: @layer base (element defaults) < @layer legacy (older page styles)
+ * < unlayered rules in this file. Rules here therefore win without specificity
+ * contests; keep selectors short and scoped to a component or a page class.
+ * Tokens live in stratum-tokens.css.
+ */
+
+/* ───────────────────────── Base ───────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  :where(button, input, select, textarea) {
+    font: inherit;
+    color: inherit;
+  }
+  :where(img, svg, canvas) {
+    max-width: 100%;
+  }
+}
+
+body.stratum {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "tnum" 0;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.stratum :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.stratum ::selection {
+  background: var(--a-200);
+  color: var(--a-900);
+}
+.stratum :is(code, kbd, samp, .mono) {
+  font-family: var(--font-mono);
+}
+@media (prefers-reduced-motion: reduce) {
+  .stratum *,
+  .stratum *::before,
+  .stratum *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skip links become visible only on focus. */
+.stratum :is(.skip-link, .skip) {
+  position: fixed;
+  left: var(--sp-3);
+  top: var(--sp-3);
+  z-index: 1000;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius);
+  background: var(--n-900);
+  color: var(--n-0);
+  transform: translateY(-200%);
+  transition: transform var(--dur) var(--ease);
+}
+.stratum :is(.skip-link, .skip):focus {
+  transform: none;
+}
+
+/* ───────────────────────── Shell ───────────────────────── */
+body.stratum {
+  padding-left: var(--rail-w);
+  transition: padding-left var(--dur) var(--ease);
+}
+html.st-rail-collapsed body.stratum {
+  padding-left: var(--rail-w-collapsed);
+}
+/* Navigation that each page used to carry on its own — replaced by the rail. */
+.stratum :is(.app-header > nav, header > nav:not([role="tablist"]), .topbar > nav, [data-stratum-switcher]),
+.stratum :is(header, .topbar, .app-header, .review-sidebar, .auth-story) > .stratum-brand {
+  display: none !important;
+}
+
+.st-rail {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  width: var(--rail-w);
+  background: var(--n-900);
+  color: var(--n-300);
+  border-right: 1px solid var(--n-800);
+  transition: width var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.st-rail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--topbar-h);
+  padding: 0 var(--sp-4);
+  border-bottom: 1px solid var(--n-800);
+}
+.st-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--n-0);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 15px;
+}
+.st-brand-mark {
+  width: 24px;
+  height: 26px;
+  flex: none;
+}
+.st-rail-close {
+  display: none;
+}
+.st-rail-groups {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--sp-3) var(--sp-2);
+  scrollbar-width: thin;
+  scrollbar-color: var(--n-700) transparent;
+}
+.st-rail-group + .st-rail-group {
+  margin-top: var(--sp-4);
+}
+.st-rail-label {
+  margin: 0 0 var(--sp-1);
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--n-400);
+  white-space: nowrap;
+}
+.st-rail ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.st-rail-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 44px;
+  padding: 6px var(--sp-3);
+  border-radius: var(--radius);
+  color: var(--n-300);
+  text-decoration: none;
+}
+.st-rail-link:hover {
+  background: var(--n-800);
+  color: var(--n-0);
+}
+.st-rail-link[aria-current="page"] {
+  background: var(--n-800);
+  color: var(--n-0);
+}
+.st-rail-link[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--s-400);
+}
+.st-icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.st-rail-link[aria-current="page"] .st-icon {
+  color: var(--s-400);
+}
+.st-rail-text {
+  display: grid;
+  min-width: 0;
+  line-height: 1.3;
+}
+.st-rail-text b {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.st-rail-text small {
+  font-size: var(--fs-xs);
+  color: var(--n-400);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.st-rail-foot {
+  padding: var(--sp-3) var(--sp-2) var(--sp-4);
+  border-top: 1px solid var(--n-800);
+}
+.st-rail-scope {
+  margin: 0 0 var(--sp-2);
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-xs);
+  color: var(--n-400);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.st-rail-collapse {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  min-height: 40px;
+  padding: 0 var(--sp-3);
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--n-400);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.st-rail-collapse:hover {
+  background: var(--n-800);
+  color: var(--n-0);
+}
+.st-rail-collapse .st-icon {
+  transition: transform var(--dur) var(--ease);
+}
+
+/* Collapsed rail: icons only, names as hover tips. */
+html.st-rail-collapsed .st-rail {
+  width: var(--rail-w-collapsed);
+}
+html.st-rail-collapsed .st-rail :is(.st-brand-word, .st-rail-text, .st-rail-scope, .st-rail-collapse span) {
+  display: none;
+}
+html.st-rail-collapsed .st-rail-head {
+  justify-content: center;
+  padding: 0;
+}
+html.st-rail-collapsed .st-rail-label {
+  height: 1px;
+  margin: var(--sp-2) var(--sp-2);
+  padding: 0;
+  overflow: hidden;
+  color: transparent;
+  background: var(--n-800);
+}
+html.st-rail-collapsed .st-rail-link,
+html.st-rail-collapsed .st-rail-collapse {
+  justify-content: center;
+  padding: 0;
+}
+html.st-rail-collapsed .st-rail-collapse .st-icon {
+  transform: rotate(180deg);
+}
+html.st-rail-collapsed .st-rail-link:is(:hover, :focus-visible)::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--n-950);
+  color: var(--n-0);
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+  box-shadow: var(--shadow-2);
+  pointer-events: none;
+}
+
+.st-mobilebar,
+.st-scrim {
+  display: none;
+}
+
+@media (max-width: 899px) {
+  body.stratum,
+  html.st-rail-collapsed body.stratum {
+    padding-left: 0;
+  }
+  .st-mobilebar {
+    position: sticky;
+    top: 0;
+    z-index: 55;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    height: 52px;
+    padding: 0 var(--sp-3) 0 var(--sp-2);
+    background: var(--n-900);
+    color: var(--n-0);
+  }
+  .st-menu-button,
+  .st-rail-close {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: var(--radius);
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .st-menu-button:hover,
+  .st-rail-close:hover {
+    background: var(--n-800);
+  }
+  .st-mobile-title {
+    margin-left: auto;
+    font-size: var(--fs-sm);
+    color: var(--n-300);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .st-rail,
+  html.st-rail-collapsed .st-rail {
+    width: min(300px, 86vw);
+    transform: translateX(-102%);
+    box-shadow: var(--shadow-3);
+  }
+  html.st-rail-collapsed .st-rail :is(.st-brand-word, .st-rail-text, .st-rail-scope) {
+    display: revert;
+  }
+  html.st-rail-collapsed .st-rail-text {
+    display: grid;
+  }
+  html.st-rail-collapsed .st-rail-head {
+    justify-content: space-between;
+    padding: 0 var(--sp-2) 0 var(--sp-4);
+  }
+  html.st-rail-collapsed .st-rail-label {
+    height: auto;
+    margin: 0 0 var(--sp-1);
+    padding: 0 var(--sp-3);
+    color: var(--n-400);
+    background: none;
+  }
+  html.st-rail-collapsed .st-rail-link {
+    justify-content: flex-start;
+    padding: 6px var(--sp-3);
+  }
+  .st-rail-head {
+    padding: 0 var(--sp-2) 0 var(--sp-4);
+  }
+  .st-rail-foot .st-rail-collapse {
+    display: none;
+  }
+  body.st-rail-open .st-rail {
+    transform: none;
+  }
+  body.st-rail-open .st-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 58;
+    background: color-mix(in srgb, var(--n-950) 55%, transparent);
+    backdrop-filter: blur(2px);
+  }
+}
+
+/* ───────────────────────── Page header ─────────────────────────
+ * One header pattern for every workspace: title, context, actions. */
+.st-pagehead {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  min-height: var(--topbar-h);
+  padding: var(--sp-2) var(--sp-6);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.st-pagehead-title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  min-width: 0;
+  margin-right: auto;
+}
+.st-pagehead h1 {
+  margin: 0;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.st-pagehead-meta {
+  min-width: 0;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.st-pagehead-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--sp-2);
+}
+@media (max-width: 899px) {
+  .st-pagehead {
+    position: static;
+    backdrop-filter: none; /* would become the containing block of fixed menus */
+    background: var(--surface);
+    flex-wrap: wrap;
+    padding: var(--sp-3) var(--sp-4);
+  }
+  .st-pagehead-title {
+    flex-wrap: wrap;
+    row-gap: 2px;
+    width: 100%;
+  }
+  .st-pagehead-actions {
+    justify-content: flex-start;
+  }
+}
+
+/* ───────────────────────── Components ───────────────────────── */
+.st-btn,
+.st-pagehead-actions :is(button, .button, a.button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  box-shadow: var(--shadow-1);
+  cursor: pointer;
+  transition: background var(--dur), border-color var(--dur), color var(--dur);
+}
+.st-btn:hover:not(:disabled),
+.st-pagehead-actions :is(button, .button, a.button):hover:not(:disabled) {
+  background: var(--n-50);
+  border-color: var(--border-strong);
+}
+.st-btn:disabled,
+.st-pagehead-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.st-btn-primary,
+.st-pagehead-actions :is(.dark, .primary, .st-btn-primary) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--n-0);
+}
+.st-btn-primary:hover:not(:disabled),
+.st-pagehead-actions :is(.dark, .primary, .st-btn-primary):hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+.st-btn-ghost,
+.st-pagehead-actions .st-btn-ghost {
+  background: none;
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+}
+.st-btn-ghost:hover:not(:disabled),
+.st-pagehead-actions .st-btn-ghost:hover:not(:disabled) {
+  background: var(--n-100);
+  color: var(--text);
+}
+.st-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.st-status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--g-500);
+}
+
+/* Overflow menu for secondary page actions. */
+.st-more {
+  position: relative;
+}
+.st-more > summary {
+  list-style: none;
+}
+.st-more > summary::-webkit-details-marker {
+  display: none;
+}
+.st-more:not([open]) > .st-more-panel {
+  display: none;
+}
+.st-more-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 70;
+  display: grid;
+  min-width: 200px;
+  padding: var(--sp-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-3);
+}
+.st-pagehead-actions .st-more-panel :is(button, a) {
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 36px;
+  border: 0;
+  box-shadow: none;
+  background: none;
+  font-weight: 400;
+}
+.st-pagehead-actions .st-more-panel :is(button, a):hover:not(:disabled) {
+  background: var(--n-100);
+}
+@media (max-width: 899px) {
+  .st-more-panel {
+    left: 0;
+    right: auto;
+  }
+}
+
+/* Scope / disclaimer note: a quiet callout instead of 10px footnotes. */
+.st-note {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+}
+.st-note b {
+  color: var(--text);
+  font-weight: 600;
+  white-space: nowrap;
+}

@@ -1,3 +1,5 @@
+/* Legacy layer: new STRATUM UI rules (stratum-ui.css) take precedence without specificity overrides. */
+@layer legacy {
 :root {
   --navy: var(--n-850);
   --ink: var(--n-700);
@@ -3223,4 +3225,5 @@ dialog::backdrop {
   .tab-list button {
     font-size: 12px;
   }
+}
 }

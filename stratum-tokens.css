@@ -6,6 +6,8 @@
  * here re-themes the whole product. Instrument viewports (3D equipment,
  * consoles) use the dark end of the same neutral ramp.
  */
+@layer base, legacy;
+
 :root {
   /* Neutral ramp: warm paper at the light end, instrument slate at the dark end. */
   --n-0: #ffffff;

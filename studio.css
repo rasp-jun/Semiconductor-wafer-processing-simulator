@@ -1,3 +1,5 @@
+/* Legacy layer: new STRATUM UI rules (stratum-ui.css) take precedence without specificity overrides. */
+@layer legacy {
 /* WaferFlow Studio — shared visual language for the two simulation workspaces.
    Calculated values, interaction targets and simulation state remain in the apps. */
 .studio {
@@ -2938,4 +2940,5 @@
     transition: none !important;
     scroll-behavior: auto !important;
   }
+}
 }

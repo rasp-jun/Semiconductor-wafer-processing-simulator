@@ -1,3 +1,5 @@
+/* Legacy layer: new STRATUM UI rules (stratum-ui.css) take precedence without specificity overrides. */
+@layer legacy {
 :root {
   color-scheme: dark;
   --bg: var(--n-900);
@@ -3285,4 +3287,5 @@ dialog li {
     flex: 1 0 calc(100% - 36px);
     white-space: nowrap;
   }
+}
 }

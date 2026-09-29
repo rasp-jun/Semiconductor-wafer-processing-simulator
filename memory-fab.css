@@ -1,3 +1,5 @@
+/* Legacy layer: new STRATUM UI rules (stratum-ui.css) take precedence without specificity overrides. */
+@layer legacy {
 :root {
   font-family: Inter, "Pretendard", "Segoe UI", "Malgun Gothic", sans-serif;
   color: var(--n-800);
@@ -2551,4 +2553,5 @@ dialog::backdrop {
   .footer {
     flex-wrap: wrap;
   }
+}
 }

@@ -1,3 +1,5 @@
+/* Legacy layer: new STRATUM UI rules (stratum-ui.css) take precedence without specificity overrides. */
+@layer legacy {
 :root {
   --ink: var(--n-700);
   --muted: var(--n-500);
@@ -1506,4 +1508,5 @@ dialog textarea.csv-editor {
   * {
     scroll-behavior: auto !important;
   }
+}
 }

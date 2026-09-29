@@ -1,3 +1,5 @@
+/* Legacy layer: new STRATUM UI rules (stratum-ui.css) take precedence without specificity overrides. */
+@layer legacy {
 /* STRATUM / Process Intelligence. Shared presentation; app state stays app-owned. */
 body.stratum {
   --st-ink: var(--n-900);
@@ -1846,4 +1848,5 @@ body.stratum {
   .stratum.stratum-data > header {
     display: none;
   }
+}
 }

@@ -1,3 +1,5 @@
+/* Legacy layer: new STRATUM UI rules (stratum-ui.css) take precedence without specificity overrides. */
+@layer legacy {
 * {
   box-sizing: border-box;
 }
@@ -211,4 +213,5 @@ select:focus-visible {
     color: var(--n-500);
     margin: 8px 0;
   }
+}
 }

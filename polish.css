@@ -1,3 +1,5 @@
+/* Legacy layer: new STRATUM UI rules (stratum-ui.css) take precedence without specificity overrides. */
+@layer legacy {
 /* Equipment workspace: deliberate hierarchy, readable controls and part inspection. */
 :root {
   --machine-accent: var(--s-300);
@@ -732,4 +734,5 @@
   .topbar-right {
     gap: 8px;
   }
+}
 }
