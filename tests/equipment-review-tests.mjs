@@ -27,6 +27,15 @@ export async function runEquipmentReviewTests(root) {
     const html=M.report(t,{record:{id:'R1',title:'<b>attack</b>',revision:2,author:'A',created_at:'date',trace_sha256:'digest',status:'reviewed',review_note:'not release'}});
     assert(!html.includes('<script>'));assert(html.includes('&lt;script&gt;'));assert(html.includes('digest'));assert(html.includes('장비 적합성 검증 전'));assert(html.includes('default-src'));assert(!html.includes('<img'));
   });
+  await test('Reports retain review time, fault declarations and recipe differences without inventing missing conditions',()=>{
+    const trace=sparse(),baseline=sparse();trace.recipe.pressurePa=0;trace.fault='<beam>';baseline.recipe.pressurePa=2;
+    const html=M.report(trace,{record:{id:'R0',revision:1,status:'reviewed',reviewed_at:'2026-09-24T12:00:00Z'},baseline:{trace:baseline}}),d=parseHTML(html).document;
+    assert(d.body.textContent.includes('2026-09-24T12:00:00Z'));assert(d.body.textContent.includes('이상 조건 선언: <beam>'));assert(!html.includes('<beam>'));assert(d.body.textContent.includes('기준 미제공'));assert(html.includes('>0<'));
+    assert(html.includes('레시피 항목'));assert(html.includes('미제공 조건은 확인할 수 없습니다'));
+    delete trace.recipe;delete baseline.recipe;const comparison=M.compare(trace,baseline);
+    assert(comparison.recipeNotice.includes('레시피 미제공'));assert(!comparison.recipeNotice.includes('동일 조건'));
+    assert(M.report(trace,{baseline:{trace:baseline}}).includes('전체 조건의 동일 여부를 확인할 수 없습니다'));
+  });
 
   function mount({initialized=true,logged=false,role='engineer',failure=null}={}) {
     const {document:d}=parseHTML(files['equipment.html']);
@@ -69,7 +78,7 @@ export async function runEquipmentReviewTests(root) {
 
   await test('Review layer is offline until explicit connection; local baseline survives draft edits',()=>{
     const ui=mount();assert.equal(ui.calls.length,0);ui.click('#pinBaseline');const before=ui.review.state().baseline.trace.recipe.beamVoltageV;
-    ui.input('#recipe-beamVoltageV',800);assert.equal(ui.review.state().baseline.trace.recipe.beamVoltageV,before);assert(ui.el('#reviewComparison').textContent.includes('동일 조건'));
+    ui.input('#recipe-beamVoltageV',800);assert.equal(ui.review.state().baseline.trace.recipe.beamVoltageV,before);assert(ui.el('#reviewComparison').textContent.includes('제공된 레시피 항목 동일'));
     ui.app.startRun();assert(ui.el('#reviewComparison').textContent.includes('700 → 800'));assert.equal(ui.storage.get('waferflow-fab-v05'),'untouched');
   });
   await test('Uninitialized server offers account setup without creating default users',async()=>{
@@ -108,6 +117,13 @@ export async function runEquipmentReviewTests(root) {
   });
   await test('Current standalone report explicitly has no server approval and includes original whole trace',async()=>{
     const ui=mount();ui.app.seek(1);ui.input('#recipe-beamVoltageV',999);ui.click('#currentReport');const html=await ui.downloads[0].text();assert(html.includes('서버 보관·동료 검토 상태가 연결되지'));assert(html.includes('>700<'));assert(!html.includes('>999<'));assert(html.includes('전체 기록 기준'));
+  });
+  await test('Imported logs without recipes never claim identical conditions in the comparison UI',()=>{
+    const ui=mount(),trace=ui.app.snapshot().trace;delete trace.recipe;delete trace.fault;
+    ui.app.importData(trace);ui.click('#pinBaseline');ui.app.importData(trace);
+    assert(ui.el('#reviewComparison').textContent.includes('레시피 미제공'));
+    assert(!ui.el('#reviewComparison').textContent.includes('동일 조건'));
+    assert(ui.el('#reviewComparison').textContent.includes('이상 조건 선언: 현재 미제공 / 기준 미제공'));
   });
   const result={passed:tests.filter(t=>t.status==='passed').length,tests};await fs.writeFile(root+'/tests/equipment-review-results.json',JSON.stringify(result,null,2));
   const failures=tests.filter(t=>t.status==='failed');if(failures.length)throw Error(failures.map(x=>x.name+'\n'+x.error).join('\n\n'));return result;

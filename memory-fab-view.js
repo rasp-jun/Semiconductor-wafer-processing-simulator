@@ -38,10 +38,13 @@
     return `<svg viewBox="0 0 300 205" role="img" aria-label="${t.name} 기능 모형"><ellipse cx="155" cy="177" rx="104" ry="16" fill="#071e2b" opacity=".5"/>${lines}${base}${shape}${rect(36,115,28,49,'#507488')}${rect(33,102,34,14,'#95b3c1')}${Array.from({length:6},(_,i)=>line(39,121+i*6,61,121+i*6,'#9cbdc9',1)).join('')}${line(63,142,76,142,'#7f9fac',5)}<circle cx="211" cy="141" r="2" fill="${active?'#7de8bb':'#96bac6'}"/><text x="20" y="24" fill="#7ea9b7" font-size="7" font-family="monospace" letter-spacing="1">${t.en}</text><text x="280" y="191" fill="#557e90" font-size="6" text-anchor="end" font-family="monospace">PRINCIPLE MODEL</text></svg>`;
   }
   function mount(host,type){
-    const t=root.MemoryFab.tools[type];let view=null,wafer=null;
+    const t=root.MemoryFab.tools[type],family=t.view&&root.FabEngine?.tools[t.view]?.family;
+    const duration=family&&root.FabViewport?root.FabViewport.playback(family,0).seconds:12;
+    const timeline=progress=>{if(family&&root.FabViewport)return root.FabViewport.playback(family,progress*duration);const bounds=[0,.22,.34,.82,1];let index=0;while(index<3&&progress>=bounds[index+1])index++;return {phase:['load','condition','process','unload'][index],progress:(progress-bounds[index])/(bounds[index+1]-bounds[index]),total:progress};};
+    let view=null,wafer=null;
     if(t.view&&root.FabViewport&&root.FabEngine){view=root.FabViewport.mount(host);if(view.renderer){wafer=root.FabEngine.createWafer();view.select({tool:t.view,recipe:root.FabEngine.tools[t.view].defaults||{}});view.cutaway(true);view.renderer.domElement.setAttribute('aria-label','장비 작동 원리 3D 모형. 드래그로 회전, 휠로 확대.');view.renderer.domElement.removeAttribute('aria-haspopup');view.renderer.domElement.removeAttribute('aria-controls');}else view=null;}
     if(!view)host.innerHTML=svg(type);
-    return{is3D:!!view,update(progress,running){const p=Math.max(0,Math.min(1,progress));if(view){const phase=p<.22?'load':p<.34?'condition':p<.82?'process':'unload',value=phase==='load'?p/.22:phase==='condition'?(p-.22)/.12:phase==='process'?(p-.34)/.48:(p-.82)/.18;view.update({phase,progress:value,running,speed:1,wafer,recipe:{}});}else host.innerHTML=svg(type,p);},camera:mode=>view?.camera(mode),dispose(){view?.dispose?.();host.innerHTML='';}};
+    return{is3D:!!view,duration,update(progress,running){const p=Math.max(0,Math.min(1,progress)),pose=timeline(p);if(view)view.update({phase:pose.phase,progress:pose.progress,elapsed:p*duration,running,speed:1,wafer,recipe:{}});else host.innerHTML=svg(type,p);return pose;},camera:mode=>view?.camera(mode),dispose(){view?.dispose?.();host.innerHTML='';}};
   }
   root.MemoryFabView=Object.freeze({svg,mount});
 })(window);

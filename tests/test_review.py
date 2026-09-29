@@ -63,6 +63,15 @@ class ReviewTests(unittest.TestCase):
         self.assertEqual(self.engineer.post('/api/projects',json={'name':'blocked'},headers=headers).status_code,403)
         self.assertEqual(self.admin.get('/api/status',headers={'Host':'untrusted.example'}).status_code,400)
 
+    def test_invalid_scenario_type_and_unicode_csrf_are_client_errors(self):
+        for scenario in [[], {}, 5, None]:
+            payload = dict(self.recipe_payload, scenario=scenario)
+            response = self.post(self.engineer, f'/projects/{self.project_id}/recipes', payload)
+            self.assertEqual(response.status_code, 422)
+        response = self.engineer.post('/api/projects', json={'name':'invalid'}, headers={
+            'X-WaferFlow':'review', 'X-CSRF-Token':'잘못된-토큰'})
+        self.assertEqual(response.status_code, 403)
+
     def test_bootstrap_is_single_use_and_no_default_credentials(self):
         self.assertEqual(self.post(self.admin,'/bootstrap',dict(username='second',display_name='second',password=PASSWORD)).status_code,409)
         self.assertEqual(self.post(self.app.test_client(),'/login',dict(username='admin',password='admin')).status_code,401)
@@ -218,6 +227,17 @@ class ModelAndImportTests(unittest.TestCase):
                 parse_measurements(data,480,520)
         with self.assertRaises(ValidationError):
             parse_measurements(CSV,520,480)
+
+    def test_malformed_csv_header_and_huge_integer_are_validation_errors(self):
+        from server.model import number
+        from server.equipment import number as equipment_number
+        for malformed in ['"unterminated', '"' + 'x' * 140000]:
+            with self.assertRaises(ValidationError):
+                parse_measurements(malformed, 480, 520)
+        with self.assertRaises(ValidationError):
+            number(10 ** 1000, 'CD', 0, 100000)
+        with self.assertRaises(ValidationError):
+            equipment_number(10 ** 1000, 'sensor')
 
     def test_small_sample_has_no_fabricated_standard_deviation(self):
         result=parse_measurements('wafer_id,site_id,cd_nm,etch_depth_nm\nW1,S1,500,100',480,520)

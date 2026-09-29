@@ -12,7 +12,7 @@ SCHEMA = 'waferflow-equipment-trace-v1'
 
 
 def number(value, label):
-    if type(value) not in (int, float) or not math.isfinite(value) or abs(value) > 1e12:
+    if type(value) not in (int, float) or abs(value) > 1e12 or not math.isfinite(value):
         raise ValidationError(f'{label}: 유한한 숫자가 필요합니다.')
     return value
 

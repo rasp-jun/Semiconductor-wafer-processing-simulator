@@ -1,0 +1,560 @@
+{
+  "schema": "waferflow-linkedom-provenance-v1",
+  "verifiedOn": "2026-09-24",
+  "worker": {
+    "path": "tests/linkedom.worker.mjs",
+    "bytes": 421658,
+    "sha256": "196efeb17c260e001979dbc54a3c30e701a881c6e8a3eedaddc5ad83c99ee5ff",
+    "normalization": "CRLF -> LF",
+    "normalizedSha256": "196efeb17c260e001979dbc54a3c30e701a881c6e8a3eedaddc5ad83c99ee5ff",
+    "npmMatch": true,
+    "exactLockRebuildMatch": true
+  },
+  "upstream": {
+    "name": "linkedom",
+    "version": "0.18.12",
+    "commit": "dfc2fa88969b2d63014e3f6afd49a4e4449996e5",
+    "tarball": "https://registry.npmjs.org/linkedom/-/linkedom-0.18.12.tgz",
+    "integrity": "sha512-jalJsOwIKuQJSeTvsgzPe9iJzyfVaEJiEXl+25EkKevsULHvMJzpNqwvj1jOESWdmgKDiXObyjOYwlUqG7wo1Q==",
+    "lockSha256": "da78f3c11c2e0143b1527e786275e7badac02895e44765b21fe0c672e0329ec3",
+    "rollupConfigSha256": "385e9c6985660935d60c0075134832ac88259a7c86ce34d2cd4365d5e0db49df"
+  },
+  "buildTools": [
+    {
+      "name": "rollup",
+      "version": "4.34.6"
+    },
+    {
+      "name": "@rollup/plugin-node-resolve",
+      "version": "16.0.0"
+    },
+    {
+      "name": "@rollup/plugin-commonjs",
+      "version": "28.0.2"
+    },
+    {
+      "name": "@rollup/plugin-json",
+      "version": "6.1.0"
+    }
+  ],
+  "notices": {
+    "path": "tests/LINKEDOM-THIRD-PARTY-NOTICES.md",
+    "sha256": "6a3abb0699b648c83a26c468dfefa197399dd3f9ee97791b33c83d4a1436746a",
+    "components": 16
+  },
+  "components": [
+    {
+      "name": "linkedom",
+      "version": "0.18.12",
+      "license": "ISC",
+      "kind": "bundled library",
+      "packagePath": ".",
+      "tarball": "https://registry.npmjs.org/linkedom/-/linkedom-0.18.12.tgz",
+      "integrity": "sha512-jalJsOwIKuQJSeTvsgzPe9iJzyfVaEJiEXl+25EkKevsULHvMJzpNqwvj1jOESWdmgKDiXObyjOYwlUqG7wo1Q==",
+      "licenseFile": "package/LICENSE",
+      "licenseSha256": "dc6d4961d8b6ee747231582ae9c53ce1d66bf76bc9f5a28f554c0e97210953bf"
+    },
+    {
+      "name": "boolbase",
+      "version": "1.0.0",
+      "license": "ISC",
+      "kind": "bundled module",
+      "packagePath": "node_modules/boolbase",
+      "tarball": "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz",
+      "integrity": "sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==",
+      "licenseSource": "https://raw.githubusercontent.com/fb55/boolbase/be0bcd8a4e917a0a5895e95b523fbbed05a64871/LICENSE",
+      "licenseSha256": "cdf4d87ae0a6c160227263bf4e39a0a10e30e89ae7256e0f7ac7bde0836552c6",
+      "licenseEvidence": "The upstream LICENSE-addition commit contains index.js identical to the 1.0.0 npm archive."
+    },
+    {
+      "name": "css-select",
+      "version": "5.1.0",
+      "license": "BSD-2-Clause",
+      "kind": "bundled module",
+      "packagePath": "node_modules/css-select",
+      "tarball": "https://registry.npmjs.org/css-select/-/css-select-5.1.0.tgz",
+      "integrity": "sha512-nwoRF1rvRRnnCqqY7updORDsuqKzqYJ28+oSMaJMMgOauh3fvwHqMS7EZpIPqK8GL+g9mKxF1vP/ZjSeNjEVHg==",
+      "licenseFile": "package/LICENSE",
+      "licenseSha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+    },
+    {
+      "name": "css-what",
+      "version": "6.1.0",
+      "license": "BSD-2-Clause",
+      "kind": "bundled module",
+      "packagePath": "node_modules/css-what",
+      "tarball": "https://registry.npmjs.org/css-what/-/css-what-6.1.0.tgz",
+      "integrity": "sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==",
+      "licenseFile": "package/LICENSE",
+      "licenseSha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+    },
+    {
+      "name": "cssom",
+      "version": "0.5.0",
+      "license": "MIT",
+      "kind": "bundled module",
+      "packagePath": "node_modules/cssom",
+      "tarball": "https://registry.npmjs.org/cssom/-/cssom-0.5.0.tgz",
+      "integrity": "sha512-iKuQcq+NdHqlAcwUY0o/HL69XQrUaQdMjmStJ8JFmUaiiQErlhrmuigkg/CU4E2J0IyUKUrMAgl36TvN67MqTw==",
+      "licenseFile": "package/LICENSE.txt",
+      "licenseSha256": "e539937c489c4928ad7461669ec017f4d916fb3565fc26f5b8a0ce816d2ed23c"
+    },
+    {
+      "name": "dom-serializer",
+      "version": "2.0.0",
+      "license": "MIT",
+      "kind": "bundled module",
+      "packagePath": "node_modules/dom-serializer",
+      "tarball": "https://registry.npmjs.org/dom-serializer/-/dom-serializer-2.0.0.tgz",
+      "integrity": "sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==",
+      "licenseFile": "package/LICENSE",
+      "licenseSha256": "94cfe87de9b178e8fee313a19178e625129e2ce559db32e772e7bd95114ee6ff"
+    },
+    {
+      "name": "domelementtype",
+      "version": "2.3.0",
+      "license": "BSD-2-Clause",
+      "kind": "bundled module",
+      "packagePath": "node_modules/domelementtype",
+      "tarball": "https://registry.npmjs.org/domelementtype/-/domelementtype-2.3.0.tgz",
+      "integrity": "sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==",
+      "licenseFile": "package/LICENSE",
+      "licenseSha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+    },
+    {
+      "name": "domhandler",
+      "version": "5.0.3",
+      "license": "BSD-2-Clause",
+      "kind": "bundled module",
+      "packagePath": "node_modules/domhandler",
+      "tarball": "https://registry.npmjs.org/domhandler/-/domhandler-5.0.3.tgz",
+      "integrity": "sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==",
+      "licenseFile": "package/LICENSE",
+      "licenseSha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+    },
+    {
+      "name": "domutils",
+      "version": "3.2.2",
+      "license": "BSD-2-Clause",
+      "kind": "bundled module",
+      "packagePath": "node_modules/domutils",
+      "tarball": "https://registry.npmjs.org/domutils/-/domutils-3.2.2.tgz",
+      "integrity": "sha512-6kZKyUajlDuqlHKVX1w7gyslj9MPIXzIFiz/rGu35uC1wMi+kMhQwGhl4lt9unC9Vb9INnY9Z3/ZA3+FhASLaw==",
+      "licenseFile": "package/LICENSE",
+      "licenseSha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+    },
+    {
+      "name": "entities",
+      "version": "4.5.0",
+      "license": "BSD-2-Clause",
+      "kind": "bundled module",
+      "packagePath": "node_modules/entities",
+      "tarball": "https://registry.npmjs.org/entities/-/entities-4.5.0.tgz",
+      "integrity": "sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==",
+      "licenseFile": "package/LICENSE",
+      "licenseSha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+    },
+    {
+      "name": "htmlparser2",
+      "version": "10.0.0",
+      "license": "MIT",
+      "kind": "bundled module",
+      "packagePath": "node_modules/htmlparser2",
+      "tarball": "https://registry.npmjs.org/htmlparser2/-/htmlparser2-10.0.0.tgz",
+      "integrity": "sha512-TwAZM+zE5Tq3lrEHvOlvwgj1XLWQCtaaibSN11Q+gGBAS7Y1uZSWwXXRe4iF6OXnaq1riyQAPFOBtYc77Mxq0g==",
+      "licenseFile": "package/LICENSE",
+      "licenseSha256": "204cfa747341660e4da64cd23e8c876c6b20279d247f48564993d3fc4a2eab47"
+    },
+    {
+      "name": "entities",
+      "version": "6.0.0",
+      "license": "BSD-2-Clause",
+      "kind": "bundled module",
+      "packagePath": "node_modules/htmlparser2/node_modules/entities",
+      "tarball": "https://registry.npmjs.org/entities/-/entities-6.0.0.tgz",
+      "integrity": "sha512-aKstq2TDOndCn4diEyp9Uq/Flu2i1GlLkc6XIDQSDMuaFE3OPW5OphLCyQ5SpSJZTb4reN+kTcYru5yIfXoRPw==",
+      "licenseFile": "package/LICENSE",
+      "licenseSha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+    },
+    {
+      "name": "nth-check",
+      "version": "2.1.1",
+      "license": "BSD-2-Clause",
+      "kind": "bundled module",
+      "packagePath": "node_modules/nth-check",
+      "tarball": "https://registry.npmjs.org/nth-check/-/nth-check-2.1.1.tgz",
+      "integrity": "sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==",
+      "licenseFile": "package/LICENSE",
+      "licenseSha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+    },
+    {
+      "name": "uhyphen",
+      "version": "0.2.0",
+      "license": "ISC",
+      "kind": "bundled module",
+      "packagePath": "node_modules/uhyphen",
+      "tarball": "https://registry.npmjs.org/uhyphen/-/uhyphen-0.2.0.tgz",
+      "integrity": "sha512-qz3o9CHXmJJPGBdqzab7qAYuW8kQGKNEuoHFYrBwV6hWIMcpAmxDLXojcHfFr9US1Pe6zUswEIJIbLI610fuqA==",
+      "licenseFile": "package/LICENSE",
+      "licenseSha256": "2b0748436e16684ec912b82f153343c6063ae7a7f24fac680058ca06bf02f2a7"
+    },
+    {
+      "name": "@rollup/plugin-commonjs",
+      "version": "28.0.2",
+      "license": "MIT",
+      "kind": "generated commonjsHelpers.js runtime helper",
+      "packagePath": "node_modules/@rollup/plugin-commonjs",
+      "tarball": "https://registry.npmjs.org/@rollup/plugin-commonjs/-/plugin-commonjs-28.0.2.tgz",
+      "integrity": "sha512-BEFI2EDqzl+vA1rl97IDRZ61AIwGH093d9nz8+dThxJNH8oSoB7MjWvPCX3dkaK1/RCJ/1v/R1XB15FuSs0fQw==",
+      "licenseFile": "package/LICENSE",
+      "licenseSha256": "7b8136f76c483d03597500bfa991aae9be68d4629e1121cbf9b93aa727efe305"
+    },
+    {
+      "name": "XRegExp",
+      "version": "commit 95eeebeb8fac8754d54eafe2b4743661ac1cf028",
+      "license": "MIT",
+      "kind": "escape-regex fragment copied into css-select/lib/esm/attributes.js",
+      "licenseSource": "https://raw.githubusercontent.com/slevithan/xregexp/95eeebeb8fac8754d54eafe2b4743661ac1cf028/LICENSE",
+      "licenseSha256": "73af2949bff9296cb0f816c3be19a4da4e95adc94c1f924796e8bad3f03f2f29"
+    }
+  ],
+  "renderedDependencyModules": [
+    {
+      "path": "node_modules/htmlparser2/node_modules/entities/dist/esm/generated/decode-data-html.js",
+      "renderedLength": 47719
+    },
+    {
+      "path": "node_modules/htmlparser2/node_modules/entities/dist/esm/generated/decode-data-xml.js",
+      "renderedLength": 274
+    },
+    {
+      "path": "node_modules/htmlparser2/node_modules/entities/dist/esm/decode-codepoint.js",
+      "renderedLength": 1703
+    },
+    {
+      "path": "node_modules/htmlparser2/node_modules/entities/dist/esm/decode.js",
+      "renderedLength": 17320
+    },
+    {
+      "path": "node_modules/htmlparser2/dist/esm/Tokenizer.js",
+      "renderedLength": 29936
+    },
+    {
+      "path": "node_modules/htmlparser2/dist/esm/Parser.js",
+      "renderedLength": 16594
+    },
+    {
+      "path": "node_modules/domelementtype/lib/esm/index.js",
+      "renderedLength": 1642
+    },
+    {
+      "path": "node_modules/domhandler/lib/esm/node.js",
+      "renderedLength": 9123
+    },
+    {
+      "path": "node_modules/domhandler/lib/esm/index.js",
+      "renderedLength": 4489
+    },
+    {
+      "path": "node_modules/entities/lib/esm/escape.js",
+      "renderedLength": 3323
+    },
+    {
+      "path": "node_modules/dom-serializer/lib/esm/foreignNames.js",
+      "renderedLength": 2032
+    },
+    {
+      "path": "node_modules/dom-serializer/lib/esm/index.js",
+      "renderedLength": 4893
+    },
+    {
+      "path": "node_modules/domutils/lib/esm/stringify.js",
+      "renderedLength": 2330
+    },
+    {
+      "path": "node_modules/domutils/lib/esm/traversal.js",
+      "renderedLength": 2970
+    },
+    {
+      "path": "node_modules/domutils/lib/esm/manipulation.js",
+      "renderedLength": 3295
+    },
+    {
+      "path": "node_modules/domutils/lib/esm/querying.js",
+      "renderedLength": 5012
+    },
+    {
+      "path": "node_modules/domutils/lib/esm/legacy.js",
+      "renderedLength": 5051
+    },
+    {
+      "path": "node_modules/domutils/lib/esm/helpers.js",
+      "renderedLength": 4877
+    },
+    {
+      "path": "node_modules/domutils/lib/esm/feeds.js",
+      "renderedLength": 5842
+    },
+    {
+      "path": "node_modules/htmlparser2/dist/esm/index.js",
+      "renderedLength": 2351
+    },
+    {
+      "path": "node_modules/boolbase/index.js",
+      "renderedLength": 294
+    },
+    {
+      "path": "node_modules/boolbase/index.js?commonjs-es-import",
+      "renderedLength": 110
+    },
+    {
+      "path": "node_modules/css-what/lib/es/types.js",
+      "renderedLength": 1002
+    },
+    {
+      "path": "node_modules/css-what/lib/es/parse.js",
+      "renderedLength": 16289
+    },
+    {
+      "path": "node_modules/css-select/lib/esm/sort.js",
+      "renderedLength": 2371
+    },
+    {
+      "path": "node_modules/css-select/lib/esm/attributes.js",
+      "renderedLength": 7033
+    },
+    {
+      "path": "node_modules/nth-check/lib/esm/parse.js",
+      "renderedLength": 2200
+    },
+    {
+      "path": "node_modules/nth-check/lib/esm/compile.js",
+      "renderedLength": 1756
+    },
+    {
+      "path": "node_modules/nth-check/lib/esm/index.js",
+      "renderedLength": 791
+    },
+    {
+      "path": "node_modules/css-select/lib/esm/pseudo-selectors/filters.js",
+      "renderedLength": 5074
+    },
+    {
+      "path": "node_modules/css-select/lib/esm/pseudo-selectors/pseudos.js",
+      "renderedLength": 2861
+    },
+    {
+      "path": "node_modules/css-select/lib/esm/pseudo-selectors/aliases.js",
+      "renderedLength": 1376
+    },
+    {
+      "path": "node_modules/css-select/lib/esm/pseudo-selectors/subselects.js",
+      "renderedLength": 3533
+    },
+    {
+      "path": "node_modules/css-select/lib/esm/pseudo-selectors/index.js",
+      "renderedLength": 1408
+    },
+    {
+      "path": "node_modules/css-select/lib/esm/general.js",
+      "renderedLength": 5452
+    },
+    {
+      "path": "node_modules/css-select/lib/esm/compile.js",
+      "renderedLength": 3867
+    },
+    {
+      "path": "node_modules/css-select/lib/esm/index.js",
+      "renderedLength": 1756
+    },
+    {
+      "path": "node_modules/uhyphen/esm/index.js",
+      "renderedLength": 147
+    },
+    {
+      "path": "node_modules/cssom/lib/index.js?commonjs-exports",
+      "renderedLength": 13
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSStyleDeclaration.js?commonjs-exports",
+      "renderedLength": 29
+    },
+    {
+      "path": "node_modules/cssom/lib/parse.js?commonjs-exports",
+      "renderedLength": 17
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSStyleSheet.js?commonjs-exports",
+      "renderedLength": 23
+    },
+    {
+      "path": "node_modules/cssom/lib/StyleSheet.js?commonjs-exports",
+      "renderedLength": 20
+    },
+    {
+      "path": "node_modules/cssom/lib/StyleSheet.js",
+      "renderedLength": 444
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSStyleRule.js?commonjs-exports",
+      "renderedLength": 22
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSRule.js?commonjs-exports",
+      "renderedLength": 17
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSRule.js",
+      "renderedLength": 1226
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSStyleRule.js",
+      "renderedLength": 3947
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSStyleSheet.js",
+      "renderedLength": 2666
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSImportRule.js?commonjs-exports",
+      "renderedLength": 23
+    },
+    {
+      "path": "node_modules/cssom/lib/MediaList.js?commonjs-exports",
+      "renderedLength": 19
+    },
+    {
+      "path": "node_modules/cssom/lib/MediaList.js",
+      "renderedLength": 1230
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSImportRule.js",
+      "renderedLength": 3606
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSGroupingRule.js?commonjs-exports",
+      "renderedLength": 25
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSGroupingRule.js",
+      "renderedLength": 2144
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSMediaRule.js?commonjs-exports",
+      "renderedLength": 22
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSConditionRule.js?commonjs-exports",
+      "renderedLength": 26
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSConditionRule.js",
+      "renderedLength": 894
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSMediaRule.js",
+      "renderedLength": 1649
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSSupportsRule.js?commonjs-exports",
+      "renderedLength": 25
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSSupportsRule.js",
+      "renderedLength": 1201
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSFontFaceRule.js?commonjs-exports",
+      "renderedLength": 25
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSFontFaceRule.js",
+      "renderedLength": 1281
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSHostRule.js?commonjs-exports",
+      "renderedLength": 21
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSHostRule.js",
+      "renderedLength": 1106
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSKeyframeRule.js?commonjs-exports",
+      "renderedLength": 25
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSKeyframeRule.js",
+      "renderedLength": 1316
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSKeyframesRule.js?commonjs-exports",
+      "renderedLength": 26
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSKeyframesRule.js",
+      "renderedLength": 1407
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSValueExpression.js?commonjs-exports",
+      "renderedLength": 28
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSValue.js?commonjs-exports",
+      "renderedLength": 18
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSValue.js",
+      "renderedLength": 1064
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSValueExpression.js",
+      "renderedLength": 5871
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSDocumentRule.js?commonjs-exports",
+      "renderedLength": 25
+    },
+    {
+      "path": "node_modules/cssom/lib/MatcherList.js?commonjs-exports",
+      "renderedLength": 21
+    },
+    {
+      "path": "node_modules/cssom/lib/MatcherList.js",
+      "renderedLength": 1557
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSDocumentRule.js",
+      "renderedLength": 1345
+    },
+    {
+      "path": "node_modules/cssom/lib/parse.js",
+      "renderedLength": 12386
+    },
+    {
+      "path": "node_modules/cssom/lib/CSSStyleDeclaration.js",
+      "renderedLength": 3934
+    },
+    {
+      "path": "node_modules/cssom/lib/clone.js?commonjs-exports",
+      "renderedLength": 15
+    },
+    {
+      "path": "node_modules/cssom/lib/clone.js",
+      "renderedLength": 2236
+    },
+    {
+      "path": "node_modules/cssom/lib/index.js",
+      "renderedLength": 1315
+    },
+    {
+      "path": "node_modules/cssom/lib/index.js?commonjs-es-import",
+      "renderedLength": 30
+    }
+  ],
+  "excluded": [
+    "html-escaper: no rendered modules",
+    "native canvas: replaced by the upstream shim"
+  ],
+  "rebuildMethod": "Integrity-verified npm archives resolved using the upstream package-lock.json. No package lifecycle scripts. Upstream Rollup config and exact locked build-tool versions. Rollup chunk.modules identifies rendered module origins. Node executable supplied by installed Playwright; audit performed on Windows x64."
+}

@@ -18,5 +18,22 @@ export async function runMemoryFabSceneTests(root){
     viewport.dispose();assert.equal(host.innerHTML,'');assert.equal(frames.size,0);tests.push({name:type+' equipment adapter, phases and resource cleanup',status:'passed'});
   }
   assert.equal(disposes,Object.values(c.MemoryFab.tools).filter(t=>t.view).length);
+  for(const type of ['clean','coat','cmp']){
+    const viewport=c.MemoryFabView.mount(host,type),family=c.FabEngine.tools[c.MemoryFab.tools[type].view].family;
+    assert.equal(viewport.duration,c.FabViewport.playback(family,0).seconds);
+    for(const p of [0,.2,.3,.4,.52,.6,.72,.82,1]){
+      const pose=viewport.update(p,false),expected=c.FabViewport.playback(family,p*viewport.duration);
+      assert.equal(pose.phase,expected.phase);assert.equal(pose.progress,expected.progress);
+    }
+    advance();viewport.dispose();assert.equal(frames.size,0);
+  }
+  tests.push({name:'Memory equipment timing and captions share the CMOS timeline, including the longer wet cycle',status:'passed'});
+  for(const type of ['coat','cmp']){
+    const viewport=c.MemoryFabView.mount(host,type),pose=p=>{viewport.update(p,false);advance();return rendered.at(-1).getObjectByName('active-wafer').rotation.y;};
+    const first=pose(.65);pose(1);assert.equal(pose(0),0);assert.equal(pose(.65),first);
+    viewport.update(.65,true);advance();advance();assert.equal(rendered.at(-1).getObjectByName('active-wafer').rotation.y,first);
+    viewport.dispose();assert.equal(frames.size,0);
+  }
+  tests.push({name:'Repeated equipment demonstrations reproduce the same spin and CMP pose independently of prior playback',status:'passed'});
   return {passed:tests.length,scope:'Real Three.js scene and geometry with renderer/canvas stubs. No browser/GPU visual verification.',tests};
 }

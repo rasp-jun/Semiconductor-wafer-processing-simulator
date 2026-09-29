@@ -16,8 +16,9 @@ from flask import Flask, abort, g, jsonify, request, send_from_directory
 from werkzeug.exceptions import HTTPException
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from .model import CATALOG, ValidationError, parse_measurements, simulate, validate_params
+from .model import CATALOG, ValidationError, measurement_source, parse_measurements, simulate, validate_params
 from .equipment import register_equipment
+from .fab_data import register_fab_data
 
 ROOT = Path(__file__).resolve().parent.parent
 VERSION = '0.4.1'
@@ -52,6 +53,7 @@ def create_app(database=None, testing=False):
         connection.execute('PRAGMA journal_mode=WAL')
         connection.executescript((ROOT / 'server' / 'schema.sql').read_text(encoding='utf-8'))
         connection.executescript((ROOT / 'server' / 'equipment-schema.sql').read_text(encoding='utf-8'))
+        connection.executescript((ROOT / 'server' / 'fab-data-schema.sql').read_text(encoding='utf-8-sig'))
         if connection.execute('SELECT MAX(version) FROM schema_version').fetchone()[0] != 1:
             raise RuntimeError('Unsupported database schema version')
 
@@ -139,7 +141,7 @@ def create_app(database=None, testing=False):
             if not session:
                 abort(401, description='로그인이 필요합니다.')
             g.user = dict(session)
-            if request.method not in ('GET', 'HEAD', 'OPTIONS') and not hmac.compare_digest(g.user['csrf'], request.headers.get('X-CSRF-Token', '')):
+            if request.method not in ('GET', 'HEAD', 'OPTIONS') and not hmac.compare_digest(g.user['csrf'].encode('utf-8'), request.headers.get('X-CSRF-Token', '').encode('utf-8')):
                 abort(403, description='세션 검증에 실패했습니다. 다시 로그인하세요.')
         if request.method not in ('GET', 'HEAD', 'OPTIONS'):
             db().execute('BEGIN IMMEDIATE')
@@ -280,6 +282,7 @@ def create_app(database=None, testing=False):
         if not full:
             row['result'].pop('rows', None)
             row['result'].pop('dies', None)
+            row['result'].pop('source_archive', None)
         return row
 
     @app.get('/api/projects/<project_id>')
@@ -296,7 +299,7 @@ def create_app(database=None, testing=False):
 
     def add_revision(recipe_id, data, parent=None):
         params = validate_params(data.get('params'))
-        if data.get('scenario') not in {m['id'] for m in CATALOG['missions']}:
+        if not isinstance(data.get('scenario'), str) or data['scenario'] not in {m['id'] for m in CATALOG['missions']}:
             raise ValidationError('모델 시나리오를 선택하세요.')
         revision_id = uid()
         db().execute('INSERT INTO revisions(id,recipe_id,number,parent_id,params_json,scenario,model_version,change_reason,created_by,created_at) VALUES(?,?,?,?,?,?,?,?,?,?)',
@@ -368,10 +371,14 @@ def create_app(database=None, testing=False):
             result['engine_sha256'] = digest((ROOT / 'server' / 'model.py').read_text(encoding='utf-8'))
             result['catalog_sha256'] = digest(encoded(CATALOG))
         elif kind in ('measurement', 'demo'):
-            result = parse_measurements(data.get('csv'), data.get('cd_lsl_nm'), data.get('cd_usl_nm'))
+            csv_text, source_archive = measurement_source(data)
+            result = parse_measurements(csv_text, data.get('cd_lsl_nm'), data.get('cd_usl_nm'))
             result['source'] = 'user-supplied-measurement-unverified' if kind=='measurement' else 'synthetic-csv-example'
             result['source_name'] = text(data.get('source_name'), '데이터 출처', 200)
-            result['file_sha256'] = digest(data['csv'])
+            # Keep the existing field's submitted-text meaning; file-byte hashes live in source_archive.
+            result['file_sha256'] = digest(csv_text)
+            result['file_sha256_scope'] = 'submitted-csv-text-utf8'
+            result['source_archive'] = source_archive
         else:
             raise ValidationError('실험 데이터 유형을 선택하세요.')
         experiment_id, payload = uid(), encoded(result)
@@ -395,6 +402,7 @@ def create_app(database=None, testing=False):
         return response
 
     register_equipment(app, db, one, rows, body, require_roles, audit, uid, now, encoded)
+    register_fab_data(app, db, one, rows, body, require_roles, audit, uid, now, encoded)
 
     @app.get('/')
     def home():

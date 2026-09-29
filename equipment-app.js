@@ -5,16 +5,62 @@
   const escape = v => String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const defaults = () => Object.fromEntries(Object.entries(E.PROFILE.fields).map(([k, f]) => [k, f.default]));
   const STORAGE = 'waferflow-equipment-draft-v1';
-  let simulationDraft = null;
+  let simulationDraft = null, simulationTrace = null;
+  let storageBaseline = null, storageBlocked = false, storageDirty = false, storageMessage = '', recoveryRaw = null;
+  let draftRevision = 0, exportedDraftRevision = -1;
+  let importSequence = 0, traceRevision = 0;
   const state = { trace: null, time: 0, playing: false, activeRun: false, imported: false, draftChanged: false, last: null, raf: null, channel: 'pressurePa', eventKey: '', rotation: [] };
   const stage = id => E.STAGES.find(s => s.id === id);
+  const faultLabels = Object.freeze({none:'정상 운전',vacuum:'진공 도달 실패',cooling:'가공 중 냉각 압력 저하',beam:'빔 전류 추종 실패'});
   function say(message, error = false) { $('#feedback').hidden = !message; $('#feedback').textContent = message; $('#feedback').className = 'feedback' + (error ? ' error' : ''); }
   function fmt(v) { if (!Number.isFinite(v)) return '—'; const a = Math.abs(v); return a >= 10000 ? (v / 1000).toFixed(1) + 'k' : a >= 100 ? v.toFixed(0) : a >= 1 ? v.toFixed(1) : a > 0 && a < .01 ? v.toExponential(1) : v.toFixed(3); }
   function readRecipe() { return Object.fromEntries(Object.keys(E.PROFILE.fields).map(k => [k, $('#recipe-' + k).value])); }
   function writeRecipe(recipe) { for (const k of Object.keys(E.PROFILE.fields)) $('#recipe-' + k).value = recipe[k] ?? ''; }
+  function currentDraft() { return state.imported ? simulationDraft : { recipe: readRecipe(), fault: $('#faultSelect').value }; }
+  function draftPacket() { return { schema: STORAGE, modelVersion: E.VERSION, profileId: E.PROFILE.id, ...currentDraft() }; }
+  function decodeDraft(data, legacy = false) {
+    if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('입력 초안 형식이 아닙니다.');
+    if (!legacy || data.schema != null || data.modelVersion != null || data.profileId != null) {
+      if (data.schema !== STORAGE || data.modelVersion !== E.VERSION || data.profileId !== E.PROFILE.id) throw new Error('초안의 형식·모델 버전·장비 프로필이 현재 모델과 다릅니다.');
+    }
+    const keys = Object.keys(E.PROFILE.fields), recipe = data.recipe;
+    if (!recipe || typeof recipe !== 'object' || Array.isArray(recipe) || Object.keys(recipe).length !== keys.length || !keys.every(k => Object.hasOwn(recipe, k))) throw new Error('초안의 입력 항목이 현재 장비와 다릅니다.');
+    for (const value of Object.values(recipe)) if (!((typeof value === 'string' && value.length <= 128) || (typeof value === 'number' && Number.isFinite(value)))) throw new Error('초안 입력값의 형식이 올바르지 않습니다.');
+    if (!Object.hasOwn(faultLabels, data.fault)) throw new Error('초안의 이상 조건이 올바르지 않습니다.');
+    return { recipe: Object.fromEntries(keys.map(k => [k, String(recipe[k])])), fault: data.fault };
+  }
+  function renderDraftStorage() {
+    $('#draftStatus').textContent = storageMessage ? '자동 저장 확인 필요 · 입력 초안 JSON으로 보관하세요' : storageDirty ? '입력 초안 저장 중…' : storageBaseline === null ? '입력 초안만 자동 저장 · 운전 로그는 별도 보관' : '입력 초안 저장됨 · 운전 로그는 별도 보관';
+    $('#draftStatus').classList.toggle('error', !!storageMessage);
+    $('#draftRecovery').hidden = !storageMessage;
+    $('#draftStorageMessage').textContent = storageMessage;
+    $('#downloadDraftRecovery').hidden = recoveryRaw === null;
+    $('#draftDownloadStatus').hidden = exportedDraftRevision !== draftRevision;
+  }
+  function renderDraftContext() {
+    $('#draftContext').textContent = state.imported ? '불러온 로그를 재생 중입니다. 별도 입력 초안은 “예제 모델로 돌아가기”에서 확인하세요. 초안 불러오기는 이 로그를 바꾸지 않습니다.' : state.draftChanged ? '미실행 초안 · 현재 차트와 운전 기록에는 반영되지 않았습니다. 실행 버튼으로 새로 계산하세요.' : '현재 차트는 표시 조건의 예제 계산입니다. 운전 기록 JSON에는 미실행 초안을 포함하지 않습니다.';
+  }
+  function storageConflict(raw) {
+    storageBlocked = true; storageDirty = true; recoveryRaw = raw;
+    storageMessage = '다른 탭에서 입력 초안이 변경되었습니다. 자동 저장을 중지했으며 다른 탭의 원문은 덮어쓰지 않습니다. 이 탭의 입력 초안을 JSON으로 보관한 뒤 새로고침하세요.';
+    renderDraftStorage();
+  }
   function persistDraft() {
-    try { localStorage.setItem(STORAGE, JSON.stringify({ recipe: readRecipe(), fault: $('#faultSelect').value })); $('#draftStatus').textContent = '운전 조건 저장됨 · 기존 Fab 기록 보존'; }
-    catch (_) { $('#draftStatus').textContent = '로컬 저장 불가 · 현재 화면에서 사용 가능'; }
+    storageDirty = true; const revision = ++draftRevision, raw = JSON.stringify(draftPacket());
+    const failed = () => { if (!storageBlocked) storageMessage = '브라우저에 입력 초안을 저장하지 못했습니다. 현재 입력은 유지됩니다. 입력 초안 JSON으로 보관하세요.'; renderDraftStorage(); };
+    if (storageBlocked) { renderDraftStorage(); return; }
+    if (!window.navigator?.locks?.request) {
+      storageBlocked = true; storageMessage = '탭 간 저장 잠금을 사용할 수 없어 자동 저장을 중지했습니다. HTTPS 또는 localhost로 열거나 입력 초안 JSON으로 보관하세요.'; renderDraftStorage(); return;
+    }
+    renderDraftStorage();
+    try { Promise.resolve(window.navigator.locks.request(STORAGE + '-write', { mode: 'exclusive' }, () => {
+      if (storageBlocked || revision !== draftRevision) return;
+      try {
+        const existing = localStorage.getItem(STORAGE);
+        if (existing !== storageBaseline) { storageConflict(existing); return; }
+        localStorage.setItem(STORAGE, raw); storageBaseline = raw; storageDirty = false; storageMessage = ''; renderDraftStorage();
+      } catch (_) { failed(); }
+    })).catch(failed); } catch (_) { failed(); }
   }
   function validate() {
     const result = E.validateRecipe(readRecipe());
@@ -32,14 +78,16 @@
     for (const el of document.querySelectorAll('#recipeForm input, #defaultsButton, #faultSelect')) el.disabled = locked;
     $('#recipeMode').textContent = state.imported ? 'LOG REPLAY' : state.activeRun ? 'LOCKED' : state.draftChanged ? 'DRAFT CHANGED' : 'EDITABLE';
     $('#stopButton').disabled = !state.activeRun;
-    $('#runButton').textContent = state.activeRun ? '계산된 운전 재생 중' : '▶ 설정 조건으로 실행';
     if (state.imported) {
       $('#runButton').disabled = true;
       $('#preflight').innerHTML = '<li class="info"><div>로그 재생 모드<small>입력 범위·실제 장비 적합성을 판정하지 않습니다.</small></div></li><li class="info"><div>제공된 레시피만 표시<small>빈 항목은 로그에 포함되지 않은 값입니다.</small></div></li>';
       for (const k of Object.keys(E.PROFILE.fields)) { $('#recipe-' + k).setAttribute('aria-invalid', 'false'); $('#error-' + k).textContent = ''; }
     } else validate();
+    $('#importDraftButton').disabled = state.activeRun;
+    renderDraftContext();
   }
   function loadTrace(trace, imported = false) {
+    traceRevision++;
     state.playing = false; state.activeRun = false; state.trace = trace; state.time = trace.samples[0].t;
     state.imported = imported; state.last = null; state.eventKey = ''; state.rotation = [0];
     for (let i = 1; i < trace.samples.length; i++) {
@@ -57,7 +105,7 @@
     $('#importedFaultOption')?.remove();
     if (imported) {
       const option = document.createElement('option'); option.id = 'importedFaultOption'; option.value = 'imported-info';
-      option.textContent = '파일 표기: ' + (trace.fault || '시나리오 정보 없음');
+      option.textContent = '파일 표기: ' + (Object.hasOwn(faultLabels,trace.fault) ? faultLabels[trace.fault] : trace.fault || '시나리오 정보 없음');
       $('#faultSelect').appendChild(option); $('#faultSelect').value = 'imported-info';
     }
     $('#actualLegend').textContent = imported ? '파일 기록값' : '모델 응답';
@@ -89,15 +137,16 @@
     if (!state.trace) return;
     const { sample, angle, sampledAt } = sampleAt(state.time), s = stage(sample.stage);
     const ended = state.time >= state.trace.duration, alarm = !state.imported && state.trace.events.some(e => e.level === 'alarm' && e.t <= state.time);
-    view.render(sample, { time: state.time, playing: state.playing, imported: state.imported, rotationDeg: angle });
-    const runLabel = state.imported ? (ended ? 'LOG END' : state.playing ? 'LOG PLAYBACK' : 'LOG PAUSED') : alarm ? 'ALARM / STOP' : ended ? (state.trace.outcome.status === 'completed' ? 'COMPLETE' : 'STOPPED') : state.playing ? 'RUNNING' : state.time > state.trace.samples[0].t ? 'PAUSED' : 'READY';
+    const runLabel = state.imported ? (ended ? 'LOG END' : state.playing ? 'LOG PLAYBACK' : 'LOG PAUSED') : alarm ? 'ALARM / STOP' : ended ? (state.trace.outcome.status === 'completed' ? 'COMPLETE' : 'STOPPED') : state.playing ? 'RUNNING' : state.activeRun || state.time > state.trace.samples[0].t ? 'PAUSED' : 'READY';
+    view.render(sample, { time: state.time, playing: state.playing, imported: state.imported, rotationDeg: angle, status: runLabel });
     $('#runState').textContent = runLabel;
     $('#runState').className = 'state ' + (alarm || (ended && state.trace.outcome.status === 'aborted') ? 'aborted' : ended ? 'completed' : state.playing ? 'running' : 'ready');
     $('#stageTitle').textContent = s?.label || '단계 미상';
     $('#timeLabel').textContent = state.time.toFixed(1) + ' / ' + state.trace.duration.toFixed(1) + ' s';
     $('#scrubber').value = String(state.time);
-    $('#playButton').textContent = state.playing ? 'Ⅱ 정지' : '▶ 재생';
-    $('#playButton').setAttribute('aria-label', state.playing ? '운전 기록 일시 정지' : '운전 기록 재생');
+    $('#playButton').textContent = state.playing ? 'Ⅱ 정지' : ended ? '▶ 다시 재생' : '▶ 재생';
+    $('#playButton').setAttribute('aria-label', state.playing ? '운전 기록 일시 정지' : ended ? '운전 기록 처음부터 재생' : '운전 기록 재생');
+    $('#runButton').textContent = state.activeRun ? '계산된 운전 ' + (state.playing ? '재생 중' : '일시 정지') : '▶ 설정 조건으로 실행';
     $('#stageDescription').textContent = state.imported
       ? '기록 시각 ' + sampledAt.toFixed(2) + ' s · 기록값 유지 방식 · 제공된 신호만 표시'
       : (s?.description || '모델 운전 결과') + ' · 표시 속도 ' + $('#speedSelect').value + '×';
@@ -125,7 +174,7 @@
     }
     const latestAlarm = !state.imported && state.trace.events.filter(e => e.level === 'alarm' && e.t <= state.time).at(-1);
     $('#outcome').className = 'outcome' + (alarm || (ended && state.trace.outcome.status === 'aborted') ? ' alarm' : ended ? ' done' : '');
-    $('#outcome').textContent = latestAlarm ? latestAlarm.message : ended ? (state.imported ? '파일 결과: ' : '') + state.trace.outcome.reason : state.imported ? '사용자 제공 로그 재생 · 알람 이력만으로 현재 장비 상태를 추정하지 않습니다.' : '모델 운전 ' + (state.playing ? '재생 중' : '대기 / 일시 정지') + ' · 조건부 전이와 알람을 확인하세요.';
+    $('#outcome').textContent = latestAlarm ? latestAlarm.message : ended ? (state.imported ? '파일 결과: ' : '') + state.trace.outcome.reason : state.imported ? '사용자 제공 로그 재생 · 알람 이력만으로 현재 장비 상태를 추정하지 않습니다.' : '모델 운전 ' + (state.playing ? '재생 중' : runLabel === 'READY' ? '재생 대기' : '일시 정지') + ' · 조건부 전이와 알람을 확인하세요.';
     updateChartCursor(sample);
   }
   function buildChart() {
@@ -212,26 +261,66 @@
   }
   function importData(data) {
     const valid = E.validateTrace(data);
-    if (!state.imported) simulationDraft = { recipe: readRecipe(), fault: $('#faultSelect').value };
+    const savedTime = data.playback?.t, restoreTime = Number.isFinite(savedTime);
+    if (!state.imported) { simulationDraft = { recipe: readRecipe(), fault: $('#faultSelect').value }; simulationTrace = state.trace; }
     writeRecipe(valid.recipe || {});
     loadTrace(valid, true);
-    say('로그를 불러왔습니다. 재생 버튼으로 기록을 확인하세요. 기존 Fab 데이터는 유지됩니다.');
+    if (restoreTime) seek(savedTime);
+    say('로그를 불러왔습니다. ' + (restoreTime ? state.time.toFixed(1) + '초 관찰 시점을 복원했습니다. ' : '') + '재생 버튼으로 기록을 확인하세요. 기존 Fab 데이터는 유지됩니다.');
   }
   function download() {
     const data = { ...state.trace, exportedAt: new Date().toISOString(), playback: { t: state.time }, scope: 'Offline equipment model/log replay; no manufacturing release decision.' };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = 'waferflow-equipment-' + Date.now() + '.json'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
-    say('현재 화면의 전체 계산 / 불러온 로그를 내보냈습니다. 재생 위치도 함께 기록했습니다.');
+    say('현재 계산 / 불러온 로그와 재생 위치의 다운로드를 요청했습니다. 미실행 입력 초안은 제외됩니다. 초안은 “입력 초안 JSON”으로 별도 보관하세요.');
   }
-  $('#recipeFields').innerHTML = Object.entries(E.PROFILE.fields).map(([k, f]) => '<div class="recipe-field"><label for="recipe-' + k + '">' + escape(f.label) + '<span>' + f.min + '–' + f.max + '</span></label><div class="input-wrap"><input id="recipe-' + k + '" name="' + k + '" type="number" min="' + f.min + '" max="' + f.max + '" step="' + f.step + '" value="' + f.default + '" aria-describedby="error-' + k + '"><span>' + escape(f.unit) + '</span></div><span id="error-' + k + '" class="field-error"></span></div>').join('');
+  function saveFile(name, raw) {
+    const url = URL.createObjectURL(new Blob([raw], { type: 'application/json' })), a = document.createElement('a');
+    a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  function exportDraft() {
+    saveFile('waferflow-equipment-draft-' + Date.now() + '.json', JSON.stringify({ ...draftPacket(), exportedAt: new Date().toISOString() }, null, 2));
+    exportedDraftRevision = draftRevision; renderDraftStorage();
+    say('입력 초안 JSON 다운로드를 요청했습니다. 브라우저에서 파일 보관을 확인하세요. 운전 로그는 별도 파일입니다.');
+  }
+  function importDraft(data) {
+    if (state.activeRun) throw new Error('현재 가상 운전을 마치거나 중단한 뒤 초안을 불러오세요.');
+    const draft = decodeDraft(data);
+    if (state.imported) simulationDraft = draft;
+    else { writeRecipe(draft.recipe); $('#faultSelect').value = draft.fault; }
+    state.draftChanged = true; lockControls(); persistDraft();
+    say(state.imported ? '입력 초안을 별도로 불러왔습니다. 현재 로그와 재생 위치는 유지됩니다. “예제 모델로 돌아가기”에서 미실행 초안을 확인하세요.' : '미실행 입력 초안을 불러왔습니다. 현재 차트와 운전 기록은 유지됩니다. 실행 버튼으로 새로 계산하세요.');
+  }
+  function bindFileImport(selector, limit, label, apply) {
+    $(selector).addEventListener('change', async () => {
+      const attempt = ++importSequence, draft = draftRevision, trace = traceRevision, input = $(selector), file = input.files?.[0];
+      // Clear while this selection owns the input, never in a delayed finally block.
+      input.value = ''; if (!file) return;
+      const current = () => attempt === importSequence && draft === draftRevision && trace === traceRevision;
+      try {
+        if (file.size > limit) throw new Error(label + ' 파일은 ' + (limit >= 1024 * 1024 ? limit / (1024 * 1024) + ' MB' : limit / 1024 + ' KB') + ' 이하로 선택하세요.');
+        const raw = await file.text();
+        if (!current()) return;
+        apply(JSON.parse(raw));
+      } catch (e) { if (current()) say(label + ' 불러오기 실패: ' + e.message, true); }
+    });
+  }
+  // Text inputs retain unfinished numeric edits verbatim; the engine validates execution.
+  $('#recipeFields').innerHTML = Object.entries(E.PROFILE.fields).map(([k, f]) => '<div class="recipe-field"><label for="recipe-' + k + '">' + escape(f.label) + '<span>' + f.min + '–' + f.max + '</span></label><div class="input-wrap"><input id="recipe-' + k + '" name="' + k + '" type="text" inputmode="decimal" maxlength="128" value="' + f.default + '" aria-describedby="error-' + k + '"><span>' + escape(f.unit) + '</span></div><span id="error-' + k + '" class="field-error"></span></div>').join('');
   $('#readouts').innerHTML = Object.entries(E.CHANNELS).map(([k, c]) => '<div class="readout"><small>' + escape(c.label) + '</small><strong><span id="value-' + k + '">—</span><em>' + escape(c.unit) + '</em></strong><span class="target" id="target-' + k + '">SET —</span></div>').join('');
   $('#digitalStates').innerHTML = [['beam','BEAM'],['shutter','SHUTTER'],['pump','PUMP'],['gate','GATE']].map(([k, label]) => '<span id="digital-' + k + '">● ' + label + '<b>미상</b></span>').join('');
   const view = V.create($('#equipmentViewport'), { onSelect(id) { const part = V.PARTS[id]; if (part) { $('#partTitle').textContent = part.title; $('#partDescription').textContent = part.body; } } });
   writeRecipe(defaults());
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE) || 'null');
-    if (saved && E.validateRecipe(saved.recipe).ok) { writeRecipe(saved.recipe); if (['none','vacuum','cooling','beam'].includes(saved.fault)) $('#faultSelect').value = saved.fault; }
-  } catch (_) { $('#draftStatus').textContent = '저장된 초안을 읽지 못해 기본값을 사용합니다.'; }
+    storageBaseline = localStorage.getItem(STORAGE);
+    if (storageBaseline !== null) {
+      const saved = decodeDraft(JSON.parse(storageBaseline), true);
+      writeRecipe(saved.recipe); $('#faultSelect').value = saved.fault; state.draftChanged = true;
+    }
+  } catch (_) {
+    storageBlocked = true; recoveryRaw = storageBaseline;
+    storageMessage = recoveryRaw !== null ? '저장된 초안을 복원하지 못했습니다. 손상되었거나 현재 모델과 호환되지 않는 원문을 그대로 보존하며 자동 저장을 중지했습니다. 원문과 현재 입력 초안을 각각 내려받으세요.' : '브라우저 저장소를 읽을 수 없어 자동 저장을 중지했습니다. 현재 입력 초안을 JSON으로 보관하세요.';
+  }
   $('#recipeForm').addEventListener('submit', e => e.preventDefault());
   $('#recipeForm').addEventListener('input', () => { state.draftChanged = true; lockControls(); persistDraft(); say('운전 조건 초안이 변경되었습니다. 현재 차트는 이전 계산이며, 실행 버튼으로 다시 계산합니다.'); });
   $('#faultSelect').addEventListener('change', () => { state.draftChanged = true; lockControls(); persistDraft(); say('이상 조건을 변경했습니다. 실행 버튼으로 적용하세요.'); });
@@ -249,26 +338,42 @@
     seek(state.chart.start + Math.max(0, Math.min(1, (x - 64) / 644)) * state.chart.span);
   });
   $('#importButton').addEventListener('click', () => $('#importFile').click());
-  $('#importFile').addEventListener('change', async () => {
-    const file = $('#importFile').files?.[0]; if (!file) return;
-    try { if (file.size > 8 * 1024 * 1024) throw new Error('로그 파일은 8 MB 이하로 선택하세요.'); const text = await file.text(); importData(JSON.parse(text)); }
-    catch (e) { say('로그 불러오기 실패: ' + e.message, true); }
-    finally { $('#importFile').value = ''; }
-  });
+  bindFileImport('#importFile', 8 * 1024 * 1024, '로그', importData);
   $('#exportButton').addEventListener('click', download);
+  $('#exportDraftButton').addEventListener('click', exportDraft);
+  $('#importDraftButton').addEventListener('click', () => $('#importDraftFile').click());
+  bindFileImport('#importDraftFile', 64 * 1024, '입력 초안', importDraft);
+  $('#downloadDraftRecovery').addEventListener('click', () => {
+    if (recoveryRaw !== null) saveFile('waferflow-equipment-stored-original-' + Date.now() + '.json', recoveryRaw);
+  });
   $('#returnSimulation').addEventListener('click', () => {
-    const recipe = simulationDraft && E.validateRecipe(simulationDraft.recipe).ok ? simulationDraft.recipe : defaults();
-    writeRecipe(recipe); $('#faultSelect').value = simulationDraft?.fault || 'none';
-    state.draftChanged = false; loadTrace(E.simulate(recipe, $('#faultSelect').value));
-    say('독립 예제 모델로 돌아왔습니다. 설정 조건으로 실행할 수 있습니다.');
+    const draft = simulationDraft || { recipe: defaults(), fault: 'none' };
+    state.draftChanged = true; loadTrace(simulationTrace || E.simulate(defaults(), 'none'));
+    writeRecipe(draft.recipe); $('#faultSelect').value = draft.fault; lockControls();
+    say('독립 예제 모델로 돌아왔습니다. 입력 초안을 복원했으며 차트는 이전 계산입니다. 실행 버튼으로 새로 계산하세요.');
   });
   $('#sourceButton').addEventListener('click', () => { state.playing = false; state.last = null; render(); $('#sourceDialog').showModal(); });
   $('#closeSource').addEventListener('click', () => $('#sourceDialog').close()); $('#closeSourceBottom').addEventListener('click', () => $('#sourceDialog').close());
-  document.addEventListener('visibilitychange', () => { if (document.hidden && state.playing) { state.playing = false; state.last = null; render(); say('화면이 숨겨져 재생을 일시 정지했습니다. 재생 버튼으로 이어갈 수 있습니다.'); } });
-  $('#modelVersion').textContent = E.VERSION + ' · 데이터 저장: 이 화면의 초안만';
-  loadTrace(E.simulate(readRecipe(), $('#faultSelect').value));
+  function pauseForHiddenPage() {
+    if (!state.playing) return;
+    state.playing = false; state.last = null; render();
+    say('화면이 숨겨져 재생을 일시 정지했습니다. 재생 버튼으로 이어갈 수 있습니다.');
+  }
+  document.addEventListener('visibilitychange', () => { if (document.hidden) pauseForHiddenPage(); });
+  window.addEventListener?.('pagehide', pauseForHiddenPage);
+  window.addEventListener?.('storage', event => {
+    if ((event.key === STORAGE || event.key === null) && !storageBlocked) {
+      try { const raw = localStorage.getItem(STORAGE); if (raw !== storageBaseline) storageConflict(raw); }
+      catch (_) { storageBlocked = true; storageDirty = true; storageMessage = '브라우저 저장소를 읽을 수 없습니다. 입력 초안을 JSON으로 보관하세요.'; renderDraftStorage(); }
+    }
+  });
+  window.addEventListener?.('beforeunload', event => {
+    if (storageDirty && exportedDraftRevision !== draftRevision) { event.preventDefault(); event.returnValue = ''; }
+  });
+  loadTrace(E.simulate(defaults(), 'none'));
+  renderDraftStorage();
   state.raf = requestAnimationFrame(tick);
-  window.EquipmentApp = { startRun, stopRun, seek, play, importData,
+  window.EquipmentApp = { startRun, stopRun, seek, play, importData, importDraft,
     pause() { state.playing = false; state.last = null; render(); },
     useRecipe(trace) {
       if (trace.profileId !== E.PROFILE.id || trace.modelVersion !== E.VERSION) throw new Error('현재 엔진과 장비 프로필·모델 버전이 다릅니다. 기록 재생만 가능합니다.');

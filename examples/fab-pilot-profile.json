@@ -1,0 +1,41 @@
+{
+  "schema": "waferflow-pilot-profile-v1",
+  "id": "DEMO-CLEAN-PILOT",
+  "revision": "1",
+  "owner": "교육 예제",
+  "equipmentId": "DEMO-CLEAN-01",
+  "chamberId": "BATH-A",
+  "tool": "clean",
+  "stepId": "OP001",
+  "recipeRevision": "demo-r1",
+  "productId": "DEMO-SI",
+  "routeRevision": "demo-route-1",
+  "metrologyId": "SYNTHETIC",
+  "metrologyMethod": "인위적 오차를 더한 소프트웨어 테스트",
+  "modelVersion": "wf-fab-0.6.0",
+  "adapterVersion": "wf-data-1.0.0",
+  "validFrom": "2026-01-01T00:00:00Z",
+  "validUntil": "2027-01-01T00:00:00Z",
+  "maxGap": 5,
+  "mapping": {
+    "temperature": "BathTemperature"
+  },
+  "envelope": {
+    "temperature": [
+      20,
+      80
+    ],
+    "time": [
+      10,
+      300
+    ]
+  },
+  "metricPath": "particles",
+  "metricUnit": "model-index",
+  "acceptance": {
+    "mae": 2,
+    "absoluteBias": 1,
+    "maxError": 4
+  },
+  "allowReferenceInput": true
+}

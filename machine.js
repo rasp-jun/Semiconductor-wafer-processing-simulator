@@ -7,6 +7,7 @@
   const $=s=>document.querySelector(s);
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const smooth=t=>t*t*(3-2*t);
+  const motionPreference=window.matchMedia?.('(prefers-reduced-motion: reduce)');
   const stationPositions=[[-6,-3],[-2,-3],[2,-3],[6,-3],[6,3],[2,3],[-2,3],[-6,3]];
   const stationNames=['OXIDATION','SPIN COATER','SOFT BAKE','UV EXPOSURE','POST BAKE','DEVELOPER','PLASMA ETCH','PR STRIP'];
   const equipmentNames=['열산화로','스핀 코터','소프트베이크 핫플레이트','마스크 노광기','PEB 핫플레이트','현상기','플라즈마 식각기','PR 스트리퍼'];
@@ -53,7 +54,7 @@
   function cylinder(parent,x,y,z,r,h,mat,segments=48){return mesh(new T.CylinderGeometry(r,r,h,segments),mat,parent,x,y,z);}
   function ring(parent,x,y,z,r,t,mat){const m=mesh(new T.TorusGeometry(r,t,10,64),mat,parent,x,y,z);m.rotation.x=Math.PI/2;return m;}
   function pipe(parent,a,b,r,mat){const av=new T.Vector3(...a),bv=new T.Vector3(...b);const m=mesh(new T.CylinderGeometry(r,r,av.distanceTo(bv),16),mat,parent);m.position.copy(av).add(bv).multiplyScalar(.5);m.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),bv.sub(av).normalize());return m;}
-  function labelTexture(text,small='WAFERFLOW / PROCESS MODULE'){
+  function labelTexture(text,small='STRATUM / PROCESS MODULE'){
     const canvas=document.createElement('canvas');canvas.width=512;canvas.height=128;const ctx=canvas.getContext('2d');ctx.fillStyle='#1d303c';ctx.fillRect(0,0,512,128);ctx.fillStyle='#c5e695';ctx.fillRect(20,24,5,73);ctx.font='bold 33px sans-serif';ctx.fillText(text,43,58);ctx.fillStyle='#90adb9';ctx.font='16px monospace';ctx.fillText(small,44,88);const tex=new T.CanvasTexture(canvas);tex.colorSpace=T.SRGBColorSpace;return tex;
   }
   function plaque(parent,x,y,z,text,w=1.65){const mat=new T.MeshBasicMaterial({map:labelTexture(text)});const m=mesh(new T.PlaneGeometry(w,w/4),mat,parent,x,y,z);m.castShadow=false;return m;}
@@ -154,6 +155,7 @@
   let active=window.WaferAppBridge?.snapshot().stageIndex??3,playing=false,elapsed=0,speed=1,cutaway=true,follow=false,finished=false,started=false,displayMode='detail',lastTime=performance.now(),visible=true,renderCounter=0;
   let phase='PROCESS',phaseProgress=1,textureKey='',drag=null,dragged=false,zoomMode='overview';
   let annotations=true,componentIndex=0,annotationKey='',statusKey='';
+  let viewDirty=true,contextLost=false,wasHidden=!!document.hidden,lastSceneKey='',lastOutput=null,lastReducedMotion=!!motionPreference?.matches;
   const componentLayer=$('#machineAnnotations');
   const waferPosition=new T.Vector3(),lastWaferPosition=new T.Vector3();
   $('#equipmentNav').innerHTML=equipmentNames.map((name,i)=>`<button class="equipment-tab" data-equipment="${i}" aria-pressed="${i===active}"><span>${String(i+1).padStart(2,'0')} / ${WaferEngine.stages[i].short}</span><strong>${WaferEngine.stages[i].name}</strong><small>${name}</small></button>`).join('');
@@ -199,8 +201,8 @@
     const start=new T.Vector3(0,1.55,0),mid=new T.Vector3(Math.sqrt(Math.max(.1,1.65**2-(end.z/2)**2)),(end.y+start.y)/2,end.z/2);
     pointArm(start,mid,armA);pointArm(mid,end,armB);elbowJoint.position.copy(mid);hand.position.copy(end);hand.rotation.y=end.z<0?0:Math.PI;
   }
-  function updateProcess(index,phase,progress,seconds){
-    const snapshot=state(),p=snapshot.params,output=snapshot.result;
+  function updateProcess(index,phase,progress,seconds,snapshot=state()){
+    const p=snapshot.params,output=snapshot.result;
     const on=phase==='PROCESS',moving=phase==='TRANSFER';
     waferPosition.copy(positionFor(index,phase,progress));wafer.position.copy(waferPosition);
     wafer.rotation.y=on&&[1,5,7].includes(index)?seconds*(index===1?p.rpm/400:2):0;
@@ -229,8 +231,8 @@
     $('#machineViewLabel').textContent=`${equipmentNames[index]} · 내부 확대`;
     document.querySelectorAll('[data-camera]').forEach(b=>b.classList.toggle('selected',b.dataset.camera==='close'));
   }
-  function pause(){playing=false;$('#machinePlay').innerHTML=`▶ <span>${displayMode==='detail'?'이 장비 가동':'전체 공정 재생'}</span>`;$('#machinePlay').setAttribute('aria-pressed','false');}
-  function toggle(){if(playing){pause();return;}if(finished||!started){if(displayMode==='overview')active=0;elapsed=active*11;finished=false;}started=true;playing=true;$('#machinePlay').innerHTML='Ⅱ <span>일시정지</span>';$('#machinePlay').setAttribute('aria-pressed','true');window.WaferAppBridge?.selectStage(active);if(follow||displayMode==='detail')focusStation(active,true);}
+  function pause(){playing=false;$('#machinePlay').innerHTML=`▶ <span>${displayMode==='detail'?'이 장비 가동':'전체 공정 재생'}</span>`;$('#machinePlay').setAttribute('aria-pressed','false');updateStatus();}
+  function toggle(){if(playing){pause();return;}if(finished||!started){if(displayMode==='overview')active=0;elapsed=active*11;phase='TRANSFER';phaseProgress=0;finished=false;}started=true;playing=true;$('#machinePlay').innerHTML='Ⅱ <span>일시정지</span>';$('#machinePlay').setAttribute('aria-pressed','true');window.WaferAppBridge?.selectStage(active);if(follow||displayMode==='detail')focusStation(active,true);updateStatus();}
   function reset(){pause();if(displayMode==='overview')active=0;elapsed=active*11;phase='TRANSFER';phaseProgress=0;finished=false;started=false;window.WaferAppBridge?.selectStage(active);updateStatus();}
   function seek(fraction){
     if(!Number.isFinite(fraction))return;
@@ -267,8 +269,9 @@
     const stage=WaferEngine.stages[active];
     const local=clamp((elapsed-active*11)/11,0,1),overall=displayMode==='detail'?local:elapsed/88;
     $('#machineScrubber').value=String(Math.round(overall*1000));$('#machineScrubber').setAttribute('aria-valuetext',equipmentNames[active]+' '+Math.round(local*100)+'%');
-    const phaseIndex=local<.2?0:local<.3?1:local<.91?2:3;document.querySelectorAll('[data-phase-position]').forEach((b,i)=>{b.classList.toggle('active',i===phaseIndex);b.setAttribute('aria-pressed',String(i===phaseIndex));});renderComponents();const word=phase==='TRANSFER'?'로봇 이송 중':phase==='INSPECT'?'가공 확인':playing?'웨이퍼 가공 중':'장비 관찰';
-    $('#machineStageName').textContent=equipmentNames[active];$('#machinePhase').textContent=finished?(displayMode==='detail'?'이 장비의 가공 완료':'전체 가공 완료'):word;$('#machineProgress').style.width=`${finished?100:displayMode==='detail'?(elapsed-active*11)/11*100:elapsed/88*100}%`;$('#machineStepCount').textContent=`${String(active+1).padStart(2,'0')} / 08`;
+    const phaseIndex=local<.2?0:local<.3?1:local<.91?2:3;document.querySelectorAll('[data-phase-position]').forEach((b,i)=>{b.classList.toggle('active',i===phaseIndex);b.setAttribute('aria-pressed',String(i===phaseIndex));});renderComponents();const word=phase==='TRANSFER'?'로봇 이송 중':phase==='INSPECT'?'가공 확인':'웨이퍼 가공 중';
+    const stateWord=finished?(displayMode==='detail'?'이 장비의 가공 완료':'전체 가공 완료'):playing?word:started?'일시정지 · '+word:phase==='TRANSFER'?'반입 대기':'장비 관찰 · 재생 대기';
+    $('#machineStageName').textContent=equipmentNames[active];$('#machinePhase').textContent=stateWord;$('#machineProgress').style.width=`${finished?100:displayMode==='detail'?(elapsed-active*11)/11*100:elapsed/88*100}%`;$('#machineStepCount').textContent=`${String(active+1).padStart(2,'0')} / 08`;
     $('#machineTime').textContent=`${Math.floor(displayMode==='detail'?elapsed-active*11:elapsed).toString().padStart(2,'0')} / ${displayMode==='detail'?11:88} s`;
     $('#machineEquipmentTitle').textContent=equipmentNames[active];$('#machineEquipmentDescription').textContent=equipmentInfo[active][0];$('#machineMaterialChange').textContent=equipmentInfo[active][1];$('#machineComponents').textContent=equipmentInfo[active][2];$('#machineNext').disabled=active===7;
     document.querySelectorAll('[data-equipment]').forEach(b=>{const selected=Number(b.dataset.equipment)===active;b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected));});
@@ -307,18 +310,28 @@
   $('#machineCutaway').addEventListener('click',toggleCutaway);
   document.querySelectorAll('[data-camera]').forEach(b=>b.addEventListener('click',()=>setCamera(b.dataset.camera)));
   $('#machineFollow').addEventListener('click',()=>{follow=!follow;$('#machineFollow').setAttribute('aria-pressed',String(follow));$('#machineFollow').classList.toggle('selected',follow);if(follow)focusStation(active,true);});
-  const resize=()=>{const w=host.clientWidth,h=host.clientHeight;if(w<1||h<1)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();if(zoomMode==='close')focusStation(active,true);else setCamera(zoomMode);};
+  const resize=()=>{viewDirty=true;const w=host.clientWidth,h=host.clientHeight;if(w<1||h<1)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();if(zoomMode==='close')focusStation(active,true);else setCamera(zoomMode);};
   const resizeObserver=new ResizeObserver(resize);resizeObserver.observe(host);resize();
-  const visibilityObserver=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;},{threshold:0});visibilityObserver.observe(host);
+  const visibilityObserver=new IntersectionObserver(entries=>{const next=entries[0].isIntersecting;if(next!==visible)viewDirty=true;visible=next;},{threshold:0});visibilityObserver.observe(host);
+  renderer.domElement.addEventListener('webglcontextlost',event=>{event.preventDefault();contextLost=true;});
+  renderer.domElement.addEventListener('webglcontextrestored',()=>{contextLost=false;viewDirty=true;});
   function labels(){const w=host.clientWidth,h=host.clientHeight;stations.forEach(s=>{const pos=new T.Vector3(s.group.position.x,3.9,s.group.position.z);pos.project(camera);s.label.style.transform=`translate(-50%,-50%) translate(${(pos.x+1)*w/2}px,${(-pos.y+1)*h/2}px)`;s.label.hidden=displayMode==='detail'||pos.z>1||Math.abs(pos.x)>1.04||Math.abs(pos.y)>1.04;});}
   let raf;
-  function tick(now){raf=requestAnimationFrame(tick);const dt=Math.min((now-lastTime)/1000,.1);lastTime=now;if(document.hidden)return;
+  const cameraMoving=()=>target.distanceToSquared(desiredTarget)>1e-8||Math.abs(distance-desiredDistance)>1e-4||Math.abs(azimuth-desiredAzimuth)>1e-5||Math.abs(elevation-desiredElevation)>1e-5;
+  function tick(now){raf=requestAnimationFrame(tick);const dt=Math.min((now-lastTime)/1000,.1);lastTime=now;if(document.hidden){wasHidden=true;return;}if(wasHidden){wasHidden=false;viewDirty=true;}
     if(!playing){const index=state().stageIndex;if(index!==active){active=index;phase='PROCESS';phaseProgress=(.5-.3)/.61;elapsed=index*11+5.5;componentIndex=0;started=false;finished=false;setMode('detail');updateStatus();}}
     if(playing){const end=displayMode==='detail'?(active+1)*11:88;elapsed=Math.min(end,elapsed+dt*speed);const next=displayMode==='detail'?active:Math.min(7,Math.floor(elapsed/11));if(next!==active){active=next;window.WaferAppBridge?.selectStage(active);if(follow)focusStation(active,true);}const phaseInfo=getPhase((elapsed%11)/11);phase=phaseInfo.phase;phaseProgress=phaseInfo.fraction;if(elapsed>=end){phase='INSPECT';phaseProgress=1;finished=true;pause();}updateStatus();}
-    if(!visible)return;
-    updateProcess(active,phase,phaseProgress,elapsed);
-    target.lerp(desiredTarget,.085);distance=T.MathUtils.lerp(distance,desiredDistance,.08);azimuth=T.MathUtils.lerp(azimuth,desiredAzimuth,.08);elevation=T.MathUtils.lerp(elevation,desiredElevation,.08);
-    camera.position.set(target.x+distance*Math.cos(elevation)*Math.sin(azimuth),target.y+distance*Math.sin(elevation),target.z+distance*Math.cos(elevation)*Math.cos(azimuth));camera.lookAt(target);renderer.render(scene,camera);if(++renderCounter%2===0){labels();positionComponents();}if(!playing&&renderCounter%15===0)updateStatus();
+    if(!visible||contextLost)return;
+    const snapshot=state(),sceneKey=JSON.stringify([active,phase,phaseProgress,elapsed,playing,cutaway,annotations,componentIndex,displayMode,snapshot.params]),sceneChanged=sceneKey!==lastSceneKey||snapshot.result!==lastOutput;
+    // MediaQueryList.matches stays live when the OS preference changes; process time remains independent.
+    const reduceMotion=!!motionPreference?.matches;if(reduceMotion!==lastReducedMotion){lastReducedMotion=reduceMotion;viewDirty=true;}
+    // Keep polling the app's public snapshot, but do no geometry, DOM or GPU work while settled.
+    if(!sceneChanged&&!viewDirty&&!cameraMoving())return;
+    if(sceneChanged){updateProcess(active,phase,phaseProgress,elapsed,snapshot);if(!playing)updateStatus();lastSceneKey=sceneKey;lastOutput=snapshot.result;}
+    target.lerp(desiredTarget,reduceMotion?1:.085);distance=T.MathUtils.lerp(distance,desiredDistance,reduceMotion?1:.08);azimuth=T.MathUtils.lerp(azimuth,desiredAzimuth,reduceMotion?1:.08);elevation=T.MathUtils.lerp(elevation,desiredElevation,reduceMotion?1:.08);
+    if(!cameraMoving()){target.copy(desiredTarget);distance=desiredDistance;azimuth=desiredAzimuth;elevation=desiredElevation;}
+    camera.position.set(target.x+distance*Math.cos(elevation)*Math.sin(azimuth),target.y+distance*Math.sin(elevation),target.z+distance*Math.cos(elevation)*Math.cos(azimuth));camera.lookAt(target);renderer.render(scene,camera);viewDirty=false;
+    if(++renderCounter%2===0||!playing){labels();positionComponents();}
   }
   elapsed=active*11+5.5;phaseProgress=(.5-.3)/.61;setMode('detail');target.copy(desiredTarget);distance=desiredDistance;azimuth=desiredAzimuth;elevation=desiredElevation;updateProcess(active,phase,phaseProgress,elapsed);updateStatus();raf=requestAnimationFrame(tick);
   window.WaferMachine={toggle,pause,selectStage,reset,seek,inspectComponent,focusStation,scene,camera,renderer,stations,wafer,robot,getState:()=>({active,playing,elapsed,phase,phaseProgress,cutaway,follow,displayMode,annotations,componentIndex,position:wafer.position.toArray()}),dispose(){cancelAnimationFrame(raf);resizeObserver.disconnect();visibilityObserver.disconnect();const geometries=new Set(),mats=new Set(),textures=new Set();if(scene.environment)textures.add(scene.environment);scene.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material)(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{mats.add(m);Object.values(m).forEach(v=>{if(v?.isTexture)textures.add(v);});});});geometries.forEach(g=>g.dispose());mats.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());renderer.dispose();}};

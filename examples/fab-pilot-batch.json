@@ -1,0 +1,5349 @@
+{
+  "schema": "waferflow-pilot-batch-v1",
+  "runs": [
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-001",
+        "lotId": "LOT-0",
+        "waferId": "W-0",
+        "tool": "clean",
+        "startedAt": "2026-09-01T00:00:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 6.81,
+        "unit": "model-index",
+        "measuredAt": "2026-09-01T00:02:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-002",
+        "lotId": "LOT-0",
+        "waferId": "W-1",
+        "tool": "clean",
+        "startedAt": "2026-09-01T00:05:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 7.230735492403948,
+        "unit": "model-index",
+        "measuredAt": "2026-09-01T00:07:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-003",
+        "lotId": "LOT-0",
+        "waferId": "W-2",
+        "tool": "clean",
+        "startedAt": "2026-09-01T00:10:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 7.26464871341284,
+        "unit": "model-index",
+        "measuredAt": "2026-09-01T00:12:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-004",
+        "lotId": "LOT-0",
+        "waferId": "W-3",
+        "tool": "clean",
+        "startedAt": "2026-09-01T00:15:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 6.880560004029933,
+        "unit": "model-index",
+        "measuredAt": "2026-09-01T00:17:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-005",
+        "lotId": "LOT-1",
+        "waferId": "W-4",
+        "tool": "clean",
+        "startedAt": "2026-09-02T00:00:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 6.431598752346035,
+        "unit": "model-index",
+        "measuredAt": "2026-09-02T00:02:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-006",
+        "lotId": "LOT-1",
+        "waferId": "W-5",
+        "tool": "clean",
+        "startedAt": "2026-09-02T00:05:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 6.3305378626684305,
+        "unit": "model-index",
+        "measuredAt": "2026-09-02T00:07:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-007",
+        "lotId": "LOT-1",
+        "waferId": "W-6",
+        "tool": "clean",
+        "startedAt": "2026-09-02T00:10:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 6.670292250900537,
+        "unit": "model-index",
+        "measuredAt": "2026-09-02T00:12:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-008",
+        "lotId": "LOT-1",
+        "waferId": "W-7",
+        "tool": "clean",
+        "startedAt": "2026-09-02T00:15:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 7.138493299359395,
+        "unit": "model-index",
+        "measuredAt": "2026-09-02T00:17:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-009",
+        "lotId": "LOT-2",
+        "waferId": "W-8",
+        "tool": "clean",
+        "startedAt": "2026-09-03T00:00:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 7.304679123311691,
+        "unit": "model-index",
+        "measuredAt": "2026-09-03T00:02:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-010",
+        "lotId": "LOT-2",
+        "waferId": "W-9",
+        "tool": "clean",
+        "startedAt": "2026-09-03T00:05:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 7.016059242620878,
+        "unit": "model-index",
+        "measuredAt": "2026-09-03T00:07:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-011",
+        "lotId": "LOT-2",
+        "waferId": "W-10",
+        "tool": "clean",
+        "startedAt": "2026-09-03T00:10:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 6.537989444555315,
+        "unit": "model-index",
+        "measuredAt": "2026-09-03T00:12:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-012",
+        "lotId": "LOT-2",
+        "waferId": "W-11",
+        "tool": "clean",
+        "startedAt": "2026-09-03T00:15:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 6.310004896724648,
+        "unit": "model-index",
+        "measuredAt": "2026-09-03T00:17:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-013",
+        "lotId": "LOT-3",
+        "waferId": "W-12",
+        "tool": "clean",
+        "startedAt": "2026-09-04T00:00:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 6.541713540999782,
+        "unit": "model-index",
+        "measuredAt": "2026-09-04T00:02:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-014",
+        "lotId": "LOT-3",
+        "waferId": "W-13",
+        "tool": "clean",
+        "startedAt": "2026-09-04T00:05:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 7.02008351841332,
+        "unit": "model-index",
+        "measuredAt": "2026-09-04T00:07:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-015",
+        "lotId": "LOT-3",
+        "waferId": "W-14",
+        "tool": "clean",
+        "startedAt": "2026-09-04T00:10:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 7.3053036778474345,
+        "unit": "model-index",
+        "measuredAt": "2026-09-04T00:12:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-016",
+        "lotId": "LOT-3",
+        "waferId": "W-15",
+        "tool": "clean",
+        "startedAt": "2026-09-04T00:15:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 7.1351439200785585,
+        "unit": "model-index",
+        "measuredAt": "2026-09-04T00:17:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-017",
+        "lotId": "LOT-4",
+        "waferId": "W-16",
+        "tool": "clean",
+        "startedAt": "2026-09-05T00:00:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 6.666048341667467,
+        "unit": "model-index",
+        "measuredAt": "2026-09-05T00:02:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-018",
+        "lotId": "LOT-4",
+        "waferId": "W-17",
+        "tool": "clean",
+        "startedAt": "2026-09-05T00:05:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 6.329301254060221,
+        "unit": "model-index",
+        "measuredAt": "2026-09-05T00:07:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-019",
+        "lotId": "LOT-4",
+        "waferId": "W-18",
+        "tool": "clean",
+        "startedAt": "2026-09-05T00:10:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 6.434506376614162,
+        "unit": "model-index",
+        "measuredAt": "2026-09-05T00:12:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-020",
+        "lotId": "LOT-4",
+        "waferId": "W-19",
+        "tool": "clean",
+        "startedAt": "2026-09-05T00:15:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "baseline",
+      "measured": {
+        "value": 6.884938604831476,
+        "unit": "model-index",
+        "measuredAt": "2026-09-05T00:17:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-021",
+        "lotId": "LOT-5",
+        "waferId": "W-20",
+        "tool": "clean",
+        "startedAt": "2026-09-06T00:00:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "monitor",
+      "measured": {
+        "value": 7.266472625363813,
+        "unit": "model-index",
+        "measuredAt": "2026-09-06T00:02:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-022",
+        "lotId": "LOT-5",
+        "waferId": "W-21",
+        "tool": "clean",
+        "startedAt": "2026-09-06T00:05:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "monitor",
+      "measured": {
+        "value": 7.228327819268028,
+        "unit": "model-index",
+        "measuredAt": "2026-09-06T00:07:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-023",
+        "lotId": "LOT-5",
+        "waferId": "W-22",
+        "tool": "clean",
+        "startedAt": "2026-09-06T00:10:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "monitor",
+      "measured": {
+        "value": 6.805574345354798,
+        "unit": "model-index",
+        "measuredAt": "2026-09-06T00:12:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-024",
+        "lotId": "LOT-5",
+        "waferId": "W-23",
+        "tool": "clean",
+        "startedAt": "2026-09-06T00:15:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "monitor",
+      "measured": {
+        "value": 6.386889797912414,
+        "unit": "model-index",
+        "measuredAt": "2026-09-06T00:17:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-025",
+        "lotId": "LOT-6",
+        "waferId": "W-24",
+        "tool": "clean",
+        "startedAt": "2026-09-07T00:00:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "monitor",
+      "measured": {
+        "value": 6.357210818996688,
+        "unit": "model-index",
+        "measuredAt": "2026-09-07T00:02:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-026",
+        "lotId": "LOT-6",
+        "waferId": "W-25",
+        "tool": "clean",
+        "startedAt": "2026-09-07T00:05:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "monitor",
+      "measured": {
+        "value": 6.7438241249511135,
+        "unit": "model-index",
+        "measuredAt": "2026-09-07T00:07:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-027",
+        "lotId": "LOT-6",
+        "waferId": "W-26",
+        "tool": "clean",
+        "startedAt": "2026-09-07T00:10:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "monitor",
+      "measured": {
+        "value": 7.191279225239801,
+        "unit": "model-index",
+        "measuredAt": "2026-09-07T00:12:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-028",
+        "lotId": "LOT-6",
+        "waferId": "W-27",
+        "tool": "clean",
+        "startedAt": "2026-09-07T00:15:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "monitor",
+      "measured": {
+        "value": 7.288187964202251,
+        "unit": "model-index",
+        "measuredAt": "2026-09-07T00:17:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-029",
+        "lotId": "LOT-7",
+        "waferId": "W-28",
+        "tool": "clean",
+        "startedAt": "2026-09-08T00:00:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "monitor",
+      "measured": {
+        "value": 6.945452894153934,
+        "unit": "model-index",
+        "measuredAt": "2026-09-08T00:02:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-030",
+        "lotId": "LOT-7",
+        "waferId": "W-29",
+        "tool": "clean",
+        "startedAt": "2026-09-08T00:05:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "monitor",
+      "measured": {
+        "value": 6.478183057893516,
+        "unit": "model-index",
+        "measuredAt": "2026-09-08T00:07:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-031",
+        "lotId": "LOT-7",
+        "waferId": "W-30",
+        "tool": "clean",
+        "startedAt": "2026-09-08T00:10:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "monitor",
+      "measured": {
+        "value": 6.3159841879535685,
+        "unit": "model-index",
+        "measuredAt": "2026-09-08T00:12:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    },
+    {
+      "packet": {
+        "schema": "waferflow-fab-telemetry-v1",
+        "equipmentId": "DEMO-CLEAN-01",
+        "chamberId": "BATH-A",
+        "runId": "DEMO-032",
+        "lotId": "LOT-7",
+        "waferId": "W-31",
+        "tool": "clean",
+        "startedAt": "2026-09-08T00:15:00.000Z",
+        "processStart": 0,
+        "processEnd": 90,
+        "source": "synthetic",
+        "status": "completed",
+        "channels": {
+          "BathTemperature": {
+            "unit": "K"
+          }
+        },
+        "samples": [
+          {
+            "t": 0,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 5,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 10,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 15,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 20,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 25,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 30,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 35,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 40,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 45,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 50,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 55,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 60,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 65,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 70,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          },
+          {
+            "t": 75,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 334.15
+            }
+          },
+          {
+            "t": 80,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 331.15
+            }
+          },
+          {
+            "t": 85,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 332.15
+            }
+          },
+          {
+            "t": 90,
+            "quality": "good",
+            "values": {
+              "BathTemperature": 333.15
+            }
+          }
+        ]
+      },
+      "recipeRevision": "demo-r1",
+      "productId": "DEMO-SI",
+      "routeRevision": "demo-route-1",
+      "role": "monitor",
+      "measured": {
+        "value": 11.607981177338466,
+        "unit": "model-index",
+        "measuredAt": "2026-09-08T00:17:00.000Z",
+        "instrumentId": "SYNTHETIC",
+        "method": "인위적 오차를 더한 소프트웨어 테스트"
+      }
+    }
+  ]
+}

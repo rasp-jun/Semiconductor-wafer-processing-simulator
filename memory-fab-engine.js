@@ -52,7 +52,9 @@
     const lots=options.lots??defaultLots;if(!Array.isArray(lots)||!lots.length||lots.length>40)throw Error('LOT은 1–40개여야 합니다.');
     const ids=new Set();const normalizedLots=lots.map(l=>{if(!l||typeof l.id!=='string'||!/^[A-Za-z0-9_-]{1,40}$/.test(l.id)||ids.has(l.id)||!Object.hasOwn(products,l.product)||!Number.isFinite(l.release)||l.release<0||l.release>200||!Number.isInteger(l.wafers)||l.wafers<1||l.wafers>25)throw Error('LOT ID·제품·투입 시간을 확인하세요.');ids.add(l.id);return{id:l.id,product:l.product,release:l.release,wafers:l.wafers};});
     if(options.holdAtGate!==undefined&&typeof options.holdAtGate!=='boolean')throw Error('계측 보류 설정을 확인하세요.');
-    return {scenario,excluded:[...new Set(excluded)],overrides:normalized,lots:normalizedLots,holdAtGate:options.holdAtGate??true};
+    const review={};for(const key of ['question','hypothesis','observation','conclusion']){const value=options.review?.[key]===undefined?'':options.review[key];if(typeof value!=='string'||value.length>3000||/[\x00-\x08\x0b\x0c\x0e-\x1f]/.test(value))throw Error('실습·검토 기록은 항목당 3,000자 이내의 텍스트여야 합니다.');review[key]=value;}
+    if(options.review!==undefined&&(!options.review||typeof options.review!=='object'||Array.isArray(options.review)))throw Error('실습·검토 기록 형식을 확인하세요.');
+    return {review,scenario,excluded:[...new Set(excluded)],overrides:normalized,lots:normalizedLots,holdAtGate:options.holdAtGate??true};
   }
   function recipe(type,overrides={}){return {...Object.fromEntries(Object.entries(tools[type].fields).map(([k,f])=>[k,f.default])),...(overrides[type]||{})};}
   // Shared deterministic response terms; no synthetic LOT noise or injected faults.

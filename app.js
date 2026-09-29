@@ -20,27 +20,93 @@
   };
   const icon = name => `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="${icons[name] || icons.layers}"/></svg>`;
   const paintIcons = () => $$('[data-icon]').forEach(el => {el.innerHTML=icon(el.dataset.icon);});
-  const KEY='waferflow-v2';
+  const KEY='waferflow-v2',SCHEMA='waferflow-photo-records-v1';
   const validMission = id => E.missions.some(m=>m.id===id);
-  let saved = {}, storageFailed = false;
-  try { saved=JSON.parse(localStorage.getItem(KEY)||'{}'); if(!saved || typeof saved!=='object') saved={}; } catch { saved={}; }
-  const validEntry = r => r && validMission(r.missionId) && r.params && typeof r.params==='object' && Object.keys(E.fields).every(k => typeof r.params[k]==='number' && Number.isFinite(r.params[k])) && typeof r.id==='string';
-  let history = Array.isArray(saved.history) ? saved.history.filter(validEntry).slice(-200).map(r=>({...r,params:E.normalize(r.params),hypothesis:String(r.hypothesis||'').slice(0,500)})) : [];
-  let recipes = Array.isArray(saved.recipes) ? saved.recipes.filter(validEntry).slice(-50).map(r=>({...r,params:E.normalize(r.params),name:String(r.name||'이름 없는 레시피').slice(0,60)})) : [];
+  const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
+  const validParams=value=>object(value)&&Object.keys(E.fields).every(k=>typeof value[k]==='number'&&Number.isFinite(value[k])&&value[k]>=E.fields[k].min&&value[k]<=E.fields[k].max);
+  const validEntry = r => object(r)&&validMission(r.missionId)&&validParams(r.params)&&typeof r.id==='string'&&(r.modelVersion==null||r.modelVersion===E.version);
+  const validText=(value,limit=Infinity)=>value===undefined||typeof value==='string'&&value.length<=limit;
+  const validRows=(rows,limit,recipe)=>rows===undefined||Array.isArray(rows)&&rows.length<=limit&&rows.every(r=>validEntry(r)&&validText(r.time)&&validText(recipe?r.name:r.label,recipe?60:40)&&(recipe||validText(r.hypothesis,500)));
+  const restoreHistory=rows=>rows.filter(validEntry).slice(-200).map(r=>({...r,params:E.normalize(r.params),label:storedText(r.label,'복원한 실험').slice(0,40),time:storedText(r.time),hypothesis:storedText(r.hypothesis).slice(0,500)}));
+  const restoreRecipes=rows=>rows.filter(validEntry).slice(-50).map(r=>({...r,params:E.normalize(r.params),time:storedText(r.time),name:storedText(r.name,'이름 없는 레시피').slice(0,60)}));
+  let saved={},storageBaseline=null,storageBlocked=false,storageDirty=false,storageMessage='',originalSaved=null,saveSequence=0,exportedSequence=-1;
+  function preserveOriginal(){storageBlocked=true;originalSaved=storageBaseline;storageMessage='저장된 기록의 일부 또는 형식을 확인할 수 없어 자동 저장을 중지했습니다. 저장 원본을 먼저 내려받아 보관하세요. 현재 실험은 전체 기록 JSON으로 별도 보관할 수 있습니다.';}
+  try {
+    storageBaseline=localStorage.getItem(KEY);
+    if(storageBaseline!==null){
+      try {
+        saved=JSON.parse(storageBaseline);
+        if(!object(saved)||(saved.version!==undefined&&saved.version!==2)||(saved.schema!==undefined&&saved.schema!==SCHEMA)||(saved.modelVersion!==undefined&&saved.modelVersion!==E.version))throw Error('unsupported photo record');
+        if((saved.missionId!==undefined&&!validMission(saved.missionId))||(saved.params!==undefined&&!validParams(saved.params))||!validText(saved.hypothesis,500)||!validRows(saved.history,200,false)||!validRows(saved.recipes,50,true)||(saved.lastResult!==undefined&&(!object(saved.lastResult)||!validMission(saved.lastResult.missionId)||!validParams(saved.lastResult.params)||!validText(saved.lastResult.label,40))))preserveOriginal();
+      }catch{saved={};preserveOriginal();}
+    }
+  }catch{storageBlocked=true;storageMessage='브라우저 저장소에 접근할 수 없어 자동 저장을 중지했습니다. 현재 실험은 전체 기록 JSON으로 내려받아 보관하세요.';}
+  if(!storageBlocked&&!window.navigator?.locks?.request){storageBlocked=true;storageMessage='이 연결에서는 탭 간 저장 잠금을 사용할 수 없어 자동 저장을 중지했습니다. HTTPS 또는 localhost로 열거나 전체 기록 JSON으로 보관하세요.';}
+  const storedText=(value,fallback='')=>typeof value==='string'?value:fallback;
+  let history = Array.isArray(saved.history) ? restoreHistory(saved.history) : [];
+  let recipes = Array.isArray(saved.recipes) ? restoreRecipes(saved.recipes) : [];
   let missionId = validMission(saved.missionId) ? saved.missionId : 'residue';
   let params = E.normalize(saved.params || E.missions.find(m=>m.id===missionId).defaults);
-  let stageIndex = 3, view='scene', compare=false, page='lab', running=false, playing=false, progress=1, frame=0, playbackStart=0;
+  let stageIndex = 3, view='scene', compare=false, page='lab', running=false, playing=false, progress=1, frame=0, playbackElapsed=0, playbackLast=null;
   let baseline=E.simulate(mission().defaults,missionId), result=baseline, preview=E.simulate(params,missionId), selectedRun='BASELINE', analysis=null, toastTimer;
   if (saved.lastResult?.missionId===missionId && saved.lastResult.params && Object.keys(E.fields).every(k=>Number.isFinite(saved.lastResult.params[k]))) {
-    result=E.simulate(saved.lastResult.params,missionId);selectedRun=String(saved.lastResult.label||'저장된 실행').slice(0,40);
+    result=E.simulate(saved.lastResult.params,missionId);selectedRun=storedText(saved.lastResult.label,'저장된 실행').slice(0,40);
   }
   function mission(){return E.missions.find(m=>m.id===missionId);}
   function setText(id,value){$(id).textContent=value;}
-  function persist(){try{localStorage.setItem(KEY,JSON.stringify({version:2,missionId,params,history,recipes,hypothesis:$('#hypothesis').value,lastResult:{params:result.params,missionId:result.missionId,label:selectedRun}}));}catch{if(!storageFailed){toast('저장 공간이 부족합니다. 리포트를 내보내 보관하세요.');storageFailed=true;}}}
+  function pack(){return {version:2,schema:SCHEMA,modelVersion:E.version,missionId,params,history,recipes,hypothesis:$('#hypothesis').value,lastResult:{params:result.params,missionId:result.missionId,label:selectedRun}};}
+  function renderStorage(){const panel=$('#photoStorageStatus');panel.classList.toggle('error',storageBlocked||storageDirty);$('#photoStorageMessage').textContent=storageMessage||'레시피·실험 이력·가설을 이 브라우저에 저장합니다. 전체 기록은 JSON으로 내려받아 보관할 수 있습니다.';$('#downloadPhotoOriginal').hidden=originalSaved===null;}
+  function protectStorage(raw){storageBlocked=true;storageDirty=saveSequence!==exportedSequence;if(originalSaved===null)originalSaved=raw;storageMessage='다른 탭에서 저장 기록이 변경되어 자동 저장을 중지했습니다. 현재 화면의 실험은 전체 기록 JSON으로 보관한 뒤 새로고침하세요. 다른 탭의 기록은 덮어쓰지 않습니다.';renderStorage();}
+  function persist(){
+    storageDirty=true;const sequence=++saveSequence,raw=JSON.stringify(pack());
+    if(storageBlocked){renderStorage();return;}
+    const failed=()=>{if(sequence!==saveSequence||storageBlocked)return;storageMessage='현재 변경을 브라우저에 저장하지 못했습니다. 레시피·실험 이력·가설은 화면에 유지됩니다. 전체 기록 JSON으로 내려받아 보관하세요.';renderStorage();};
+    storageMessage='현재 실험 기록을 브라우저에 저장 중…';renderStorage();
+    const write=()=>{try{if(storageBlocked||sequence!==saveSequence)return;const existing=localStorage.getItem(KEY);if(existing!==storageBaseline){protectStorage(existing);return;}localStorage.setItem(KEY,raw);storageBaseline=raw;storageDirty=false;storageMessage='현재 레시피·실험 이력·가설을 이 브라우저에 저장했습니다.';renderStorage();}catch{failed();}};
+    // Compare and write inside one exclusive lock so simultaneous tabs cannot both replace the same baseline.
+    try{Promise.resolve(window.navigator.locks.request(KEY+'-write',{mode:'exclusive'},write)).catch(failed);}catch{failed();}
+  }
+  function exportState(){download('waferflow-photo-records.json',JSON.stringify({...pack(),exportedAt:new Date().toISOString()},null,2),'application/json;charset=utf-8');exportedSequence=saveSequence;storageDirty=false;renderStorage();toast('현재 레시피·전체 실험 이력·저장 레시피·가설의 JSON 내려받기를 시작했습니다.');}
+  let importSequence=0,pendingImport=null,dialogSequence=0,recipeDraft=null;
+  function decodeImport(raw){
+    let data;try{data=JSON.parse(raw);}catch{throw Error('JSON 문법을 확인할 수 없습니다. 내려받은 전체 기록 파일을 선택하세요.');}
+    if(!object(data)||(data.version!==undefined&&data.version!==2)||(data.schema!==undefined&&data.schema!==SCHEMA)||(data.modelVersion!==undefined&&data.modelVersion!==E.version))throw Error('지원하지 않는 포토 기록 형식 또는 모델 버전입니다.');
+    if(!validMission(data.missionId)||!validParams(data.params)||typeof data.hypothesis!=='string'||!validText(data.hypothesis,500)||!Array.isArray(data.history)||!validRows(data.history,200,false)||!Array.isArray(data.recipes)||!validRows(data.recipes,50,true)||!object(data.lastResult)||data.lastResult.missionId!==data.missionId||!validParams(data.lastResult.params)||!validText(data.lastResult.label,40))throw Error('포토 전체 기록의 조건·실험·레시피 또는 마지막 실행을 확인할 수 없습니다.');
+    for(const rows of [data.history,data.recipes])if(rows.some(r=>!r.id||r.id==='baseline')||new Set(rows.map(r=>r.id)).size!==rows.length)throw Error('실험 또는 레시피 식별자가 비어 있거나 중복되었습니다.');
+    return data;
+  }
+  function cancelImport(){importSequence++;pendingImport=null;$('#importPhotoDialog').close();}
+  async function readImport(input){
+    const file=input.files?.[0];input.value='';if(!file)return;
+    const sequence=++importSequence,revision=saveSequence,dialogRevision=dialogSequence;pendingImport=null;$('#importPhotoDialog').close();
+    if(running){toast('실행이 끝난 뒤 기록을 불러오세요.');return;}
+    if(document.querySelector('dialog[open]')){toast('열린 대화상자를 마친 뒤 기록을 불러오세요.');return;}
+    try{
+      if(file.size>2*1024*1024)throw Error('전체 기록 파일은 2 MB 이하로 불러오세요.');
+      const raw=await file.text();if(sequence!==importSequence)return;
+      if(revision!==saveSequence||running){toast('파일을 읽는 동안 실험이 변경되어 불러오기를 취소했습니다.');return;}
+      if(dialogRevision!==dialogSequence||document.querySelector('dialog[open]')){toast('파일을 읽는 동안 다른 대화상자 작업을 시작하여 불러오기를 취소했습니다.');return;}
+      const data=decodeImport(raw);pendingImport={data,sequence,revision,dialogRevision};pausePlayback();
+      $('#importPhotoSummary').textContent=`${file.name} · 실험 ${data.history.length}개 · 레시피 ${data.recipes.length}개. 현재 기록의 JSON 내려받기를 시작한 뒤 이 파일의 내용으로 바꿉니다. 내려받은 파일을 확인해 주세요.`;
+      $('#importPhotoDialog').showModal();
+    }catch(error){if(sequence===importSequence)toast('기록을 불러오지 못했습니다. '+error.message);}
+  }
+  function applyImport(){
+    const pending=pendingImport;
+    if(!pending||pending.sequence!==importSequence)return;
+    if(pending.revision!==saveSequence||pending.dialogRevision!==dialogSequence||running||document.querySelector('dialog[open]:not(#importPhotoDialog)')){cancelImport();toast('현재 작업이 변경되어 불러오기를 취소했습니다. 파일을 다시 선택하세요.');return;}
+    download('waferflow-photo-before-import.json',JSON.stringify({...pack(),exportedAt:new Date().toISOString()},null,2),'application/json;charset=utf-8');
+    const data=pending.data;cancelImport();stopPlayback();window.WaferMachine?.pause();
+    missionId=data.missionId;params=E.normalize(data.params);history=restoreHistory(data.history);recipes=restoreRecipes(data.recipes);
+    baseline=E.simulate(mission().defaults,missionId);result=E.simulate(data.lastResult.params,missionId);preview=E.simulate(params,missionId);selectedRun=storedText(data.lastResult.label,'복원한 실험');
+    $('#hypothesis').value=data.hypothesis;stageIndex=mission().focusStage;progress=1;compare=false;analysis=null;$('#compareToggle').setAttribute('aria-pressed','false');$('#hintContent').hidden=true;
+    renderAll();showPage('lab');persist();toast('전체 기록을 불러왔습니다. 현재 조건과 마지막 실행 결과를 구분해 복원했습니다.');
+  }
   function toast(message){setText('#toast',message);$('#toast').classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('visible'),3200);}
   function changed(p,base=mission().defaults){return Object.keys(E.fields).filter(k=>Math.abs(p[k]-base[k])>0.001).map(k=>`${E.fields[k].label} ${p[k]} ${E.fields[k].unit}`).join(' · ')||'기준 레시피';}
   function shortChanges(p){const text=changed(p);return text.length>60?text.slice(0,57)+'…':text;}
-  function stopPlayback(){playing=false;cancelAnimationFrame(frame);$('#playProcess').innerHTML=icon('play');$('#playProcess').setAttribute('aria-label','공정 순서 재생');}
+  function stopPlayback(reset=true){playing=false;cancelAnimationFrame(frame);frame=0;playbackLast=null;if(reset)playbackElapsed=0;$('#playProcess').innerHTML=icon('play');$('#playProcess').setAttribute('aria-label',!reset&&playbackElapsed>0?'공정 순서 이어서 재생':'공정 순서 재생');}
+  function pausePlayback(){if(playing){stopPlayback(false);setText('#playbackDescription',`공정 흐름 일시정지 · ${Math.round(progress*100)}% (설명용 시간)`);}window.WaferMachine?.pause();}
   function setStage(index,fromPlayback=false){if(!fromPlayback){stopPlayback();if(window.WaferMachine){window.WaferMachine.selectStage(index);return;}}stageIndex=index;progress=fromPlayback?0:1;renderStage();renderVisual();}
   function renderMission(){
     const m=mission();setText('#missionTitle',m.title);setText('#missionDescription',m.description);setText('#missionLevel',m.level+' · '+m.subtitle);setText('#missionCode',m.code);$('#missionTarget').innerHTML=`${m.target}<span>% ↗</span>`;
@@ -48,10 +114,12 @@
   }
   function renderStage(){
     const stage=E.stages[stageIndex];
+    const focusedStage=document.activeElement?.closest('#processRibbon [data-stage]')?.dataset.stage;
     $('#processRibbon').innerHTML=E.stages.map((s,i)=>`<button class="ribbon-step ${i===stageIndex?'active':''}" data-stage="${i}" aria-pressed="${i===stageIndex}"><span class="ribbon-meta"><span>${String(i+1).padStart(2,'0')}</span><span>${s.short}</span></span><strong>${s.name}</strong></button>`).join('');
     setText('#stageEnglish',stage.english.toUpperCase());setText('#stageName',stage.name);setText('#stageDescription',stage.description);setText('#sceneId',`${stage.short} / ${String(stageIndex+1).padStart(2,'0')}`);setText('#sceneCaption',stage.english.toUpperCase());setText('#equipmentLabel',stage.equipment);setText('#playbackTitle',`${String(stageIndex+1).padStart(2,'0')} · ${stage.name}`);setText('#stageFraction',`${stageIndex+1} / 8`);
     $('#playbackDots').innerHTML=E.stages.map((s,i)=>`<i class="${i===stageIndex?'active':''}"></i>`).join('');
     $('#parameterControls').innerHTML=stage.fields.map(k=>{const f=E.fields[k];return `<div class="parameter"><div class="parameter-top"><label for="param-${k}">${f.label}</label><output for="param-${k}" class="parameter-value" id="value-${k}">${params[k]}<small>${f.unit}</small></output></div><input id="param-${k}" type="range" data-param="${k}" min="${f.min}" max="${f.max}" step="${f.step}" value="${params[k]}" style="--pct:${(params[k]-f.min)/(f.max-f.min)*100}%" ${running?'disabled':''}><div class="range-labels"><span>${f.min} ${f.unit}</span><span>${f.max} ${f.unit}</span></div></div>`;}).join('') || '<p class="empty-state">감광막 제거 후 단면과 불량 맵을 확인하세요. 이 단계의 제거 조건은 고정되어 있습니다.</p>';
+    if(focusedStage!==undefined)$(`#processRibbon [data-stage="${focusedStage}"]`)?.focus({preventScroll:true});
   }
   function updatePreview(){preview=E.simulate(params,missionId);renderVisual();renderReasoning();renderDraft();persist();}
   function renderDraft(){const dirty=JSON.stringify(params)!==JSON.stringify(result.params);setText('#draftStatus',dirty?'설정 변경됨 · 실행해 결과를 기록하세요.':'현재 조건의 결과가 표시되어 있습니다.');$('#draftDot').classList.toggle('dirty',dirty);setText('#previewLabel',dirty?'설정 미리보기':'현재 레시피');}
@@ -113,11 +181,11 @@
   }
   function download(name,text,type){const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
   function exportReport(){
-    const r=result;const notes=history.filter(h=>h.missionId===missionId);const html=`<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WaferFlow 실험 리포트</title><style>body{font:14px/1.9 system-ui,sans-serif;max-width:950px;margin:45px auto;padding:0 25px;color:#173332}h1{font-size:30px}h2{margin-top:34px}table{width:100%;border-collapse:collapse}th,td{padding:10px;border:1px solid #cdd9d4;text-align:left}small{color:#54736c}.summary{padding:20px;background:#eff5e7;font-size:19px}.scene-svg{max-width:500px}.scene-svg text{fill:#435f5d}p{overflow-wrap:anywhere}@media print{body{margin:0;max-width:none}tr{break-inside:avoid}}</style><h1>WaferFlow · 공정 실험 리포트</h1><p>${esc(mission().title)}</p><small>생성 ${new Date().toISOString()} · ${E.version} · SEED ${r.seed} · 교육용 합성 모델</small><p class="summary">${esc(selectedRun)} · 수율 ${r.yield}% · 불량 ${r.bad}/${r.total} · 가상 비용 $${r.cost.toFixed(2)}</p><p>이 리포트는 최근 표시된 실행 결과를 기준으로 합니다. 실행 전 미리보기 변경은 포함하지 않습니다. 실제 장비 결과나 제조용 검증 자료가 아닙니다.</p><h2>재현 조건</h2><table><tr><th>변수</th><th>값</th></tr>${Object.entries(r.params).map(([k,v])=>`<tr><td>${E.fields[k].label}</td><td>${v} ${E.fields[k].unit}</td></tr>`).join('')}</table><h2>웨이퍼 맵</h2>${V.map(r,false)}<h2>가설과 실험 기록</h2>${notes.map(h=>{const o=E.simulate(h.params,h.missionId);return `<article><h3>${esc(h.label)} · ${o.yield}% · $${o.cost.toFixed(2)}</h3><p>${esc(h.hypothesis||'가설 미기록')}</p><small>${esc(changed(h.params))} · ${esc(h.time)}</small></article>`;}).join('')||'<p>아직 실행한 실험이 없습니다.</p>'}<h2>모델 해석</h2><p>공개 공정 원리를 참고한 단순화 모델입니다. 수율과 불량 유형은 다이별 합성 판정으로 계산하며, 가상 비용은 임의의 학습용 비용 함수입니다. 변수를 바꾸는 사고 과정을 설명하는 용도입니다.</p><p>공정 참고: <a href="https://www.cleanroom.byu.edu/SOP_05PR">BYU Cleanroom</a> · <a href="https://www.microchemicals.com/DOWNLOADS/Application-Notes/">MicroChemicals</a></p></html>`;
+    const r=result;const notes=history.filter(h=>h.missionId===missionId);const html=`<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>STRATUM 실험 리포트</title><style>body{font:14px/1.9 system-ui,sans-serif;max-width:950px;margin:45px auto;padding:0 25px;color:#173332}h1{font-size:30px}h2{margin-top:34px}table{width:100%;border-collapse:collapse}th,td{padding:10px;border:1px solid #cdd9d4;text-align:left}small{color:#54736c}.summary{padding:20px;background:#eff5e7;font-size:19px}.scene-svg{max-width:500px}.scene-svg text{fill:#435f5d}p{overflow-wrap:anywhere}@media print{body{margin:0;max-width:none}tr{break-inside:avoid}}</style><h1>STRATUM · 공정 실험 리포트</h1><p>${esc(mission().title)}</p><small>생성 ${new Date().toISOString()} · ${E.version} · SEED ${r.seed} · 교육용 합성 모델</small><p class="summary">${esc(selectedRun)} · 수율 ${r.yield}% · 불량 ${r.bad}/${r.total} · 가상 비용 $${r.cost.toFixed(2)}</p><p>이 리포트는 최근 표시된 실행 결과를 기준으로 합니다. 실행 전 미리보기 변경은 포함하지 않습니다. 실제 장비 결과나 제조용 검증 자료가 아닙니다.</p><h2>재현 조건</h2><table><tr><th>변수</th><th>값</th></tr>${Object.entries(r.params).map(([k,v])=>`<tr><td>${E.fields[k].label}</td><td>${v} ${E.fields[k].unit}</td></tr>`).join('')}</table><h2>웨이퍼 맵</h2>${V.map(r,false)}<h2>가설과 실험 기록</h2>${notes.map(h=>{const o=E.simulate(h.params,h.missionId);return `<article><h3>${esc(h.label)} · ${o.yield}% · $${o.cost.toFixed(2)}</h3><p>${esc(h.hypothesis||'가설 미기록')}</p><small>${esc(changed(h.params))} · ${esc(h.time)}</small></article>`;}).join('')||'<p>아직 실행한 실험이 없습니다.</p>'}<h2>모델 해석</h2><p>공개 공정 원리를 참고한 단순화 모델입니다. 수율과 불량 유형은 다이별 합성 판정으로 계산하며, 가상 비용은 임의의 학습용 비용 함수입니다. 변수를 바꾸는 사고 과정을 설명하는 용도입니다.</p><p>공정 참고: <a href="https://www.cleanroom.byu.edu/SOP_05PR">BYU Cleanroom</a> · <a href="https://www.microchemicals.com/DOWNLOADS/Application-Notes/">MicroChemicals</a></p></html>`;
     download(`waferflow-${missionId}-report.html`,html,'text/html;charset=utf-8');toast('실험 리포트를 저장했습니다. 브라우저에서 열어 PDF로 인쇄할 수 있습니다.');
   }
   function exportCSV(){if(!history.length){toast('먼저 전체 공정을 실행해 실험을 기록하세요.');return;}const cell=v=>{let s=String(v??'');if(/^[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"';};const keys=Object.keys(E.fields);const rows=[['run','mission','time','hypothesis','model_version','seed','yield_percent','failed_dies','total_dies','virtual_cost_usd',...keys],...history.map(h=>{const r=E.simulate(h.params,h.missionId);return[h.label,h.missionId,h.time,h.hypothesis,E.version,r.seed,r.yield,r.bad,r.total,r.cost,...keys.map(k=>h.params[k])];})];download('waferflow-experiments.csv','\uFEFF'+rows.map(row=>row.map(cell).join(',')).join('\r\n'),'text/csv;charset=utf-8');toast('전체 실험 CSV를 저장했습니다.');}
-  function openInfo(kind){$('#dialogContent').innerHTML=kind==='guide'?'<h2>웨이퍼 위에서 시작하는 첫 실험</h2><ol><li>상단에서 공정 단계를 선택하고, 재생 버튼으로 전체 흐름을 확인하세요.</li><li>노광에서는 빛을 받은 PR의 상태가 변하고, 현상에서 그 부분이 제거됩니다.</li><li>공정 장면·웨이퍼 단면·불량 맵을 오가며 잔사와 패턴을 관찰하세요.</li><li>한 변수를 바꾸고 가설을 기록한 뒤 전체 공정을 실행하세요.</li><li>기준 비교와 통계 분석으로 근거를 확인하고 리포트를 내보내세요.</li></ol><p>이 시뮬레이터는 포토 공정과 인접 단계를 시각화합니다. 실장비 조작 화면 또는 물리 해석 TCAD는 아닙니다.</p>':'<h2>관찰을 위한 모델, 재현 가능한 실험</h2><p>공개 원리를 참고해 독립적으로 작성한 교육용 시뮬레이터입니다. 장면은 공정의 개념을 보여주는 비축척 시각화입니다.</p><h3>수치의 출처</h3><p>산화·스핀 코팅의 함수 형태는 공개 원리를 참고했습니다. 파라미터, 불량 확률, 비용 계수는 학습을 위한 자체 가정입니다. 공개 PDK나 실제 팹 데이터를 실행한 결과가 아닙니다.</p><h3>실행과 미리보기</h3><p>장면·단면·불량 맵과 단서는 현재 설정의 미리보기입니다. 하단 KPI와 기록은 마지막으로 실행한 조건입니다. 동일 조건과 시드에서는 동일 결과가 나옵니다.</p><h3>통계 해석</h3><p>반복 분석의 구간은 합성 표본 평균에 대한 정규 근사입니다. 실제 공정 수율, 모델 오차 또는 양산 품질의 신뢰구간이 아닙니다.</p><p>상세 출처는 ‘공정 지식 · 리서치’에서 확인하세요.</p>';$('#infoDialog').showModal();}
+  function openInfo(kind){$('#dialogContent').innerHTML=kind==='guide'?'<h2 id="infoDialogTitle">웨이퍼 위에서 시작하는 첫 실험</h2><ol><li>상단에서 공정 단계를 선택하고, 재생 버튼으로 전체 흐름을 확인하세요.</li><li>노광에서는 빛을 받은 PR의 상태가 변하고, 현상에서 그 부분이 제거됩니다.</li><li>공정 장면·웨이퍼 단면·불량 맵을 오가며 잔사와 패턴을 관찰하세요.</li><li>한 변수를 바꾸고 가설을 기록한 뒤 전체 공정을 실행하세요.</li><li>기준 비교와 통계 분석으로 근거를 확인하고 리포트를 내보내세요.</li></ol><p>이 시뮬레이터는 포토 공정과 인접 단계를 시각화합니다. 실장비 조작 화면 또는 물리 해석 TCAD는 아닙니다.</p>':'<h2 id="infoDialogTitle">관찰을 위한 모델, 재현 가능한 실험</h2><p>공개 원리를 참고해 독립적으로 작성한 교육용 시뮬레이터입니다. 장면은 공정의 개념을 보여주는 비축척 시각화입니다.</p><h3>수치의 출처</h3><p>산화·스핀 코팅의 함수 형태는 공개 원리를 참고했습니다. 파라미터, 불량 확률, 비용 계수는 학습을 위한 자체 가정입니다. 공개 PDK나 실제 팹 데이터를 실행한 결과가 아닙니다.</p><h3>실행과 미리보기</h3><p>장면·단면·불량 맵과 단서는 현재 설정의 미리보기입니다. 하단 KPI와 기록은 마지막으로 실행한 조건입니다. 동일 조건과 시드에서는 동일 결과가 나옵니다.</p><h3>통계 해석</h3><p>반복 분석의 구간은 합성 표본 평균에 대한 정규 근사입니다. 실제 공정 수율, 모델 오차 또는 양산 품질의 신뢰구간이 아닙니다.</p><p>상세 출처는 ‘공정 지식 · 리서치’에서 확인하세요.</p>';$('#infoDialog').showModal();}
   document.addEventListener('click',event=>{
     const b=event.target.closest('button');if(!b)return;
     if(b.dataset.page){showPage(b.dataset.page);return;}
@@ -137,14 +205,22 @@
   $('#hintButton').addEventListener('click',()=>{$('#hintContent').hidden=!$('#hintContent').hidden;});
   $('#hypothesis').value=typeof saved.hypothesis==='string'?saved.hypothesis.slice(0,500):'';
   $('#hypothesis').addEventListener('input',persist);
-  $('#guideButton').addEventListener('click',()=>openInfo('guide'));$('#modelInfo').addEventListener('click',()=>openInfo('model'));$('#footerModelInfo').addEventListener('click',()=>showPage('research'));
-  $('#saveRecipe').addEventListener('click',()=>{$('#recipeName').value=`${mission().subtitle} · 레시피 ${recipes.length+1}`;$('#saveDialog').showModal();});
-  $('#saveForm').addEventListener('submit',event=>{event.preventDefault();const name=$('#recipeName').value.trim();if(!name){$('#recipeName').setCustomValidity('레시피 이름을 입력하세요.');$('#recipeName').reportValidity();return;}recipes.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name,missionId,params:{...params},time:new Date().toISOString()});recipes=recipes.slice(-50);persist();$('#saveDialog').close();toast('레시피를 포트폴리오 노트에 저장했습니다.');});$('#recipeName').addEventListener('input',()=>$('#recipeName').setCustomValidity(''));
+  $('#guideButton').addEventListener('click',()=>{dialogSequence++;openInfo('guide');});$('#modelInfo').addEventListener('click',()=>{dialogSequence++;openInfo('model');});$('#footerModelInfo').addEventListener('click',()=>showPage('research'));
+  $('#saveRecipe').addEventListener('click',()=>{dialogSequence++;recipeDraft={missionId,params:{...params}};$('#recipeName').value=`${mission().subtitle} · 레시피 ${recipes.length+1}`;$('#saveDialog').showModal();});
+  $('#saveForm').addEventListener('submit',event=>{event.preventDefault();if(!recipeDraft)return;const name=$('#recipeName').value.trim();if(!name){$('#recipeName').setCustomValidity('레시피 이름을 입력하세요.');$('#recipeName').reportValidity();return;}recipes.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name,...recipeDraft,time:new Date().toISOString()});recipeDraft=null;recipes=recipes.slice(-50);persist();$('#saveDialog').close();toast('레시피를 포트폴리오 노트에 저장했습니다.');});$('#recipeName').addEventListener('input',()=>$('#recipeName').setCustomValidity(''));
   $('#exportReport').addEventListener('click',exportReport);$('#exportAll').addEventListener('click',exportCSV);
+  $('#exportPhotoState').addEventListener('click',exportState);$('#downloadPhotoOriginal').addEventListener('click',()=>{if(originalSaved!==null)download('waferflow-photo-preserved-original.json',originalSaved,'application/json;charset=utf-8');});
+  $('#importPhotoState').addEventListener('click',()=>{if(running){toast('실행이 끝난 뒤 기록을 불러오세요.');return;}$('#importPhotoFile').click();});
+  $('#importPhotoFile').addEventListener('change',event=>readImport(event.target));
+  $('#confirmPhotoImport').addEventListener('click',applyImport);$('#cancelPhotoImport').addEventListener('click',cancelImport);
+  $('#importPhotoDialog').addEventListener('cancel',cancelImport);
   $('#sweepParameter').innerHTML=Object.entries(E.fields).map(([key,f])=>`<option value="${key}" ${key==='dose'?'selected':''}>${f.label}</option>`).join('');
   $('#runAnalysis').addEventListener('click',analyze);$('#sweepParameter').addEventListener('change',analyze);$('#exportStats').addEventListener('click',()=>{if(!analysis)analyze();download('waferflow-synthetic-statistics.json',JSON.stringify(analysis,null,2),'application/json');toast('모델·조건·시드를 포함한 통계 JSON을 저장했습니다.');});
-  $('#playProcess').addEventListener('click',()=>{if(playing){stopPlayback();return;}playing=true;stageIndex=0;progress=0;playbackStart=performance.now();renderStage();$('#playProcess').innerHTML=icon('pause');$('#playProcess').setAttribute('aria-label','공정 재생 일시정지');let lastDraw=0;function tick(now){if(!playing)return;const elapsed=now-playbackStart;const index=Math.min(7,Math.floor(elapsed/2600));if(index!==stageIndex)setStage(index,true);progress=Math.min(1,(elapsed%2600)/2600);if(now-lastDraw>90){renderVisual();setText('#playbackDescription',`공정 흐름 재생 · ${Math.round(progress*100)}% (설명용 시간)`);lastDraw=now;}if(elapsed>=20800){progress=1;stopPlayback();renderVisual();setText('#playbackDescription','전체 흐름 완료 · 조건을 바꾸고 실험해 보세요.');return;}frame=requestAnimationFrame(tick);}frame=requestAnimationFrame(tick);});
-  document.addEventListener('keydown',event=>{if(event.key==='Enter'&&page==='lab'&&!event.target.closest('input,textarea,button,select,dialog,a')){event.preventDefault();runSimulation();}});
+  $('#playProcess').addEventListener('click',()=>{if(playing){pausePlayback();return;}window.WaferMachine?.pause();playing=true;if(playbackElapsed===0){stageIndex=0;progress=0;}playbackLast=performance.now();renderStage();$('#playProcess').innerHTML=icon('pause');$('#playProcess').setAttribute('aria-label','공정 재생 일시정지');let lastDraw=-Infinity;function tick(now){if(!playing)return;if(document.hidden){pausePlayback();return;}playbackElapsed+=Math.max(0,now-playbackLast);playbackLast=now;const elapsed=playbackElapsed,index=Math.min(7,Math.floor(elapsed/2600));if(index!==stageIndex)setStage(index,true);progress=Math.min(1,(elapsed%2600)/2600);if(now-lastDraw>90){renderVisual();setText('#playbackDescription',`공정 흐름 재생 · ${Math.round(progress*100)}% (설명용 시간)`);lastDraw=now;}if(elapsed>=20800){progress=1;stopPlayback();renderVisual();setText('#playbackDescription','전체 흐름 완료 · 조건을 바꾸고 실험해 보세요.');return;}frame=requestAnimationFrame(tick);}frame=requestAnimationFrame(tick);});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)pausePlayback();});
+  window.addEventListener?.('pagehide',pausePlayback);
+  window.addEventListener?.('storage',event=>{if(event.key!==KEY&&event.key!==null)return;try{const raw=localStorage.getItem(KEY);if(raw!==storageBaseline)protectStorage(raw);}catch{storageBlocked=true;storageDirty=saveSequence!==exportedSequence;storageMessage='브라우저 저장소에 접근할 수 없어 자동 저장을 중지했습니다. 현재 실험을 전체 기록 JSON으로 보관하세요.';renderStorage();}});
+  window.addEventListener?.('beforeunload',event=>{if(storageDirty||running){event.preventDefault();event.returnValue='';}});
   window.WaferAppBridge={snapshot:()=>({params:{...params},result:preview,stageIndex,missionId}),loadRecipe:entry=>{if(!entry||!validMission(entry.scenario)||!entry.params||!Object.keys(E.fields).every(k=>Number.isFinite(entry.params[k])))throw new Error('지원하지 않는 검토 레시피입니다.');stopPlayback();window.WaferMachine?.pause();missionId=entry.scenario;params=E.normalize(entry.params);baseline=E.simulate(mission().defaults,missionId);result=baseline;preview=E.simulate(params,missionId);selectedRun='BASELINE';$('#hypothesis').value=String(entry.reason||'').slice(0,500);stageIndex=3;progress=1;renderAll();showPage('lab');persist();},selectStage:index=>{stopPlayback();stageIndex=index;progress=1;renderStage();renderVisual();}};
-  paintIcons();$$('.nav-item').forEach(el=>el.setAttribute('aria-label',names[el.dataset.page]));renderAll();
+  paintIcons();$$('.nav-item').forEach(el=>el.setAttribute('aria-label',names[el.dataset.page]));renderAll();renderStorage();
 })();

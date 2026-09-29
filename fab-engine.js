@@ -1,17 +1,22 @@
 /* Independent planar-CMOS process demonstrator. Geometric / analytical surrogate, not TCAD. */
 (function(root){
   'use strict';
-  const VERSION='wf-fab-0.5.0',NX=160,WIDTH=4800,BASE=600;
+  const VERSION='wf-fab-0.6.0',NX=160,WIDTH=4800,BASE=600;
+  // Planar Ni + Si -> NiSi volume ratios, Kusunoki et al., SISPAD 2003, Eq. (1).
+  // Reaction kinetics below remain illustrative, not a calibrated salicide model.
+  const NISI_SI_PER_NI=1.84,NISI_PER_NI=2.22;
+  // Notification thresholds, not process qualification or universal failure limits.
+  const SILICIDE_NOTICE_C=600,GAUSSIAN_TAIL_10PCT_Z=1.2815515655446004;
   const materials={Si:{name:'실리콘',color:'#687b92'},SiO2:{name:'산화막',color:'#62b8ab'},SiN:{name:'질화막',color:'#b9a566'},Poly:{name:'폴리실리콘',color:'#b886b1'},PR:{name:'감광막',color:'#db946f'},Ni:{name:'니켈',color:'#9daebd'},NiSi:{name:'실리사이드',color:'#acbb88'},TiN:{name:'장벽막',color:'#91a4b1'},W:{name:'텅스텐',color:'#cbd4df'},Al:{name:'알루미늄',color:'#c4d7ee'}};
   const field=(label,unit,min,max,step=1)=>({label,unit,min,max,step});
   const tools={
-    clean:{name:'습식 세정 벤치',english:'WET CLEAN BENCH',family:'wet',fields:{time:field('처리 시간','s',10,600),temperature:field('용액 온도','°C',20,90)},defaults:{time:90,temperature:60},principle:'액체의 화학 반응과 린스로 표면 오염을 제거합니다.'},
+    clean:{name:'습식 세정 벤치',english:'WET CLEAN BENCH',family:'wet',fields:{time:field('처리 시간','s',10,600),temperature:field('용액 온도','°C',20,90)},defaults:{time:90,temperature:60},principle:'약액으로 표면 오염을 제거하고 초순수로 헹굽니다. 화면에서는 지그가 웨이퍼를 고정한 뒤 세워 처리조에 넣습니다.'},
     oxidation:{name:'열산화로',english:'OXIDATION FURNACE',family:'furnace',fields:{time:field('산화 시간','min',.2,90,.1),temperature:field('공정 온도','°C',800,1100)},defaults:{time:4.2,temperature:1000},principle:'실리콘을 소비하면서 SiO₂를 성장시킵니다. 기존 산화막 두께를 이어서 계산합니다.'},
     lpcvd:{name:'LPCVD 반응로',english:'LOW PRESSURE CVD',family:'furnace',fields:{time:field('증착 시간','s',10,3000),temperature:field('공정 온도','°C',400,850),flow:field('상대 가스 유량','%',50,150)},defaults:{time:1000,temperature:620,flow:100},principle:'저압 반응 분위기에서 표면 반응으로 박막을 형성합니다.'},
     pecvd:{name:'PECVD 클러스터',english:'PLASMA ENHANCED CVD',family:'cluster',fields:{time:field('증착 시간','s',10,900),temperature:field('척 온도','°C',200,500),flow:field('상대 가스 유량','%',50,150)},defaults:{time:300,temperature:350,flow:100},principle:'가스 분배판과 플라즈마를 이용하여 절연막을 증착합니다.'},
     coat:{name:'코팅 트랙',english:'RESIST COATER',family:'spin',fields:{rpm:field('스핀 속도','rpm',1500,5000,100),time:field('회전 시간','s',10,90)},defaults:{rpm:3000,time:30},principle:'진공 척 위의 웨이퍼에 감광액을 공급하고 회전시켜 막을 만듭니다.'},
     bake:{name:'트랙 핫플레이트',english:'SOFT BAKE',family:'hotplate',fields:{temperature:field('베이크 온도','°C',80,130),time:field('베이크 시간','s',20,150)},defaults:{temperature:100,time:60},principle:'감광막의 용매를 줄입니다. 이 예제는 비화학증폭 양성 PR을 가정하여 별도 PEB를 생략합니다.'},
-    scanner:{name:'DUV 스테퍼',english:'MASK / PROJECTION EXPOSURE',family:'scanner',fields:{dose:field('노광량','mJ/cm²',60,180),focus:field('초점 오프셋','µm',-1,1,.05)},defaults:{dose:120,focus:0},principle:'마스크의 광학상을 PR에 전사합니다. 현재 마스크와 초점·노광량으로 잠상 분포를 계산합니다.'},
+    scanner:{name:'투영 노광기',english:'MASK / PROJECTION EXPOSURE',family:'scanner',fields:{dose:field('노광량','mJ/cm²',60,180),focus:field('초점 오프셋','µm',-1,1,.05)},defaults:{dose:120,focus:0},principle:'마스크의 광학상을 PR에 전사합니다. 현재 마스크와 초점·노광량으로 잠상 분포를 계산합니다. 파장·NA를 해석하지 않는 광학 전사 예제입니다.'},
     developer:{name:'현상 트랙',english:'POSITIVE RESIST DEVELOPER',family:'spin',fields:{time:field('현상 시간','s',20,120)},defaults:{time:65},principle:'양성 PR의 노광된 영역을 제거하여 다음 식각·주입 단계의 개구를 만듭니다.'},
     etch:{name:'ICP-RIE 식각기',english:'INDUCTIVELY COUPLED PLASMA',family:'etch',fields:{time:field('식각 시간','s',5,900),power:field('바이어스 파워','W',50,500),pressure:field('챔버 압력','mTorr',5,80)},defaults:{time:60,power:200,pressure:20},principle:'반응종과 방향성 이온으로 노출된 물질을 제거합니다. PR 소모와 재료별 선택비를 함께 반영합니다.'},
     strip:{name:'플라즈마 애셔',english:'OXYGEN PLASMA ASHER',family:'etch',fields:{time:field('애싱 시간','s',20,240),power:field('소스 파워','W',100,600)},defaults:{time:120,power:300},principle:'산소 플라즈마로 유기 감광막을 제거합니다. 남은 PR은 다음 공정의 차단막으로 작용합니다.'},
@@ -22,7 +27,7 @@
     pvd:{name:'PVD 스퍼터링기',english:'MAGNETRON SPUTTER DEPOSITION',family:'pvd',fields:{time:field('증착 시간','s',5,600),power:field('타깃 파워','W',300,3000)},defaults:{time:100,power:1500},principle:'플라즈마 이온이 타깃을 때려 방출한 원자를 웨이퍼에 증착합니다.'},
     ald:{name:'ALD 반응기',english:'ATOMIC LAYER DEPOSITION',family:'cluster',fields:{cycles:field('반응 사이클','cycles',10,500),temperature:field('척 온도','°C',150,400)},defaults:{cycles:100,temperature:250},principle:'전구체 A → 퍼지 → 전구체 B → 퍼지의 사이클로 얇은 장벽막을 성장시킵니다.'},
     metrology:{name:'광학 박막 · CD 계측기',english:'IN-LINE PROCESS METROLOGY',family:'metrology',fields:{samples:field('샘플링 지점','sites',5,49)},defaults:{samples:25},principle:'현재 계산된 단면에서 막 두께·높이·패턴 폭을 샘플링합니다. 실측 장비 데이터가 아닙니다.'},
-    probe:{name:'웨이퍼 프로버',english:'WAFER SORT / PROCESS CHECK',family:'probe',fields:{samples:field('확인 다이','dies',9,81)},defaults:{samples:49},principle:'프로브 접촉 동작과 공정 구조 체크를 표현합니다. 트랜지스터 I–V나 실제 전기 수율은 계산하지 않습니다.'}
+    probe:{name:'웨이퍼 프로버',english:'WAFER SORT / PROCESS CHECK',family:'probe',fields:{samples:field('구조 확인 지점','sites',9,81)},defaults:{samples:49},principle:'프로브 접촉 동작과 대표 단면의 구조 표본을 확인합니다. 표본 수는 실제 다이 수가 아니며, 트랜지스터 I–V나 전기 수율은 계산하지 않습니다.'}
   };
   const modules=[{id:'well',name:'웰 형성',tag:'FEOL / WELL'},{id:'sti',name:'소자 분리',tag:'FEOL / STI'},{id:'gate',name:'게이트 형성',tag:'FEOL / GATE'},{id:'junction',name:'접합 · 실리사이드',tag:'FEOL / S-D'},{id:'contact',name:'콘택트',tag:'MOL / CONTACT'},{id:'m1',name:'금속 1층',tag:'BEOL / M1'},{id:'m2',name:'비아 · 금속 2층',tag:'BEOL / M2'},{id:'finish',name:'보호막 · 검사',tag:'FINISH / SORT'}];
   const route=[];
@@ -61,14 +66,14 @@
   add('contact','cmp','ILD 평탄화','cmp',{plane:550,rate:4,recipe:{time:140}});
   photo('contact','contact','CONTACT');add('contact','etch','콘택트 홀 식각','etch',{targets:['SiO2'],rate:5,recipe:{time:125}});strip('contact');
   add('contact','ald','콘택트 TiN 장벽막','deposit',{material:'TiN',gpc:.1});
-  add('contact','lpcvd','텅스텐 콘택트 충전','deposit',{material:'W',rate:1,recipe:{time:800,temperature:620},gapfill:true});
+  add('contact','lpcvd','텅스텐 콘택트 충전','deposit',{material:'W',rate:1,rateTemperature:430,recipe:{time:800,temperature:430},gapfill:true});
   add('contact','cmp','텅스텐 플러그 CMP','cmp',{plane:550,rate:5,recipe:{time:175}});add('contact','metrology','콘택트 충전 확인','measure');
   add('m1','pvd','Al 배선막 증착 · M1','deposit',{material:'Al',rate:5,recipe:{time:100}});
   photo('m1','metal1','METAL 1');add('m1','etch','M1 배선 패턴 식각','etch',{targets:['Al'],rate:5,recipe:{time:110}});strip('m1');add('m1','clean','금속 식각 후 세정','clean');
   add('m2','pecvd','금속층 사이 절연막','deposit',{material:'SiO2',rate:2,recipe:{time:450},gapfill:true});
   add('m2','cmp','IMD 평탄화','cmp',{plane:1350,rate:4,recipe:{time:160}});
   photo('m2','via','VIA 1');add('m2','etch','층간 비아 식각','etch',{targets:['SiO2'],rate:5,recipe:{time:100}});strip('m2');
-  add('m2','ald','비아 TiN 장벽막','deposit',{material:'TiN',gpc:.1});add('m2','lpcvd','텅스텐 비아 충전','deposit',{material:'W',rate:1,recipe:{time:600},gapfill:true});add('m2','cmp','비아 플러그 CMP','cmp',{plane:1350,rate:5,recipe:{time:140}});
+  add('m2','ald','비아 TiN 장벽막','deposit',{material:'TiN',gpc:.1});add('m2','lpcvd','텅스텐 비아 충전','deposit',{material:'W',rate:1,rateTemperature:430,recipe:{time:600,temperature:430},gapfill:true});add('m2','cmp','비아 플러그 CMP','cmp',{plane:1350,rate:5,recipe:{time:140}});
   add('m2','pvd','Al 배선막 증착 · M2','deposit',{material:'Al',rate:5,recipe:{time:100}});photo('m2','metal2','METAL 2');add('m2','etch','M2 배선 패턴 식각','etch',{targets:['Al'],rate:5,recipe:{time:110}});strip('m2');
   add('finish','pecvd','SiN 패시베이션 증착','deposit',{material:'SiN',rate:2,recipe:{time:250}});photo('finish','pad','PAD OPEN');add('finish','etch','패드 개구 식각','etch',{targets:['SiN'],rate:5,recipe:{time:110}});strip('finish');
   add('finish','metrology','최종 단면 · 막 계측','measure');add('finish','probe','웨이퍼 소트 · 구조 체크','probe');
@@ -102,8 +107,12 @@
       case'clean':w.particles*=Math.exp(-p.time*f*(.02+(p.temperature-20)*.00025));break;
       case'oxidize':w.columns.forEach((c,i)=>{let layer=top(c);if(!layer||!['Si','SiO2'].includes(layer.material))return;const existing=layer.material==='SiO2'?layer.nm:0;if(layer.material==='SiO2'&&c.at(-2)?.material!=='Si')return;const a=120,b=240*Math.exp((p.temperature-1000)/95),grown=(Math.sqrt((2*existing+a)**2+4*b*p.time*f)-a)/2-existing;const silicon=c[layer.material==='Si'?c.length-1:c.length-2];const amount=Math.min(grown*variation(i),silicon.nm/.44);silicon.nm-=amount*.44;addFilm(c,'SiO2',amount);});break;
       case'deposit':case'spacerDeposit':{
-        let thickness=step.gpc?p.cycles*step.gpc:step.rate*(p.time||1);if(step.tool==='lpcvd'||step.tool==='pecvd')thickness*=Math.exp((p.temperature-(step.tool==='lpcvd'?620:350))/180)*Math.sqrt(p.flow/100);if(step.tool==='pvd')thickness*=p.power/1500;if(step.tool==='ald')thickness*=Math.exp(-Math.max(0,Math.abs(p.temperature-250)-50)/150);thickness*=f;
-        const oldHeights=w.columns.map(height);w.columns.forEach((c,i)=>{let amount=thickness*variation(i);if(step.op==='spacerDeposit'&&f>0){const reach=Math.ceil(thickness/(WIDTH/NX));const neighbor=Math.max(...oldHeights.slice(Math.max(0,i-reach),Math.min(NX,i+reach+1)));amount+=Math.max(0,neighbor-oldHeights[i])*.9;}addFilm(c,step.material,amount);});w.particles+=.8*f;break;}
+        let thickness=step.gpc?p.cycles*step.gpc:step.rate*(p.time||1);if(step.tool==='lpcvd'||step.tool==='pecvd')thickness*=Math.exp((p.temperature-(step.rateTemperature??(step.tool==='lpcvd'?620:350)))/180)*Math.sqrt(p.flow/100);if(step.tool==='pvd')thickness*=p.power/1500;if(step.tool==='ald')thickness*=Math.exp(-Math.max(0,Math.abs(p.temperature-250)-50)/150);
+        // Interpolate toward the completed spacer geometry. Recomputing the
+        // integer reach during progress instantly filled whole neighboring
+        // columns; this interpolation is not a surface-growth kinetics model.
+        const spacerReach=step.op==='spacerDeposit'?Math.ceil(thickness/(WIDTH/NX)):0;thickness*=f;
+        const oldHeights=w.columns.map(height);w.columns.forEach((c,i)=>{let amount=thickness*variation(i);if(step.op==='spacerDeposit'&&f>0){const neighbor=Math.max(...oldHeights.slice(Math.max(0,i-spacerReach),Math.min(NX,i+spacerReach+1)));amount+=Math.max(0,neighbor-oldHeights[i])*.9*f;}addFilm(c,step.material,amount);});w.particles+=.8*f;break;}
       case'coat':{const thickness=600*Math.sqrt(3000/p.rpm)*Math.min(1,p.time/25)*f;w.columns.forEach((c,i)=>addFilm(c,'PR',thickness*variation(i)));w.mask=step.mask;w.latent=null;w.prBaked=false;break;}
       case'bake':if(f===1)w.prBaked=true;w.bakeFactor=clamp(1-Math.abs(p.temperature-100)/80-Math.abs(p.time-60)/250,.4,1);break;
       case'expose':{const sigma=(55*Math.sqrt(1+(p.focus/.35)**2))/(WIDTH/NX);const effectiveDose=p.dose*(fault==='dose'?.55:1)*f;w.latent=w.columns.map((_,i)=>{let light=0,total=0;for(let j=-Math.ceil(sigma*3);j<=Math.ceil(sigma*3);j++){const weight=Math.exp(-j*j/(2*sigma*sigma));light+=weight*(maskOpen(step.mask,clamp((i+j+.5)/NX,0,1))?1:0);total+=weight;}return effectiveDose*light/total*(w.bakeFactor||1);});break;}
@@ -111,9 +120,9 @@
       case'etch':{const rate=step.rate*(p.power/200)**.7*(20/p.pressure)**.12;w.columns.forEach((c,i)=>{let remaining=p.time*f;if(top(c)?.material==='PR'){const prRate=rate/8,used=Math.min(remaining,top(c).nm/prRate);remove(c,prRate*used,['PR']);remaining-=used;}if(remaining>0)remove(c,rate*remaining*variation(i),step.targets,150);});break;}
       case'strip':w.columns.forEach(c=>{if(top(c)?.material==='PR')remove(c,Math.min(top(c).nm,9*p.time*f*p.power/300),['PR']);});if(f===1){w.prBaked=false;w.latent=null;}break;
       case'wetetch':w.columns.forEach(c=>{if(top(c)&&step.targets.includes(top(c).material))remove(c,Math.min(top(c).nm,step.rate*p.time*f*Math.exp((p.temperature-step.recipe.temperature)/100)),step.targets);});break;
-      case'implant':{const rp=p.energy*(step.species==='B'?2.8:step.species==='P'?1.7:.8)*Math.cos(p.tilt*Math.PI/180),sigma=Math.max(7,rp*.32),dose=p.dose*f;const transmission=w.columns.map(c=>{const barrier=c.filter(l=>l.material!=='Si').reduce((s,l)=>s+l.nm*(l.material==='SiO2'?.3:1),0);return Math.exp(-barrier/Math.max(10,rp*.22));});if(f>0)w.dopants.push({species:step.species,role:step.role,dose,rp,sigma,activation:0,transmission,tilt:p.tilt});break;}
+      case'implant':{const rp=p.energy*(step.species==='B'?2.8:step.species==='P'?1.7:.8)*Math.cos(p.tilt*Math.PI/180),sigma=Math.max(7,rp*.32),dose=p.dose*f;const transmission=w.columns.map(c=>{const barrier=c.filter(l=>l.material!=='Si').reduce((s,l)=>s+l.nm*(l.material==='SiO2'?.3:1),0);return Math.exp(-barrier/Math.max(10,rp*.22));});const surface=w.columns.map(c=>c.find(l=>l.material==='Si')?.nm||0);if(f>0)w.dopants.push({species:step.species,role:step.role,dose,rp,sigma,activation:0,transmission,surface,tilt:p.tilt});break;}
       case'anneal':w.dopants.forEach(d=>{const k=.13*Math.exp((p.temperature-1000)/85);d.activation=1-(1-d.activation)*Math.exp(-k*p.time*f);const diffusion=.6*Math.exp((p.temperature-1000)/75);d.sigma=Math.sqrt(d.sigma*d.sigma+2*diffusion*p.time*f);});break;
-      case'silicide':w.columns.forEach(c=>{const ni=top(c),si=c.at(-2);if(ni?.material==='Ni'&&['Si','Poly'].includes(si?.material)){const reacted=Math.min(ni.nm*clamp((p.temperature-300)/150,0,1)*Math.min(1,p.time/30)*f,si.nm/.8),remaining=ni.nm-reacted;c.pop();si.nm-=reacted*.8;addFilm(c,'NiSi',reacted*1.8);addFilm(c,'Ni',remaining);}});break;
+      case'silicide':w.columns.forEach(c=>{const ni=top(c),si=c.at(-2);if(ni?.material==='Ni'&&['Si','Poly'].includes(si?.material)){const reacted=Math.min(ni.nm*clamp((p.temperature-300)/150,0,1)*Math.min(1,p.time/30)*f,si.nm/NISI_SI_PER_NI),remaining=ni.nm-reacted;c.pop();si.nm=Math.max(0,si.nm-reacted*NISI_SI_PER_NI);if(si.nm<1e-7)c.pop();addFilm(c,'NiSi',reacted*NISI_PER_NI);addFilm(c,'Ni',remaining);}});break;
       case'cmp':{const removal=step.rate*p.pressure/3*p.rpm/60*p.time*f;const stopHeight=c=>{const index=step.stop?c.findIndex(l=>l.material===step.stop):-1;return index<0?null:sum(c.slice(0,index+1))-BASE;};const stops=w.columns.map(stopHeight).filter(v=>v!==null);const plane=stops.length?stops.reduce((a,b)=>a+b,0)/stops.length:step.plane;w.columns.forEach(c=>remove(c,Math.min(removal,Math.max(0,height(c)-(stopHeight(c)??plane)))));break;}
       case'measure':case'probe':{const sites=Array.from({length:p.samples},(_,j)=>{const index=Math.round(j/(p.samples-1)*(NX-1)),c=w.columns[index];return {index,x_nm:(index+.5)*WIDTH/NX,surface_nm:round(height(c)),top_material:top(c)?.material||null,top_thickness_nm:round(top(c)?.nm||0)};});w.lastMeasurement={stepId:step.id,samples:p.samples,source:'geometric-model-sampling',sites,summary:summarize(w)};break;}
     }
@@ -122,7 +131,17 @@
     if(step.op==='strip'&&metrics.films.PR.max>1)warnings.push({code:'STRIP_INCOMPLETE',message:'감광막이 남았습니다. 다음 도포 전에 제거 조건을 확인하세요.'});
     if(step.op==='cmp'&&metrics.topography>50)warnings.push({code:'PLANARITY',message:'연마 후 표면 단차가 50 nm를 넘습니다. 연마 시간·압력을 검토하세요.'});
     if(step.op==='etch'&&metrics.films.Si.mean<before.films.Si.mean-350)warnings.push({code:'SUBSTRATE_LOSS',message:'실리콘 제거량이 큰 조건입니다. 표적 막과 시간을 확인하세요.'});
+    if(f>0&&step.op==='etch'){
+      const exhausted=wafer.columns.filter((column,i)=>column.some(layer=>layer.material==='Si'&&layer.nm>0)&&!w.columns[i].some(layer=>layer.material==='Si'&&layer.nm>0)).length;
+      if(exhausted)warnings.push({code:'ETCH_DEPTH_LIMIT',category:'model-limit',message:'모델 범위 안내 · 이번 식각에서 '+exhausted+'/'+NX+'개 위치의 Si가 소진되어 계산 하단에 도달했습니다. 이 예제는 입고 Si 표면 아래 '+BASE+' nm까지만 계산합니다. 그 아래의 추가 식각과 이후 구조는 해석 범위를 벗어나며, 실제 기판 관통이나 물리적 식각 정지를 뜻하지 않습니다.'});
+    }
     if(step.tool==='scanner'&&Math.abs(p.focus)>.5)warnings.push({code:'DEFOCUS',message:'큰 초점 오프셋으로 광학상이 흐려지는 조건입니다.'});
+    if(f>0&&step.op==='silicide'&&p.temperature>=SILICIDE_NOTICE_C)warnings.push({code:'SILICIDE_MODEL_LIMIT',category:'model-limit',message:'모델 범위 안내 · 고온 NiSi의 상전이·응집을 계산하지 않습니다. 발생 조건은 막 두께·시간·재료계에 따라 다릅니다. 600°C는 이 안내의 표시 기준이며, 표시 단면으로 실제 상 안정성이나 불량 여부를 판정할 수 없습니다.'});
+    if(f>0&&(step.op==='implant'||step.op==='anneal')){
+      const profiles=step.op==='implant'?[w.dopants.at(-1)]:w.dopants;
+      if(profiles.some(d=>d.rp/d.sigma<=GAUSSIAN_TAIL_10PCT_Z))warnings.push({code:'IMPLANT_SURFACE_TAIL',category:'model-limit',message:'모델 범위 안내 · '+(step.op==='anneal'?'열처리로 넓어진 주입':'주입')+' Gaussian 계산 분포의 10% 이상이 주입 당시 Si 표면 밖의 음의 깊이에 놓입니다. 입력 도즈는 입사량이며 Si 내부의 적분량과 다릅니다. 실제 이온 손실을 예측한 값이 아니며, 표면 경계 조건을 보정하지 않았습니다.'});
+    }
+    for(const warning of warnings)warning.category??='process-result';
     w.virtualSeconds+=dt;if(f===1)w.cursor=wafer.cursor+1;
     return {wafer:w,recipe:p,metrics,warnings,seconds:duration(step,p),before};
   }
@@ -131,6 +150,43 @@
     const record={stepId:step.id,index:step.index,tool:step.tool,name:step.name,recipe:result.recipe,fault,metrics:result.metrics,warnings:result.warnings,seconds:result.seconds,modelVersion:VERSION,time:new Date().toISOString()};result.wafer.records=[...wafer.records,record];return result;
   }
   function replay(id,records,count=records.length){let w=createWafer(id);for(const record of records.slice(0,count)){const step=route[w.cursor];if(record.modelVersion!==VERSION||record.stepId!==step?.id)throw new Error('공정 기록의 모델 버전 또는 순서가 일치하지 않습니다.');const result=execute(w,record.recipe,record.fault||'none');w=result.wafer;w.records[w.records.length-1].time=record.time;}return w;}
-  function dopingAt(w,column,depth){let n=-1e15;for(const d of w.dopants){const peak=d.dose/(Math.sqrt(2*Math.PI)*d.sigma*1e-7);const value=peak*Math.exp(-.5*((depth-d.rp)/d.sigma)**2)*d.transmission[column]*d.activation;n+=(d.species==='B'?-1:1)*value;}return n;}
-  root.FabEngine={VERSION,NX,WIDTH,BASE,materials,tools,modules,route,createWafer,maskOpen,recipeFor,duration,interlocks,summarize,process,execute,replay,dopingAt,height,copy};
+  // Histories are immutable: execute/import replace their record arrays. Keep a
+  // bounded set of read-only snapshots, scoped to that array and wafer identity.
+  function createReplayCache(limit=32){
+    if(!Number.isInteger(limit)||limit<1)throw new Error('조회 캐시 크기가 올바르지 않습니다.');
+    const entries=[];
+    function at(id,records,count=records.length){
+      if(!Number.isInteger(count)||count<0||count>records.length)throw new Error('조회할 공정 범위가 올바르지 않습니다.');
+      const same=entry=>entry.id===id&&entry.records===records;
+      const hit=entries.findIndex(entry=>same(entry)&&entry.count===count);
+      if(hit>=0){const [entry]=entries.splice(hit,1);entries.push(entry);return entry.wafer;}
+      const nearest=entries.filter(entry=>same(entry)&&entry.count<count).sort((a,b)=>b.count-a.count)[0];
+      let wafer=nearest?.wafer||createWafer(id);
+      while(wafer.cursor<count){
+        const record=records[wafer.cursor],step=route[wafer.cursor];
+        if(record.modelVersion!==VERSION||record.stepId!==step?.id)throw new Error('공정 기록의 모델 버전 또는 순서가 일치하지 않습니다.');
+        wafer=execute(wafer,record.recipe,record.fault||'none').wafer;
+        wafer.records[wafer.records.length-1].time=record.time;
+      }
+      entries.push({id,records,count,wafer});if(entries.length>limit)entries.shift();
+      return wafer;
+    }
+    return {at,clear(){entries.length=0;}};
+  }
+  function dopingAt(w,column,depth){
+    if(!Number.isInteger(column)||column<0||column>=NX||!Number.isFinite(depth))throw new Error('도핑 조회 위치가 유효하지 않습니다.');
+    const silicon=w.columns[column].find(l=>l.material==='Si');
+    if(!silicon||depth<0||depth>silicon.nm)return 0;
+    let n=-1e15;
+    for(const d of w.dopants){
+      // Rp is measured from the Si surface at implantation. Later material
+      // consumption moves the interface, not the remaining implanted profile.
+      const implantDepth=depth+d.surface[column]-silicon.nm;
+      const peak=d.dose/(Math.sqrt(2*Math.PI)*d.sigma*1e-7);
+      const value=peak*Math.exp(-.5*((implantDepth-d.rp)/d.sigma)**2)*d.transmission[column]*d.activation;
+      n+=(d.species==='B'?-1:1)*value;
+    }
+    return n;
+  }
+  root.FabEngine={VERSION,NX,WIDTH,BASE,materials,tools,modules,route,createWafer,maskOpen,recipeFor,duration,interlocks,summarize,process,execute,replay,createReplayCache,dopingAt,height,copy};
 })(typeof window!=='undefined'?window:globalThis);

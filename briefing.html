@@ -1,0 +1,89 @@
+<!doctype html>
+<!-- WIP: unintegrated briefing draft. Browser QA and process-window entry point are pending. -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111622">
+  <meta name="description" content="STRATUM 기술제품 브리핑. 장비 관찰, 두 변수의 공정 조건 탐색, 재현 가능한 검토 자료를 하나의 실험 흐름으로 연결합니다.">
+  <title>STRATUM · 기술제품 브리핑</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="stratum.css">
+  <link rel="stylesheet" href="stratum-briefing.css">
+  <script src="stratum-shell.js" defer></script>
+  <script src="stratum-briefing.js" defer></script>
+</head>
+<body class="stratum stratum-briefing">
+  <a class="brief-skip" href="#briefMain">제품 브리핑 본문으로 이동</a>
+  <header class="brief-header">
+    <a class="brand stratum-brand" href="index.html" aria-label="STRATUM 홈"><svg class="stratum-symbol" viewBox="0 0 40 44" aria-hidden="true"><path d="m2 12 18-9 18 9-18 9z" fill="currentColor"/><path d="m2 24 18 9 18-9v7l-18 9-18-9z" fill="#375cf6"/><path d="m2 17 18 9 18-9v4l-18 9-18-9z" fill="#f2f1ec"/></svg><span class="stratum-wordmark">STRATUM<small>PROCESS INTELLIGENCE</small></span></a>
+    <span class="brief-header-label">PRODUCT BRIEF / 01</span>
+    <nav class="brief-header-nav" aria-label="제품 브리핑 탐색"><a href="#workflow">실험 흐름</a><a href="#handoff">결과 전달</a><a href="#connection">현장 연결</a></nav>
+    <div data-stratum-switcher></div>
+  </header>
+  <main id="briefMain" tabindex="-1">
+    <section class="brief-hero" aria-labelledby="briefTitle">
+      <div class="brief-intro">
+        <p class="brief-overline"><span class="brief-signal" aria-hidden="true"></span> SEMICONDUCTOR PROCESS STUDIO</p>
+        <h1 id="briefTitle">공정을 보고.<br>조건을 좁히고.<br><em>근거로 설명하다.</em></h1>
+        <p class="brief-lead">장비의 동작에서 조건의 차이까지.<br>관찰하고, 비교하고, 다시 확인할 수 있는<br class="brief-wide-break"> 반도체 공정 실험 공간.</p>
+        <div class="brief-audience"><span>교육</span><span>기업 시연</span><span>내부 실험 검토</span></div>
+        <a id="briefHeroAction" class="brief-action" href="cmos-lab.html#window-oxidation"><span>산화 공정 조건 맵 열기</span><b aria-hidden="true">↗</b></a>
+        <p id="briefHeroContext" class="brief-action-note">온도와 시간을 함께 바꾸며 모델의 산화막 변화를 비교합니다.</p>
+      </div>
+      <figure class="brief-instrument">
+        <div class="brief-image-register"><span id="briefInstrumentCode">THERMAL / OXIDATION</span><span>STRATUM · MODEL 03</span></div>
+        <img id="briefInstrumentImage" src="assets/cmos/equipment-oxidation.jpg" width="950" height="884" alt="수직 열처리 타워와 전면 웨이퍼 반입부를 갖춘 산화 장비의 자체 제작 모형" fetchpriority="high">
+        <figcaption><span id="briefInstrumentName">수직 산화 장비</span><span>자체 제작 모형의 렌더</span></figcaption>
+        <span class="brief-image-cross brief-image-cross-top" aria-hidden="true">+</span><span class="brief-image-cross brief-image-cross-bottom" aria-hidden="true">+</span>
+      </figure>
+    </section>
+
+    <section class="brief-objectives" aria-label="관심 과제 선택">
+      <div class="brief-objective-heading"><span class="brief-overline">START WITH A QUESTION</span><p>지금 확인하려는<br>과제에서 시작하세요.</p></div>
+      <div class="brief-choices" role="group" aria-label="검토 목표">
+        <button type="button" data-brief-choice="window" aria-pressed="true"><span>01</span><strong>어떤 조건에서<br>구조가 달라질까?</strong><small>두 변수의 조건 범위 탐색</small><b aria-hidden="true">↗</b></button>
+        <button type="button" data-brief-choice="observe" aria-pressed="false"><span>02</span><strong>장비 안에서<br>무엇이 일어날까?</strong><small>반송 · 내부 기구 · A/B 비교</small><b aria-hidden="true">↗</b></button>
+        <button type="button" data-brief-choice="data" aria-pressed="false"><span>03</span><strong>운전 기록을<br>어떻게 검토할까?</strong><small>입력 로그 · 태그 · 단위 확인</small><b aria-hidden="true">↗</b></button>
+      </div>
+      <p id="briefChoiceStatus" class="brief-sr-only" role="status" aria-live="polite"></p>
+      <noscript><p>아래 실험 흐름에서 원하는 작업 공간을 바로 열 수 있습니다.</p></noscript>
+    </section>
+
+    <section class="brief-scale" aria-label="CMOS 모델 구성"><p>하나의 웨이퍼 위에 연결한<br><strong>공정의 전체 맥락.</strong></p><dl><div><dt>공정 단계</dt><dd>117</dd></div><div><dt>장비 모형</dt><dd>18</dd></div><div><dt>공정 모듈</dt><dd>8</dd></div></dl><p class="brief-model-note">Planar CMOS · 2 Metal<br>공개 원리를 축약한 교육용 구조 모델</p></section>
+
+    <section id="workflow" class="brief-workflow" aria-labelledby="workflowTitle">
+      <div class="brief-section-heading"><p class="brief-overline">01 / EXPERIMENT WORKFLOW</p><h2 id="workflowTitle">질문을 조건으로.<br>조건을 검토 자료로.</h2><p>직접 실행할 수 있는 세 가지 진입점.<br>각 단계의 입력과 결과를 분리해 확인합니다.</p></div>
+      <ol class="brief-flow-list">
+        <li>
+          <span class="brief-flow-number" aria-hidden="true">01</span>
+          <div class="brief-flow-copy"><span class="brief-overline">PROCESS WINDOW</span><h3>한 번의 값보다,<br>조건의 범위를 읽습니다.</h3><p>두 변수를 선택하고 9개 또는 25개 조합을 같은 입력에서 계산합니다. 관심 지표와 목표 범위를 정해 결과가 어떻게 달라지는지 살펴보세요.</p><a href="cmos-lab.html#window-oxidation">산화 공정 조건 맵 시작 <span aria-hidden="true">↗</span></a></div>
+          <div class="brief-flow-detail"><span class="brief-detail-label">DEMO QUESTION</span><p class="brief-question">“온도와 시간을 바꾸면<br>산화막은 어떻게 달라질까?”</p><div class="brief-equation"><span>온도 <small>×</small> 시간</span><i aria-hidden="true">→</i><strong>산화막 변화</strong></div><p class="brief-detail-note">각 조합은 계산 모델의 결과입니다.<br>현장 공정의 허용 범위나 수율을 인증하지 않습니다.</p></div>
+        </li>
+        <li>
+          <span class="brief-flow-number" aria-hidden="true">02</span>
+          <div class="brief-flow-copy"><span class="brief-overline">EQUIPMENT & STRUCTURE</span><h3>장비의 움직임과<br>웨이퍼 구조를 함께 봅니다.</h3><p>전체 장비에서 반입과 반출을 따라가고, 내부 구조로 공정 기구를 관찰합니다. 완료 시점이 같은 두 실험을 가져와 구조의 차이를 설명하세요.</p><a href="cmos-lab.html">장비 관찰 · 실험 비교 시작 <span aria-hidden="true">↗</span></a></div>
+          <figure class="brief-flow-image"><img src="assets/cmos/icp-chamber.jpg" width="950" height="884" alt="방사형 공정 챔버와 전면 반송부로 구성한 식각 장비 모형" loading="lazy"><figcaption>ICP ETCH / 장비 외관과 내부 구조를 구분해 관찰</figcaption></figure>
+        </li>
+        <li>
+          <span class="brief-flow-number" aria-hidden="true">03</span>
+          <div class="brief-flow-copy"><span class="brief-overline">DATA REVIEW</span><h3>로그를 읽기 전에,<br>입력의 의미부터 확인합니다.</h3><p>JSON·CSV 운전 기록을 불러와 공정 태그와 단위를 연결합니다. 처리 구간과 입력 이력을 확인하고 같은 입력에서 계산한 기준 결과와 비교합니다.</p><a href="fab-data.html">운전 데이터 검토 시작 <span aria-hidden="true">↗</span></a></div>
+          <div class="brief-flow-detail"><span class="brief-detail-label">INPUT → REVIEW</span><ul class="brief-data-chain"><li><span>01</span><strong>운전 기록</strong><small>장비 · 웨이퍼 · 시각</small></li><li><span>02</span><strong>태그와 단위</strong><small>모델 변수와 명시적 연결</small></li><li><span>03</span><strong>원본과 계산</strong><small>입력 출처와 모델값 분리</small></li></ul></div>
+        </li>
+      </ol>
+    </section>
+
+    <section id="handoff" class="brief-handoff" aria-labelledby="handoffTitle">
+      <div class="brief-handoff-copy"><p class="brief-overline">02 / REVIEW HANDOFF</p><h2 id="handoffTitle">좋은 실험은,<br>다시 확인할 수 있어야.</h2><p>선택한 조건과 계산 결과를 함께 남기세요.<br>공정 조건 맵에서 세 가지 형식으로<br>검토 자료를 내보낼 수 있습니다.</p><a class="brief-text-action" href="cmos-lab.html#window-oxidation">조건 맵 실행하고 자료 만들기 <span aria-hidden="true">↗</span></a></div>
+      <dl class="brief-formats"><div><dt>JSON</dt><dd><strong>다시 계산할 수 있는 조건</strong><p>입력 이력, 선택 변수와 조합, 모델 버전을 함께 보관합니다.</p></dd></div><div><dt>CSV</dt><dd><strong>조합별로 비교하는 수치</strong><p>조건과 계산 지표를 표로 옮겨 후속 검토에 사용합니다.</p></dd></div><div><dt>HTML</dt><dd><strong>맥락을 담은 독립 보고서</strong><p>범위와 방법, 결과를 브라우저에서 열어 읽고 전달합니다.</p></dd></div></dl>
+    </section>
+
+    <section id="connection" class="brief-connection" aria-labelledby="connectionTitle">
+      <div class="brief-section-heading"><p class="brief-overline">03 / FIELD CONNECTION</p><h2 id="connectionTitle">현장과 연결할 때<br>필요한 것들.</h2><p>파일 검토에서 시작해 적용 범위를 정합니다.<br>장비 통신과 현장 정확도는 별도 검증 대상입니다.</p></div>
+      <div class="brief-connection-body"><dl><div><dt><span>01</span> 대상 식별</dt><dd>장비·챔버·제품·웨이퍼와 레시피 개정 번호</dd></div><div><dt><span>02</span> 입력 정의</dt><dd>센서 태그, 물리 단위, 공정 시각과 품질 정보</dd></div><div><dt><span>03</span> 비교 근거</dt><dd>연결 가능한 계측값, 오차 기준과 독립 검증 LOT</dd></div><div><dt><span>04</span> 연결 사양</dt><dd>현장 시스템의 접근 방식과 장비별 통신 어댑터</dd></div></dl><a href="fab-data.html">데이터 입력과 지원 범위 확인 <span aria-hidden="true">↗</span></a></div>
+    </section>
+    <aside class="brief-scope" aria-label="현재 모델과 사용 범위"><span class="brief-overline">MODEL / wf-fab-0.6.0</span><p>STRATUM은 교육·시연·모델 내 조건 비교를 위한 공간입니다. 계산값과 실측값을 구분하며, 실장비 제어·양산 승인·제조사 인증 기능을 제공하지 않습니다.</p><a href="cmos-lab.html">공정 스튜디오에서 확인 <span aria-hidden="true">↗</span></a></aside>
+  </main>
+  <footer class="brief-footer"><span>STRATUM <i>/</i> PROCESS INTELLIGENCE</span><a href="THIRD_PARTY_NOTICES.md">자료 출처 · 제3자 고지 ↗</a><a href="#briefMain">처음으로 ↑</a></footer>
+</body>
+</html>

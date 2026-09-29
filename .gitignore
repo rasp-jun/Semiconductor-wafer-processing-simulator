@@ -30,3 +30,10 @@ tests/validation.json
 /waferflow-*.json
 /waferflow-*.csv
 /waferflow-*.html
+
+.venv-review/
+.test-tools/
+/assets/cmos/*.blend1
+
+# Local hosting project binding; publishable source is built from the asset manifest.
+/.openai/

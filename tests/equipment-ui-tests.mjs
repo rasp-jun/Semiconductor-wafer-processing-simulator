@@ -16,9 +16,9 @@ export async function runEquipmentUITests(root) {
     catch (error) { tests.push({name,status:'failed',error:error.stack || String(error)}); }
     finally { while (active.length) active.pop().app.dispose(); }
   }
-  function mount(storage = new Map([[fabKey, fabEvidence]])) {
+  function mount(storage = new Map([[fabKey, fabEvidence]]), options = {}) {
     const {document:d} = parseHTML(files['equipment.html']);
-    const frames = new Map(), downloads = [];
+    const frames = new Map(), downloads = [], listeners = new Map();
     let clock = 0, fid = 0;
     // LinkeDOM does not implement mutable select.value or HTMLDialogElement.showModal.
     Object.defineProperty(Object.getPrototypeOf(d.querySelector('select')), 'value', {
@@ -33,8 +33,10 @@ export async function runEquipmentUITests(root) {
     const context = {
       document:d, console, Blob,
       URL:{createObjectURL(blob) {downloads.push(blob); return 'blob:equipment-test-' + downloads.length;},revokeObjectURL(){}},
-      localStorage:{getItem:key => storage.get(key) ?? null,setItem:(key,value) => storage.set(key,String(value))},
+      localStorage:{getItem:key => {if(options.getError)throw Error('Storage unavailable');return storage.get(key) ?? null;},setItem:(key,value) => {if(options.setError)throw Error('QuotaExceededError');storage.set(key,String(value));}},
+      navigator:{locks:options.noLocks ? undefined : options.locks || {request:(_name,_options,fn) => Promise.resolve(fn())}},
       requestAnimationFrame:fn => {frames.set(++fid,fn); return fid;}, cancelAnimationFrame:id => frames.delete(id),
+      addEventListener:(type,fn) => {if(!listeners.has(type))listeners.set(type,[]);listeners.get(type).push(fn);},
       setTimeout:() => 0, clearTimeout(){}, performance:{now:() => clock},
       fetch() {throw new Error('Equipment UI must operate without a network request.');}
     };
@@ -47,7 +49,8 @@ export async function runEquipmentUITests(root) {
     function change(selector,value) {const el = element(selector); el.value = String(value); el.dispatchEvent(new Event('change',{bubbles:true}));}
     function advance(count,ms=100) {for(let i=0;i<count;i++){clock+=ms;const pending=[...frames.values()];frames.clear();pending.forEach(fn=>fn(clock));}}
     function hidden(value) {Object.defineProperty(d,'hidden',{value,configurable:true});d.dispatchEvent(new Event('visibilitychange'));}
-    const result = {d,c,el:element,click,input,change,advance,hidden,storage,downloads,frames,app:c.EquipmentApp,E:c.EquipmentEngine};
+    function emit(type,properties={}) {for(const listener of listeners.get(type)||[])listener(properties);}
+    const result = {d,c,el:element,click,input,change,advance,hidden,emit,storage,downloads,frames,app:c.EquipmentApp,E:c.EquipmentEngine};
     assert(result.app,'EquipmentApp did not initialize'); active.push(result); return result;
   }
   function partial(ui) {
@@ -69,6 +72,7 @@ export async function runEquipmentUITests(root) {
     assert.equal(ui.d.querySelectorAll('#readouts .readout').length,6);
     assert.equal(ui.d.querySelectorAll('#stageStrip [data-stage]').length,7);
     assert.equal(ui.el('#runState').textContent,'READY');
+    assert.equal(ui.el('#equipmentViewport [data-node="stage-title"]').textContent,'웨이퍼 투입 · 재생 대기');
     assert(!ui.el('#runButton').disabled);
     assert.equal(ui.app.snapshot().trace.provenance.kind,'synthetic');
   });
@@ -103,12 +107,17 @@ export async function runEquipmentUITests(root) {
     assert.equal(ui.el('#runState').textContent,'RUNNING');
   });
   await test('Pause holds time and resume continues the same immutable calculated trace',()=>{
-    const ui=mount();ui.click('#runButton');ui.advance(5);ui.click('#playButton');
+    const ui=mount();ui.click('#runButton');ui.click('#playButton');
+    assert.equal(ui.app.snapshot().time,0);assert.equal(ui.el('#runState').textContent,'PAUSED');
+    ui.click('#playButton');ui.advance(5);ui.click('#playButton');
     const paused=ui.app.snapshot();ui.advance(20);
     assert.equal(ui.app.snapshot().time,paused.time);assert(!ui.app.snapshot().playing);
+    assert.equal(ui.el('#runButton').textContent,'계산된 운전 일시 정지');
+    assert.equal(ui.el('#equipmentViewport [data-node="stage-title"]').textContent,'웨이퍼 투입 · 일시 정지');
     assert(ui.el('#recipe-beamVoltageV').disabled);
     ui.click('#playButton');ui.advance(3);
     assert(ui.app.snapshot().time>paused.time);
+    assert.equal(ui.el('#runButton').textContent,'계산된 운전 재생 중');
     assert.equal(JSON.stringify(ui.app.snapshot().trace),JSON.stringify(paused.trace));
   });
   await test('Stopping truncates future records, disables the beam and preserves the transfer position',()=>{
@@ -181,6 +190,18 @@ export async function runEquipmentUITests(root) {
     assert.equal(ui.app.snapshot().time,time);assert(!ui.app.snapshot().playing);
     assert(ui.el('#feedback').textContent.includes('숨겨져'));ui.click('#playButton');ui.advance(2);assert(ui.app.snapshot().time>time);
   });
+  await test('Page navigation pauses at the same timestamp and cache restoration requires explicit resume',()=>{
+    const ui=mount();ui.click('#runButton');ui.advance(5);
+    const before=ui.app.snapshot(),svg=ui.el('#equipmentViewport [data-node="arm"]').getAttribute('d');
+    ui.emit('pagehide',{persisted:true});ui.advance(1,60000);ui.emit('pageshow',{persisted:true});ui.advance(5);
+    const restored=ui.app.snapshot();
+    assert(!restored.playing);assert(restored.activeRun);assert.equal(restored.time,before.time);
+    assert.equal(JSON.stringify(restored.trace),JSON.stringify(before.trace));
+    assert.equal(ui.el('#equipmentViewport [data-node="arm"]').getAttribute('d'),svg);
+    assert.equal(ui.el('#runButton').textContent,'계산된 운전 일시 정지');
+    ui.click('#playButton');ui.advance(1,60000);assert.equal(ui.app.snapshot().time,before.time);
+    ui.advance(1);assert(Math.abs(ui.app.snapshot().time-before.time-.4)<1e-9);
+  });
   await test('JSON export/import preserves units, samples, recipe and version but labels imported provenance unverified',async()=>{
     const ui=mount();ui.input('#recipe-beamVoltageV',800);ui.click('#runButton');ui.advance(3);ui.click('#exportButton');
     const data=JSON.parse(await ui.downloads.at(-1).text()), before=ui.app.snapshot();
@@ -191,8 +212,19 @@ export async function runEquipmentUITests(root) {
     assert.equal(restored.trace.provenance.kind,'unverified');assert(restored.imported);
     assert(ui.el('#dataBadge').textContent.includes('미검증'));assert(ui.el('#runButton').disabled);assert(ui.el('#recipe-beamVoltageV').disabled);
     assert(ui.el('#faultSelect').disabled);assert.equal(ui.el('#faultSelect').value,'imported-info');
-    assert.equal(ui.el('#importedFaultOption').textContent,'파일 표기: '+data.fault);
+    assert.equal(ui.el('#importedFaultOption').textContent,'파일 표기: 정상 운전');
+    assert.equal(restored.time,before.time);assert(!restored.playing);assert(!restored.activeRun);
     ui.click('#exportButton');assert.equal(JSON.parse(await ui.downloads.at(-1).text()).provenance.kind,'unverified');
+  });
+  await test('Imported playback bookmarks are bounded by the verified trace and never carry into a new simulation',()=>{
+    const ui=mount(),data=partial(ui);
+    for(const [saved,expected] of [[1.25,1.25],[-3,0],[100,2],['1.25',0],[null,0],[{},0]]){data.playback={t:saved};ui.app.importData(data);assert.equal(ui.app.snapshot().time,expected);assert(!ui.app.snapshot().playing);assert(!ui.app.snapshot().activeRun);assert(!/NaN|Infinity|\[object Object\]/.test(ui.el('#timeLabel').textContent));}
+    delete data.playback;ui.app.importData(data);assert.equal(ui.app.snapshot().time,0);
+    data.playback={t:1.25};ui.app.importData(data);ui.click('#returnSimulation');assert.equal(ui.app.snapshot().time,0);assert(!ui.app.snapshot().imported);ui.click('#runButton');assert.equal(ui.app.snapshot().time,0);assert(ui.app.snapshot().activeRun);
+  });
+  await test('Imported known fault codes have Korean labels while original source metadata remains unchanged',()=>{
+    const ui=mount(),data=partial(ui),labels={none:'정상 운전',vacuum:'진공 도달 실패',cooling:'가공 중 냉각 압력 저하',beam:'빔 전류 추종 실패',SITE_CUSTOM:'SITE_CUSTOM'};
+    for(const [fault,label] of Object.entries(labels)){data.fault=fault;ui.app.importData(data);assert.equal(ui.el('#importedFaultOption').textContent,'파일 표기: '+label);assert.equal(ui.app.snapshot().trace.fault,fault);}
   });
   await test('A recovered alarm in an imported log remains history without forcing current playback into alarm-stop',()=>{
     const ui=mount(), data=partial(ui);
@@ -207,6 +239,7 @@ export async function runEquipmentUITests(root) {
     assert(ui.el('#eventList').textContent.includes('과거 압력 알람'));assert(ui.el('#eventList').textContent.includes('복구 이벤트'));
     assert(!ui.el('#outcome').textContent.includes('과거 압력 알람'));
     ui.app.seek(data.duration);assert.equal(ui.el('#runState').textContent,'LOG END');
+    assert.equal(ui.el('#equipmentViewport [data-node="stage-title"]').textContent,'이온 밀링 · 기록 끝');
     assert.equal(ui.el('#outcome').textContent,'파일 결과: '+data.outcome.reason);
   });
   await test('Seeking an active simulated run to its last sample releases recipe editing without modifying the trace',()=>{
@@ -276,14 +309,126 @@ export async function runEquipmentUITests(root) {
     reloaded.click('#defaultsButton');assert.equal(reloaded.el('#recipe-beamVoltageV').value,String(reloaded.E.PROFILE.fields.beamVoltageV.default));
     assert.equal(reloaded.el('#faultSelect').value,'none');assert.equal(storage.get(fabKey),fabEvidence);
   });
+  const draftKey='waferflow-equipment-draft-v1';
+  function unloadBlocked(ui) {
+    let prevented=false;const event={preventDefault(){prevented=true;}};ui.emit('beforeunload',event);return prevented;
+  }
+  await test('Unfinished, nonnumeric and out-of-range drafts restore verbatim while execution stays blocked',()=>{
+    for(const value of ['', '1e', '99999']) {
+      const storage=new Map(),ui=mount(storage);ui.input('#recipe-beamVoltageV',830);ui.input('#recipe-pressurePa',value);
+      assert(ui.el('#draftStatus').textContent.includes('저장됨'));assert(!unloadBlocked(ui));
+      const reloaded=mount(storage);assert.equal(reloaded.el('#recipe-beamVoltageV').value,'830');assert.equal(reloaded.el('#recipe-pressurePa').value,value);
+      assert(reloaded.el('#runButton').disabled);assert.equal(reloaded.el('#recipe-pressurePa').getAttribute('aria-invalid'),'true');
+      assert.equal(reloaded.app.snapshot().trace.recipe.beamVoltageV,reloaded.E.PROFILE.fields.beamVoltageV.default);
+      assert(reloaded.el('#draftContext').textContent.includes('미실행'));assert(reloaded.app.snapshot().draftChanged);
+    }
+  });
+  await test('Draft JSON preserves raw inputs separately and restores without recalculating the current trace',async()=>{
+    const ui=mount();ui.input('#recipe-beamVoltageV',830);ui.input('#recipe-pressurePa','');ui.change('#faultSelect','cooling');ui.app.seek(2);
+    const original=JSON.stringify(ui.app.snapshot().trace);ui.click('#exportButton');const log=JSON.parse(await ui.downloads.at(-1).text());
+    assert.equal(log.recipe.beamVoltageV,ui.E.PROFILE.fields.beamVoltageV.default);assert(!('draft' in log));assert.equal(log.playback.t,2);
+    assert(ui.el('#feedback').textContent.includes('미실행 입력 초안은 제외'));
+    ui.click('#exportDraftButton');const draft=JSON.parse(await ui.downloads.at(-1).text());
+    assert.equal(draft.schema,draftKey);assert.equal(draft.modelVersion,ui.E.VERSION);assert.equal(draft.profileId,ui.E.PROFILE.id);
+    assert.equal(draft.recipe.beamVoltageV,'830');assert.equal(draft.recipe.pressurePa,'');assert.equal(draft.fault,'cooling');assert(!('samples' in draft));
+    ui.input('#recipe-beamVoltageV',700);ui.app.importDraft(draft);
+    assert.equal(ui.el('#recipe-beamVoltageV').value,'830');assert.equal(ui.el('#recipe-pressurePa').value,'');assert(ui.el('#runButton').disabled);
+    assert.equal(JSON.stringify(ui.app.snapshot().trace),original);assert.equal(ui.app.snapshot().time,2);assert(ui.app.snapshot().draftChanged);
+  });
+  await test('Importing a draft during log replay keeps source samples, bookmark and locked inputs intact',async()=>{
+    const ui=mount();ui.input('#recipe-beamVoltageV',840);ui.input('#recipe-pressurePa','1e');ui.click('#exportDraftButton');const draft=JSON.parse(await ui.downloads.at(-1).text());
+    const source=clone(ui.app.snapshot().trace);source.recipe.beamVoltageV=910;source.playback={t:3};ui.app.importData(source);
+    const before=JSON.stringify(ui.app.snapshot().trace);ui.app.importDraft(draft);
+    assert.equal(JSON.stringify(ui.app.snapshot().trace),before);assert.equal(ui.app.snapshot().time,3);assert(ui.app.snapshot().imported);
+    assert.equal(ui.el('#recipe-beamVoltageV').value,'910');assert(ui.el('#recipe-beamVoltageV').disabled);
+    ui.click('#exportDraftButton');assert.equal(JSON.parse(await ui.downloads.at(-1).text()).recipe.pressurePa,'1e');
+    ui.click('#exportButton');const log=JSON.parse(await ui.downloads.at(-1).text());assert.equal(log.recipe.beamVoltageV,910);assert.equal(log.playback.t,3);
+    ui.click('#returnSimulation');assert.equal(ui.el('#recipe-beamVoltageV').value,'840');assert.equal(ui.el('#recipe-pressurePa').value,'1e');assert(ui.el('#runButton').disabled);
+    assert(!ui.app.snapshot().imported);assert.equal(ui.app.snapshot().trace.recipe.beamVoltageV,ui.E.PROFILE.fields.beamVoltageV.default);
+  });
+  await test('Draft import validation is atomic and rejects incompatible files or an active operation',async()=>{
+    const ui=mount();ui.input('#recipe-beamVoltageV',820);ui.click('#exportDraftButton');const good=JSON.parse(await ui.downloads.at(-1).text()),before=JSON.stringify(ui.app.snapshot()),raw=ui.storage.get(draftKey);
+    for(const patch of [{schema:'wrong'},{modelVersion:'old'},{profileId:'other'},{fault:'unknown'},{recipe:{...good.recipe,extra:'1'}},{recipe:{...good.recipe,beamVoltageV:{value:1}}}]) {
+      assert.throws(()=>ui.app.importDraft({...good,...patch}));assert.equal(JSON.stringify(ui.app.snapshot()),before);assert.equal(ui.el('#recipe-beamVoltageV').value,'820');assert.equal(ui.storage.get(draftKey),raw);
+    }
+    ui.click('#runButton');const running=JSON.stringify(ui.app.snapshot());assert.throws(()=>ui.app.importDraft(good),/운전/);assert.equal(JSON.stringify(ui.app.snapshot()),running);assert(ui.el('#importDraftButton').disabled);
+  });
+  await test('Corrupt and incompatible saved originals remain byte-for-byte protected through edits and downloads',async()=>{
+    for(const raw of ['{BROKEN\n original',JSON.stringify({schema:draftKey,modelVersion:'old',profileId:'old',recipe:{},fault:'none'})]) {
+      const storage=new Map([[draftKey,raw],[fabKey,fabEvidence]]),ui=mount(storage);
+      assert(!ui.el('#draftRecovery').hidden);assert(ui.el('#draftStorageMessage').textContent.includes('원문'));
+      ui.input('#recipe-beamVoltageV',870);assert.equal(storage.get(draftKey),raw);assert(unloadBlocked(ui));
+      ui.click('#downloadDraftRecovery');assert.equal(await ui.downloads.at(-1).text(),raw);assert(unloadBlocked(ui));
+      ui.click('#exportButton');assert(unloadBlocked(ui));
+      ui.click('#exportDraftButton');assert.equal(JSON.parse(await ui.downloads.at(-1).text()).recipe.beamVoltageV,'870');assert(!unloadBlocked(ui));
+      assert(!ui.el('#draftRecovery').hidden);assert.equal(storage.get(draftKey),raw);assert.equal(storage.get(fabKey),fabEvidence);
+      ui.input('#recipe-beamVoltageV',880);assert(unloadBlocked(ui));assert(ui.el('#draftDownloadStatus').hidden);
+    }
+  });
+  await test('Unavailable storage, full storage and missing locks retain an actionable warning until drafts are exported',async()=>{
+    for(const options of [{getError:true},{setError:true},{noLocks:true}]) {
+      const ui=mount(new Map(),options);ui.input('#recipe-beamVoltageV',890);
+      assert(!ui.el('#draftRecovery').hidden);assert(ui.el('#draftStatus').classList.contains('error'));assert(unloadBlocked(ui));
+      const warning=ui.el('#draftStorageMessage').textContent;ui.app.seek(4);ui.click('#exportButton');assert(unloadBlocked(ui));assert.equal(ui.el('#draftStorageMessage').textContent,warning);
+      ui.click('#exportDraftButton');assert(!unloadBlocked(ui));assert.equal(ui.el('#draftStorageMessage').textContent,warning);
+      ui.input('#recipe-pressurePa','.4');assert(unloadBlocked(ui));assert(!ui.storage.has(draftKey));
+    }
+  });
+  await test('Shared draft changes stop stale tabs without overwriting either the saved or editable values',async()=>{
+    const storage=new Map(),a=mount(storage),b=mount(storage);a.input('#recipe-beamVoltageV',820);const saved=storage.get(draftKey);
+    b.emit('storage',{key:draftKey,newValue:saved});assert(!b.el('#draftRecovery').hidden);b.input('#recipe-pressurePa','.4');
+    assert.equal(storage.get(draftKey),saved);assert.equal(b.el('#recipe-pressurePa').value,'.4');assert(unloadBlocked(b));
+    b.click('#downloadDraftRecovery');assert.equal(await b.downloads.at(-1).text(),saved);assert(unloadBlocked(b));
+    b.click('#exportDraftButton');const draft=JSON.parse(await b.downloads.at(-1).text());assert.equal(draft.recipe.pressurePa,'.4');assert(!unloadBlocked(b));
+    assert(b.el('#draftStorageMessage').textContent.includes('다른 탭'));assert.equal(storage.get(draftKey),saved);
+  });
+  await test('The lock serializes compare-and-write and obsolete queued drafts cannot overwrite the latest edit',()=>{
+    const queued=[],locks={request:(name,options,fn)=>{assert.equal(name,draftKey+'-write');assert.equal(options.mode,'exclusive');queued.push(fn);return Promise.resolve();}},storage=new Map(),a=mount(storage,{locks}),b=mount(storage,{locks});
+    a.input('#recipe-beamVoltageV',810);a.input('#recipe-beamVoltageV',820);b.input('#recipe-pressurePa','.4');assert(!storage.has(draftKey));assert(unloadBlocked(a));
+    queued.shift()();assert(!storage.has(draftKey));queued.shift()();const saved=storage.get(draftKey);assert.equal(JSON.parse(saved).recipe.beamVoltageV,'820');assert(!unloadBlocked(a));
+    queued.shift()();assert.equal(storage.get(draftKey),saved);assert(b.el('#draftStorageMessage').textContent.includes('다른 탭'));assert(unloadBlocked(b));
+  });
+  function pendingFile(ui, selector) {
+    let resolve,reject;const content=new Promise((yes,no)=>{resolve=yes;reject=no;});
+    const input=ui.el(selector);Object.defineProperty(input,'files',{configurable:true,value:[{size:100,text:()=>content}]});
+    input.dispatchEvent(new Event('change',{bubbles:true}));return {resolve,reject};
+  }
+  const flushFileRead=()=>new Promise(resolve=>setImmediate(resolve));
+  await test('Slow draft file reads cannot overwrite edits made while the file is loading',async()=>{
+    const ui=mount();ui.click('#exportDraftButton');const draft=JSON.parse(await ui.downloads.at(-1).text());draft.recipe.beamVoltageV='810';
+    const file=pendingFile(ui,'#importDraftFile');ui.input('#recipe-beamVoltageV',890);const feedback=ui.el('#feedback').textContent,raw=ui.storage.get(draftKey);
+    file.resolve(JSON.stringify(draft));await flushFileRead();
+    assert.equal(ui.el('#recipe-beamVoltageV').value,'890');assert.equal(ui.storage.get(draftKey),raw);assert.equal(ui.el('#feedback').textContent,feedback);
+    const failed=pendingFile(ui,'#importDraftFile');ui.input('#recipe-pressurePa','.4');const newer=ui.el('#feedback').textContent;
+    failed.reject(Error('late read failure'));await flushFileRead();assert.equal(ui.el('#feedback').textContent,newer);
+  });
+  await test('The newest log or draft selection owns import feedback and late reads cannot change its mode',async()=>{
+    const ui=mount();ui.click('#exportDraftButton');const draft=JSON.parse(await ui.downloads.at(-1).text());draft.recipe.beamVoltageV='860';
+    const source=clone(ui.app.snapshot().trace);source.recipe.beamVoltageV=910;
+    const oldLog=pendingFile(ui,'#importFile'),newDraft=pendingFile(ui,'#importDraftFile');
+    newDraft.resolve(JSON.stringify(draft));await flushFileRead();const feedback=ui.el('#feedback').textContent;
+    oldLog.resolve(JSON.stringify(source));await flushFileRead();assert(!ui.app.snapshot().imported);assert.equal(ui.el('#recipe-beamVoltageV').value,'860');assert.equal(ui.el('#feedback').textContent,feedback);
+    const oldDraft=pendingFile(ui,'#importDraftFile'),newLog=pendingFile(ui,'#importFile');newLog.resolve(JSON.stringify(source));await flushFileRead();const imported=JSON.stringify(ui.app.snapshot());
+    ui.el('#importFile').value='newer-input-marker';oldDraft.reject(Error('stale draft read'));await flushFileRead();
+    assert.equal(JSON.stringify(ui.app.snapshot()),imported);assert.equal(ui.el('#importFile').value,'newer-input-marker');assert(ui.app.snapshot().imported);assert.equal(ui.el('#recipe-beamVoltageV').value,'910');
+  });
+  await test('Changing the current trace invalidates an older file read even when the input recipe is unchanged',async()=>{
+    const ui=mount(),source=clone(ui.app.snapshot().trace),file=pendingFile(ui,'#importFile');ui.app.importData(source);ui.click('#returnSimulation');
+    const before=JSON.stringify(ui.app.snapshot()),feedback=ui.el('#feedback').textContent;file.resolve(JSON.stringify(source));await flushFileRead();
+    assert.equal(JSON.stringify(ui.app.snapshot()),before);assert.equal(ui.el('#feedback').textContent,feedback);assert(!ui.app.snapshot().imported);
+  });
   await test('Completion releases editing and all fault scenarios remain visibly aborted with beam stopped',()=>{
     const ui=mount();ui.change('#speedSelect','16');ui.click('#runButton');ui.advance(150,250);
     let snap=ui.app.snapshot();assert.equal(snap.time,snap.trace.duration);assert(!snap.playing);assert(!snap.activeRun);
     assert.equal(ui.el('#runState').textContent,'COMPLETE');assert(!ui.el('#recipe-pressurePa').disabled);
+    assert.equal(ui.el('#equipmentViewport [data-node="stage-title"]').textContent,'웨이퍼 회수 · 운전 완료');
+    assert.equal(ui.el('#playButton').textContent,'▶ 다시 재생');
+    assert.equal(ui.el('#playButton').getAttribute('aria-label'),'운전 기록 처음부터 재생');
     for(const fault of ['vacuum','cooling','beam']) {
       ui.change('#faultSelect',fault);ui.click('#runButton');const trace=ui.app.snapshot().trace;
       assert.equal(trace.outcome.status,'aborted');ui.app.seek(trace.duration);
       assert.equal(ui.el('#runState').textContent,'ALARM / STOP');assert.equal(ui.el('#equipmentViewport [data-node="beam"]').getAttribute('opacity'),'0');
+      assert(ui.el('#equipmentViewport [data-node="stage-title"]').textContent.endsWith(' · 운전 중단'));
       assert(!ui.app.snapshot().activeRun);
     }
   });

@@ -10,6 +10,7 @@
     transfer: Object.freeze({title: '웨이퍼 이송 · Wafer transfer', body: '진공 게이트와 이송 기구가 웨이퍼를 챔버에 넣고 꺼냅니다. 이 화면의 로봇 위치는 0–1로 정규화된 이송 신호를 표현합니다. 실제 로봇 축 좌표나 안전 궤적을 재현한 것이 아니며, 신호가 없으면 이송 동작을 표시하지 않습니다.'})
   });
   const STAGES = Object.freeze({load: '웨이퍼 투입', pump: '진공 배기', stabilize: '조건 안정화', process: '이온 밀링', cooldown: '빔 정지 · 냉각', vent: '벤트', unload: '웨이퍼 회수', unknown: '단계 미확인', complete: '구동 완료', aborted: '구동 중단'});
+  const PLAYBACK = Object.freeze({READY: '재생 대기', RUNNING: '재생 중', PAUSED: '일시 정지', COMPLETE: '운전 완료', STOPPED: '운전 중단', 'ALARM / STOP': '운전 중단', 'LOG PLAYBACK': '기록 재생 중', 'LOG PAUSED': '기록 일시 정지', 'LOG END': '기록 끝'});
   let nextId = 0;
   function create(container, {onSelect = function() {}} = {}) {
     if (!container || typeof container.appendChild !== 'function') throw new TypeError('장비 화면 컨테이너가 필요합니다.');
@@ -208,7 +209,7 @@
     const fmt = (value, decimals = 1) => !finite(value) ? '—' : Math.abs(value) >= 100000 || (value !== 0 && Math.abs(value) < .01) ? value.toExponential(2) : value.toLocaleString('en-US', {maximumFractionDigits:decimals,minimumFractionDigits:0});
     const known = (d, key) => typeof d[key] === 'boolean';
     const stateText = (d, key, yes = 'ON', no = 'OFF') => known(d, key) ? d[key] ? yes : no : 'UNKNOWN';
-    function render(sample = {}, {time = sample.t, playing = false, imported = false, rotationDeg} = {}) {
+    function render(sample = {}, {time = sample.t, playing = false, imported = false, rotationDeg, status} = {}) {
       if (disposed) return;
       const v = sample.values || {}, d = sample.digital || {}, t = finite(time) ? time : 0;
       const stage = Object.prototype.hasOwnProperty.call(STAGES, sample.stage) ? sample.stage : 'unknown';
@@ -223,8 +224,9 @@
       const radians = angle * Math.PI / 180;
       const end = {x:242 + 254*extension, y:308 + 23*extension};
       const elbow = {x:191 + 140*extension,y:323-42*Math.sin(extension*Math.PI*.7)};
-      write('stage-title', STAGES[stage] + (playing ? ' · 재생 중' : ' · 일시 정지'));
-      set('state-dot', 'fill', stage === 'aborted' ? '#f2a37d' : playing ? '#66dfc4' : '#698da4');
+      const playback = Object.hasOwn(PLAYBACK, status) ? PLAYBACK[status] : playing ? '재생 중' : '일시 정지';
+      write('stage-title', STAGES[stage] + ' · ' + playback);
+      set('state-dot', 'fill', stage === 'aborted' || status === 'STOPPED' || status === 'ALARM / STOP' ? '#f2a37d' : playing || status === 'COMPLETE' ? '#66dfc4' : '#698da4');
       write('provenance', '원리 기반 절개 모형 · 치수 미보정');
       write('beam-readout', fmt(v.beamVoltageV, 0) + ' V · ' + fmt(v.beamCurrentMa) + ' mA');
       write('pressure-readout', fmt(v.pressurePa, 3) + ' Pa');

@@ -1,5 +1,9 @@
 """Server recomputation of the existing illustrative model, never a fab predictor."""
+import base64
+import binascii
 import csv
+import hashlib
+import hmac
 import io
 import json
 import math
@@ -14,7 +18,7 @@ class ValidationError(ValueError):
 
 
 def number(value, name, minimum, maximum):
-    if isinstance(value, bool) or not isinstance(value, (float, int)) or not math.isfinite(value):
+    if isinstance(value, bool) or not isinstance(value, (float, int)) or not minimum <= value <= maximum or not math.isfinite(value):
         raise ValidationError(f'{name}: 유한한 숫자가 필요합니다.')
     if not minimum <= value <= maximum:
         raise ValidationError(f'{name}: {minimum}–{maximum} 범위가 필요합니다.')
@@ -93,7 +97,11 @@ def parse_measurements(text, lower, upper):
         raise ValidationError('CSV는 비어 있지 않은 UTF-8 텍스트, 최대 1 MB여야 합니다.')
     reader = csv.DictReader(io.StringIO(text.lstrip('\ufeff')), strict=True)
     columns = ['wafer_id', 'site_id', 'cd_nm', 'etch_depth_nm']
-    if reader.fieldnames != columns:
+    try:
+        headers = reader.fieldnames
+    except csv.Error as error:
+        raise ValidationError(f'CSV 헤더 형식 오류: {error}') from error
+    if headers != columns:
         raise ValidationError('CSV 헤더 순서: wafer_id,site_id,cd_nm,etch_depth_nm (단위 nm)')
     rows, seen = [], set()
     try:
@@ -120,3 +128,61 @@ def parse_measurements(text, lower, upper):
                 cd_min_nm=min(values), cd_max_nm=max(values), etch_depth_mean_nm=statistics.mean(r['etch_depth_nm'] for r in rows), within_spec_count=inside,
                 within_spec_percent=inside/len(rows)*100, limits=dict(cd_lsl_nm=lower, cd_usl_nm=upper),
                 interpretation='표본 사이트의 규격 충족 비율입니다. 웨이퍼 수율·공정 능력·공정 안정성 판정이 아닙니다.')
+
+
+def measurement_source(data):
+    """Preserve submitted text or exact UTF-8 file bytes without doubling the request."""
+    original = data.get('original_csv')
+    if 'csv_utf8_base64' in data and 'original_csv' in data:
+        raise ValidationError('제출 CSV 텍스트와 원본 파일 전송을 혼합할 수 없습니다.')
+    if original is None:
+        if 'csv_utf8_base64' in data:
+            content = data['csv_utf8_base64']
+            if not isinstance(content, str) or len(content) > 1333336:
+                raise ValidationError('제출 CSV는 UTF-8 최대 1 MB의 base64 텍스트여야 합니다.')
+            try:
+                raw = base64.b64decode(content, validate=True)
+                # Transport only: retain the submitted BOM and CR/LF exactly.
+                text = raw.decode('utf-8')
+            except (binascii.Error, ValueError, UnicodeError) as error:
+                raise ValidationError('제출 CSV의 base64 또는 UTF-8 인코딩이 올바르지 않습니다.') from error
+            if 'csv' in data and data['csv'] != text:
+                raise ValidationError('제출 CSV 텍스트와 base64 내용이 일치하지 않습니다.')
+        else:
+            text = data.get('csv')
+            try:
+                raw = text.encode('utf-8') if isinstance(text, str) else None
+            except UnicodeError as error:
+                raise ValidationError('CSV에 UTF-8로 표현할 수 없는 문자가 있습니다.') from error
+        if raw is None or len(raw) > 1000000:
+            raise ValidationError('CSV는 UTF-8 텍스트, 최대 1 MB여야 합니다.')
+        sha = hashlib.sha256(raw).hexdigest()
+        return text, dict(schema='waferflow-measurement-source-v1', kind='submitted-text',
+                          encoding='utf-8', text=text, sha256=sha, hash_scope='submitted-csv-text-utf8')
+    if not isinstance(original, dict) or original.get('encoding') != 'base64':
+        raise ValidationError('CSV 원본은 base64 바이트 형식이어야 합니다.')
+    content = original.get('bytes_base64')
+    if not isinstance(content, str) or len(content) > 1333336:
+        raise ValidationError('CSV 원본 파일은 최대 1 MB입니다.')
+    try:
+        raw = base64.b64decode(content, validate=True)
+        # File.text/TextDecoder removes an initial BOM; textarea values use LF.
+        text = raw.decode('utf-8-sig').replace('\r\n', '\n').replace('\r', '\n')
+    except (binascii.Error, ValueError, UnicodeError) as error:
+        raise ValidationError('CSV 원본의 base64 또는 UTF-8 인코딩이 올바르지 않습니다.') from error
+    if not raw or len(raw) > 1000000:
+        raise ValidationError('CSV 원본 파일은 비어 있지 않아야 하며 최대 1 MB입니다.')
+    sha = hashlib.sha256(raw).hexdigest()
+    text_sha = hashlib.sha256(text.encode('utf-8')).hexdigest()
+    for actual, supplied, label in [(sha, original.get('sha256'), '파일 바이트'), (text_sha, data.get('csv_text_sha256'), '제출 CSV 텍스트')]:
+        if not isinstance(supplied, str) or len(supplied) != 64 or any(c not in '0123456789abcdef' for c in supplied) or not hmac.compare_digest(actual, supplied):
+            raise ValidationError(f'{label} SHA-256이 일치하지 않습니다. 파일을 다시 선택하세요.')
+    if 'csv' in data and data['csv'] != text:
+        raise ValidationError('CSV 텍스트와 원본 파일 내용이 일치하지 않습니다.')
+    filename = original.get('filename')
+    if not isinstance(filename, str) or not 1 <= len(filename) <= 255 or any(ord(c) < 32 for c in filename):
+        raise ValidationError('CSV 원본 파일 이름을 확인하세요.')
+    return text, dict(schema='waferflow-measurement-source-v1', kind='original-file', encoding='base64',
+                      bytes_base64=base64.b64encode(raw).decode('ascii'), byte_length=len(raw), filename=filename,
+                      sha256=sha, hash_scope='original-file-bytes', submitted_text_sha256=text_sha,
+                      submitted_text_transform='utf8-strip-initial-bom-normalize-crlf-cr-to-lf')

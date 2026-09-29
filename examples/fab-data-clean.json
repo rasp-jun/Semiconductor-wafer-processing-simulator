@@ -1,0 +1,154 @@
+{
+  "schema": "waferflow-fab-telemetry-v1",
+  "equipmentId": "DEMO-CLEAN-01",
+  "chamberId": "BATH-A",
+  "runId": "DEMO-RUN-001",
+  "lotId": "DEMO-LOT",
+  "waferId": "W01",
+  "tool": "clean",
+  "startedAt": "2026-09-21T00:00:00Z",
+  "processStart": 0,
+  "processEnd": 90,
+  "status": "completed",
+  "source": "synthetic",
+  "channels": {
+    "BathTemperature": {
+      "unit": "K"
+    }
+  },
+  "samples": [
+    {
+      "t": 0,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 331.15
+      }
+    },
+    {
+      "t": 5,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 332.15
+      }
+    },
+    {
+      "t": 10,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 333.15
+      }
+    },
+    {
+      "t": 15,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 334.15
+      }
+    },
+    {
+      "t": 20,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 331.15
+      }
+    },
+    {
+      "t": 25,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 332.15
+      }
+    },
+    {
+      "t": 30,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 333.15
+      }
+    },
+    {
+      "t": 35,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 334.15
+      }
+    },
+    {
+      "t": 40,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 331.15
+      }
+    },
+    {
+      "t": 45,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 332.15
+      }
+    },
+    {
+      "t": 50,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 333.15
+      }
+    },
+    {
+      "t": 55,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 334.15
+      }
+    },
+    {
+      "t": 60,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 331.15
+      }
+    },
+    {
+      "t": 65,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 332.15
+      }
+    },
+    {
+      "t": 70,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 333.15
+      }
+    },
+    {
+      "t": 75,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 334.15
+      }
+    },
+    {
+      "t": 80,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 331.15
+      }
+    },
+    {
+      "t": 85,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 332.15
+      }
+    },
+    {
+      "t": 90,
+      "quality": "good",
+      "values": {
+        "BathTemperature": 333.15
+      }
+    }
+  ]
+}
