@@ -17,7 +17,7 @@
   --n-150: #e3e2dc;
   --n-200: #d6d6d0;
   --n-300: #babdbf;
-  --n-400: #8e949c;
+  --n-400: #666d78;
   --n-500: #646c78;
   --n-600: #4a5260;
   --n-700: #343b47;
@@ -31,7 +31,7 @@
   --a-100: #dfe6ff;
   --a-200: #c0cdff;
   --a-300: #93a8ff;
-  --a-400: #6682fb;
+  --a-400: #3f5fe9;
   --a-500: #375cf6;
   --a-600: #2448df;
   --a-700: #1d39b1;
@@ -49,12 +49,12 @@
   --g-50: #ecf8f0;
   --g-200: #b7e3c5;
   --g-400: #4cc07c;
-  --g-500: #1f9a55;
+  --g-500: #178247;
   --g-700: #16703f;
   --w-50: #fff6e6;
   --w-200: #fbd9a0;
   --w-400: #efb76b;
-  --w-600: #b86e12;
+  --w-600: #9a5a0a;
   --w-800: #6f430b;
   --d-50: #fff0ee;
   --d-200: #ffc5b9;
@@ -63,24 +63,24 @@
   --d-700: #a3291a;
 
   /* Semantic roles — prefer these in new code. */
-  --bg: var(--n-50);
-  --surface: var(--n-0);
-  --surface-sunken: var(--n-100);
-  --surface-raised: var(--n-0);
-  --border: var(--n-200);
-  --border-strong: var(--n-300);
-  --text: var(--n-900);
-  --text-muted: var(--n-500);
-  --text-subtle: var(--n-400);
-  --accent: var(--a-500);
-  --accent-hover: var(--a-600);
-  --accent-soft: var(--a-50);
-  --focus: var(--a-400);
-  --console-bg: var(--n-900);
-  --console-surface: var(--n-850);
-  --console-border: var(--n-700);
-  --console-text: var(--n-100);
-  --console-muted: var(--n-400);
+  --ui-bg: var(--n-50);
+  --ui-surface: var(--n-0);
+  --ui-surface-sunken: var(--n-100);
+  --ui-surface-raised: var(--n-0);
+  --ui-border: var(--n-200);
+  --ui-border-strong: var(--n-300);
+  --ui-text: var(--n-900);
+  --ui-text-muted: var(--n-500);
+  --ui-text-subtle: var(--n-400);
+  --ui-accent: var(--a-500);
+  --ui-accent-hover: var(--a-600);
+  --ui-accent-soft: var(--a-50);
+  --ui-focus: var(--a-400);
+  --ui-console-bg: var(--n-900);
+  --ui-console-surface: var(--n-850);
+  --ui-console-border: var(--n-700);
+  --ui-console-text: var(--n-100);
+  --ui-console-muted: var(--n-400);
 
   /* Type. Pretendard/SUIT are used when installed; otherwise the platform Korean UI face. */
   --font-sans: "Pretendard Variable", "Pretendard", "SUIT Variable", "Segoe UI Variable Text", "Segoe UI",
@@ -117,4 +117,24 @@
   --rail-w: 232px;
   --rail-w-collapsed: 60px;
   --topbar-h: 56px;
+}
+
+/* Instrument surfaces (dark): the muted and status steps are re-lightened so
+ * secondary text keeps AA contrast there. Lists every dark container in the product. */
+.st-rail,
+.st-mobilebar,
+.stage-column,
+.console-transport,
+#routeDialog,
+.equipment-viewport,
+.fab-panel,
+.equipment-showcase,
+.machine-viewport {
+  --n-300: #c9ccce;
+  --n-400: #a2a8b0;
+  --a-300: #aabbff;
+  --a-400: #7d95ff;
+  --a-500: #6682fb;
+  --g-500: #3fb872;
+  --w-600: #e59a3c;
 }

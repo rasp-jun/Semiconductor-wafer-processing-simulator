@@ -39,8 +39,8 @@ body.route-docked .route-dock {
   top: var(--topbar-h);
   height: calc(100dvh - var(--topbar-h));
   overflow: hidden;
-  background: var(--surface);
-  border-right: 1px solid var(--border);
+  background: var(--ui-surface);
+  border-right: 1px solid var(--ui-border);
 }
 .cmos-console #cmosMain {
   display: block;
@@ -58,7 +58,7 @@ body.route-docked .route-dock {
   padding: var(--sp-4) var(--sp-3) 0;
   background: none;
   border: 0;
-  color: var(--text);
+  color: var(--ui-text);
 }
 .route-dock :is(.route-drawer, .route-drawer-content) {
   display: flex;
@@ -74,7 +74,7 @@ body.route-docked .route-dock {
   margin: 0 var(--sp-1) var(--sp-2);
   font: 600 var(--fs-label) / 1.4 var(--font-mono);
   letter-spacing: 0.06em;
-  color: var(--text-subtle);
+  color: var(--ui-text-subtle);
 }
 .route-dock .panel-label span:first-child {
   display: none;
@@ -97,16 +97,16 @@ body.route-docked .route-dock {
 .route-dock .wafer-label {
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--text-muted);
+  color: var(--ui-text-muted);
 }
 .route-dock :is(select, input[type="search"]) {
   width: 100%;
   min-height: 36px;
   padding: 0 var(--sp-3);
-  border: 1px solid var(--border);
+  border: 1px solid var(--ui-border);
   border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--text);
+  background: var(--ui-surface);
+  color: var(--ui-text);
   font: 500 var(--fs-sm) var(--font-sans);
 }
 .route-dock .experiment-summary button {
@@ -115,10 +115,10 @@ body.route-docked .route-dock {
   width: 100%;
   min-height: 32px;
   padding: 0 var(--sp-2);
-  border: 1px dashed var(--border-strong);
+  border: 1px dashed var(--ui-border-strong);
   border-radius: var(--radius);
   background: none;
-  color: var(--text-muted);
+  color: var(--ui-text-muted);
   font-size: var(--fs-sm);
   cursor: pointer;
 }
@@ -129,7 +129,7 @@ body.route-docked .route-dock {
   display: flex;
   justify-content: space-between;
   font: var(--fs-xs) var(--font-mono);
-  color: var(--text-muted);
+  color: var(--ui-text-muted);
   margin-bottom: 6px;
 }
 .route-dock .progress-track {
@@ -141,7 +141,7 @@ body.route-docked .route-dock {
 .route-dock .progress-track i {
   display: block;
   height: 100%;
-  background: var(--accent);
+  background: var(--ui-accent);
 }
 .route-dock .search {
   position: relative;
@@ -151,7 +151,7 @@ body.route-docked .route-dock {
   left: 10px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text-subtle);
+  color: var(--ui-text-subtle);
 }
 .route-dock .search input {
   padding-left: 30px;
@@ -165,7 +165,7 @@ body.route-docked .route-dock {
 .route-dock .route-filter label {
   flex: none;
   font-size: var(--fs-xs);
-  color: var(--text-muted);
+  color: var(--ui-text-muted);
 }
 .route-dock .route-result-bar {
   display: flex;
@@ -175,7 +175,7 @@ body.route-docked .route-dock {
   min-height: 28px;
   margin: var(--sp-1) 0;
   font-size: var(--fs-xs);
-  color: var(--text-muted);
+  color: var(--ui-text-muted);
 }
 .route-dock .route-result-bar p {
   margin: 0;
@@ -186,7 +186,7 @@ body.route-docked .route-dock {
   margin-bottom: var(--sp-2);
   border: 1px solid var(--a-200);
   border-radius: var(--radius);
-  background: var(--accent-soft);
+  background: var(--ui-accent-soft);
   color: var(--a-700);
   font-size: var(--fs-sm);
   font-weight: 600;
@@ -198,7 +198,7 @@ body.route-docked .route-dock {
   overflow: auto;
   margin: 0 calc(-1 * var(--sp-3));
   padding: 0 var(--sp-2) var(--sp-6);
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--ui-border);
   scrollbar-width: thin;
   overscroll-behavior: contain;
 }
@@ -213,7 +213,7 @@ body.route-docked .route-dock {
   border: 0;
   border-bottom: 1px solid var(--n-100);
   background: none;
-  color: var(--text);
+  color: var(--ui-text);
   font-size: var(--fs-sm);
   font-weight: 600;
   text-align: left;
@@ -224,14 +224,14 @@ body.route-docked .route-dock {
 }
 .route-dock .module-number {
   font: 500 var(--fs-label) var(--font-mono);
-  color: var(--text-subtle);
+  color: var(--ui-text-subtle);
 }
 .route-dock .module-count {
   font: var(--fs-label) var(--font-mono);
-  color: var(--text-muted);
+  color: var(--ui-text-muted);
 }
 .route-dock .chevron {
-  color: var(--text-subtle);
+  color: var(--ui-text-subtle);
   text-align: center;
 }
 .route-dock .route-step {
@@ -246,7 +246,7 @@ body.route-docked .route-dock {
   border: 0;
   border-radius: var(--radius-sm);
   background: none;
-  color: var(--text);
+  color: var(--ui-text);
   font-size: var(--fs-sm);
   line-height: 1.35;
   text-align: left;
@@ -259,10 +259,10 @@ body.route-docked .route-dock {
   display: block;
   margin-top: 1px;
   font: var(--fs-label) var(--font-mono);
-  color: var(--text-subtle);
+  color: var(--ui-text-subtle);
 }
 .route-dock .route-step .step-marker {
-  background: var(--surface);
+  background: var(--ui-surface);
   display: grid;
   place-items: center;
   width: 16px;
@@ -277,24 +277,24 @@ body.route-docked .route-dock {
   background: var(--g-500);
 }
 .route-dock .route-step.current .step-marker {
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 3px var(--n-0), inset 0 0 0 8px var(--accent);
+  border-color: var(--ui-accent);
+  box-shadow: inset 0 0 0 3px var(--n-0), inset 0 0 0 8px var(--ui-accent);
 }
 .route-dock .route-step.warning .step-marker {
   border-color: var(--w-600);
   background: var(--w-400);
 }
 .route-dock .route-step.selected {
-  background: var(--accent-soft);
-  box-shadow: inset 3px 0 0 var(--accent);
+  background: var(--ui-accent-soft);
+  box-shadow: inset 3px 0 0 var(--ui-accent);
 }
 .route-dock .route-step.done:not(.selected) > span:nth-child(2) {
-  color: var(--text-muted);
+  color: var(--ui-text-muted);
 }
 .route-dock .route-step-status {
   font-size: var(--fs-label);
   font-weight: 600;
-  color: var(--text-muted);
+  color: var(--ui-text-muted);
   white-space: nowrap;
 }
 .route-dock .route-step.current .route-step-status {
@@ -316,8 +316,8 @@ body.route-docked .route-dock {
   min-height: var(--studio-toolbar-h);
   margin: 0 calc(-1 * var(--sp-6)) var(--sp-4);
   padding: var(--sp-2) var(--sp-6);
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
+  background: var(--ui-bg);
+  border-bottom: 1px solid var(--ui-border);
 }
 .cmos-toolbar .operation-header {
   display: flex;
@@ -343,7 +343,7 @@ body.route-docked .route-dock {
   margin: 0;
   font: 500 var(--fs-label) / 1.3 var(--font-mono);
   letter-spacing: 0.02em;
-  color: var(--text-muted);
+  color: var(--ui-text-muted);
 }
 .cmos-toolbar #operationName {
   margin: 0;
@@ -372,16 +372,16 @@ body.route-docked .route-dock {
   gap: 6px;
   min-height: 24px;
   padding: 0 10px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--ui-border);
   border-radius: 999px;
-  background: var(--surface);
-  color: var(--text);
+  background: var(--ui-surface);
+  color: var(--ui-text);
   font-size: var(--fs-xs);
   font-weight: 600;
 }
 .cmos-toolbar #viewContext {
   font-size: var(--fs-label);
-  color: var(--text-muted);
+  color: var(--ui-text-muted);
   white-space: nowrap;
 }
 .cmos-toolbar .route-open {
@@ -415,18 +415,18 @@ body.route-docked .route-dock {
   border: 0;
   border-radius: var(--radius-sm);
   background: none;
-  color: var(--text-muted);
+  color: var(--ui-text-muted);
   font-size: var(--fs-sm);
   font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
 }
 .cmos-toolbar .workspace-switcher a:hover {
-  color: var(--text);
+  color: var(--ui-text);
 }
 .cmos-toolbar .workspace-switcher a[aria-current="page"] {
-  background: var(--surface);
-  color: var(--text);
+  background: var(--ui-surface);
+  color: var(--ui-text);
   box-shadow: var(--shadow-1);
 }
 .cmos-toolbar .workspace-switcher svg {
@@ -473,10 +473,10 @@ body.route-docked .route-dock {
 .cmos-toolbar .operation-navigation button {
   min-height: 32px;
   padding: 0 var(--sp-3);
-  border: 1px solid var(--border);
+  border: 1px solid var(--ui-border);
   border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--text);
+  background: var(--ui-surface);
+  color: var(--ui-text);
   font-size: var(--fs-sm);
   cursor: pointer;
 }
@@ -496,15 +496,15 @@ body.route-docked :is(.process-selector, #moduleRail) {
   grid-template-columns: minmax(0, 1fr) var(--inspector-w);
   gap: 0;
   align-items: start;
-  border: 1px solid var(--border);
+  border: 1px solid var(--ui-border);
   border-radius: var(--radius-lg);
-  background: var(--surface);
+  background: var(--ui-surface);
   overflow: clip;
   box-shadow: var(--shadow-1);
 }
 .cmos-console .stage-column {
   min-width: 0;
-  background: var(--console-bg);
+  background: var(--ui-console-bg);
   align-self: stretch;
 }
 .cmos-console .equipment-panel {
@@ -562,9 +562,9 @@ body.route-docked :is(.process-selector, #moduleRail) {
   overflow: auto;
   padding: var(--sp-5);
   border: 0;
-  border-left: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
+  border-left: 1px solid var(--ui-border);
+  background: var(--ui-surface);
+  color: var(--ui-text);
   scrollbar-width: thin;
 }
 .cmos-console .recipe-panel::before {
@@ -574,14 +574,14 @@ body.route-docked :is(.process-selector, #moduleRail) {
   margin: var(--sp-1) 0 var(--sp-2);
   font-size: var(--fs-xl);
   letter-spacing: -0.02em;
-  color: var(--text);
+  color: var(--ui-text);
 }
 .cmos-console .recipe-panel .panel-label {
   display: flex;
   justify-content: space-between;
   font: 600 var(--fs-label) / 1.4 var(--font-mono);
   letter-spacing: 0.04em;
-  color: var(--text-muted);
+  color: var(--ui-text-muted);
 }
 .cmos-console .recipe-panel :is(.primary-button, .console-primary) {
   position: sticky;
@@ -594,14 +594,14 @@ body.route-docked :is(.process-selector, #moduleRail) {
   background: var(--s-400);
   color: var(--n-950);
   font-weight: 700;
-  box-shadow: 0 -12px 16px -4px var(--surface);
+  box-shadow: 0 -12px 16px -4px var(--ui-surface);
 }
 .cmos-console .recipe-panel :is(.primary-button, .console-primary):hover:not(:disabled) {
   background: var(--s-300);
 }
 .cmos-console .recipe-panel :is(.primary-button, .console-primary):disabled {
   background: var(--n-150);
-  color: var(--text-subtle);
+  color: var(--ui-text-subtle);
   box-shadow: none;
 }
 
@@ -612,9 +612,9 @@ body.route-docked #cmosMain > .console-transport {
 
 .cmos-console .console-telemetry {
   margin-top: var(--sp-4);
-  border: 1px solid var(--border);
+  border: 1px solid var(--ui-border);
   border-radius: var(--radius-lg);
-  background: var(--surface);
+  background: var(--ui-surface);
   overflow: hidden;
 }
 .cmos-console :is(#waferSection, #processResults, .learning-guide) {
@@ -648,9 +648,9 @@ body.route-docked #cmosMain > .console-transport {
     gap: 6px;
     min-height: 34px;
     padding: 0 var(--sp-3);
-    border: 1px solid var(--border);
+    border: 1px solid var(--ui-border);
     border-radius: var(--radius);
-    background: var(--surface);
+    background: var(--ui-surface);
     font-size: var(--fs-sm);
     font-weight: 600;
     cursor: pointer;
@@ -671,7 +671,7 @@ body.route-docked #cmosMain > .console-transport {
     position: static;
     max-height: none;
     border-left: 0;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--ui-border);
   }
   .cmos-console .recipe-panel :is(.primary-button, .console-primary) {
     position: static;
@@ -718,9 +718,9 @@ body.route-docked #cmosMain > .console-transport {
   .cmos-console #operationSelect {
     width: 100%;
     min-height: 44px;
-    border: 1px solid var(--border);
+    border: 1px solid var(--ui-border);
     border-radius: var(--radius);
-    background-color: var(--surface);
+    background-color: var(--ui-surface);
     font-size: var(--fs-md);
     font-weight: 600;
   }
@@ -870,4 +870,47 @@ body.route-docked #cmosMain > .console-transport {
 .cmos-toolbar .workspace-switcher {
   width: auto;
   min-width: 0;
+}
+
+/* Learning guide: a light reading card (its legacy colors assumed a dark panel). */
+.cmos-console .learning-guide {
+  border: 1px solid var(--ui-border);
+  background: var(--ui-surface);
+  color: var(--ui-text);
+  overflow: hidden;
+}
+.cmos-console .learning-guide > summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: none;
+  color: var(--ui-text);
+  font-weight: 600;
+  cursor: pointer;
+}
+.cmos-console .learning-guide-hint {
+  color: var(--ui-text-muted);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+}
+.cmos-console .learning-guide-body {
+  padding: 0 var(--sp-5) var(--sp-5);
+  background: none;
+  color: var(--n-600);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+}
+.cmos-console .learning-guide-body :is(h3, dt, strong, b) {
+  color: var(--ui-text);
+}
+.cmos-console .learning-guide-body :is(p, dd, li, .learning-intro, .learning-scope) {
+  color: var(--n-600);
+}
+.cmos-console .learning-guide-body section {
+  background: var(--ui-surface-sunken);
+  border: 0;
+  border-radius: var(--radius);
+  padding: var(--sp-4);
 }

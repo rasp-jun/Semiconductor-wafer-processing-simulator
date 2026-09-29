@@ -9,22 +9,18 @@
 <body class="stratum stratum-photo">
 <a class="skip-link" href="#main">실습실로 건너뛰기</a>
 <div class="app-shell">
-<aside class="sidebar">
-<a class="brand stratum-brand" href="index.html" aria-label="STRATUM 메모리 팹"><svg class="stratum-symbol" viewBox="0 0 40 44" aria-hidden="true"><path d="m2 12 18-9 18 9-18 9z" fill="currentColor"/><path d="m2 24 18 9 18-9v7l-18 9-18-9z" fill="#375cf6"/><path d="m2 17 18 9 18-9v4l-18 9-18-9z" fill="#f2f1ec"/></svg><span class="stratum-wordmark">STRATUM<small>PROCESS INTELLIGENCE</small></span></a>
-<div class="workspace-picker"><span class="workspace-icon">W</span><div><strong>포토 실험 작업 공간</strong><small>Patterning / Experiments</small></div><span>⌄</span></div>
-<p class="nav-label">WORKSPACE</p>
-<nav class="main-nav" aria-label="주 메뉴">
+<div class="main-shell">
+<header class="st-pagehead photo-pagehead">
+<div class="st-pagehead-title"><h1>포토 실험</h1><span class="st-pagehead-meta breadcrumb">패터닝 · <strong id="pageBreadcrumb">공정 시뮬레이터</strong></span></div>
+<div class="st-pagehead-actions"><span class="model-badge st-status">교육용 합성 모델</span><button id="guideButton" class="button secondary">첫 실험 가이드</button><button id="modelInfo" class="icon-button st-btn-ghost" aria-label="모델 안내" data-icon="help"></button></div>
+<nav class="main-nav st-tabs" aria-label="포토 실험 영역">
 <button class="nav-item active" data-page="lab"><span data-icon="layers"></span><span>공정 시뮬레이터</span><i></i></button>
 <button class="nav-item" data-page="missions"><span data-icon="compass"></span><span>불량 분석 미션</span><small>03</small></button>
 <button class="nav-item" data-page="analytics"><span data-icon="chart"></span><span>실험 · 통계 분석</span></button>
 <button class="nav-item" data-page="notebook"><span data-icon="book"></span><span>포트폴리오 노트</span><small id="noteCount">0</small></button>
 <button class="nav-item" data-page="research"><span data-icon="database"></span><span>공정 지식 · 리서치</span></button>
 </nav>
-<div class="learn-card"><span class="tiny-label">SEE. EXPERIMENT. UNDERSTAND.</span><div class="orbit">↗</div><h3>보이지 않던 공정이,<br>이해되는 순간.</h3><p>웨이퍼 한 장에서 시작하는<br>나만의 공정 엔지니어링.</p><button id="guideButton">첫 실험 가이드 <span>↗</span></button></div>
-<div class="sidebar-bottom"><span class="avatar">ME</span><div><strong>브라우저 실험 기록</strong><small>Local workspace</small></div><i class="status-dot"></i></div>
-</aside>
-<div class="main-shell">
-<header class="topbar"><div class="breadcrumb">워크스페이스 <span>/</span><strong id="pageBreadcrumb">공정 시뮬레이터</strong></div><div class="topbar-right"><div data-stratum-switcher></div><a class="button secondary" href="cmos-lab.html">공정 스튜디오 ↗</a><a class="button secondary" href="workbench.html">엔지니어링 워크스페이스 ↗</a><span class="model-badge"><i></i>교육용 합성 모델</span><button id="modelInfo" class="icon-button" aria-label="모델 안내" data-icon="help"></button><span class="divider"></span><span class="avatar small">ME</span></div></header>
+</header>
 <main id="main">
 <aside id="photoStorageStatus" class="photo-storage-status" aria-label="포토 실습 기록 보관"><div><strong>포토 실습 기록</strong><p id="photoStorageMessage" role="status" aria-live="polite"></p></div><div class="photo-storage-actions"><button id="downloadPhotoOriginal" class="button secondary" hidden>저장 원본 JSON ↓</button><button id="exportPhotoState" class="button secondary">전체 기록 JSON ↓</button><button id="importPhotoState" class="button secondary">기록 불러오기 ↑</button><input id="importPhotoFile" type="file" accept=".json,application/json" hidden></div></aside>
 <section id="page-lab" class="page">
