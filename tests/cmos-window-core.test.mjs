@@ -113,6 +113,80 @@ export async function runCmosWindowTests(root=path.resolve(path.dirname(fileURLT
     await assert.rejects(W.pack(results.get('cmp'),{title:null}));await assert.rejects(W.pack(results.get('cmp'),{note:'x'.repeat(3001)}));assert.throws(()=>W.toHTML(results.get('cmp'),null,{title:1}));
   });
   await test('No engine definitions, live state or browser storage are mutated',()=>{assert.equal(JSON.stringify({route:E.route,tools:E.tools,materials:E.materials}),definitions);assert.equal(storageTouches,0);assert.equal(appTouches,0);assert(yields>0);});
+  await test('Pinned comparison uses selected minus reference across all recipes, metrics, time and warnings',()=>{
+    const result=results.get('gate-etch'),before=canon(result),left=result.rows[0],right=result.rows.at(-1),pair=W.compareRows(result,left.id,right.id);
+    assert.equal(pair.referenceId,left.id);assert.equal(pair.selectedId,right.id);
+    for(const row of pair.recipe){assert.equal(row.reference,left.recipe[row.id]);assert.equal(row.selected,right.recipe[row.id]);assert.equal(row.delta,right.recipe[row.id]-left.recipe[row.id]);}
+    for(const row of pair.metrics){assert.equal(row.reference,left.metrics[row.id]);assert.equal(row.selected,right.metrics[row.id]);assert.equal(row.delta,row.reference===null||row.selected===null?null:row.selected-row.reference);}
+    assert.equal(pair.seconds.delta,right.seconds-left.seconds);assert.equal(canon(pair.warnings.reference),canon(left.warnings));assert.equal(canon(pair.warnings.selected),canon(right.warnings));
+    pair.recipe[0].selected=0;pair.metrics[0].delta=0;pair.warnings.reference.push({code:'invented'});assert.equal(canon(result),before);
+  });
+  await test('Comparing a row to itself reports zero differences but keeps unavailable metrics absent',()=>{
+    const result=results.get('oxidation'),pair=W.compareRows(result,'R01','R01');
+    assert(pair.recipe.every(r=>r.delta===0));assert(pair.metrics.every(r=>r.delta===0||r.delta===null));assert.equal(pair.metrics.find(r=>r.id==='gateCD').delta,null);assert.equal(pair.seconds.delta,0);
+    const reversed=W.compareRows(result,'R25','R01'),forward=W.compareRows(result,'R01','R25');
+    for(let i=0;i<forward.metrics.length;i++)if(forward.metrics[i].delta!==null)assert.equal(reversed.metrics[i].delta+forward.metrics[i].delta,0);
+  });
+  await test('Comparison rejects missing IDs and unverified or changed result objects',()=>{
+    const result=results.get('oxidation');
+    for(const id of [null,0,'R99','baseline'])assert.throws(()=>W.compareRows(result,id,'R01'),/조건/);
+    assert.throws(()=>W.compareRows(result,'R01','missing'),/조건/);assert.throws(()=>W.compareRows(clone(result),'R01','R02'),/먼저 계산/);
+    const value=result.rows[0].metrics.oxideMean;result.rows[0].metrics.oxideMean+=1;
+    assert.throws(()=>W.compareRows(result,'R01','R02'),/먼저 계산/);result.rows[0].metrics.oxideMean=value;
+  });
+  const broad={limits:[{metric:'oxideMean',min:0,max:100000}],excludeWarnings:false,sort:{metric:'seconds',direction:'asc'}};
+  await test('Candidate screening intersects inclusive targets without another engine calculation',()=>{
+    const result=results.get('oxidation'),middle=result.rows[12],settings={...clone(broad),limits:[{metric:'oxideMean',min:middle.metrics.oxideMean,max:result.rows.at(-1).metrics.oxideMean},{metric:'topography',min:0,max:middle.metrics.topography}]};
+    const before=executions,original=canon(result),screened=W.screen(result,settings);
+    const expected=result.rows.filter(r=>settings.limits.every(c=>r.metrics[c.metric]>=c.min&&r.metrics[c.metric]<=c.max));
+    assert(screened.count>0&&screened.count<25);assert.deepEqual(clone(screened.candidates.map(c=>c.id)).sort(),clone(expected.map(r=>r.id)).sort());assert(screened.candidates.some(c=>c.id===middle.id));
+    assert.equal(screened.count+Object.values(screened.excluded).reduce((a,b)=>a+b,0),25);assert.equal(executions,before);assert.equal(canon(result),original);
+    screened.settings.limits[0].min=0;screened.rows[0].checks[0].min=-1;assert.equal(settings.limits[0].min,middle.metrics.oxideMean);
+  });
+  await test('Warning exclusion removes only matching conditions with model warnings and retains reasons',()=>{
+    const result=results.get('cmp'),settings={limits:[{metric:'topography',min:0,max:100000}],excludeWarnings:true,sort:{metric:'seconds',direction:'asc'}},a=W.screen(result,settings);
+    const warnings=result.rows.filter(r=>r.warnings.length);assert(warnings.length>0);
+    assert.equal(a.excluded.warnings,warnings.length);assert.equal(a.count,25-warnings.length);assert(a.rows.filter(r=>r.status==='warnings').every(r=>r.reason.includes('경고')));
+    settings.excludeWarnings=false;assert.equal(W.screen(result,settings).count,25);
+    settings.limits[0].max=-1;settings.limits[0].min=-2;settings.excludeWarnings=true;
+    const noMatches=W.screen(result,settings);assert.equal(noMatches.count,0);assert.equal(noMatches.excluded.outside,25);assert.equal(noMatches.excluded.warnings,0);
+  });
+  await test('Absent target metrics exclude rows while zero values and unavailable sort values remain meaningful',()=>{
+    const result=results.get('oxidation'),settings=clone(broad);settings.limits=[{metric:'gateCD',min:0,max:100000}];
+    const absent=W.screen(result,settings);assert.equal(absent.excluded.unavailable,25);assert.equal(absent.count,0);assert(absent.rows.every(r=>r.reason.includes('계산값 없음')));
+    settings.limits=[{metric:'polyMean',min:0,max:0}];settings.sort.metric='gateCD';
+    for(const direction of ['asc','desc']){settings.sort.direction=direction;const sorted=W.screen(result,settings);assert.equal(sorted.count,25);assert(sorted.candidates.every(c=>c.sortValue===null));assert.deepEqual(clone(sorted.candidates.map(c=>c.id)),clone(result.rows.map(r=>r.id)));}
+  });
+  await test('Ascending and descending ordering preserve condition order for ties',()=>{
+    for(const direction of ['asc','desc']){
+      const settings={...clone(broad),sort:{metric:'seconds',direction}},screened=W.screen(results.get('oxidation'),settings);
+      for(let i=1;i<screened.candidates.length;i++){const a=screened.candidates[i-1],b=screened.candidates[i];assert(direction==='asc'?a.sortValue<=b.sortValue:a.sortValue>=b.sortValue);if(a.sortValue===b.sortValue)assert(a.id<b.id);assert.equal(b.rank,i+1);}
+    }
+  });
+  await test('Invalid, duplicate and unsafe candidate rules are rejected before any engine work',()=>{
+    const settings=clone(broad),bad=[null,{}, {...settings,limits:[]},{...settings,limits:[...settings.limits,...settings.limits]}, {...settings,limits:Array(6).fill(settings.limits[0])}, {...settings,excludeWarnings:'yes'},{...settings,sort:{metric:'none',direction:'asc'}},{...settings,sort:{metric:'seconds',direction:'up'}},{...settings,extra:1}, {...settings,limits:[{metric:'oxideMean',min:'0',max:1}]},{...settings,limits:[{metric:'oxideMean',min:2,max:1}]},{...settings,limits:[{metric:'oxideMean',min:0,max:Infinity}]}];
+    const before=executions;for(const value of bad)assert.throws(()=>W.screen(results.get('oxidation'),value));assert.equal(executions,before);
+    let invoked=0;const unsafe={...settings};Object.defineProperty(unsafe,'sort',{enumerable:true,get(){invoked++;return settings.sort;}});assert.throws(()=>W.screen(results.get('oxidation'),unsafe));assert.equal(invoked,0);
+    assert.throws(()=>W.screen(clone(results.get('oxidation')),settings),/먼저 계산/);
+  });
+  await test('Version 2 packages restore all candidate rules while version 1 stays compatible',async()=>{
+    const result=results.get('cmp'),settings={limits:[{metric:'topography',min:0,max:80},{metric:'oxideMean',min:0,max:100000}],excludeWarnings:true,sort:{metric:'topography',direction:'desc'}};
+    const packed=await W.pack(result,{screening:settings,title:'후보 검토'});assert.equal(packed.schema,'stratum-cmos-window-package-v2');const restored=await W.unpack(JSON.stringify(packed));
+    assert.equal(canon(restored.screening),canon(settings));assert.equal(canon(W.screen(restored.result,restored.screening)),canon(W.screen(result,settings)));
+    const legacy=await W.pack(result,{screening:null});assert.equal(legacy.schema,'stratum-cmos-window-package-v1');assert(!Object.hasOwn(legacy.payload,'screening'));assert.equal((await W.unpack(legacy)).screening,null);
+  });
+  await test('Candidate criteria are checksum protected and malformed recomputed-checksum settings are rejected',async()=>{
+    const pkg=await W.pack(results.get('cmp'),{screening:broad});pkg.payload.screening.excludeWarnings=true;await assert.rejects(W.unpack(pkg),/체크섬/);
+    pkg.payload.screening.limits.push({...pkg.payload.screening.limits[0]});pkg.integrity.digest=createHash('sha256').update(canon(pkg.payload)).digest('hex');await assert.rejects(W.unpack(pkg),/중복/);
+    const old=await W.pack(results.get('cmp'));old.payload.screening=broad;old.integrity.digest=createHash('sha256').update(canon(old.payload)).digest('hex');await assert.rejects(W.unpack(old),/검토 내용/);
+  });
+  await test('CSV and standalone HTML include applied rules, sorted candidates and every exclusion reason',()=>{
+    const result=results.get('cmp'),settings={limits:[{metric:'topography',min:0,max:100000}],excludeWarnings:true,sort:{metric:'topography',direction:'desc'}},screened=W.screen(result,settings);
+    const csv=W.toCSV(result,null,{title:'=candidate'},settings),html=W.toHTML(result,null,{title:'<script>bad</script>'},settings);
+    assert(csv.startsWith('\uFEFF'));assert(csv.includes('후보 목표'));assert(csv.includes('후보 정렬'));assert(csv.includes('후보 판정 근거'));assert.equal((csv.match(/"R\d\d"/g)||[]).length,25);assert(csv.includes('모델 경고'));
+    assert(html.includes('후보 '+screened.count+' / 25개 조합'));assert(html.includes('큰 값부터'));assert(html.includes('모든 조합의 후보 판정 근거'));assert(!html.includes('<script>bad'));
+    const empty=W.toHTML(result,null,{}, {...settings,limits:[{metric:'topography',min:-2,max:-1}]});assert(empty.includes('후보가 없습니다'));
+  });
   return {passed:tests.length,failed:0,tests};
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))runCmosWindowTests().then(result=>console.log(JSON.stringify(result,null,2))).catch(error=>{console.error(error);process.exitCode=1;});

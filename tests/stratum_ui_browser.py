@@ -67,7 +67,7 @@ def check_navigation(page, route, width, prefix):
     page.keyboard.press('Enter')
     expect(switcher).to_have_attribute('open', '')
     links = switcher.locator('a[href]')
-    expect(links).to_have_count(9)
+    expect(links).to_have_count(10)
     for link in links.all():
         expect(link).to_be_visible()
         link.scroll_into_view_if_needed()

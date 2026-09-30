@@ -10,7 +10,8 @@
     ['06', 'fab-pilot.html', '파일럿 검토', '운전 비교 · 후속 조치'],
     ['07', 'evidence.html', '모델 검증', '보정 · 검증 · 오차'],
     ['08', 'public-study.html', '공개 데이터', '실측 근거 · 재현'],
-    ['09', 'workbench.html', '검토 기록', '레시피 · 버전 · 팀']
+    ['09', 'workbench.html', '검토 기록', '레시피 · 버전 · 팀'],
+    ['10', 'briefing.html', 'STRATUM 소개', '실험 흐름 · 결과 전달']
   ];
   const page = (location.pathname.split('/').pop() || 'index.html').replace('memory-fab.html', 'index.html');
   if (document.body.dataset.stratumEdition === 'public' || document.body.classList.contains('stratum-public')) {

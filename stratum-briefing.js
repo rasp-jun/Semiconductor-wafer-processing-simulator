@@ -32,8 +32,12 @@
   let active = 'window', request = 0;
   buttons.forEach(button => button.addEventListener('click', async () => {
     const key = button.dataset.briefChoice, next = choices[key];
-    if (!next || key === active) return;
+    if (!next) return;
     const currentRequest = ++request;
+    if (key === active) {
+      status.textContent = next.action + '. 위의 시작 링크에서 해당 작업 공간으로 이동할 수 있습니다.';
+      return;
+    }
     status.textContent = '선택한 과제의 장비 모형을 불러옵니다.';
     try {
       const pending = new Image();

@@ -170,6 +170,7 @@
     for(const id of ['waferSelect','newWafer','importButton','editExperiment','jumpCurrent'])$('#'+id).disabled=busy;$('#newWafer').disabled=busy||full;$('#beforeButton').disabled=state.selected>w.cursor||(!done&&!state.running&&!state.preview);$('#runFeedback').textContent=state.feedback;$('#faultNote').textContent={none:'정상 조건으로 계산합니다.',dose:'노광 단계에만 적용되는 출력 저하입니다.',uniformity:'막·식각의 위치별 편차를 늘립니다.',vacuum:'진공 장비에서 공정을 보류하는 인터록입니다.'}[$('#faultSelect').value];
     const badge=$('#runState');badge.className='state-badge'+(state.error?' hold':state.running?' running':'');badge.textContent=state.busy?'계산 중':state.running?(state.running.paused?'일시정지':'처리 중'):state.error?'확인 필요':state.preview?'미리보기':draft?'입력 중':done?'기록 완료':future?'미리보기':w.cursor===E.route.length?'완료':'대기';$('#viewContext').textContent=state.running?(state.running.paused?'현재 공정 일시정지':'현재 공정 실행 중'):state.preview?'미리 계산 결과 · 실행 기록 유지':done?(draft?'변경 조건 초안 · 단면은 원본 결과':'원본 결과 보기 · 조건 수정 가능'):future?'장비 미리 보기 · 단면은 현재 상태':'다음 실행 공정';
     $('#openEquipmentAtlas').disabled=busy;
+    $('#openWindow').disabled=state.busy;
     syncConsoleControls();
   }
   function chooseDisplay(){const w=current();before=state.selected<w.cursor?at(entry(),state.selected):w;shown=state.selected<w.cursor?at(entry(),state.selected+1):w;}
@@ -366,7 +367,13 @@
     }catch(e){state.stopAdvance=false;state.selected=Math.min(current().cursor,E.route.length-1);hold(e);render();}
   }
   function nextId(){let n=1;while(state.wafers.some(w=>w.id==='W'+String(n).padStart(2,'0')))n++;return 'W'+String(n).padStart(2,'0');}
-  function addWafer(fork=false){if(state.running||state.busy||state.wafers.length>=25)return;const old=entry(),id=nextId(),point=state.selected,records=fork?old.wafer.records.slice(0,point):[];const e=makeEntry(id,records,fork?E.copy(old.overrides):{},fork?E.copy(old.conditions):{},fork?{id:old.id,from:point}:null);if(fork){e.title=old.title?(old.title+' · 분기').slice(0,60):'';e.note=old.note;for(const r of old.wafer.records.slice(point)){e.overrides[r.stepId]??=E.copy(r.recipe);e.conditions[r.stepId]??=r.fault;}}state.wafers.push(e);state.active=id;if(fork)state.compare=old.id;state.compareCount=null;state.selected=fork?point:0;state.feedback='';state.error=false;state.before=false;state.expanded.add(E.route[state.selected].module);persist();render();notify(fork?`${old.id}의 원본 기록을 보존하고 ${id}에서 분기했습니다.`:`새 웨이퍼 ${id}를 생성했습니다.`);}
+  function makeBranch(source,point,id){
+    const branch=makeEntry(id,source.wafer.records.slice(0,point),E.copy(source.overrides),E.copy(source.conditions),{id:source.id,from:point});
+    branch.title=source.title?(source.title+' · 분기').slice(0,60):'';branch.note=source.note;
+    for(const record of source.wafer.records.slice(point)){branch.overrides[record.stepId]??=E.copy(record.recipe);branch.conditions[record.stepId]??=record.fault;}
+    return branch;
+  }
+  function addWafer(fork=false){if(state.running||state.busy||state.wafers.length>=25)return;const old=entry(),id=nextId(),point=state.selected,e=fork?makeBranch(old,point,id):makeEntry(id);state.wafers.push(e);state.active=id;if(fork)state.compare=old.id;state.compareCount=null;state.selected=fork?point:0;state.feedback='';state.error=false;state.before=false;state.expanded.add(E.route[state.selected].module);persist();render();notify(fork?`${old.id}의 원본 기록을 보존하고 ${id}에서 분기했습니다.`:`새 웨이퍼 ${id}를 생성했습니다.`);}
   function download(name,type,content){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
   function exportHistory(){download('waferflow-fab-'+new Date().toISOString().slice(0,10)+'.json','application/json',JSON.stringify(pack(),null,2));exportedSequence=saveSequence;if(storageDirty){$('#saveStatus').textContent='JSON 다운로드 요청됨 · 파일 보관을 확인하세요';$('#saveStatus').classList.add('error');}}
   function exportCSV(){const cell=v=>'"'+String(v??'').replace(/^(?=[\t\r\n]|[^\S\r\n]*[=+@-])/,"'").replace(/"/g,'""')+'"';const rows=[['wafer','operation','name','recipe_json','fault','duration_s','topography_nm','poly_width_nm','activation_pct','warning_codes','model_version','executed_at','experiment_title','experiment_note']];for(const w of state.wafers)for(const r of w.wafer.records)rows.push([w.id,r.stepId,r.name,JSON.stringify(r.recipe),r.fault,r.seconds,r.metrics.topography,r.metrics.gateCD,r.metrics.activation,r.warnings.map(a=>a.code).join('|'),r.modelVersion,r.time,w.title,w.note]);download('waferflow-fab-history.csv','text/csv;charset=utf-8','\uFEFF'+rows.map(row=>row.map(cell).join(',')).join('\r\n'));}
@@ -508,4 +515,42 @@
   root.addEventListener('beforeunload',e=>{if(state.running||state.busy||storageDirty&&exportedSequence!==saveSequence){e.preventDefault();e.returnValue='';}});view=root.FabViewport.mount($('#fabViewport'),{presentation:'console',onInspect:explainEquipment,onContextLoss(){if(state.running){state.running.paused=true;syncControls();draw();}notify('3D 연결이 끊겨 일시정지했습니다. 복구 후 계속 실행할 수 있습니다.');}});render();workspaceFromHash();renderRecovery();if(storageBlocked){$('#saveStatus').textContent='자동 저장 중지 · JSON으로 보관하세요';$('#saveStatus').classList.add('error');}requestAnimationFrame(frame);
   root.FabApp={snapshot:()=>E.copy(pack()),importData,select,advance,viewport:view};
   root.CmosReviewUI?.mount({getComparison:comparison,pause:pauseForReading});
+  // Bind an experiment to the exact input and raw draft it captured. Dialog
+  // activity has its own import guard and must not invalidate this source token.
+  function windowSourceKey(){
+    return JSON.stringify([state.active,state.selected,current().records,
+      entry().title,entry().note,entry().overrides,entry().conditions,
+      $$('[data-field]').map(input=>[input.dataset.field,input.value]),$('#faultSelect').value]);
+  }
+  function captureWindow(){
+    if(state.running||state.busy)throw Error('실행을 완료하거나 취소한 뒤 현재 공정을 가져오세요.');
+    if(state.selected>current().cursor)throw Error('선택 공정 직전까지의 완료 기록이 필요합니다. 앞 공정을 진행하거나 독립 예제를 선택하세요.');
+    const step=E.route[state.selected],baseRecipe=readRecipe(),fields=Object.entries(E.tools[step.tool].fields);
+    if(fields.length<2)throw Error('두 변수 이상을 가진 공정을 선택하세요. 이 공정은 결과 · 비교의 한 변수 비교를 사용할 수 있습니다.');
+    const range=([field,f])=>{const value=baseRecipe[field],span=Math.max(Math.abs(value)*.2,f.step*4);return {field,min:Math.max(f.min,value-span),max:Math.min(f.max,value+span),count:3};};
+    return {config:{input:{waferId:state.active,title:entry().title,records:E.copy(current().records.slice(0,state.selected))},
+      stepId:step.id,baseRecipe,fault:$('#faultSelect').value,x:range(fields[0]),y:range(fields[1])},
+      token:{key:windowSourceKey(),mode:state.selected<current().cursor?'branch':'draft'}};
+  }
+  function applyWindow(recipe,fault,token){
+    const mode=state.selected<current().cursor?'branch':'draft';
+    if(state.running||state.busy||state.selected>current().cursor||token?.mode!==mode||token?.key!==windowSourceKey())throw Error('원본 공정이나 레시피가 변경되었습니다. 현재 공정을 다시 가져와 계산하세요.');
+    const step=E.route[state.selected],next=E.recipeFor(step,recipe);
+    if(!faults.includes(fault))throw Error('지원하지 않는 이상 조건입니다.');
+    if(mode==='branch'){
+      if(state.wafers.length>=25)throw Error('웨이퍼 25개 한도에 도달하여 새 실험을 만들 수 없습니다. 조건 맵 패키지로 보관하세요.');
+      // Prepare the complete branch before committing any live state. The
+      // source's records, future drafts, title and notes stay untouched.
+      const source=entry(),branch=makeBranch(source,state.selected,nextId());
+      branch.overrides[step.id]=E.copy(next);branch.conditions[step.id]=fault;
+      draftSequence++;state.wafers.push(branch);state.active=branch.id;state.compare=source.id;state.compareCount=null;
+      state.feedback='';state.error=false;state.before=false;persist();render();setWorkspace('equipment');
+      notify(source.id+'를 보존하고 '+branch.id+'에 선택 조건을 준비했습니다. 실행하면 새 실험에 기록됩니다.');
+      return;
+    }
+    draftSequence++;clearPreview();entry().overrides[step.id]=E.copy(next);entry().conditions[step.id]=fault;
+    state.feedback='';state.error=false;persist();renderRecipe();
+    notify('선택 조건을 레시피 초안에 불러왔습니다. 공정을 실행하면 기록에 반영됩니다.');
+  }
+  root.CmosWindowUI?.mount({capture:captureWindow,apply:applyWindow,pause:()=>{if(state.busy)return false;pauseForReading();return true;},onActivity:()=>draftSequence++});
 })(window);
